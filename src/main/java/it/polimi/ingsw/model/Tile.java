@@ -1,9 +1,10 @@
-package it.polimi.ingsw;
+package it.polimi.ingsw.model;
 
 public class Tile {
     private final int x;
     private final int y;
     private int level;
+
 
     public Tile(int x, int y) {
         this.x = x;

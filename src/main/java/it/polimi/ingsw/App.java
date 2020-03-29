@@ -23,11 +23,9 @@ public class App
     {
         StandardDivinity divinity = new StandardDivinity("Apollo", "può swappare with opponent");
         DivinityDecoratorWithEffects apollo = new SwapWithOpponent(divinity);
-        Person person = new Person("Marco", "Bonalumi", 21);
 
         try{
             FileOutputStream fos = new FileOutputStream(new File("src/main/java/it/polimi/ingsw/divinitiesxml/apollo.xml"));
-//            FileOutputStream fos = new FileOutputStream(new File("src/main/java/it/polimi/ingsw/divinitiesxml/person.xml"));
             XMLEncoder encoder = new XMLEncoder(fos);
             encoder.writeObject(apollo);
             encoder.close();
@@ -39,16 +37,15 @@ public class App
 
         try{
             FileInputStream fis = new FileInputStream(new File("src/main/java/it/polimi/ingsw/divinitiesxml/apollo.xml"));
-//            FileInputStream fis = new FileInputStream(new File("src/main/java/it/polimi/ingsw/divinitiesxml/person.xml"));
             XMLDecoder decoder = new XMLDecoder(fis);
 
-//            Person person2 = (Person) decoder.readObject();
             Divinity div = (DivinityDecoratorWithEffects) decoder.readObject();
+            StandardDivinity stddiv = (StandardDivinity) div.getDivinity();
             decoder.close();
             fis.close();
-//            System.out.println(div.getName());
+
+            System.out.println(stddiv.getName());
 //            System.out.println(div.getDescription());
-//            System.out.println(person2.getFirstName());
         }
         catch(IOException ex){
             ex.printStackTrace();

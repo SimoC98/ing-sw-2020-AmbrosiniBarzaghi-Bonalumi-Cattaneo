@@ -1,6 +1,5 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.model.Person;
 import it.polimi.ingsw.model.cards.Divinity;
 import it.polimi.ingsw.model.cards.DivinityDecoratorWithEffects;
 import it.polimi.ingsw.model.cards.StandardDivinity;

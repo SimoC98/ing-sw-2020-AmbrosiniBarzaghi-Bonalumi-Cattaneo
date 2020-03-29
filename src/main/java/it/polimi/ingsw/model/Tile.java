@@ -42,13 +42,9 @@ public class Tile {
 
     public Worker getWorker() { return worker; }
 
-    public void setDomed() {
-        isDomed = true;
-    }
+    public void setDomed() { isDomed = true; }
 
-    public void occupy() {
-        isOccupied = true;
-    }
+    public void occupy() { isOccupied = true; }
 
     public void free() { isOccupied = false; }
 

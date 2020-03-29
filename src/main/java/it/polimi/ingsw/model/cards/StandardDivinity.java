@@ -10,8 +10,8 @@ public class StandardDivinity implements Divinity {
     /**
      * name and description of the divinity card
      */
-    private final String name;
-    private final String description;
+    private String name;
+    private String description;
 
     public StandardDivinity(){
         this.name = null;
@@ -87,5 +87,13 @@ public class StandardDivinity implements Divinity {
 
     public String getDescription() {
         return description;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

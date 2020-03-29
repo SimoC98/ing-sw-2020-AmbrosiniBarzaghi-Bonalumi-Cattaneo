@@ -50,4 +50,11 @@ public class DivinityDecoratorWithEffects implements Divinity{
         return this.decoratedDivinity;
     }
 
+    public Divinity getDecoratedDivinity(){
+        return this.decoratedDivinity;
+    }
+
+    public void setDecoratedDivinity(Divinity decoratedDivinity) {
+        this.decoratedDivinity = decoratedDivinity;
+    }
 }

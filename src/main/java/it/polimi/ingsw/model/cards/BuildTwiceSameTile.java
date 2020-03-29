@@ -10,6 +10,36 @@ public class BuildTwiceSameTile extends BuildTwice {
     }
 
     @Override
+    public void build(Worker selectedWorker, Tile selectedTile) {
+        super.build(selectedWorker, selectedTile);
+    }
+
+    @Override
+    public void move(Worker selectedWorker, Tile selectedTile) {
+        super.move(selectedWorker, selectedTile);
+    }
+
+    @Override
+    public boolean legalMove(Worker selectedWorker, Tile selectedTile) {
+        return super.legalMove(selectedWorker, selectedTile);
+    }
+
+    @Override
+    public Divinity getDivinity() {
+        return super.getDivinity();
+    }
+
+    @Override
+    protected int getBuildCount() {
+        return super.getBuildCount();
+    }
+
+    @Override
+    protected Tile getFirstBuildTile() {
+        return super.getFirstBuildTile();
+    }
+
+    @Override
     public boolean legalBuild(Worker selectedWorker, Tile selectedTile) {
         if(getBuildCount()>0) {
             if(getFirstBuildTile().getX()==selectedTile.getX() && getFirstBuildTile().getY()==selectedTile.getY()) {

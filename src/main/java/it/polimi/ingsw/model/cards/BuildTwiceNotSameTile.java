@@ -18,4 +18,34 @@ public class BuildTwiceNotSameTile extends BuildTwice {
         }
         return super.legalBuild(selectedWorker,selectedTile);
     }
+
+    @Override
+    public void build(Worker selectedWorker, Tile selectedTile) {
+        super.build(selectedWorker, selectedTile);
+    }
+
+    @Override
+    public void move(Worker selectedWorker, Tile selectedTile) {
+        super.move(selectedWorker, selectedTile);
+    }
+
+    @Override
+    public boolean legalMove(Worker selectedWorker, Tile selectedTile) {
+        return super.legalMove(selectedWorker, selectedTile);
+    }
+
+    @Override
+    public Divinity getDivinity() {
+        return super.getDivinity();
+    }
+
+    @Override
+    protected int getBuildCount() {
+        return super.getBuildCount();
+    }
+
+    @Override
+    protected Tile getFirstBuildTile() {
+        return super.getFirstBuildTile();
+    }
 }

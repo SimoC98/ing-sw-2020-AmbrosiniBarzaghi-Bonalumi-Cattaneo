@@ -1,7 +1,10 @@
 package it.polimi.ingsw.model.cards;
 
+import it.polimi.ingsw.model.Phase;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
+
+import java.util.List;
 
 public class MoveTwice extends DivinityDecoratorWithEffects {
     private Tile firstMovedTile;
@@ -30,10 +33,6 @@ public class MoveTwice extends DivinityDecoratorWithEffects {
         return super.legalBuild(selectedWorker, selectedTile);
     }
 
-    /*@Override
-    public boolean isWinner() {
-        return super.isWinner();
-    } */
 
     @Override
     public Divinity getDivinity() {

@@ -1,7 +1,10 @@
 package it.polimi.ingsw.model.cards;
 
+import it.polimi.ingsw.model.Phase;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
+
+import java.util.List;
 
 public class StandardDivinity implements Divinity {
     /**
@@ -62,10 +65,7 @@ public class StandardDivinity implements Divinity {
         return selectedWorker.legalBuild(selectedTile);
     }
 
-    /*@Override
-    public boolean isWinner(Worker ) {
-        return
-    } */
+
 
     /**
      *
@@ -74,5 +74,10 @@ public class StandardDivinity implements Divinity {
     @Override
     public Divinity getDivinity() {
         return this;
+    }
+
+    @Override
+    public List<Phase> updatePossibleActions(List<Phase> possibleActions) {
+        return possibleActions;
     }
 }

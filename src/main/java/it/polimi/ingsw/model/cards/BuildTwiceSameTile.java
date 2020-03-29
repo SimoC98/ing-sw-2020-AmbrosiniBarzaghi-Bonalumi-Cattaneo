@@ -1,7 +1,10 @@
 package it.polimi.ingsw.model.cards;
 
+import it.polimi.ingsw.model.Phase;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
+
+import java.util.List;
 
 public class BuildTwiceSameTile extends BuildTwice {
 
@@ -50,5 +53,15 @@ public class BuildTwiceSameTile extends BuildTwice {
             }
         }
         return super.legalBuild(selectedWorker,selectedTile);
+    }
+
+    @Override
+    public List<Phase> updatePossibleActions(List<Phase> possibleActions) {
+        if(getBuildCount()>0) {
+            if(getFirstBuildTile().getLevel()<=2) {
+                possibleActions.add(Phase.BUILD);
+            }
+        }
+        return super.updatePossibleActions(possibleActions);
     }
 }

@@ -1,7 +1,10 @@
 package it.polimi.ingsw.model.cards;
 
+import it.polimi.ingsw.model.Phase;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
+
+import java.util.List;
 
 public class DivinityDecoratorWithEffects implements Divinity{
     /**
@@ -37,11 +40,10 @@ public class DivinityDecoratorWithEffects implements Divinity{
         return decoratedDivinity.legalBuild(selectedWorker,selectedTile);
     }
 
-    /* @Override
-    public boolean isWinner() {
-        return decoratedDivinity.isWinner();
-    } */
-
+    @Override
+    public List<Phase> updatePossibleActions(List<Phase> possibleActions) {
+        return decoratedDivinity.updatePossibleActions(possibleActions);
+    }
 
     @Override
     public Divinity getDivinity() {

@@ -35,10 +35,6 @@ public class BuildTwice extends DivinityDecoratorWithEffects {
         return super.legalMove(selectedWorker, selectedTile);
     }
 
-    /*@Override
-    public boolean isWinner() {
-        return super.isWinner();
-    } */
 
     @Override
     public Divinity getDivinity() {

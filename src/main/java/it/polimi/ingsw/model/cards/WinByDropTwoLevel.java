@@ -1,12 +1,22 @@
 package it.polimi.ingsw.model.cards;
 
+import it.polimi.ingsw.model.Phase;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
 
-public class WinByDropTwoLevel extends DivinityDecoratorWithEffects {
+import java.util.List;
+
+public class WinByDropTwoLevel extends AdditionalWinCondition {
 
     public WinByDropTwoLevel(Divinity decoratedDivinity) {
         super(decoratedDivinity);
+    }
+
+    @Override
+    protected boolean isWinner(Worker selectedWorker, Tile selectedTile) {
+        int levelDifference = selectedWorker.getPositionOnBoard().getLevel() - selectedTile.getLevel();
+        if(levelDifference>=2) return true;
+        else return false;
     }
 
     @Override
@@ -37,9 +47,7 @@ public class WinByDropTwoLevel extends DivinityDecoratorWithEffects {
         return super.getDivinity();
     }
 
-    private boolean isWinner(Worker selectedWorker, Tile selectedTile) {
-        int levelDifference = selectedWorker.getPositionOnBoard().getLevel() - selectedTile.getLevel();
-        if(levelDifference>=2) return true;
-        else return false;
-    }
+
+
+
 }

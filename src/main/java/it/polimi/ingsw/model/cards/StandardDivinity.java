@@ -11,16 +11,22 @@ public class StandardDivinity implements Divinity {
      * name and description of the divinity card
      */
     private String name;
+    private String heading;
     private String description;
+    private int number;
 
     public StandardDivinity(){
         this.name = null;
+        this.heading = null;
         this.description = null;
+        this.number = 0;
     }
 
-    public StandardDivinity(String name, String description) {
+    public StandardDivinity(String name, String heading, String description, int number) {
         this.name = name;
+        this.heading = heading;
         this.description = description;
+        this.number = number;
     }
 
     /**
@@ -81,24 +87,35 @@ public class StandardDivinity implements Divinity {
         return possibleActions;
     }
 
-    @Override
-    public void setupDivinity(List<Phase> possibleActions) {
-        return;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    public String getHeading() {
+        return heading;
+    }
+
+    public void setHeading(String heading) {
+        this.heading = heading;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 }

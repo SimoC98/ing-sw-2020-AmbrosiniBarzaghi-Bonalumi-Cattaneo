@@ -4,8 +4,8 @@ import it.polimi.ingsw.model.cards.Divinity;
 
 public class Player {
     private String username;
-    //private Color color;
-    private Divinity divinity;
+    private Color color;
+    //private Divinity divinity;
     private boolean isWinner;
     //private List<Phase> possibleActions;
 

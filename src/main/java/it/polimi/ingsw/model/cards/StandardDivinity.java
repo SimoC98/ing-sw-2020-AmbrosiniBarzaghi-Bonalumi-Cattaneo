@@ -16,7 +16,7 @@ public class StandardDivinity implements Divinity {
     }
 
     /**
-     * call the method on the worker passed as param
+     * call the method move on the worker passed as param
      * @param selectedWorker
      * @param selectedTile
      */
@@ -26,7 +26,7 @@ public class StandardDivinity implements Divinity {
     }
 
     /**
-     * call the method on the worker passed as param
+     * call the method build on the worker passed as param
      * @param selectedWorker
      * @param selectedTile
      */
@@ -36,7 +36,7 @@ public class StandardDivinity implements Divinity {
     }
 
     /**
-     * call the method on the worker passed as param
+     * call the method legalMove on the worker passed as param
      * @param selectedWorker
      * @param selectedTile
      * @return
@@ -47,7 +47,7 @@ public class StandardDivinity implements Divinity {
     }
 
     /**
-     * call the method on the worker passed as param
+     * call the method legalBuild on the worker passed as param
      * @param selectedWorker
      * @param selectedTile
      * @return

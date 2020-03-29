@@ -10,51 +10,54 @@ public class DivinityDecoratorWithEffects implements Divinity{
     /**
      * instance that has to be decorated
      */
-    private Divinity decoratedDivinity;
+    private Divinity divinity;
 
     public DivinityDecoratorWithEffects() {
-        decoratedDivinity = null;
+        divinity = null;
     }
 
     public DivinityDecoratorWithEffects(Divinity decoratedDivinity) {
-        this.decoratedDivinity = decoratedDivinity;
+        this.divinity = decoratedDivinity;
     }
 
     @Override
     public void move(Worker selectedWorker, Tile selectedTile) {
-        decoratedDivinity.move(selectedWorker,selectedTile);
+        divinity.move(selectedWorker,selectedTile);
     }
 
     @Override
     public void build(Worker selectedWorker, Tile selectedTile) {
-        decoratedDivinity.build(selectedWorker,selectedTile);
+        divinity.build(selectedWorker,selectedTile);
     }
 
     @Override
     public boolean legalMove(Worker selectedWorker, Tile selectedTile) {
-        return decoratedDivinity.legalMove(selectedWorker,selectedTile);
+        return divinity.legalMove(selectedWorker,selectedTile);
     }
 
     @Override
     public boolean legalBuild(Worker selectedWorker, Tile selectedTile) {
-        return decoratedDivinity.legalBuild(selectedWorker,selectedTile);
+        return divinity.legalBuild(selectedWorker,selectedTile);
     }
 
     @Override
     public List<Phase> updatePossibleActions(List<Phase> possibleActions) {
-        return decoratedDivinity.updatePossibleActions(possibleActions);
+        return divinity.updatePossibleActions(possibleActions);
+    }
+
+    @Override
+    public void setupDivinity(List<Phase> possibleActions) {
+        divinity.setupDivinity(possibleActions);
     }
 
     @Override
     public Divinity getDivinity() {
-        return this.decoratedDivinity;
+        return this.divinity;
     }
 
-    public Divinity getDecoratedDivinity(){
-        return this.decoratedDivinity;
-    }
 
-    public void setDecoratedDivinity(Divinity decoratedDivinity) {
-        this.decoratedDivinity = decoratedDivinity;
+
+    public void setDivinity(Divinity decoratedDivinity) {
+        this.divinity = decoratedDivinity;
     }
 }

@@ -13,4 +13,5 @@ public interface Divinity {
     public boolean legalBuild(Worker selectedWorker, Tile selectedTile);
     public Divinity getDivinity();
     public List<Phase> updatePossibleActions(List<Phase> possibleActions);
+    public void setupDivinity(List<Phase> possibleActions);
 }

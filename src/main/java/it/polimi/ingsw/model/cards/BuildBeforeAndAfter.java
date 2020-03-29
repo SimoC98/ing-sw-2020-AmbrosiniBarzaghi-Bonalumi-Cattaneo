@@ -1,7 +1,10 @@
 package it.polimi.ingsw.model.cards;
 
+import it.polimi.ingsw.model.Phase;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
+
+import java.util.List;
 
 public class BuildBeforeAndAfter extends DivinityDecoratorWithEffects {
     private boolean hasMoved;
@@ -27,5 +30,13 @@ public class BuildBeforeAndAfter extends DivinityDecoratorWithEffects {
             }
         }
         return super.legalMove(selectedWorker,selectedTile);
+    }
+
+    @Override
+    public void setupDivinity(List<Phase> possibleActions) {
+        hasMoved=false;
+        hasBuiltBefore = false;
+        possibleActions.add(Phase.BUILD);
+        super.setupDivinity(possibleActions);
     }
 }

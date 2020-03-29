@@ -81,6 +81,11 @@ public class StandardDivinity implements Divinity {
         return possibleActions;
     }
 
+    @Override
+    public void setupDivinity(List<Phase> possibleActions) {
+        return;
+    }
+
     public String getName() {
         return name;
     }

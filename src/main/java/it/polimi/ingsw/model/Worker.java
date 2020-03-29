@@ -20,11 +20,11 @@ public class Worker {
         positionOnBoard = t;
     }
 
-//    public void legalMove(Tile t){}
+   public boolean legalMove(Tile t){return true;}
 
-    //public void build (Tile t){}
+    public void build (Tile t){}
 
-//    public void legalBuild(Tile t){}
+    public boolean legalBuild(Tile t){return true;}
 
     public Tile getPositionOnBoard() {
         return this.positionOnBoard;

@@ -9,6 +9,10 @@ public class DivinityDecoratorWithEffects implements Divinity{
      */
     private Divinity decoratedDivinity;
 
+    public DivinityDecoratorWithEffects() {
+        decoratedDivinity = null;
+    }
+
     public DivinityDecoratorWithEffects(Divinity decoratedDivinity) {
         this.decoratedDivinity = decoratedDivinity;
     }

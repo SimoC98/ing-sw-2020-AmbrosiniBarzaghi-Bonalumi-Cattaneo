@@ -10,6 +10,11 @@ public class StandardDivinity implements Divinity {
     private final String name;
     private final String description;
 
+    public StandardDivinity(){
+        this.name = null;
+        this.description = null;
+    }
+
     public StandardDivinity(String name, String description) {
         this.name = name;
         this.description = description;

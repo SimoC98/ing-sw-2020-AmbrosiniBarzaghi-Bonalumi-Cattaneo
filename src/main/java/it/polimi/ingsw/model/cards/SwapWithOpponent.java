@@ -5,19 +5,21 @@ import it.polimi.ingsw.model.Worker;
 
 public class SwapWithOpponent extends MoveOnOpponent {
 
+    public SwapWithOpponent() {
+        super();
+    }
+
     public SwapWithOpponent(Divinity decoratedDivinity) {
         super(decoratedDivinity);
     }
 
     @Override
     public void move(Worker selectedWorker, Tile selectedTile) {
-        if(legalMove(selectedWorker, selectedTile)) {
-            if (selectedTile.getWorker() != null) {
-                selectedTile.getWorker().setPositionOnBoard(selectedWorker.getPositionOnBoard());
-                selectedWorker.move(selectedTile);
-            }else{
-                super.move(selectedWorker, selectedTile);
-            }
+        if (selectedTile.getWorker() != null) {
+            selectedTile.getWorker().setPositionOnBoard(selectedWorker.getPositionOnBoard());
+            selectedWorker.move(selectedTile);
+        }else{
+            super.move(selectedWorker, selectedTile);
         }
     }
 }

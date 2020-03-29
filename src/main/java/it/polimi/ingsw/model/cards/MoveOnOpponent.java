@@ -5,6 +5,10 @@ import it.polimi.ingsw.model.Worker;
 
 public class MoveOnOpponent extends DivinityDecoratorWithEffects{
 
+    public MoveOnOpponent() {
+        super();
+    }
+
     public MoveOnOpponent(Divinity decoratedDivinity) {
         super(decoratedDivinity);
     }

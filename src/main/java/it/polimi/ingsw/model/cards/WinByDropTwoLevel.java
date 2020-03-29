@@ -12,7 +12,7 @@ public class WinByDropTwoLevel extends DivinityDecoratorWithEffects {
     @Override
     public void move(Worker selectedWorker, Tile selectedTile) {
         if(isWinner(selectedWorker,selectedTile)==true) {
-            //TODO
+            selectedWorker.getPlayer().setWinner();
         }
         super.move(selectedWorker, selectedTile);
     }

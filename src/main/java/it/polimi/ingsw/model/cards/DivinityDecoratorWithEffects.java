@@ -4,12 +4,14 @@ import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
 
 public class DivinityDecoratorWithEffects implements Divinity{
+    /**
+     * instance that has to be decorated
+     */
     private Divinity decoratedDivinity;
 
     public DivinityDecoratorWithEffects(Divinity decoratedDivinity) {
         this.decoratedDivinity = decoratedDivinity;
     }
-
 
     @Override
     public void move(Worker selectedWorker, Tile selectedTile) {
@@ -35,6 +37,7 @@ public class DivinityDecoratorWithEffects implements Divinity{
     public boolean isWinner() {
         return decoratedDivinity.isWinner();
     } */
+
 
     @Override
     public Divinity getDivinity() {

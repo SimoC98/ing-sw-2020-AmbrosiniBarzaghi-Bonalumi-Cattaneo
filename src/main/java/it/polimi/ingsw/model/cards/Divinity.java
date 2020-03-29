@@ -8,7 +8,7 @@ public interface Divinity {
     public void build(Worker selectedWorker, Tile selectedTile);
     public boolean legalMove(Worker selectedWorker, Tile selectedTile);
     public boolean legalBuild(Worker selectedWorker, Tile selectedTile);
-    public boolean isWinner();
+    //public boolean isWinner(Worker workerToCheck, Tile t);
     public Divinity getDivinity();
     //public List<Phase> updatePossibleActions(List<Phase> possibleActions);
 }

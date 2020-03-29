@@ -31,10 +31,10 @@ public class DivinityDecoratorWithEffects implements Divinity{
         return decoratedDivinity.legalBuild(selectedWorker,selectedTile);
     }
 
-    @Override
+    /* @Override
     public boolean isWinner() {
         return decoratedDivinity.isWinner();
-    }
+    } */
 
     @Override
     public Divinity getDivinity() {

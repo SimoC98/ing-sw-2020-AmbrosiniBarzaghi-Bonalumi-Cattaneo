@@ -20,4 +20,8 @@ public class Tile {
         return this.y;
     }
 
+    public int getLevel() {
+        return this.level;
+    }
+
 }

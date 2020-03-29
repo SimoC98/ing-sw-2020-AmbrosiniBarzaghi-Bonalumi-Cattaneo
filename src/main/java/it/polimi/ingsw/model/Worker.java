@@ -18,4 +18,29 @@ public class Worker {
     public Tile getPositionOnBoard() {
         return this.positionOnBoard;
     }
+
+    public void move(Tile destinationMoveTile) {
+        //TODO
+    }
+
+    public void build(Tile destinationBuildTile) {
+        //TODO
+    }
+
+    public boolean legalMove(Tile destinationMoveTile) {
+        return true;
+        //TODO
+    }
+
+    public boolean legalBuild(Tile destinationBuildTile) {
+        return true;
+        //TODO
+    }
+
+    public boolean isWinner(Tile t) {
+        return true;
+        //TODO
+    }
+
+
 }

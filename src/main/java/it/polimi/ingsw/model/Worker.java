@@ -2,7 +2,7 @@ package it.polimi.ingsw.model;
 
 public class Worker {
     private Tile positionOnBoard;
-    //private static Player player;
+    private static Player player;
 
     public Worker() {
         this.positionOnBoard = null;
@@ -34,8 +34,11 @@ public class Worker {
         this.positionOnBoard = t;
     }
 
-//    public void getPlayer(){
-//    public void getPlayer(){
+    public Player getPlayer() {
+        return player;
+    }
+
+
 //        return player;
 //    }
 }

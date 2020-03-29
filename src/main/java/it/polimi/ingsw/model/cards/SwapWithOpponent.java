@@ -1,7 +1,10 @@
 package it.polimi.ingsw.model.cards;
 
+import it.polimi.ingsw.model.Phase;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
+
+import java.util.List;
 
 public class SwapWithOpponent extends MoveOnOpponent {
 
@@ -22,5 +25,35 @@ public class SwapWithOpponent extends MoveOnOpponent {
         }else{
             super.move(selectedWorker, selectedTile);
         }
+    }
+
+    @Override
+    public boolean legalMove(Worker selectedWorker, Tile selectedTile) {
+        return super.legalMove(selectedWorker, selectedTile);
+    }
+
+    @Override
+    public void build(Worker selectedWorker, Tile selectedTile) {
+        super.build(selectedWorker, selectedTile);
+    }
+
+    @Override
+    public boolean legalBuild(Worker selectedWorker, Tile selectedTile) {
+        return super.legalBuild(selectedWorker, selectedTile);
+    }
+
+    @Override
+    public List<Phase> updatePossibleActions(List<Phase> possibleActions) {
+        return super.updatePossibleActions(possibleActions);
+    }
+
+    @Override
+    public void setupDivinity(List<Phase> possibleActions) {
+        super.setupDivinity(possibleActions);
+    }
+
+    @Override
+    public Divinity getDivinity() {
+        return super.getDivinity();
     }
 }

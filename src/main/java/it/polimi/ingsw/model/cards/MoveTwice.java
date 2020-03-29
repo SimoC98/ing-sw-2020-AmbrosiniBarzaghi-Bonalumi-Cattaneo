@@ -6,6 +6,10 @@ import it.polimi.ingsw.model.Worker;
 
 import java.util.List;
 
+/**
+ * Decorator Pattern
+ * the Divinity decorated with this class is allowed to move 2 times
+ */
 public class MoveTwice extends DivinityDecoratorWithEffects {
     private Tile firstMovedTile;
     private int moveCount;
@@ -52,5 +56,15 @@ public class MoveTwice extends DivinityDecoratorWithEffects {
         return firstMovedTile;
     }
 
+    @Override
+    public List<Phase> updatePossibleActions(List<Phase> possibleActions) {
+        return super.updatePossibleActions(possibleActions);
+    }
 
+    @Override
+    public void setupDivinity(List<Phase> possibleActions) {
+        firstMovedTile = null;
+        moveCount = 0;
+        super.setupDivinity(possibleActions);
+    }
 }

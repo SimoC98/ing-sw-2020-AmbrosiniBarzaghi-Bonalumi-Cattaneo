@@ -1,8 +1,15 @@
 package it.polimi.ingsw.model.cards;
 
+import it.polimi.ingsw.model.Phase;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
 
+import java.util.List;
+
+/**
+ * Decorator Pattern
+ * the Divinity decorated with this class is allowed to build 2 times
+ */
 public class BuildTwice extends DivinityDecoratorWithEffects {
     private Tile firstBuildTile;
     private int buildCount;
@@ -47,5 +54,17 @@ public class BuildTwice extends DivinityDecoratorWithEffects {
 
     protected Tile getFirstBuildTile() {
         return firstBuildTile;
+    }
+
+    @Override
+    public void setupDivinity(List<Phase> possibleActions) {
+        firstBuildTile = null;
+        buildCount = 0;
+        super.setupDivinity(possibleActions);
+    }
+
+    @Override
+    public List<Phase> updatePossibleActions(List<Phase> possibleActions) {
+        return super.updatePossibleActions(possibleActions);
     }
 }

@@ -6,14 +6,20 @@ import it.polimi.ingsw.model.Worker;
 
 import java.util.List;
 
+
+/**
+ * Decorator Pattern
+ * implements Divinity interface and can be decorated with effects
+ */
 public class StandardDivinity implements Divinity {
     /**
-     * name and description of the divinity card
+     * features of the divinity card
      */
     private String name;
     private String heading;
     private String description;
     private int number;
+
 
     public StandardDivinity(){
         this.name = null;
@@ -87,6 +93,15 @@ public class StandardDivinity implements Divinity {
         return possibleActions;
     }
 
+    @Override
+    public void setupDivinity(List<Phase> possibleActions) {
+        return;
+    }
+
+    /**
+     * getter and setter for the card's features
+     * @return
+     */
     public String getName() {
         return name;
     }

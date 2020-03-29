@@ -6,6 +6,9 @@ import it.polimi.ingsw.model.Worker;
 
 import java.util.List;
 
+/**
+ * Decorator Pattern *
+ */
 public interface Divinity {
     public void move(Worker selectedWorker, Tile selectedTile) ;
     public void build(Worker selectedWorker, Tile selectedTile);

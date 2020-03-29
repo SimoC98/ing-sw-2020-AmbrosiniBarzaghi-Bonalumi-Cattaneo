@@ -30,4 +30,29 @@ public class MoveTwiceNotBack extends MoveTwice{
         }
         return super.updatePossibleActions(possibleActions);
     }
+
+    @Override
+    public void move(Worker selectedWorker, Tile selectedTile) {
+        super.move(selectedWorker, selectedTile);
+    }
+
+    @Override
+    public void build(Worker selectedWorker, Tile selectedTile) {
+        super.build(selectedWorker, selectedTile);
+    }
+
+    @Override
+    public boolean legalBuild(Worker selectedWorker, Tile selectedTile) {
+        return super.legalBuild(selectedWorker, selectedTile);
+    }
+
+    @Override
+    public Divinity getDivinity() {
+        return super.getDivinity();
+    }
+
+    @Override
+    public void setupDivinity(List<Phase> possibleActions) {
+        super.setupDivinity(possibleActions);
+    }
 }

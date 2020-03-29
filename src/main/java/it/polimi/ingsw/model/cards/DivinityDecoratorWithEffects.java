@@ -6,6 +6,10 @@ import it.polimi.ingsw.model.Worker;
 
 import java.util.List;
 
+/**
+ * Decorator Pattern
+ * implements Divinity interface and can be used to decorate an object with Divinity as static type
+ */
 public class DivinityDecoratorWithEffects implements Divinity{
     /**
      * instance that has to be decorated
@@ -16,9 +20,10 @@ public class DivinityDecoratorWithEffects implements Divinity{
         divinity = null;
     }
 
-    public DivinityDecoratorWithEffects(Divinity decoratedDivinity) {
-        this.divinity = decoratedDivinity;
+    public DivinityDecoratorWithEffects(Divinity divinity) {
+        this.divinity = divinity;
     }
+
 
     @Override
     public void move(Worker selectedWorker, Tile selectedTile) {

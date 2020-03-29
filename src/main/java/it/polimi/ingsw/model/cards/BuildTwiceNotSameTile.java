@@ -6,6 +6,10 @@ import it.polimi.ingsw.model.Worker;
 
 import java.util.List;
 
+/**
+ * Decorator Pattern
+ * the Divinity decorated with this class is allowed to build 2 times but on different tiles
+ */
 public class BuildTwiceNotSameTile extends BuildTwice {
 
     public BuildTwiceNotSameTile(Divinity decoratedDivinity) {
@@ -59,4 +63,11 @@ public class BuildTwiceNotSameTile extends BuildTwice {
         }
         return super.updatePossibleActions(possibleActions);
     }
+
+    @Override
+    public void setupDivinity(List<Phase> possibleActions) {
+        super.setupDivinity(possibleActions);
+    }
+
+
 }

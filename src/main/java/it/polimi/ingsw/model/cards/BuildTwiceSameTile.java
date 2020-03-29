@@ -6,6 +6,11 @@ import it.polimi.ingsw.model.Worker;
 
 import java.util.List;
 
+/**
+ * Decorator Pattern
+ * the Divinity decorated with this class is allowed to build 2 times on the same tile
+ * and only if the second built is not a dome
+ */
 public class BuildTwiceSameTile extends BuildTwice {
 
     public BuildTwiceSameTile(Divinity decoratedDivinity) {
@@ -64,4 +69,11 @@ public class BuildTwiceSameTile extends BuildTwice {
         }
         return super.updatePossibleActions(possibleActions);
     }
+
+    @Override
+    public void setupDivinity(List<Phase> possibleActions) {
+        super.setupDivinity(possibleActions);
+    }
+
+
 }

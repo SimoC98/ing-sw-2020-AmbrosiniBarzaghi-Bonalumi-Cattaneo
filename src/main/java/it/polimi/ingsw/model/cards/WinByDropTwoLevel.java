@@ -6,6 +6,11 @@ import it.polimi.ingsw.model.Worker;
 
 import java.util.List;
 
+/**
+ * Decorator Pattern
+ * the Divinity decorated with this class can also win by moving down
+ * 2 or more levels
+ */
 public class WinByDropTwoLevel extends AdditionalWinCondition {
 
     public WinByDropTwoLevel(Divinity decoratedDivinity) {

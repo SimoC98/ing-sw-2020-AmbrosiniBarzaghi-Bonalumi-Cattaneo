@@ -80,4 +80,12 @@ public class StandardDivinity implements Divinity {
     public List<Phase> updatePossibleActions(List<Phase> possibleActions) {
         return possibleActions;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }

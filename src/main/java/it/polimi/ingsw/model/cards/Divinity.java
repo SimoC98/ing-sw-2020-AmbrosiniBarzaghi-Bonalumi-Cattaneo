@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * Decorator Pattern *
+ * methods implemented by different Divinities
  */
 public interface Divinity {
     public void move(Worker selectedWorker, Tile selectedTile) ;

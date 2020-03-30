@@ -32,6 +32,9 @@ public class BuildBeforeAndAfter extends DivinityDecoratorWithEffects {
         return super.legalMove(selectedWorker,selectedTile);
     }
 
+    /**
+     * is added to the @param possibleActions BUILD: the current player can choose to build as first action
+     */
     @Override
     public void setupDivinity(List<Phase> possibleActions) {
         hasMoved=false;

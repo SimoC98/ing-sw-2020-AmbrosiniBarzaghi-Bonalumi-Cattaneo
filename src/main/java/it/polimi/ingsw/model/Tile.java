@@ -4,7 +4,7 @@ public class Tile {
     private final int x;
     private final int y;
     private int level;
-    private Boolean isDomed;
+    private Boolean isDome;
     private Boolean isOccupied;
     private Worker worker;
 
@@ -13,17 +13,23 @@ public class Tile {
         this.x = x;
         this.y = y;
         level = 0;
-        isDomed = false;
+        isDome = false;
         isOccupied = false;
         worker = null;
     }
 
+    /**
+     * places a dome if it reaches level 3
+     */
     public void increaseLevel()
     {
-        if(level < 3)
-            level++;
-        else if(level == 3)
-            setDomed();
+        if(isDome() || isOccupied) /*throw exception*/ return;
+        else {
+            if(level < 3)
+                level++;
+            else if(level == 3)
+                setDome();
+        }
     }
 
     public int getX() {
@@ -36,19 +42,31 @@ public class Tile {
 
     public int getLevel() { return level; }
 
-    public Boolean isDomed() { return isDomed; }
+    public Boolean isDome() { return isDome; }
 
     public Boolean isOccupied() { return isOccupied; }
 
+    /**
+     *
+     * @return the worker on this tile or null if is free
+     */
     public Worker getWorker() { return worker; }
 
-    public void setDomed() { isDomed = true; }
+    public void setDome() { isDome = true; }
 
-    public void occupy() { isOccupied = true; }
 
-    public void free() { isOccupied = false; }
+    public void free() {
+        isOccupied = false;
+        worker = null;
+    }
 
+    /**
+     *
+     * associate this tile to @param worker and set this tile as occupied
+     */
     public void setWorker(Worker worker) {
+        if(isOccupied || isDome) //throw exception
         this.worker = worker;
+        isOccupied = true;
     }
 }

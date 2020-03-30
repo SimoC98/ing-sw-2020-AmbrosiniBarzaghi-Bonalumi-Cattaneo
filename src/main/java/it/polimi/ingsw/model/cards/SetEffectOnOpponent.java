@@ -17,6 +17,12 @@ public class SetEffectOnOpponent extends DivinityDecoratorWithEffects {
         super(divinity);
     }
 
+    /**
+     * if the worker tries to go to a higher level tile, other player's divinities are decorated
+     * with a class that prevents them to go to a higher level tile
+     * @param selectedWorker
+     * @param selectedTile
+     */
     @Override
     public void move(Worker selectedWorker, Tile selectedTile) {
         if(selectedTile.getLevel()>selectedWorker.getPositionOnBoard().getLevel()) {
@@ -31,6 +37,11 @@ public class SetEffectOnOpponent extends DivinityDecoratorWithEffects {
         super.move(selectedWorker, selectedTile);
     }
 
+    /**
+     * if the previous turn a current player's worker has moved up, the last decoration of all other player's divinity
+     * has to be removed
+     * @param possibleActions
+     */
     @Override
     public void setupDivinity(List<Phase> possibleActions) {
         if(hasMovedUp==true) {

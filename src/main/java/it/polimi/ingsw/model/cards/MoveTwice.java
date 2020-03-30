@@ -18,11 +18,16 @@ public class MoveTwice extends DivinityDecoratorWithEffects {
         super(decoratedDivinity);
     }
 
+    /**
+     *saves the tile from which the move action starts
+     * @param selectedWorker
+     * @param selectedTile
+     */
     @Override
     public void move(Worker selectedWorker, Tile selectedTile) {
         if(moveCount==0) {
             moveCount++;
-            firstMovedTile = selectedTile;
+            firstMovedTile = selectedWorker.getPositionOnBoard();
         }
         super.move(selectedWorker,selectedTile);
     }
@@ -61,6 +66,10 @@ public class MoveTwice extends DivinityDecoratorWithEffects {
         return super.updatePossibleActions(possibleActions);
     }
 
+    /**
+     * initializes the attributes of the class
+     * @param possibleActions
+     */
     @Override
     public void setupDivinity(List<Phase> possibleActions) {
         firstMovedTile = null;

@@ -13,6 +13,11 @@ public class MoveTwiceNotBack extends MoveTwice{
         super(decoratedDivinity);
     }
 
+    /**
+     * @param selectedWorker
+     * @param selectedTile
+     * @return false if, during the second movement, the worker tries to move back to the tile where he started
+     */
     @Override
     public boolean legalMove(Worker selectedWorker, Tile selectedTile) {
         if(getMoveCount()>0) {

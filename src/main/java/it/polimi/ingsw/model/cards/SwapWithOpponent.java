@@ -19,8 +19,10 @@ public class SwapWithOpponent extends MoveOnOpponent {
     @Override
     public void move(Worker selectedWorker, Tile selectedTile) {
         if (selectedTile.getWorker() != null) {
+            selectedWorker.getPositionOnBoard().free();
             selectedWorker.getPositionOnBoard().setWorker(selectedTile.getWorker());
             selectedTile.getWorker().setPositionOnBoard(selectedWorker.getPositionOnBoard());
+            selectedTile.free();
             selectedWorker.move(selectedTile);
         }else{
             super.move(selectedWorker, selectedTile);

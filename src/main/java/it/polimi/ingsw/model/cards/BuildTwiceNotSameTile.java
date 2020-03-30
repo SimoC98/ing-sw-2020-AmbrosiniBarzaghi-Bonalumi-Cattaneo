@@ -56,10 +56,16 @@ public class BuildTwiceNotSameTile extends BuildTwice {
         return super.getFirstBuildTile();
     }
 
+    /**
+     *
+     * is added to @param possibleActions BUILD and END: the current player can choose to build 2 times;
+     * @return
+     */
     @Override
     public List<Phase> updatePossibleActions(List<Phase> possibleActions) {
-        if(getBuildCount()>0) {
+        if(getBuildCount()==1) {
             possibleActions.add(Phase.BUILD);
+            possibleActions.add(Phase.END);
         }
         return super.updatePossibleActions(possibleActions);
     }

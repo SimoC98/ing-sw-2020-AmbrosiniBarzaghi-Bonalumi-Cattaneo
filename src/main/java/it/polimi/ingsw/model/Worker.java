@@ -2,29 +2,37 @@ package it.polimi.ingsw.model;
 
 public class Worker {
     private Tile positionOnBoard;
-    private static Player player;
+    private final Player player;
 
     public Worker() {
         this.positionOnBoard = null;
-        //this.player = null;
+        this.player = null;
     }
 
-    public Worker(Tile initialPosition) {
+    public Worker(Tile initialPosition, Player player) {
         this.positionOnBoard = initialPosition;
-        //this.player = player;
+        this.player = player;
     }
 
     public void move(Tile t){
-        t.occupy();
+        positionOnBoard.free();
         t.setWorker(this);
         positionOnBoard = t;
     }
 
-   public boolean legalMove(Tile t){return true;}
+   public boolean legalMove(Tile t){
+        if(t.isDome() || t.isOccupied() || t.getLevel()-positionOnBoard.getLevel()>1) return false;
+        else return true;
+   }
 
-    public void build (Tile t){}
+    public void build (Tile t){
+        t.increaseLevel();
+    }
 
-    public boolean legalBuild(Tile t){return true;}
+    public boolean legalBuild(Tile t){
+        if(t.isDome() || t.isOccupied()) return false;
+        else return true;
+    }
 
     public Tile getPositionOnBoard() {
         return this.positionOnBoard;

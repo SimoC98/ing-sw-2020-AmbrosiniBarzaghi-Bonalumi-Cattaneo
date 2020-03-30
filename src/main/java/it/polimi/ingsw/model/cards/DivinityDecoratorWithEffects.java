@@ -9,6 +9,7 @@ import java.util.List;
 /**
  * Decorator Pattern
  * implements Divinity interface and can be used to decorate an object with Divinity as static type
+ * all the methods are called on the divinity set as attribute
  */
 public class DivinityDecoratorWithEffects implements Divinity{
     /**

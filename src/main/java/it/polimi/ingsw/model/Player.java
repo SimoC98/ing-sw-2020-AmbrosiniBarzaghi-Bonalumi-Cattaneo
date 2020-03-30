@@ -11,6 +11,11 @@ public class Player {
     private boolean isWinner;
     private List<Phase> possibleActions;
 
+    public Player(String username, Color color) {
+        this.username = username;
+        this.color = color;
+    }
+
     public void setWinner() {
         this.isWinner = true;
     }
@@ -26,4 +31,6 @@ public class Player {
     public Divinity getPlayerDivinity() {
         return divinity;
     }
+
+    
 }

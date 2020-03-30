@@ -62,9 +62,10 @@ public class BuildTwiceSameTile extends BuildTwice {
 
     @Override
     public List<Phase> updatePossibleActions(List<Phase> possibleActions) {
-        if(getBuildCount()>0) {
+        if(getBuildCount()==1) {
             if(getFirstBuildTile().getLevel()<=2) {
                 possibleActions.add(Phase.BUILD);
+                possibleActions.add(Phase.END);
             }
         }
         return super.updatePossibleActions(possibleActions);

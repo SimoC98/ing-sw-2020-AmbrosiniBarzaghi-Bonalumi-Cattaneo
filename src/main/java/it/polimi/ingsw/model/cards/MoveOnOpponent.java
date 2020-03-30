@@ -18,6 +18,11 @@ public class MoveOnOpponent extends DivinityDecoratorWithEffects{
         super.move(selectedWorker, selectedTile);
     }
 
+    /**
+     * @param selectedWorker
+     * @param selectedTile
+     * @return true even if the selected tile is occupied by another worker
+     */
     @Override
     public boolean legalMove(Worker selectedWorker, Tile selectedTile) {
         boolean stdLegalMoveReturn = super.legalMove(selectedWorker, selectedTile);

@@ -28,7 +28,7 @@ public class StandardDivinity implements Divinity {
         this.number = 0;
     }
 
-    public StandardDivinity(String name, String heading, String description, int number) {
+    public StandardDivinity(String name, String description) {
         this.name = name;
         this.heading = heading;
         this.description = description;

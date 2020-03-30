@@ -14,4 +14,16 @@ public class Player {
     public void setWinner() {
         this.isWinner = true;
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setDivinity(Divinity newDivinity) {
+        divinity = newDivinity;
+    }
+
+    public Divinity getPlayerDivinity() {
+        return divinity;
+    }
 }

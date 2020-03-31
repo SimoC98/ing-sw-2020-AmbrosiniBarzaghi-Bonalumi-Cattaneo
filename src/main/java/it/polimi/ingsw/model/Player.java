@@ -20,6 +20,10 @@ public class Player {
         this.isWinner = true;
     }
 
+    public boolean isWinner() {
+        return isWinner;
+    }
+
     public String getUsername() {
         return username;
     }

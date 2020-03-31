@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 
+import it.polimi.ingsw.model.exceptions.InvalidBuildException;
 import it.polimi.ingsw.model.exceptions.InvalidMoveException;
 
 public class Worker {
@@ -37,8 +38,11 @@ public class Worker {
         else return true;
    }
 
-    public void build (Tile t){
-         t.increaseLevel();
+    public void build (Tile t) throws InvalidBuildException {
+        if(!legalBuild(t)) {
+            throw new InvalidBuildException();
+        }
+        t.increaseLevel();
     }
 
     public boolean legalBuild(Tile t){
@@ -56,9 +60,9 @@ public class Worker {
 
     public Player getPlayer() {
         return player;
-    }{
-
     }
+
+
 
     public boolean isWinner(Tile t) {
         if(positionOnBoard.getLevel()==2 && t.getLevel()==3) {

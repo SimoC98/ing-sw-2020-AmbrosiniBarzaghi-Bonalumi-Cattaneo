@@ -21,9 +21,8 @@ public class Tile {
     /**
      * places a dome if it reaches level 3
      */
-    public void increaseLevel()
-    {
-        if(isDome() || isOccupied) /*throw exception*/ return;
+    public void increaseLevel() {
+        if(isDome() || isOccupied) return;
         else {
             if(level < 3)
                 level++;
@@ -62,10 +61,10 @@ public class Tile {
 
     /**
      *
-     * associate this tile to @param worker and set this tile as occupied
+     * associate @param worker to this tile and set this tile as occupied
+     *
      */
     public void setWorker(Worker worker) {
-        if(isOccupied || isDome) //throw exception
         this.worker = worker;
         isOccupied = true;
     }

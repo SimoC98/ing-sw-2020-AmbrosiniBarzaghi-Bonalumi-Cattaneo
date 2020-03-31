@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.cards;
 import it.polimi.ingsw.model.Phase;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.exceptions.InvalidMoveException;
 
 import java.util.List;
 
@@ -23,7 +24,11 @@ public class SwapWithOpponent extends MoveOnOpponent {
             selectedWorker.getPositionOnBoard().setWorker(selectedTile.getWorker());
             selectedTile.getWorker().setPositionOnBoard(selectedWorker.getPositionOnBoard());
             selectedTile.free();
-            selectedWorker.move(selectedTile);
+            try {
+                selectedWorker.move(selectedTile);
+            } catch (InvalidMoveException e) {
+                e.printStackTrace();
+            }
         }else{
             super.move(selectedWorker, selectedTile);
         }

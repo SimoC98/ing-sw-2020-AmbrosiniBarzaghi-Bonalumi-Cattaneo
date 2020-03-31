@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model;
 
+
+import it.polimi.ingsw.model.exceptions.InvalidMoveException;
+
 public class Worker {
     private Tile positionOnBoard;
     private final Player player;
@@ -14,9 +17,18 @@ public class Worker {
         this.player = player;
     }
 
-    public void move(Tile t){
+    public void move(Tile t) throws InvalidMoveException {
+        if(!legalMove(t)) {
+            throw new InvalidMoveException();
+        }
+
+        if(isWinner(t)) {
+            player.setWinner();
+        }
         positionOnBoard.free();
+
         t.setWorker(this);
+
         positionOnBoard = t;
     }
 
@@ -26,7 +38,7 @@ public class Worker {
    }
 
     public void build (Tile t){
-        t.increaseLevel();
+         t.increaseLevel();
     }
 
     public boolean legalBuild(Tile t){
@@ -44,6 +56,15 @@ public class Worker {
 
     public Player getPlayer() {
         return player;
+    }{
+
+    }
+
+    public boolean isWinner(Tile t) {
+        if(positionOnBoard.getLevel()==2 && t.getLevel()==3) {
+            return true;
+        }
+        else return false;
     }
 
 

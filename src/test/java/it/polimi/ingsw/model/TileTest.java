@@ -1,11 +1,16 @@
 package it.polimi.ingsw.model;
 
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class TileTest {
+
+    @Test
+    public void test() {
+        assert(true);
+    }
+
 
     @Test
     public void increaseLevelTest() {
@@ -14,11 +19,11 @@ class TileTest {
         for(int i=0; i<3; i++) {
             assertEquals(i,tileTest.getLevel());
             tileTest.increaseLevel();
-            assertFalse(tileTest.isDome());
         }
         tileTest.increaseLevel();
         assertEquals(3,tileTest.getLevel());
         assert(tileTest.isDome());
+
         tileTest.increaseLevel();
         assertEquals(3,tileTest.getLevel());
         assert(tileTest.isDome());
@@ -26,14 +31,14 @@ class TileTest {
 
    @Test
    public void occupiedTileTest() {
-        Tile tileTest = new Tile(5,5);
+        final Tile tileTest = new Tile(5,5);
         assertNull(tileTest.getWorker());
 
-        Worker workerTest = new Worker();
-        tileTest.setWorker(workerTest);
-        assertNotNull(tileTest.getWorker());
+        Worker workerTest1 = new Worker();
+       tileTest.setWorker(workerTest1);
+       assertNotNull(tileTest.getWorker());
         assert(tileTest.isOccupied());
-        assertEquals(workerTest,tileTest.getWorker());
+        assertEquals(workerTest1,tileTest.getWorker());
 
         tileTest.free();
         assertNull(tileTest.getWorker());

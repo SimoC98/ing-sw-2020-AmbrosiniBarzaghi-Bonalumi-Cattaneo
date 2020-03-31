@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.cards;
 import it.polimi.ingsw.model.Phase;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.exceptions.InvalidMoveException;
 
 import java.util.List;
 
@@ -42,7 +43,11 @@ public class StandardDivinity implements Divinity {
      */
     @Override
     public void move(Worker selectedWorker, Tile selectedTile) {
-        selectedWorker.move(selectedTile);
+        try {
+            selectedWorker.move(selectedTile);
+        } catch (InvalidMoveException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

@@ -2,15 +2,17 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.exceptions.InvalidBuildException;
 import it.polimi.ingsw.model.exceptions.InvalidMoveException;
+import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class WorkerTest {
+    private Worker workerTest;
+    private Tile positionOnBoard;
 
 
-
-    @Test
+     @Test
     public void moveTest() {
         Worker workerTest = new Worker();
         Tile tileTest1 = new Tile(5,5);

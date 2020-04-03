@@ -6,12 +6,17 @@ import java.util.List;
 public class Match {
     private ArrayList<Player> players;
     private Player currentPlayer;
+    private Board board;
 
     public ArrayList<Player> getPlayers() {
         return new ArrayList<Player>(players);
     }
 
-    public String getCurrentPlayerUsername() {
-        return currentPlayer.getUsername();
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public Board getBoard() {
+        return board;
     }
 }

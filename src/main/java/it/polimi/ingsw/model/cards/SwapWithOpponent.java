@@ -17,18 +17,19 @@ public class SwapWithOpponent extends MoveOnOpponent {
         super(decoratedDivinity);
     }
 
+    /**
+     * if the Tile selected is occupied by another player's Worker, the two Workers can be swapped
+     * @param selectedWorker
+     * @param selectedTile
+     */
     @Override
     public void move(Worker selectedWorker, Tile selectedTile) {
         if (selectedTile.getWorker() != null) {
-            selectedWorker.getPositionOnBoard().free();
             selectedWorker.getPositionOnBoard().setWorker(selectedTile.getWorker());
             selectedTile.getWorker().setPositionOnBoard(selectedWorker.getPositionOnBoard());
-            selectedTile.free();
-            try {
-                selectedWorker.move(selectedTile);
-            } catch (InvalidMoveException e) {
-                e.printStackTrace();
-            }
+            selectedWorker.setPositionOnBoard(selectedTile);
+            selectedTile.setWorker(selectedWorker);
+            return;
         }else{
             super.move(selectedWorker, selectedTile);
         }

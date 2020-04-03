@@ -36,5 +36,11 @@ public class Player {
         return divinity;
     }
 
+
+
+
+    
+
+
     
 }

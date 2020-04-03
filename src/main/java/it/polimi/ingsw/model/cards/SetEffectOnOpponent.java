@@ -47,7 +47,7 @@ public class SetEffectOnOpponent extends DivinityDecoratorWithEffects {
         if(hasMovedUp==true) {
             ArrayList<Player> players =  Game.getMatch().getPlayers();
             for(Player p:players) {
-                if(!p.getUsername().equals(Game.getMatch().getCurrentPlayerUsername())) {
+                if(!p.equals(Game.getMatch().getCurrentPlayer())) {
                     p.setDivinity(p.getPlayerDivinity().getDivinity());
                 }
             }

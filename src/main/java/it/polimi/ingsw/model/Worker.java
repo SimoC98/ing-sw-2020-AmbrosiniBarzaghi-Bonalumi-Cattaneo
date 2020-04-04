@@ -15,6 +15,7 @@ public class Worker {
 
     public Worker(Tile initialPosition, Player player) {
         this.positionOnBoard = initialPosition;
+        positionOnBoard.setWorker(this);
         this.player = player;
     }
 
@@ -34,8 +35,9 @@ public class Worker {
     }
 
    public boolean legalMove(Tile t){
-        if(t.isDome() || t.isOccupied() || t.getLevel()-positionOnBoard.getLevel()>1) return false;
-        else return true;
+        if(t.isDome() || t.isOccupied() || t.getLevel()-positionOnBoard.getLevel()>1 || t == this.positionOnBoard) return false;
+        if(!Game.getMatch().getBoard().getAdjacentTiles(positionOnBoard).contains(t)) return false;
+        return true;
    }
 
     public void build (Tile t) throws InvalidBuildException {

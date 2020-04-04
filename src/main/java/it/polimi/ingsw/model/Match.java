@@ -8,6 +8,10 @@ public class Match {
     private Player currentPlayer;
     private Board board;
 
+    public Match(Board board) {
+        this.board = board;
+    }
+
     public ArrayList<Player> getPlayers() {
         return new ArrayList<Player>(players);
     }

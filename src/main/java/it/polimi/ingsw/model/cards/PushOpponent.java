@@ -10,6 +10,10 @@ import it.polimi.ingsw.model.Worker;
  */
 public class PushOpponent extends MoveOnOpponent {
 
+    public PushOpponent(Divinity decoratedDivinity) {
+        super(decoratedDivinity);
+    }
+
     @Override
     public boolean legalMove(Worker selectedWorker, Tile selectedTile) {
         boolean moveOnOpponent = super.legalMove(selectedWorker,selectedTile);
@@ -18,7 +22,7 @@ public class PushOpponent extends MoveOnOpponent {
 
         if(moveOnOpponent) {
             if(selectedTile.isOccupied()) {
-                if(selectedTile.getX()+dx>5 || selectedTile.getX()+dx<0 || selectedTile.getY()+dy>5 || selectedTile.getY()+dy<0 || Game.getMatch().getBoard().getTile(selectedTile.getX()+dx,selectedTile.getY()+dy).isOccupied()) {
+                if(selectedTile.getX()+dx>4 || selectedTile.getX()+dx<0 || selectedTile.getY()+dy>4 || selectedTile.getY()+dy<0 || Game.getMatch().getBoard().getTile(selectedTile.getX()+dx,selectedTile.getY()+dy).isOccupied()) {
                     return false;
                 }
                 else {

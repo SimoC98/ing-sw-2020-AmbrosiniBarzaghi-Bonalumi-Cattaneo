@@ -27,6 +27,7 @@ public class SwapWithOpponent extends MoveOnOpponent {
         if (selectedTile.getWorker() != null) {
             Worker opponentWorker = selectedTile.getWorker();
             Tile myActualTile = selectedWorker.getPositionOnBoard();
+            selectedTile.free();
             try {
                 selectedWorker.move(selectedTile);
             } catch (InvalidMoveException e) {

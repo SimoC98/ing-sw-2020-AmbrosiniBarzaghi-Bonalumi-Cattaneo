@@ -20,13 +20,12 @@ public class WinByDropTwoLevel extends AdditionalWinCondition {
     @Override
     protected boolean isWinner(Worker selectedWorker, Tile selectedTile) {
         int levelDifference = selectedWorker.getPositionOnBoard().getLevel() - selectedTile.getLevel();
-        if(levelDifference>=2) return true;
-        else return false;
+        return levelDifference >= 2;
     }
 
     @Override
     public void move(Worker selectedWorker, Tile selectedTile) {
-        if(isWinner(selectedWorker,selectedTile)==true) {
+        if(isWinner(selectedWorker, selectedTile)) {
             selectedWorker.getPlayer().setWinner();
         }
         super.move(selectedWorker, selectedTile);

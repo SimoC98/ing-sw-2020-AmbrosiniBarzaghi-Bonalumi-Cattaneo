@@ -36,7 +36,7 @@ public class Worker {
 
    public boolean legalMove(Tile t){
         if(t.isDome() || t.isOccupied() || t.getLevel()-positionOnBoard.getLevel()>1 || t == this.positionOnBoard) return false;
-        if(!Game.getMatch().getBoard().getAdjacentTiles(positionOnBoard).contains(t)) return false;
+        //if(!Game.getMatch().getBoard().getAdjacentTiles(positionOnBoard).contains(t)) return false;
         return true;
    }
 

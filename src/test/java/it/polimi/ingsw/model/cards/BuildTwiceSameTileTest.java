@@ -6,12 +6,13 @@ import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.Worker;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class BuildTwiceNotSameTileTest {
+class BuildTwiceSameTileTest {
 
     private static Tile tile1;
     private static Tile tile2;
@@ -20,41 +21,44 @@ class BuildTwiceNotSameTileTest {
     private static Worker worker;
     private static List<Phase> actions;
 
-    @BeforeAll
-    static void setup(){
+    @BeforeEach
+      void setup(){
         tile1 = new Tile(1,1);
         tile2 = new Tile(2,2);
         tile3 = new Tile(3,3);
-        div = new BuildTwiceNotSameTile(new StandardDivinity());
+        div = new BuildTwiceSameTile(new StandardDivinity());
         actions = new ArrayList<>();
     }
 
-    @AfterEach
-    void tearDown() {
-        tile1.free();
-        tile2.free();
-        tile3.free();
-    }
-
     @Test
-    public void buildTwiceNotSameTileTest(){
-        worker = new Worker(tile1, new Player("jack", Color.BLUE) );
+    public void buildTwiceSameTileTest(){
+        worker = new Worker(tile1, new Player("anakin", Color.BLUE) );
         div.setupDivinity(actions);
         div.move(worker,tile2);
         div.build(worker,tile1);
         assert(div.getBuildCount()==1);
         assertEquals(div.getFirstBuildTile(), tile1);
-        assertFalse(div.legalBuild(worker, tile1));
-        assertTrue(div.legalBuild(worker, tile3));
+        assertFalse(div.legalBuild(worker, tile3));
+        assertTrue(div.legalBuild(worker, tile1));
     }
 
     @Test
     public void listControlTest(){
-        worker = new Worker(tile1, new Player("jack", Color.BLUE) );
+        worker = new Worker(tile1, new Player("anakin", Color.BLUE) );
         div.setupDivinity(actions);
         div.build(worker,tile2);
         div.updatePossibleActions(actions);
         assert(actions.size()==2);
         assertTrue(actions.contains(Phase.BUILD) && actions.contains(Phase.END));
+    }
+
+    @Test
+    public void buildNoDomesTest(){
+        worker = new Worker(tile1, new Player("anakin", Color.BLUE) );
+        tile2.increaseLevel();
+        tile2.increaseLevel();
+        div.build(worker,tile2);
+        div.updatePossibleActions(actions);
+        assertEquals(actions.size(),0);
     }
 }

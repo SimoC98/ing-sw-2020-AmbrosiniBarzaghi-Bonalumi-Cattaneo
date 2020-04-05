@@ -27,7 +27,7 @@ public class BuildTwice extends DivinityDecoratorWithEffects {
     public void build(Worker selectedWorker, Tile selectedTile) {
         if(buildCount==0) {
             buildCount++;
-            firstBuildTile = selectedWorker.getPositionOnBoard();
+            firstBuildTile = selectedTile;
         }
         super.build(selectedWorker,selectedTile);
     }

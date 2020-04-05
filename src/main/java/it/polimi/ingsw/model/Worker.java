@@ -35,8 +35,7 @@ public class Worker {
     }
 
    public boolean legalMove(Tile t){
-        if(t.isDome() || t.isOccupied() || t.getLevel()-positionOnBoard.getLevel()>1 || t == this.positionOnBoard) return false;
-        //if(!Game.getMatch().getBoard().getAdjacentTiles(positionOnBoard).contains(t)) return false;
+        if(t.isDome() || t.isOccupied() || t.getLevel()-positionOnBoard.getLevel()>1 || t == this.positionOnBoard || !positionOnBoard.isAdjacent(t.getX(), t.getY())) return false;
         return true;
    }
 
@@ -48,7 +47,7 @@ public class Worker {
     }
 
     public boolean legalBuild(Tile t){
-        if(t.isDome() || t.isOccupied()) return false;
+        if(t.isDome() || t.isOccupied() || !positionOnBoard.isAdjacent(t.getX(),t.getY())) return false;
         else return true;
     }
 
@@ -74,5 +73,5 @@ public class Worker {
     }
 
 
-
 }
+

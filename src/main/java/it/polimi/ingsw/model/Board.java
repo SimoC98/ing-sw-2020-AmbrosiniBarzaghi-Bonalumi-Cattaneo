@@ -27,9 +27,9 @@ public class Board {
         ArrayList<Tile> list = new ArrayList<Tile>();
         int x = t.getX();
         int y = t.getY();
-        for (int dx = (x > 0 ? -1 : 0) ; dx <= (x < 5 ? 1 : 0); ++dx)
+        for (int dx = (x > 0 ? -1 : 0) ; dx <= (x < 4 ? 1 : 0); ++dx)
         {
-            for (int dy = (y > 0 ? -1 : 0); dy <= (y < 5 ? 1 : 0); ++dy)
+            for (int dy = (y > 0 ? -1 : 0); dy <= (y < 4 ? 1 : 0); ++dy)
             {
                 if (dx != 0 || dy != 0)
                 {

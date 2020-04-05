@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+
 public class Tile {
     private final int x;
     private final int y;
@@ -68,4 +69,9 @@ public class Tile {
         this.worker = worker;
         isOccupied = true;
     }
+
+    public boolean isAdjacent(int tx, int ty){
+        return (Math.abs(tx-x)<=1) && (Math.abs(ty-y)<=1);
+    }
+
 }

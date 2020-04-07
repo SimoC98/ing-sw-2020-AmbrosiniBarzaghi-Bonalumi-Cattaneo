@@ -26,6 +26,7 @@ public class SetEffectOnOpponent extends DivinityDecoratorWithEffects {
     @Override
     public void move(Worker selectedWorker, Tile selectedTile) {
         if(selectedTile.getLevel()>selectedWorker.getPositionOnBoard().getLevel()) {
+            hasMovedUp = true;
             playerUsername = selectedWorker.getPlayer().getUsername();
             ArrayList<Player> players =  Game.getMatch().getPlayers();
             for(Player p:players) {
@@ -55,5 +56,9 @@ public class SetEffectOnOpponent extends DivinityDecoratorWithEffects {
 
         hasMovedUp = false;
         super.setupDivinity(possibleActions);
+    }
+
+    public boolean isHasMovedUp() {
+        return hasMovedUp;
     }
 }

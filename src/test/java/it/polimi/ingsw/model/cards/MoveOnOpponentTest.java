@@ -10,6 +10,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MoveOnOpponentTest {
 
+
+
     @Test
     public void moveOnMyOtherWorker(){
         Player p = new Player("Giova", Color.CREAM);

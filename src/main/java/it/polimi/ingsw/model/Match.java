@@ -12,6 +12,17 @@ public class Match {
         this.board = board;
     }
 
+    public Match(Board board, List<String> users, List<Color> colors) {
+        this.board = board;
+        players = new ArrayList<>();
+        for(int i=0; i<users.size();i++) {
+            Player newPlayer = new Player(users.get(i),colors.get(i));
+            players.add(newPlayer);
+        }
+    }
+
+
+
     public ArrayList<Player> getPlayers() {
         return new ArrayList<Player>(players);
     }

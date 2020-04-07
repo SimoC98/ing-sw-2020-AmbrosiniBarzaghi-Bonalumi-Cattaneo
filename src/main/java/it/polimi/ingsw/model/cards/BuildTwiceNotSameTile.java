@@ -1,10 +1,11 @@
 package it.polimi.ingsw.model.cards;
 
-import it.polimi.ingsw.model.Phase;
+import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Decorator Pattern
@@ -62,16 +63,16 @@ public class BuildTwiceNotSameTile extends BuildTwice {
      * @return
      */
     @Override
-    public List<Phase> updatePossibleActions(List<Phase> possibleActions) {
+    public Set<Action> updatePossibleActions(Set<Action> possibleActions) {
         if(getBuildCount()==1) {
-            possibleActions.add(Phase.BUILD);
-            possibleActions.add(Phase.END);
+            possibleActions.add(Action.BUILD);
+            possibleActions.add(Action.END);
         }
         return super.updatePossibleActions(possibleActions);
     }
 
     @Override
-    public void setupDivinity(List<Phase> possibleActions) {
+    public void setupDivinity(Set<Action> possibleActions) {
         super.setupDivinity(possibleActions);
     }
 

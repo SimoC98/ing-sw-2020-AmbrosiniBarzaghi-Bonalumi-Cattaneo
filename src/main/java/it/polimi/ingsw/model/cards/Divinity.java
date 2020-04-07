@@ -1,10 +1,11 @@
 package it.polimi.ingsw.model.cards;
 
-import it.polimi.ingsw.model.Phase;
+import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
 
 import java.util.List;
+import java.util.Set;
 
 /**
         * Decorator Pattern *
@@ -16,6 +17,6 @@ public interface Divinity {
     public boolean legalMove(Worker selectedWorker, Tile selectedTile);
     public boolean legalBuild(Worker selectedWorker, Tile selectedTile);
     public Divinity getDivinity();
-    public List<Phase> updatePossibleActions(List<Phase> possibleActions);
-    public void setupDivinity(List<Phase> possibleActions);
+    public Set<Action> updatePossibleActions(Set<Action> possibleActions);
+    public void setupDivinity(Set<Action> possibleActions);
 }

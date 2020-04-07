@@ -9,7 +9,9 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 class BuildTwiceNotSameTileTest {
 
@@ -18,7 +20,7 @@ class BuildTwiceNotSameTileTest {
     private static Tile tile3;
     private static BuildTwice div;
     private static Worker worker;
-    private static List<Phase> actions;
+    private static Set<Action> actions;
 
     @BeforeAll
     static void setup(){
@@ -26,7 +28,7 @@ class BuildTwiceNotSameTileTest {
         tile2 = new Tile(2,2);
         tile3 = new Tile(3,3);
         div = new BuildTwiceNotSameTile(new StandardDivinity());
-        actions = new ArrayList<>();
+        actions = new HashSet<>();
     }
 
     @AfterEach
@@ -55,6 +57,6 @@ class BuildTwiceNotSameTileTest {
         div.build(worker,tile2);
         div.updatePossibleActions(actions);
         assert(actions.size()==2);
-        assertTrue(actions.contains(Phase.BUILD) && actions.contains(Phase.END));
+        assertTrue(actions.contains(Action.BUILD) && actions.contains(Action.END));
     }
 }

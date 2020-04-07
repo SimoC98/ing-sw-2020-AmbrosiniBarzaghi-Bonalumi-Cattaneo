@@ -1,10 +1,11 @@
 package it.polimi.ingsw.model.cards;
 
-import it.polimi.ingsw.model.Phase;
+import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
 
 import java.util.List;
+import java.util.Set;
 
 public class BuildBeforeAndAfter extends DivinityDecoratorWithEffects {
     private boolean hasMoved;
@@ -36,10 +37,10 @@ public class BuildBeforeAndAfter extends DivinityDecoratorWithEffects {
      * is added to the @param possibleActions BUILD: the current player can choose to build as first action
      */
     @Override
-    public void setupDivinity(List<Phase> possibleActions) {
+    public void setupDivinity(Set<Action> possibleActions) {
         hasMoved=false;
         hasBuiltBefore = false;
-        possibleActions.add(Phase.BUILD);
+        possibleActions.add(Action.BUILD);
         super.setupDivinity(possibleActions);
     }
 }

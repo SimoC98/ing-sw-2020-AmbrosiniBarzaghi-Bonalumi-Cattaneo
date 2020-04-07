@@ -7,6 +7,11 @@ public class Match {
     private ArrayList<Player> players;
     private Player currentPlayer;
     private Board board;
+    private Action userAction;  //soluzione momentanea
+
+    public Match() {
+
+    }
 
     public Match(Board board) {
         this.board = board;
@@ -33,5 +38,13 @@ public class Match {
 
     public Board getBoard() {
         return board;
+    }
+
+    public Action getUserAction() {
+        return userAction;
+    }
+
+    public void setUserAction(Action userAction) {
+        this.userAction = userAction;
     }
 }

@@ -1,10 +1,12 @@
 package it.polimi.ingsw.model.cards;
 
-import it.polimi.ingsw.model.Phase;
+import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Decorator Pattern
@@ -47,12 +49,12 @@ public class DivinityDecoratorWithEffects implements Divinity{
     }
 
     @Override
-    public List<Phase> updatePossibleActions(List<Phase> possibleActions) {
+    public Set<Action> updatePossibleActions(Set<Action> possibleActions) {
         return divinity.updatePossibleActions(possibleActions);
     }
 
     @Override
-    public void setupDivinity(List<Phase> possibleActions) {
+    public void setupDivinity(Set<Action> possibleActions) {
         divinity.setupDivinity(possibleActions);
     }
 

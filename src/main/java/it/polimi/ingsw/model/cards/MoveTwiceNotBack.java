@@ -1,11 +1,12 @@
 package it.polimi.ingsw.model.cards;
 
 
-import it.polimi.ingsw.model.Phase;
+import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
 
 import java.util.List;
+import java.util.Set;
 
 public class MoveTwiceNotBack extends MoveTwice{
 
@@ -29,9 +30,9 @@ public class MoveTwiceNotBack extends MoveTwice{
     }
 
     @Override
-    public List<Phase> updatePossibleActions(List<Phase> possibleActions) {
+    public Set<Action> updatePossibleActions(Set<Action> possibleActions) {
         if(getMoveCount() == 1) {
-            possibleActions.add(Phase.MOVE);
+            possibleActions.add(Action.MOVE);
         }
         return super.updatePossibleActions(possibleActions);
     }
@@ -57,7 +58,7 @@ public class MoveTwiceNotBack extends MoveTwice{
     }
 
     @Override
-    public void setupDivinity(List<Phase> possibleActions) {
+    public void setupDivinity(Set<Action> possibleActions) {
         super.setupDivinity(possibleActions);
     }
 }

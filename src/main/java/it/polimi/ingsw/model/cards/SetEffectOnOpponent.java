@@ -4,6 +4,7 @@ import it.polimi.ingsw.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class SetEffectOnOpponent extends DivinityDecoratorWithEffects {
     private boolean hasMovedUp;
@@ -44,7 +45,7 @@ public class SetEffectOnOpponent extends DivinityDecoratorWithEffects {
      * @param possibleActions
      */
     @Override
-    public void setupDivinity(List<Phase> possibleActions) {
+    public void setupDivinity(Set<Action> possibleActions) {
         if(hasMovedUp==true) {
             ArrayList<Player> players =  Game.getMatch().getPlayers();
             for(Player p:players) {

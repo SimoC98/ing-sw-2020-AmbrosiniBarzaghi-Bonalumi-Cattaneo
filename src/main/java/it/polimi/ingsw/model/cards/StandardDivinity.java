@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model.cards;
 
-import it.polimi.ingsw.model.Phase;
+import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.model.exceptions.InvalidBuildException;
@@ -99,12 +99,12 @@ public class StandardDivinity implements Divinity {
     }
 
     @Override
-    public List<Phase> updatePossibleActions(List<Phase> possibleActions) {
+    public List<Action> updatePossibleActions(List<Action> possibleActions) {
         return possibleActions;
     }
 
     @Override
-    public void setupDivinity(List<Phase> possibleActions) {
+    public void setupDivinity(List<Action> possibleActions) {
         return;
     }
 

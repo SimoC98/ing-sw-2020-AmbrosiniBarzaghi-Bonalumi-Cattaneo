@@ -30,7 +30,7 @@ public class PushOpponent extends MoveOnOpponent {
                 }
             }
             else {
-                return moveOnOpponent;
+                return true;
             }
         }
         else {

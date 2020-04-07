@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-public enum Phase {
+public enum Action {
 
     BUILD,
     MOVE,

@@ -1,10 +1,11 @@
 package it.polimi.ingsw.model.cards;
 
-import it.polimi.ingsw.model.Phase;
+import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Decorator Pattern
@@ -57,14 +58,14 @@ public class BuildTwice extends DivinityDecoratorWithEffects {
     }
 
     @Override
-    public void setupDivinity(List<Phase> possibleActions) {
+    public void setupDivinity(Set<Action> possibleActions) {
         firstBuildTile = null;
         buildCount = 0;
         super.setupDivinity(possibleActions);
     }
 
     @Override
-    public List<Phase> updatePossibleActions(List<Phase> possibleActions) {
+    public Set<Action> updatePossibleActions(Set<Action> possibleActions) {
         return super.updatePossibleActions(possibleActions);
     }
 }

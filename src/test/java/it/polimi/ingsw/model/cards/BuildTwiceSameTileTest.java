@@ -4,13 +4,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.Worker;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 class BuildTwiceSameTileTest {
 
@@ -19,7 +19,7 @@ class BuildTwiceSameTileTest {
     private static Tile tile3;
     private static BuildTwice div;
     private static Worker worker;
-    private static List<Phase> actions;
+    private static Set<Action> actions;
 
     @BeforeEach
       void setup(){
@@ -27,7 +27,7 @@ class BuildTwiceSameTileTest {
         tile2 = new Tile(2,2);
         tile3 = new Tile(3,3);
         div = new BuildTwiceSameTile(new StandardDivinity());
-        actions = new ArrayList<>();
+        actions = new HashSet<>();
     }
 
     @Test
@@ -49,7 +49,7 @@ class BuildTwiceSameTileTest {
         div.build(worker,tile2);
         div.updatePossibleActions(actions);
         assert(actions.size()==2);
-        assertTrue(actions.contains(Phase.BUILD) && actions.contains(Phase.END));
+        assertTrue(actions.contains(Action.BUILD) && actions.contains(Action.END));
     }
 
     @Test

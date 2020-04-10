@@ -58,5 +58,7 @@ class MoveTwiceNotBackTest {
         div.updatePossibleActions(actions);
         assert(actions.size()==1);
         assertTrue(actions.contains(Action.MOVE));
+
+
     }
 }

@@ -14,6 +14,7 @@ import java.util.Set;
 public class MoveTwice extends DivinityDecoratorWithEffects {
     private Tile firstMovedTile;
     private int moveCount;
+    private boolean hasBuilt;
 
     public MoveTwice(Divinity decoratedDivinity) {
         super(decoratedDivinity);
@@ -35,6 +36,7 @@ public class MoveTwice extends DivinityDecoratorWithEffects {
 
     @Override
     public void build(Worker selectedWorker, Tile selectedTile) {
+        hasBuilt = true;
         super.build(selectedWorker, selectedTile);
     }
 
@@ -62,6 +64,10 @@ public class MoveTwice extends DivinityDecoratorWithEffects {
         return firstMovedTile;
     }
 
+    protected boolean isHasBuilt() {
+        return hasBuilt;
+    }
+
     @Override
     public Set<Action> updatePossibleActions(Set<Action> possibleActions) {
         return super.updatePossibleActions(possibleActions);
@@ -75,6 +81,7 @@ public class MoveTwice extends DivinityDecoratorWithEffects {
     public void setupDivinity(Set<Action> possibleActions) {
         firstMovedTile = null;
         moveCount = 0;
+        hasBuilt=false;
         super.setupDivinity(possibleActions);
     }
 }

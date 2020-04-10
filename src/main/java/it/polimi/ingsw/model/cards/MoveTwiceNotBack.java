@@ -31,7 +31,7 @@ public class MoveTwiceNotBack extends MoveTwice{
 
     @Override
     public Set<Action> updatePossibleActions(Set<Action> possibleActions) {
-        if(getMoveCount() == 1) {
+        if(getMoveCount() == 1 && !isHasBuilt()) {
             possibleActions.add(Action.MOVE);
         }
         return super.updatePossibleActions(possibleActions);

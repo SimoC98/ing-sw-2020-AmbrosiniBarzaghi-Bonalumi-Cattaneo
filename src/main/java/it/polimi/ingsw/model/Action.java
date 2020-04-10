@@ -5,7 +5,8 @@ public enum Action {
     BUILD,
     MOVE,
     BUILDDOME,
-    END
+    END;
+
 
 
 }

@@ -63,8 +63,6 @@ public class DivinityDecoratorWithEffects implements Divinity{
         return this.divinity;
     }
 
-
-
     public void setDivinity(Divinity decoratedDivinity) {
         this.divinity = decoratedDivinity;
     }

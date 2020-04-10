@@ -50,9 +50,9 @@ public class Player {
 
     public boolean move(Worker selectedWorker, Tile selectedTile) {
         if(divinity.legalMove(selectedWorker,selectedTile)) {
+            possibleActions.clear();
             divinity.move(selectedWorker,selectedTile);
-            //
-            //
+            possibleActions.add(Action.BUILD);
             divinity.updatePossibleActions(possibleActions);
             return true;
         }

@@ -7,6 +7,7 @@ import it.polimi.ingsw.model.exceptions.InvalidBuildException;
 import it.polimi.ingsw.model.exceptions.InvalidMoveException;
 
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -99,12 +100,12 @@ public class StandardDivinity implements Divinity {
     }
 
     @Override
-    public List<Action> updatePossibleActions(List<Action> possibleActions) {
+    public Set<Action> updatePossibleActions(Set<Action> possibleActions) {
         return possibleActions;
     }
 
     @Override
-    public void setupDivinity(List<Action> possibleActions) {
+    public void setupDivinity(Set<Action> possibleActions) {
         return;
     }
 

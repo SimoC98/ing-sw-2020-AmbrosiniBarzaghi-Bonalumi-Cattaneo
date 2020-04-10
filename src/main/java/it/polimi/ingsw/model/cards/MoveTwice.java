@@ -27,9 +27,9 @@ public class MoveTwice extends DivinityDecoratorWithEffects {
     @Override
     public void move(Worker selectedWorker, Tile selectedTile) {
         if(moveCount==0) {
-            moveCount++;
             firstMovedTile = selectedWorker.getPositionOnBoard();
         }
+        moveCount++;
         super.move(selectedWorker,selectedTile);
     }
 

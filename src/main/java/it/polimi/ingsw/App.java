@@ -40,7 +40,6 @@ public class App
 
         try{
             FileInputStream fis = new FileInputStream(new File("src/main/java/it/polimi/ingsw/divinitiesxml/" + divinityName + ".xml"));
-//            FileInputStream fis = new FileInputStream(new File("src/main/java/it/polimi/ingsw/divinitiesxml/Apollo.xml"));
             XMLDecoder decoder = new XMLDecoder(fis);
 
             Divinity div = (DivinityDecoratorWithEffects) decoder.readObject();

@@ -72,12 +72,11 @@ class WorkerTest {
     @Test
     public void winCondition() {
         Tile tileTest1 = new Tile(5,5);
+
+        tileTest1.increaseLevel();
+        tileTest1.increaseLevel();
+
         Worker workerTest = new Worker(tileTest1,new Player("username",Color.CREAM));
-
-        tileTest1.increaseLevel();
-        tileTest1.increaseLevel();
-        tileTest1.setWorker(workerTest);
-
 
         Tile tileTest2 = new Tile(5,4);
         tileTest2.increaseLevel();

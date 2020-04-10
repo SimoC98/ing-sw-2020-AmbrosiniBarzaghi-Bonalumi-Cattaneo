@@ -18,25 +18,42 @@ import java.io.IOException;
  */
 public class App 
 {
+
     public static void main( String[] args )
     {
-//        StandardDivinity divinity = new StandardDivinity("Artemis", "Goddess of the Hunt", "Your Move: " +
-//                "Your Worker may move one additional time, but not back to its initial space.", 3);
-//        DivinityDecoratorWithEffects decDiv = new SwapWithOpponent(divinity);
-//
-//        try{
-//            FileOutputStream fos = new FileOutputStream(new File("src/main/java/it/polimi/ingsw/divinitiesxml/Artemis.xml"));
-//            XMLEncoder encoder = new XMLEncoder(fos);
-//            encoder.writeObject(decDiv);
-//            encoder.close();
-//            fos.close();
-//        }
-//        catch(IOException ex){
-//            ex.printStackTrace();
-//        }
+        String name, description, heading;
 
+        int number = 3;
+        name = "";
+        heading = "";
+        description = "";
 
-        String divinityName = "Artemis";
+        StandardDivinity stdDiv = new StandardDivinity(name, heading, description, number);
+        DivinityDecoratorWithEffects decDiv = new SwapWithOpponent(stdDiv);
+
+//        encoder(decDiv, name);
+        decoder(name);
+    }
+
+    public static void encoder(DivinityDecoratorWithEffects divinity, String name){
+        System.out.println("ENCODING...\n");
+        System.out.println("\t\t\t" + name + ".xml");
+        try{
+            FileOutputStream fos = new FileOutputStream(new File("src/main/java/it/polimi/ingsw/divinitiesxml/" + name + ".xml"));
+            XMLEncoder encoder = new XMLEncoder(fos);
+            encoder.writeObject(divinity);
+            encoder.close();
+            fos.close();
+        }
+        catch(IOException ex){
+            ex.printStackTrace();
+        }
+
+        System.out.println("\nDONE.\n");
+    }
+
+    public static void decoder(String divinityName){
+        System.out.println("DECODING...\n");
 
         try{
             FileInputStream fis = new FileInputStream(new File("src/main/java/it/polimi/ingsw/divinitiesxml/" + divinityName + ".xml"));
@@ -47,11 +64,16 @@ public class App
             decoder.close();
             fis.close();
 
-            System.out.println(stddiv.getName());
-            System.out.println(stddiv.getDescription());
+            //tests printing name and description
+            System.out.println("NAME:\t" + stddiv.getName());
+            System.out.println("DESCRIPTION:\t" + stddiv.getDescription());
+            System.out.println("HEADING:\t" + stddiv.getHeading());
+            System.out.println("NUMBER:\t" + stddiv.getNumber());
         }
         catch(IOException ex){
             ex.printStackTrace();
         }
+
+        System.out.println("\nDONE.\n");
     }
 }

@@ -4,13 +4,13 @@
   <void property="divinity">
    <object class="it.polimi.ingsw.model.cards.StandardDivinity">
     <void property="description">
-     <string>Your Move: Your Worker may move one additional time, but not back to its initial space.</string>
+     <string>Opponent’s Turn: If one of your Workers moved up on your last turn, opponent Workers cannot move up this turn.</string>
     </void>
     <void property="heading">
-     <string>Goddess of the Hunt</string>
+     <string>Goddess of Wisdom</string>
     </void>
     <void property="name">
-     <string>Artemis</string>
+     <string>Athena</string>
     </void>
     <void property="number">
      <int>3</int>

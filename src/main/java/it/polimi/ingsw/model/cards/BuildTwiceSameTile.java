@@ -14,6 +14,8 @@ import java.util.Set;
  */
 public class BuildTwiceSameTile extends BuildTwice {
 
+    public BuildTwiceSameTile() { super(); }
+
     public BuildTwiceSameTile(Divinity decoratedDivinity) {
         super(decoratedDivinity);
     }

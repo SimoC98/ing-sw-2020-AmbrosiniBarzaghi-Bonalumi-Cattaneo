@@ -10,6 +10,8 @@ import it.polimi.ingsw.model.Worker;
  */
 public class PushOpponent extends MoveOnOpponent {
 
+    public PushOpponent() { super(); }
+
     public PushOpponent(Divinity decoratedDivinity) {
         super(decoratedDivinity);
     }

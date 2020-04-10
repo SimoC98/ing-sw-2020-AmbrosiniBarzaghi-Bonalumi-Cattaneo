@@ -11,6 +11,8 @@ public class BuildBeforeAndAfter extends DivinityDecoratorWithEffects {
     private boolean hasMoved;
     private boolean hasBuiltBefore;
 
+    public BuildBeforeAndAfter() { super(); }
+
     public BuildBeforeAndAfter(Divinity decoratedDivinity) {
         super(decoratedDivinity);
     }

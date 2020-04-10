@@ -10,6 +10,8 @@ import java.util.Set;
 public class BuildDomeEverywhere extends DivinityDecoratorWithEffects {
     private boolean hasBuilt;
 
+    public BuildDomeEverywhere() { super(); }
+
     public BuildDomeEverywhere(Divinity divinity) {
         super(divinity);
     }

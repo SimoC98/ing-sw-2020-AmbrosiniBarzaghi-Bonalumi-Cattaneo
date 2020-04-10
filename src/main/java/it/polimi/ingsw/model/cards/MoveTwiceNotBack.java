@@ -10,6 +10,8 @@ import java.util.Set;
 
 public class MoveTwiceNotBack extends MoveTwice{
 
+    public MoveTwiceNotBack() { super(); }
+
     public MoveTwiceNotBack(Divinity decoratedDivinity) {
         super(decoratedDivinity);
     }

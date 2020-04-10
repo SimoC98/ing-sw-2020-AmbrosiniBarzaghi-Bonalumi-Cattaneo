@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <java version="13.0.2" class="java.beans.XMLDecoder">
- <object class="it.polimi.ingsw.model.cards.BlockLevelUp">
+ <object class="it.polimi.ingsw.model.cards.BuildDomeEverywhere">
   <void property="divinity">
    <object class="it.polimi.ingsw.model.cards.StandardDivinity">
     <void property="description">
-     <string>Opponent’s Turn: If one of your Workers moved up on your last turn, opponent Workers cannot move up this turn.</string>
+     <string>Your Build: Your Worker may build a dome at any level.</string>
     </void>
     <void property="heading">
-     <string>Goddess of Wisdom</string>
+     <string>Titan Shouldering the Heavens</string>
     </void>
     <void property="name">
-     <string>Athena</string>
+     <string>Atlas</string>
     </void>
     <void property="number">
-     <int>3</int>
+     <int>4</int>
     </void>
    </object>
   </void>

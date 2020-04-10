@@ -5,6 +5,8 @@ import it.polimi.ingsw.model.Worker;
 
 public class BlockLevelUp extends DivinityDecoratorWithEffects {
 
+    public BlockLevelUp() { super(); }
+
     public BlockLevelUp(Divinity divinity) {
         super(divinity);
     }

@@ -16,6 +16,8 @@ public class MoveTwice extends DivinityDecoratorWithEffects {
     private int moveCount;
     private boolean hasBuilt;
 
+    public MoveTwice() { super(); }
+
     public MoveTwice(Divinity decoratedDivinity) {
         super(decoratedDivinity);
     }

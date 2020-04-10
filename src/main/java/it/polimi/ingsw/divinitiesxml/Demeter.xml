@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <java version="13.0.2" class="java.beans.XMLDecoder">
- <object class="it.polimi.ingsw.model.cards.BlockLevelUp">
+ <object class="it.polimi.ingsw.model.cards.BuildTwiceNotSameTile">
   <void property="divinity">
    <object class="it.polimi.ingsw.model.cards.StandardDivinity">
     <void property="description">
-     <string>Opponent’s Turn: If one of your Workers moved up on your last turn, opponent Workers cannot move up this turn.</string>
+     <string>Your Build: Your Worker may build one additional time, but not on the same space.</string>
     </void>
     <void property="heading">
-     <string>Goddess of Wisdom</string>
+     <string>Goddess of the Harvest</string>
     </void>
     <void property="name">
-     <string>Athena</string>
+     <string>Demeter</string>
     </void>
     <void property="number">
-     <int>3</int>
+     <int>5</int>
     </void>
    </object>
   </void>

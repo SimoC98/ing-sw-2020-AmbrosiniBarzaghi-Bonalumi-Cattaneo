@@ -5,6 +5,8 @@ import it.polimi.ingsw.model.Worker;
 
 public abstract class AdditionalWinCondition extends DivinityDecoratorWithEffects {
 
+    public AdditionalWinCondition() { super(); }
+
     public AdditionalWinCondition(Divinity decoratedDivinity) {
         super(decoratedDivinity);
     }

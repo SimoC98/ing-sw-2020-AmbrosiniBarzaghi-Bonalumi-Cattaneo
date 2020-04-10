@@ -13,6 +13,8 @@ import java.util.Set;
  */
 public class BuildTwiceNotSameTile extends BuildTwice {
 
+    public BuildTwiceNotSameTile() { super(); }
+
     public BuildTwiceNotSameTile(Divinity decoratedDivinity) {
         super(decoratedDivinity);
     }

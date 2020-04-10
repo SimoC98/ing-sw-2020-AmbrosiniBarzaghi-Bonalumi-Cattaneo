@@ -15,6 +15,8 @@ public class BuildTwice extends DivinityDecoratorWithEffects {
     private Tile firstBuildTile;
     private int buildCount;
 
+    public BuildTwice() { super(); }
+
     public BuildTwice(Divinity decoratedDivinity) {
         super(decoratedDivinity);
     }

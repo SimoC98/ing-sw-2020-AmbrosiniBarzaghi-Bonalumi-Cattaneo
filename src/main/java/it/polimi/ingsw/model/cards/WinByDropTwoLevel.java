@@ -10,6 +10,8 @@ import it.polimi.ingsw.model.Worker;
  */
 public class WinByDropTwoLevel extends AdditionalWinCondition {
 
+    public WinByDropTwoLevel() { super(); }
+
     public WinByDropTwoLevel(Divinity decoratedDivinity) {
         super(decoratedDivinity);
     }

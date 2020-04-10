@@ -1,9 +1,6 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.model.cards.Divinity;
-import it.polimi.ingsw.model.cards.DivinityDecoratorWithEffects;
-import it.polimi.ingsw.model.cards.StandardDivinity;
-import it.polimi.ingsw.model.cards.SwapWithOpponent;
+import it.polimi.ingsw.model.cards.*;
 
 import java.beans.XMLDecoder;
 import java.io.File;
@@ -23,21 +20,23 @@ public class App
     {
         String name, description, heading;
 
-        int number = 3;
-        name = "";
-        heading = "";
-        description = "";
+        int number = 10; //MODIFY!
+        name = "Prometheus";   //MODIFY!
+        heading = "Titan Benefactor of Mankind";    //MODIFY!
+        description = "Your Turn: If your Worker does " +
+                "not move up, it may build both " +
+                "before and after moving.";   //MODIFY!
 
         StandardDivinity stdDiv = new StandardDivinity(name, heading, description, number);
-        DivinityDecoratorWithEffects decDiv = new SwapWithOpponent(stdDiv);
+        DivinityDecoratorWithEffects decDiv = new BuildBeforeAndAfter(stdDiv); //MODIFY!
 
-//        encoder(decDiv, name);
+        encoder(decDiv, name);
         decoder(name);
     }
 
     public static void encoder(DivinityDecoratorWithEffects divinity, String name){
-        System.out.println("ENCODING...\n");
-        System.out.println("\t\t\t" + name + ".xml");
+        System.out.println("ENCODING...");
+        System.out.println("FILE:\t\"" + name + ".xml\"");
         try{
             FileOutputStream fos = new FileOutputStream(new File("src/main/java/it/polimi/ingsw/divinitiesxml/" + name + ".xml"));
             XMLEncoder encoder = new XMLEncoder(fos);
@@ -65,10 +64,10 @@ public class App
             fis.close();
 
             //tests printing name and description
-            System.out.println("NAME:\t" + stddiv.getName());
-            System.out.println("DESCRIPTION:\t" + stddiv.getDescription());
-            System.out.println("HEADING:\t" + stddiv.getHeading());
-            System.out.println("NUMBER:\t" + stddiv.getNumber());
+            System.out.println("NAME:\t_" + stddiv.getName());
+            System.out.println("DESCRIPTION:\t_" + stddiv.getDescription());
+            System.out.println("HEADING:\t_" + stddiv.getHeading());
+            System.out.println("NUMBER:\t_" + stddiv.getNumber());
         }
         catch(IOException ex){
             ex.printStackTrace();

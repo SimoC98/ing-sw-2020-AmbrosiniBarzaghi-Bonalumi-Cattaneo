@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <java version="13.0.2" class="java.beans.XMLDecoder">
  <object class="it.polimi.ingsw.model.cards.SwapWithOpponent">
-  <void property="decoratedDivinity">
+  <void property="divinity">
    <object class="it.polimi.ingsw.model.cards.StandardDivinity">
     <void property="description">
      <string>Your Move: Your Worker may move into an opponent Worker’s space by forcing their Worker to the space yours just vacated.</string>

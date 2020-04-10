@@ -20,37 +20,39 @@ public class App
 {
     public static void main( String[] args )
     {
-        StandardDivinity divinity = new StandardDivinity("Athena", "Goddess of Wisdom", "Opponent’s Turn: If one of your " +
-                "Workers moved up on your last " +
-                "turn, opponent Workers cannot " +
-                "move up this turn.", 3);
-        DivinityDecoratorWithEffects apollo = new SwapWithOpponent(divinity);
-
-        try{
-            FileOutputStream fos = new FileOutputStream(new File("src/main/java/it/polimi/ingsw/divinitiesxml/Athena.xml"));
-            XMLEncoder encoder = new XMLEncoder(fos);
-            encoder.writeObject(apollo);
-            encoder.close();
-            fos.close();
-        }
-        catch(IOException ex){
-            ex.printStackTrace();
-        }
-
+//        StandardDivinity divinity = new StandardDivinity("Artemis", "Goddess of the Hunt", "Your Move: " +
+//                "Your Worker may move one additional time, but not back to its initial space.", 3);
+//        DivinityDecoratorWithEffects decDiv = new SwapWithOpponent(divinity);
+//
 //        try{
-//            FileInputStream fis = new FileInputStream(new File("src/main/java/it/polimi/ingsw/divinitiesxml/Apollo.xml"));
-//            XMLDecoder decoder = new XMLDecoder(fis);
-//
-//            Divinity div = (DivinityDecoratorWithEffects) decoder.readObject();
-//            StandardDivinity stddiv = (StandardDivinity) div.getDivinity();
-//            decoder.close();
-//            fis.close();
-//
-//            System.out.println(stddiv.getName());
-////            System.out.println(div.getDescription());
+//            FileOutputStream fos = new FileOutputStream(new File("src/main/java/it/polimi/ingsw/divinitiesxml/Artemis.xml"));
+//            XMLEncoder encoder = new XMLEncoder(fos);
+//            encoder.writeObject(decDiv);
+//            encoder.close();
+//            fos.close();
 //        }
 //        catch(IOException ex){
 //            ex.printStackTrace();
 //        }
+
+
+        String divinityName = "Artemis";
+
+        try{
+            FileInputStream fis = new FileInputStream(new File("src/main/java/it/polimi/ingsw/divinitiesxml/" + divinityName + ".xml"));
+//            FileInputStream fis = new FileInputStream(new File("src/main/java/it/polimi/ingsw/divinitiesxml/Apollo.xml"));
+            XMLDecoder decoder = new XMLDecoder(fis);
+
+            Divinity div = (DivinityDecoratorWithEffects) decoder.readObject();
+            StandardDivinity stddiv = (StandardDivinity) div.getDivinity();
+            decoder.close();
+            fis.close();
+
+            System.out.println(stddiv.getName());
+            System.out.println(stddiv.getDescription());
+        }
+        catch(IOException ex){
+            ex.printStackTrace();
+        }
     }
 }

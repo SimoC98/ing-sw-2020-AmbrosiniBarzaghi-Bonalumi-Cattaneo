@@ -47,12 +47,12 @@ class SetEffectOnOpponentTest {
         div1.move(w1,match.getBoard().getTile(0,1));        //worker with athena moves up
 
 
-        assertFalse(match.getPlayers().get(1).getPlayerDivinity().legalMove(w2,match.getBoard().getTile(4,3)));     //opponent can't move up
-        assert(match.getPlayers().get(1).getPlayerDivinity().legalMove(w2,match.getBoard().getTile(3,4)));          //opponent can stay on his level
+        assertFalse(match.getPlayers().get(1).getDivinity().legalMove(w2,match.getBoard().getTile(4,3)));     //opponent can't move up
+        assert(match.getPlayers().get(1).getDivinity().legalMove(w2,match.getBoard().getTile(3,4)));          //opponent can stay on his level
 
 
         div1.setupDivinity(new HashSet<>());
-        assertTrue(match.getPlayers().get(1).getPlayerDivinity().legalMove(w2,match.getBoard().getTile(3,4)));      //dopo setup può muoversi su liv più alto
+        assertTrue(match.getPlayers().get(1).getDivinity().legalMove(w2,match.getBoard().getTile(3,4)));      //dopo setup può muoversi su liv più alto
 
     }
 }

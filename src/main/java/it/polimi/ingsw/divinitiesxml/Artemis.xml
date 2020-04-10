@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <java version="13.0.2" class="java.beans.XMLDecoder">
- <object class="it.polimi.ingsw.model.cards.MoveTwiceNotBack">
-  <void property="decoratedDivinity">
+ <object class="it.polimi.ingsw.model.cards.SwapWithOpponent">
+  <void property="divinity">
    <object class="it.polimi.ingsw.model.cards.StandardDivinity">
     <void property="description">
      <string>Your Move: Your Worker may move one additional time, but not back to its initial space.</string>
@@ -13,7 +13,7 @@
      <string>Artemis</string>
     </void>
     <void property="number">
-     <int>2</int>
+     <int>3</int>
     </void>
    </object>
   </void>

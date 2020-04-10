@@ -12,7 +12,8 @@ public class Player {
     private Color color;
     private Divinity divinity;
     private boolean isWinner;
-    private Set<Action> possibleActions;
+    private Set<Action> possibleActions;    //empty list => end of turn
+    //other idea:
     private List<Worker> workers;
 
     public Player(String username, Color color) {
@@ -44,9 +45,15 @@ public class Player {
         divinity = newDivinity;
     }
 
-    public Divinity getPlayerDivinity() {
+    public Divinity getDivinity() {
         return divinity;
     }
+
+    public List<Worker> getWorkers() { return new ArrayList<>(workers); }
+
+    public Set<Action> getPossibleActions() { return new HashSet<Action>(possibleActions); }
+
+    public Color getColor() { return color; }
 
     public boolean move(Worker selectedWorker, Tile selectedTile) {
         if(divinity.legalMove(selectedWorker,selectedTile)) {
@@ -61,6 +68,7 @@ public class Player {
 
     public boolean build(Worker selectedWorker, Tile selectedTile) {
         if(divinity.legalBuild(selectedWorker,selectedTile)) {
+            possibleActions.clear();
             divinity.build(selectedWorker,selectedTile);
             divinity.updatePossibleActions(possibleActions);
             return true;
@@ -68,6 +76,9 @@ public class Player {
         else return false;
     }
 
+    public void startOfTurn(){
+        possibleActions.add(Action.MOVE);
+        divinity.setupDivinity(possibleActions);
 
-    
+    }
 }

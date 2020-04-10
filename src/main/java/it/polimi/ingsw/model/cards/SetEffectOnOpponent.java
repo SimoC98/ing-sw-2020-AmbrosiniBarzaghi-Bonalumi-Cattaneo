@@ -3,7 +3,6 @@ package it.polimi.ingsw.model.cards;
 import it.polimi.ingsw.model.*;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 public class SetEffectOnOpponent extends DivinityDecoratorWithEffects {
@@ -32,7 +31,7 @@ public class SetEffectOnOpponent extends DivinityDecoratorWithEffects {
             ArrayList<Player> players =  Game.getMatch().getPlayers();
             for(Player p:players) {
                 if(!p.getUsername().equals(playerUsername)) {
-                    p.setDivinity(new BlockLevelUp(p.getPlayerDivinity().getDivinity()));
+                    p.setDivinity(new BlockLevelUp(p.getDivinity().getDivinity()));
                 }
             }
         }
@@ -50,7 +49,7 @@ public class SetEffectOnOpponent extends DivinityDecoratorWithEffects {
             ArrayList<Player> players =  Game.getMatch().getPlayers();
             for(Player p:players) {
                 if(!p.equals(Game.getMatch().getCurrentPlayer())) {
-                    p.setDivinity(p.getPlayerDivinity().getDivinity());
+                    p.setDivinity(p.getDivinity().getDivinity());
                 }
             }
         }

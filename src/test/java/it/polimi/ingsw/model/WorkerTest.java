@@ -72,7 +72,6 @@ class WorkerTest {
     @Test
     public void winCondition() {
         Tile tileTest1 = new Tile(5,5);
-
         tileTest1.increaseLevel();
         tileTest1.increaseLevel();
 

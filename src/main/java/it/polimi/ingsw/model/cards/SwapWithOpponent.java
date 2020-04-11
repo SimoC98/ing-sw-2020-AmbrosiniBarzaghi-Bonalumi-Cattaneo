@@ -50,28 +50,5 @@ public class SwapWithOpponent extends MoveOnOpponent {
         return super.legalMove(selectedWorker, selectedTile);
     }
 
-    @Override
-    public void build(Worker selectedWorker, Tile selectedTile) {
-        super.build(selectedWorker, selectedTile);
-    }
 
-    @Override
-    public boolean legalBuild(Worker selectedWorker, Tile selectedTile) {
-        return super.legalBuild(selectedWorker, selectedTile);
-    }
-
-    @Override
-    public Set<Action> updatePossibleActions(Set<Action> possibleActions) {
-        return super.updatePossibleActions(possibleActions);
-    }
-
-    @Override
-    public void setupDivinity(Set<Action> possibleActions) {
-        super.setupDivinity(possibleActions);
-    }
-
-    @Override
-    public Divinity getDivinity() {
-        return super.getDivinity();
-    }
 }

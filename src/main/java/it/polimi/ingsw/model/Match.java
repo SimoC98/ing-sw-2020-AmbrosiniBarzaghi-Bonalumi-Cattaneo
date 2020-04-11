@@ -9,9 +9,7 @@ public class Match {
     private Board board;
     private Action userAction;  //soluzione momentanea
 
-    public Match() {
-
-    }
+    public Match() {  }
 
     public Match(Board board) {
         this.board = board;

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.cards.BuildBeforeAndAfter;
+import it.polimi.ingsw.model.cards.Divinity;
 import it.polimi.ingsw.model.cards.MoveTwiceNotBack;
 import it.polimi.ingsw.model.cards.StandardDivinity;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,9 +17,6 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-//        t1 = new Tile(1, 1);
-//        t2 = new Tile(1, 2);
-
         b = new Board();
         p = new Player("Gigetto", Color.CREAM);
         p.setDivinity(new StandardDivinity());
@@ -101,5 +100,28 @@ class PlayerTest {
         boolean success = p.build(w, t2);
 
         assertTrue(success);
+    }
+
+    @Test
+    public void test() {
+        Divinity d = new BuildBeforeAndAfter(new StandardDivinity());
+        p.setDivinity(d);
+
+        Tile t1 = b.getTile(1, 1);
+        Tile t2 = b.getTile(1, 2);
+
+        p.addWorker(t1);
+        w = p.getWorkers().get(0);
+
+        p.startOfTurn();
+
+        assert(p.getPossibleActions().size()==2);
+        assert(p.getPossibleActions().contains(Action.BUILD));
+        assert(p.getPossibleActions().contains(Action.MOVE));
+
+        boolean res = p.build(w,t2);
+        assert(res);
+        assert(p.getPossibleActions().size()==1 && p.getPossibleActions().contains(Action.MOVE));
+
     }
 }

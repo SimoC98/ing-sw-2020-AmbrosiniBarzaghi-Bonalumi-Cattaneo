@@ -77,6 +77,7 @@ public class Player {
     }
 
     public void startOfTurn(){
+        possibleActions.clear();
         possibleActions.add(Action.MOVE);
         divinity.setupDivinity(possibleActions);
 

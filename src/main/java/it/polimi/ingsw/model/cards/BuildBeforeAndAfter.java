@@ -20,9 +20,15 @@ public class BuildBeforeAndAfter extends DivinityDecoratorWithEffects {
     @Override
     public void build(Worker selectedWorker, Tile selectedTile) {
         if(hasMoved==false) {
-            hasMoved=true;
+            hasBuiltBefore=true;
         }
         super.build(selectedWorker,selectedTile);
+    }
+
+    @Override
+    public void move(Worker selectedWorker, Tile selectedTile) {
+        hasMoved = true;
+        super.move(selectedWorker, selectedTile);
     }
 
     @Override
@@ -33,6 +39,14 @@ public class BuildBeforeAndAfter extends DivinityDecoratorWithEffects {
             }
         }
         return super.legalMove(selectedWorker,selectedTile);
+    }
+
+    @Override
+    public Set<Action> updatePossibleActions(Set<Action> possibleActions) {
+        if(hasBuiltBefore && !hasMoved) {
+            possibleActions.add(Action.MOVE);
+        }
+        return super.updatePossibleActions(possibleActions);
     }
 
     /**

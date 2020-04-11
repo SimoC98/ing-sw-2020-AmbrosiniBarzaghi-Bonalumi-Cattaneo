@@ -17,7 +17,9 @@ public class Board {
     }
 
     public Tile getTile(int x, int y){
-        return board[x][y];
+        if(x>=0 && y>= 0 && x<5 && y<5)
+            return board[x][y];
+        return null;
     }
 
         /**Code similar to the one from https://stackoverflow.com/questions/2035522/get-adjacent-elements-in-a-two-dimensional-array
@@ -38,5 +40,11 @@ public class Board {
             }
         }
         return list;
+    }
+
+    public void removePlayerWorkers(Player player){
+     for(Worker w : player.getWorkers()){
+         w.getPositionOnBoard().free();
+     }
     }
 }

@@ -101,27 +101,4 @@ class PlayerTest {
 
         assertTrue(success);
     }
-
-    @Test
-    public void test() {
-        Divinity d = new BuildBeforeAndAfter(new StandardDivinity());
-        p.setDivinity(d);
-
-        Tile t1 = b.getTile(1, 1);
-        Tile t2 = b.getTile(1, 2);
-
-        p.addWorker(t1);
-        w = p.getWorkers().get(0);
-
-        p.startOfTurn();
-
-        assert(p.getPossibleActions().size()==2);
-        assert(p.getPossibleActions().contains(Action.BUILD));
-        assert(p.getPossibleActions().contains(Action.MOVE));
-
-        boolean res = p.build(w,t2);
-        assert(res);
-        assert(p.getPossibleActions().size()==1 && p.getPossibleActions().contains(Action.MOVE));
-
-    }
 }

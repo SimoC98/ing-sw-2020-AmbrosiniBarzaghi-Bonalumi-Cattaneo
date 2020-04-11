@@ -80,6 +80,5 @@ public class Player {
         possibleActions.clear();
         possibleActions.add(Action.MOVE);
         divinity.setupDivinity(possibleActions);
-
     }
 }

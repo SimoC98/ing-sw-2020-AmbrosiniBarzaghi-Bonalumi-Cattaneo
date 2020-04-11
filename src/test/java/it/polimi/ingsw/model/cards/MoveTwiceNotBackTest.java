@@ -18,6 +18,7 @@ class MoveTwiceNotBackTest {
     private static Tile tile1;
     private static Tile tile2;
     private static Tile tile3;
+    private static Tile tile4;
     private static MoveTwice div;
     private static Worker worker;
     private static Set<Action> actions;

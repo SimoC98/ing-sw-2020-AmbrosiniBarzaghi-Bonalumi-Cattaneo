@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.model.Action;
+import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
 
@@ -67,6 +68,8 @@ public class BuildTwiceNotSameTile extends BuildTwice {
     @Override
     public Set<Action> updatePossibleActions(Set<Action> possibleActions) {
         if(getBuildCount()==1) {
+            /*List<Tile> l = Game.getMatch().getAvailableBuildTiles(Game.getMatch().getSelectedWorker());
+            if(l.size()>0) //add actions*/
             possibleActions.add(Action.BUILD);
             possibleActions.add(Action.END);
         }

@@ -4,7 +4,9 @@ import it.polimi.ingsw.model.*;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,7 +17,6 @@ class BuildBeforeAndAfterTest {
     private static Tile tile3;
     private static BuildBeforeAndAfter div;
     private static Worker worker;
-    //private static Set<Action> actions;
     private static Player p;
 
     @BeforeAll
@@ -59,6 +60,34 @@ class BuildBeforeAndAfterTest {
 
         p.build(worker,tile1);
         assert(p.getPossibleActions().size()==0);
+    }
+
+    @Test
+    public void CannotBuildIfCannotMoveTest() {
+        List<String> l = new ArrayList<>();
+        l.add("simone");
+        l.add("marco");
+        Match match = new Match(l);
+        Game g = new Game(match);
+        Board b = match.getBoard();
+
+        Player p = match.getPlayers().get(0);
+        p.setDivinity(div);
+        p.startOfTurn();
+        p.addWorker(b.getTile(0,0));
+
+        assert(p.getWorkers().get(0).getPositionOnBoard().getX()==0 && p.getWorkers().get(0).getPositionOnBoard().getY()==0);
+
+        b.getTile(0,1).setDome();
+        b.getTile(1,0).setDome();
+        assertFalse(div.legalBuild(p.getWorkers().get(0),b.getTile(1,1)));
+        assert(div.legalMove(p.getWorkers().get(0),b.getTile(1,1)));
+
+        p.move(p.getWorkers().get(0),b.getTile(1,1));
+        p.move(p.getWorkers().get(0),b.getTile(0,0));
+
+        assert(div.legalBuild(p.getWorkers().get(0),b.getTile(1,1)));
+
     }
 
 

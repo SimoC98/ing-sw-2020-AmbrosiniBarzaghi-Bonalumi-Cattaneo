@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.cards;
 
 
 import it.polimi.ingsw.model.Action;
+import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
 
@@ -34,6 +35,8 @@ public class MoveTwiceNotBack extends MoveTwice{
     @Override
     public Set<Action> updatePossibleActions(Set<Action> possibleActions) {
         if(getMoveCount() == 1 && !isHasBuilt()) {
+            /*List<Tile> l = Game.getMatch().getAvailableMoveTiles(Game.getMatch().getSelectedWorker());
+            if(l.size()>0) //add action*/
             possibleActions.add(Action.MOVE);
         }
         return super.updatePossibleActions(possibleActions);

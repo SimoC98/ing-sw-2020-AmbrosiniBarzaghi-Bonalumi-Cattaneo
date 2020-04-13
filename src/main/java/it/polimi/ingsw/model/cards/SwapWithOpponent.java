@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.model.Action;
+import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.model.exceptions.InvalidMoveException;
@@ -36,10 +37,7 @@ public class SwapWithOpponent extends MoveOnOpponent {
             }
             myActualTile.setWorker(opponentWorker);
             opponentWorker.setPositionOnBoard(myActualTile);
-//            selectedWorker.getPositionOnBoard().setWorker(selectedTile.getWorker());
-//            selectedTile.getWorker().setPositionOnBoard(selectedWorker.getPositionOnBoard());
-//            selectedWorker.setPositionOnBoard(selectedTile);
-//            selectedTile.setWorker(selectedWorker);
+
         }else{
             super.move(selectedWorker, selectedTile);
         }
@@ -47,6 +45,8 @@ public class SwapWithOpponent extends MoveOnOpponent {
 
     @Override
     public boolean legalMove(Worker selectedWorker, Tile selectedTile) {
+        /*List<Tile> l = Game.getMatch().getAvailableBuildTiles(Game.getMatch().getSelectedWorker());
+        if(l.size()==0) return false;*/
         return super.legalMove(selectedWorker, selectedTile);
     }
 

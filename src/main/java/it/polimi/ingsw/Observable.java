@@ -1,5 +1,7 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.model.Match;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,9 +16,9 @@ public class Observable {
         users.remove(user);
     }
 
-    public void notifyUsers(ModelUpdateEvent model) {
+    public void notifyUsers(Match model) {
         for(Observer o : users) {
-            o.update(model);
+            //update with simplified copy of model
         }
     }
 

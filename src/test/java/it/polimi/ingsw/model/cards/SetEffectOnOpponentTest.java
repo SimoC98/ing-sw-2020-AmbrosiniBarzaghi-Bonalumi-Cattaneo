@@ -19,12 +19,9 @@ class SetEffectOnOpponentTest {
     @BeforeEach
     void setUp() {
         List<String> users = new ArrayList<String>();
-        List<Color> colors = new ArrayList<Color>();
         users.add("simone");
         users.add("marco");
-        colors.add(Color.BLUE);
-        colors.add(Color.WHITE);
-        match = new Match(new Board(),users,colors);
+        match = new Match(users);
         game = new Game(match);
         div1 = new SetEffectOnOpponent(new StandardDivinity());
         div1.setupDivinity(new HashSet<Action>());

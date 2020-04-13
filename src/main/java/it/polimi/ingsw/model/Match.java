@@ -1,16 +1,18 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.Observable;
 import it.polimi.ingsw.model.exceptions.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Match {
+public class Match extends Observable {
     private ArrayList<Player> players;
     private Player currentPlayer;
     private Board board;
     private Action userAction; //soluzione momentanea
     private Worker selectedWorker;
+    private int turnId;
 
     public Match() {  }
 
@@ -19,6 +21,7 @@ public class Match {
     }
 
     public Match(List<String> users) {
+        turnId = 0;
         userAction = null;
         selectedWorker = null;
         currentPlayer = null;
@@ -55,17 +58,24 @@ public class Match {
     }
 
     public void startNextTurn(){
-        int playerIndex = players.indexOf(currentPlayer);
-        if (playerIndex + 1>= players.size()) {
-            playerIndex = 0;
-        }else {
-            playerIndex = playerIndex + 1;
-        }currentPlayer = players.get(playerIndex);
+        turnId++;
+        if(currentPlayer!=null) {
+            int playerIndex = players.indexOf(currentPlayer);
+            if (playerIndex + 1>= players.size()) {
+                playerIndex = 0;
+            }else {
+                playerIndex = playerIndex + 1;
+            }
+            currentPlayer = players.get(playerIndex);
+        }
+        else {
+            currentPlayer = players.get(0);
+        }
         currentPlayer.startOfTurn();
     }
 
     public void selectWorker(int x, int y) throws InvalidWorkerSelectionException{
-        if (board.getTile(x, y).isOccupied() && board.getTile(x, y).getWorker().getPlayer().equals(currentPlayer))
+        if (board.getTile(x, y).isOccupied() && board.getTile(x, y).getWorker().getPlayer().equals(currentPlayer) && getAvailableMoveTiles(board.getTile(x,y).getWorker()).size()>0)
             selectedWorker = board.getTile(x, y).getWorker();
         else throw new InvalidWorkerSelectionException();
     }
@@ -81,53 +91,59 @@ public class Match {
     public List<Tile> getAvailableMoveTiles(Worker selectedWorker){
         List<Tile> list = new ArrayList<>();
         list = board.getAdjacentTiles(selectedWorker.getPositionOnBoard());
-        for(Tile t : list){
-            if (!selectedWorker.getPlayer().getDivinity().legalMove(selectedWorker,t)) {
-                list.remove(t);
+        List<Tile> ret = new ArrayList<>();
+        for(int i=0; i<list.size();i++){
+            Tile t = list.get(i);
+            if (selectedWorker.getPlayer().getDivinity().legalMove(selectedWorker,t)==true) {
+                ret.add(t);
             }
         }
-        return list;
+        return ret;
     }
 
     public List<Tile> getAvailableBuildTiles(Worker selectedWorker){
         List<Tile> list = new ArrayList<>();
         list = board.getAdjacentTiles(selectedWorker.getPositionOnBoard());
-        for(Tile t : list){
-            if (!selectedWorker.getPlayer().getDivinity().legalBuild(selectedWorker,t)) {
-                list.remove(t);
+        List<Tile> ret = new ArrayList<>();
+        for(int i=0; i<list.size();i++){
+            Tile t = list.get(i);
+            if (selectedWorker.getPlayer().getDivinity().legalBuild(selectedWorker,t)==true) {
+                ret.add(t);
             }
         }
-        return list;
+        return ret;
     }
 
     public Player findWinner(){
-        for(Player p : players)
+        for(Player p : players) {
             if (p.isWinner()) return p;
+        }
          return null;
     }
 
     public Boolean checkLoser(){
         Player loser = currentPlayer;
-        for (Worker w : currentPlayer.getWorkers())
+        for (Worker w : currentPlayer.getWorkers()) {
             if(getAvailableMoveTiles(w).size() > 0) return false;
+        }
         board.removePlayerWorkers(currentPlayer);
         startNextTurn();
         players.remove(loser);
         if (players.size() == 1)
             currentPlayer.setWinner();
+        //remove loser user form observer list
         //notify all players
         return true;
     }
 
     public void setAction(Action act) throws InvalidActionException{
-        if (currentPlayer.getPossibleActions().contains(act))
-            userAction = act;
+        if (currentPlayer.getPossibleActions().contains(act)) userAction = act;
         else throw new InvalidActionException();
     }
 
     public void move (int x, int y) throws InvalidMoveException {
         Tile t = board.getTile(x,y);
-        if( t != null &&currentPlayer.move(selectedWorker, t)){
+        if( t != null && currentPlayer.move(selectedWorker, t)){
             //notify view & controller
         }
         else throw new InvalidMoveException();
@@ -139,5 +155,13 @@ public class Match {
             //notify view & controller
         }
         else throw new InvalidBuildException();
+    }
+
+    public int getTurnId() {
+        return turnId;
+    }
+
+    public void incrementTurnId() {
+        turnId++;
     }
 }

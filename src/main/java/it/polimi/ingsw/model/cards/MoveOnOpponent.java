@@ -35,12 +35,5 @@ public class MoveOnOpponent extends DivinityDecoratorWithEffects{
        }
 
        return super.legalMove(selectedWorker,selectedTile);
-
-        /*boolean stdLegalMoveReturn = super.legalMove(selectedWorker, selectedTile);
-
-        if(!stdLegalMoveReturn && selectedTile.getWorker() != null)
-            return true;
-        else
-            return stdLegalMoveReturn; */
     }
 }

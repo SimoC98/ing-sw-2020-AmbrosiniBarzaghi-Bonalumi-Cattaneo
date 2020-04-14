@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.Observable;
+import it.polimi.ingsw.model.cards.Divinity;
 import it.polimi.ingsw.model.exceptions.*;
 
 import java.util.ArrayList;
@@ -13,7 +14,6 @@ public class Match extends Observable {
     private Action userAction; //soluzione momentanea
     private Worker selectedWorker;
 
-
     public Match() {  }
 
     public Match(Board board) {
@@ -21,7 +21,6 @@ public class Match extends Observable {
     }
 
     public Match(List<String> users) {
-
         userAction = null;
         selectedWorker = null;
         currentPlayer = null;
@@ -156,5 +155,12 @@ public class Match extends Observable {
         else throw new InvalidBuildException();
     }
 
-
+    public boolean loadDivinity(String divinityName) {
+        Divinity divinity = XMLDecoderUtility.loadDivinity(divinityName);
+        if(divinity != null) {
+            currentPlayer.setDivinity(divinity);
+            return true;
+        }
+        return false;
+    }
 }

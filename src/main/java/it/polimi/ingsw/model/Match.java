@@ -12,7 +12,7 @@ public class Match extends Observable {
     private Board board;
     private Action userAction; //soluzione momentanea
     private Worker selectedWorker;
-    private int turnId;
+
 
     public Match() {  }
 
@@ -21,7 +21,7 @@ public class Match extends Observable {
     }
 
     public Match(List<String> users) {
-        turnId = 0;
+
         userAction = null;
         selectedWorker = null;
         currentPlayer = null;
@@ -58,7 +58,6 @@ public class Match extends Observable {
     }
 
     public void startNextTurn(){
-        turnId++;
         if(currentPlayer!=null) {
             int playerIndex = players.indexOf(currentPlayer);
             if (playerIndex + 1>= players.size()) {
@@ -136,8 +135,8 @@ public class Match extends Observable {
         return true;
     }
 
-    public void setAction(Action act) throws InvalidActionException{
-        if (currentPlayer.getPossibleActions().contains(act)) userAction = act;
+    public void setAction(Action action) throws InvalidActionException{
+        if (currentPlayer.getPossibleActions().contains(action)) userAction = action;
         else throw new InvalidActionException();
     }
 
@@ -157,11 +156,5 @@ public class Match extends Observable {
         else throw new InvalidBuildException();
     }
 
-    public int getTurnId() {
-        return turnId;
-    }
 
-    public void incrementTurnId() {
-        turnId++;
-    }
 }

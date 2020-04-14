@@ -37,7 +37,6 @@ public class BuildBeforeAndAfter extends DivinityDecoratorWithEffects {
     public boolean legalBuild(Worker selectedWorker, Tile selectedTile) {
         if(!hasMoved && selectedTile.getLevel()>=selectedWorker.getPositionOnBoard().getLevel()) {
             List<Tile> l = new ArrayList<>( Game.getMatch().getAvailableMoveTiles(selectedWorker));
-            l.remove(selectedTile);
             List<Tile> ret = new ArrayList<>();
             for(int i=0;i<l.size();i++) {
                 Tile t = l.get(i);

@@ -87,6 +87,53 @@ class BuildBeforeAndAfterTest {
         p.move(p.getWorkers().get(0),b.getTile(0,0));
 
         assert(div.legalBuild(p.getWorkers().get(0),b.getTile(1,1)));
+    }
+
+    @Test
+    public void test() {
+        List<String> l = new ArrayList<>();
+        l.add("simone");
+        l.add("marco");
+        Match match = new Match(l);
+        Game g = new Game(match);
+        Board b = match.getBoard();
+
+        Player p = match.getPlayers().get(0);
+        p.setDivinity(div);
+        p.startOfTurn();
+        b.getTile(0,0).increaseLevel();
+        b.getTile(0,1).increaseLevel();
+        b.getTile(0,1).increaseLevel();
+        b.getTile(1,0).increaseLevel();
+        b.getTile(1,0).increaseLevel();
+        p.addWorker(b.getTile(0,0));
+
+        //(0,0) level 1, (0,1) level 2, (1,0) level 2, (1,1) level 0
+
+        assert(p.getWorkers().get(0).getPositionOnBoard().getX()==0 && p.getWorkers().get(0).getPositionOnBoard().getY()==0 && b.getTile(0,0).getLevel()==1);
+        assert(b.getTile(1,0).getLevel()==2 && b.getTile(0,1).getLevel()==2);
+
+        assert(div.legalBuild(p.getWorkers().get(0),b.getTile(1,1)));  //se ha liv più basso può costruire
+        b.getTile(1,1).increaseLevel();
+        assertFalse(div.legalBuild(p.getWorkers().get(0),b.getTile(1,1))); //se ha stesso livello non può --> non potrebbe più muovere
+        assert(div.legalBuild(p.getWorkers().get(0),b.getTile(0,1)));
+
+        assert(p.getPossibleActions().size()==2);
+        assert(p.getPossibleActions().contains(Action.MOVE));
+        assert(p.getPossibleActions().contains(Action.BUILD));
+
+        assertFalse(p.build(p.getWorkers().get(0),b.getTile(1,1)));
+        assert(p.build(p.getWorkers().get(0),b.getTile(1,0)));
+        assert(p.getPossibleActions().size()==1 && p.getPossibleActions().contains(Action.MOVE));
+        assert(b.getTile(0,1).getLevel()==2);
+        assertFalse(p.move(p.getWorkers().get(0),b.getTile(0,1))); //dopo che ha costruito non può salire di livello
+        assertFalse(p.move(p.getWorkers().get(0),b.getTile(1,0))); // same
+        assert(p.move(p.getWorkers().get(0),b.getTile(1,1)));
+        assert(p.getPossibleActions().size()==1 && p.getPossibleActions().contains(Action.BUILD));
+
+        p.build(p.getWorkers().get(0),b.getTile(0,0));
+        assert(p.getPossibleActions().size()==0);
+
 
     }
 

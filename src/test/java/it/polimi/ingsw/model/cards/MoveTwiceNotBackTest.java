@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.exceptions.InvalidWorkerSelectionException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -59,7 +60,45 @@ class MoveTwiceNotBackTest {
         div.updatePossibleActions(actions);
         assert(actions.size()==1);
         assertTrue(actions.contains(Action.MOVE));
-
-
     }
+
+   /* @Test
+    public void test() throws InvalidWorkerSelectionException {
+        List<String> l = new ArrayList<>();
+        l.add("jack");
+        Match m = new Match(l);
+        Game g = new Game(m);
+        Board b = m.getBoard();
+        Player p = m.getPlayers().get(0);
+        Divinity div = new MoveTwiceNotBack(new StandardDivinity());
+        p.setDivinity(div);
+
+        p.addWorker(b.getTile(1,1));
+
+        m.setCurrentPlayer(p);
+
+        assert(b.getTile(1, 1).isOccupied());
+        assert(b.getTile(1, 1).getWorker().getPlayer().equals(m.getCurrentPlayer()));
+
+        m.selectWorker(1,1);
+
+        b.getTile(0,1).setDome();
+        b.getTile(1,0).setDome();
+
+        p.startOfTurn();
+
+        assertFalse(p.move(p.getWorkers().get(0),b.getTile(1,0)));
+        assert(p.getPossibleActions().size()==1 && p.getPossibleActions().contains(Action.MOVE));
+        assert(div.legalMove(p.getWorkers().get(0),b.getTile(2,2)));
+        //assert(p.move(p.getWorkers().get(0),b.getTile(2,2)));
+        assert(p.move(p.getWorkers().get(0),b.getTile(0,0)));
+        assert(p.getPossibleActions().size()==1);
+        assert(p.getPossibleActions().contains(Action.BUILD));
+        assertFalse(p.build(p.getWorkers().get(0),b.getTile(2,2)));
+        p.build(p.getWorkers().get(0),b.getTile(1,1));
+        assert(p.getPossibleActions().size()==0);
+
+
+
+    }*/
 }

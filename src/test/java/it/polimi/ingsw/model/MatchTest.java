@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.cards.StandardDivinity;
-import it.polimi.ingsw.model.exceptions.WorkerBadPlacementException;
+import it.polimi.ingsw.model.exceptions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -102,6 +102,122 @@ class MatchTest {
         assert(match.getPlayers().size()==1);
         assert(match.findWinner().equals(p3));
     }
+
+    @Test
+    public void placeWorkersTest() {
+        p1.setDivinity(new StandardDivinity());
+        p2.setDivinity(new StandardDivinity());
+        match.startNextTurn();
+
+        assertThrows(WorkerBadPlacementException.class,()-> match.placeWorkers(0,0,0,0));
+        try {
+            match.placeWorkers(0,0,4,0);
+        } catch (WorkerBadPlacementException e) { }
+        assertTrue(p1.getWorkers().get(0).getPositionOnBoard().equals(board.getTile(0,0)));
+        assertTrue(p1.getWorkers().get(1).getPositionOnBoard().equals(board.getTile(4,0)));
+
+        match.startNextTurn();
+        assertThrows(WorkerBadPlacementException.class,()-> match.placeWorkers(0,0,3,0));
+        try {
+            match.placeWorkers(2,0,3,0);
+        } catch (WorkerBadPlacementException e) { }
+        assertTrue(p2.getWorkers().get(0).getPositionOnBoard().equals(board.getTile(2,0)));
+        assertTrue(p2.getWorkers().get(1).getPositionOnBoard().equals(board.getTile(3,0)));
+    }
+
+    @Test
+    public void selectWorkerTest() throws WorkerBadPlacementException {
+        p1.setDivinity(new StandardDivinity());
+        p2.setDivinity(new StandardDivinity());
+        p3.setDivinity(new StandardDivinity());
+        match.startNextTurn();
+        match.placeWorkers(0,0,4,0);
+        match.startNextTurn();
+        match.placeWorkers(0,4,4,4);
+        match.startNextTurn();
+        match.startNextTurn();
+
+        assertThrows(InvalidWorkerSelectionException.class,()->match.selectWorker(1,1));
+        assertThrows(InvalidWorkerSelectionException.class,()->match.selectWorker(4,4));
+
+        board.getTile(0,1).setDome();
+        board.getTile(1,0).setDome();
+        board.getTile(1,1).setDome();
+
+        assertThrows(InvalidWorkerSelectionException.class,()->match.selectWorker(0,0));
+
+        try {
+            match.selectWorker(4,0);
+        } catch (InvalidWorkerSelectionException e) { }
+
+        assert(match.getSelectedWorker().equals(p1.getWorkers().get(1)));
+    }
+
+    @Test
+    public void setActionTest() {
+        p1.setDivinity(new StandardDivinity());
+        p2.setDivinity(new StandardDivinity());
+        match.startNextTurn();
+
+        assertThrows(InvalidActionException.class,()-> match.setAction(Action.BUILD));
+        try {
+            match.setAction(Action.MOVE);
+        } catch (InvalidActionException e) {}
+
+        assert(match.getUserAction().equals(Action.MOVE));
+    }
+
+    @Test
+    public void moveTest() throws WorkerBadPlacementException, InvalidWorkerSelectionException {
+        p1.setDivinity(new StandardDivinity());
+        p2.setDivinity(new StandardDivinity());
+        p3.setDivinity(new StandardDivinity());
+
+        match.startNextTurn();
+        match.placeWorkers(0,0,4,0);
+        match.startNextTurn();
+        match.placeWorkers(0,1,4,4);
+        match.startNextTurn();
+        match.startNextTurn();
+        match.selectWorker(0,0);
+
+        board.getTile(1,1).setDome();
+        board.getTile(1,0).increaseLevel();
+        board.getTile(1,0).increaseLevel();
+
+        assertThrows(InvalidMoveException.class,()->match.move(0,1));
+        assertThrows(InvalidMoveException.class,()->match.move(1,1));
+        assertThrows(InvalidMoveException.class,()->match.move(5,1));
+        assertThrows(InvalidMoveException.class,()->match.move(0,0));
+        assertThrows(InvalidMoveException.class,()->match.move(1,0));
+    }
+
+    @Test
+    public void buildTest() throws WorkerBadPlacementException, InvalidWorkerSelectionException {
+        p1.setDivinity(new StandardDivinity());
+        p2.setDivinity(new StandardDivinity());
+        p3.setDivinity(new StandardDivinity());
+
+        match.startNextTurn();
+        match.placeWorkers(0,0,4,0);
+        match.startNextTurn();
+        match.placeWorkers(0,1,4,4);
+        match.startNextTurn();
+        match.startNextTurn();
+        match.selectWorker(0,0);
+
+        board.getTile(1,1).setDome();
+        board.getTile(1,0).increaseLevel();
+        board.getTile(1,0).increaseLevel();
+
+        assertThrows(InvalidBuildException.class,()->match.build(0,1));
+        assertThrows(InvalidBuildException.class,()->match.build(1,1));
+        assertThrows(InvalidBuildException.class,()->match.build(5,1));
+        assertThrows(InvalidBuildException.class,()->match.build(0,0));
+
+    }
+
+
 
 
 }

@@ -7,6 +7,15 @@ import it.polimi.ingsw.model.exceptions.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Core class of the game logic in the model.
+ * This class holds the list of the active players.
+ * It initializes everything necessary to start a game
+ * and to follow its evolution.
+ * <p>
+ * The basic idea is to track an user decisions
+ * and to communicate to other players the changes.
+ */
 public class Match extends Observable {
     private ArrayList<Player> players;
     private Player currentPlayer;
@@ -14,12 +23,25 @@ public class Match extends Observable {
     private Action userAction; //soluzione momentanea
     private Worker selectedWorker;
 
+    /**
+     * Constructor used to support other classes
+     *  and to simplify testing
+     */
     public Match() {  }
 
+    /**
+     * Constructor used to support other classes
+     *  and to simplify testing
+     */
     public Match(Board board) {
         this.board = board;
     }
 
+    /**
+     * Main constructor for {@link Match}
+     * it initializes the variables to manage a game
+     * @param users only parameter as other properties are managed otherwise
+     */
     public Match(List<String> users) {
         userAction = null;
         selectedWorker = null;
@@ -38,24 +60,37 @@ public class Match extends Observable {
         return new ArrayList<Player>(players);
     }
 
+    /**
+     * @return {@link Player} whom turn it is
+     */
     public Player getCurrentPlayer() {
         return currentPlayer;
     }
 
+    /**
+     * @return {@link Worker} chosen by the current
+     * {@link Player} to perform an action
+     */
     public Worker getSelectedWorker(){return selectedWorker;}
 
     public Board getBoard() {
         return board;
     }
 
+    /**
+     * Its aim is to hold a user choice
+     * in order to evaluate if it is correct
+     * and in that case to execute it
+     */
     public Action getUserAction() {
         return userAction;
     }
 
-    public void setUserAction(Action userAction) {
-        this.userAction = userAction;
-    }
 
+    /**
+     * Method used at the end of a player's turn
+     * to initialize the next player's one
+     */
     public void startNextTurn(){
         if(currentPlayer!=null) {
             int playerIndex = players.indexOf(currentPlayer);
@@ -72,12 +107,28 @@ public class Match extends Observable {
         currentPlayer.startOfTurn();
     }
 
+    /**
+     * {@link Worker} on which a {@link Player} decides to perform an action.
+     * Only the coordinates are passed; if the choice is not valid an exception is thrown
+     * @param x expected {@link Worker} {@code x} coordinate
+     * @param y expected {@link Worker} {@code y} coordinate
+     * @throws InvalidWorkerSelectionException thrown whether the worker is not in the specified position, the worker does not belong to the current player or such worker has no available moves
+     */
     public void selectWorker(int x, int y) throws InvalidWorkerSelectionException{
         if (board.getTile(x, y).isOccupied() && board.getTile(x, y).getWorker().getPlayer().equals(currentPlayer) && getAvailableMoveTiles(board.getTile(x,y).getWorker()).size()>0)
             selectedWorker = board.getTile(x, y).getWorker();
         else throw new InvalidWorkerSelectionException();
     }
 
+    /**
+     *This method has to be called at the begging of the game by
+     * each player to place their workers on the {@link Board}.
+     * <p>
+     * The player selects four coordinates on which his two workers
+     * will be placed; if a positioning is not valid, the player
+     * will have to reenter all the four coordinates again
+     * @throws WorkerBadPlacementException Exception called when the coordinates are out of bound, they are the same, or a {@link Tile} is already occupied by a precedent player's worker
+     */
     public void placeWorkers(int x1, int y1, int x2, int y2) throws WorkerBadPlacementException{
         if(board.getTile(x1,y1) != null && board.getTile(x2,y2) != null && !board.getTile(x1,y1).equals(board.getTile(x2,y2)) && !board.getTile(x1,y1).isOccupied() && !board.getTile(x2,y2).isOccupied()) {
             currentPlayer.addWorker(board.getTile(x1, y1));
@@ -86,6 +137,12 @@ public class Match extends Observable {
         else throw new WorkerBadPlacementException();
     }
 
+    /**
+     * List of possible {@link Tile}s for the current {@link Player}
+     * to move onto with his selected worker, when he chooses {@link Action#MOVE}
+     * @param selectedWorker {@link Worker} that is going to move
+     * @return The list is created checking that each of the {@link Match#selectedWorker}'s adjacent tiles are free to move onto; such conditions are verified through the call of {@code legalMove} on {@link Player}
+     */
     public List<Tile> getAvailableMoveTiles(Worker selectedWorker){
         List<Tile> list = new ArrayList<>();
         list = board.getAdjacentTiles(selectedWorker.getPositionOnBoard());
@@ -99,6 +156,12 @@ public class Match extends Observable {
         return ret;
     }
 
+    /**
+     * List of possible {@link Tile}s for the current {@link Player}
+     * to build on with his selected worker, when he chooses {@link Action#MOVE}
+     * @param selectedWorker {@link Worker} that is going to build
+     * @return The list is created checking that each of the {@link Match#selectedWorker}'s adjacent tiles are free to build on; such conditions are verified through the call of {@code legalBuild} on {@link Player}
+     */
     public List<Tile> getAvailableBuildTiles(Worker selectedWorker){
         List<Tile> list = new ArrayList<>();
         list = board.getAdjacentTiles(selectedWorker.getPositionOnBoard());
@@ -112,6 +175,9 @@ public class Match extends Observable {
         return ret;
     }
 
+    /**
+     * @return The winning {@link Player}
+     */
     public Player findWinner(){
         for(Player p : players) {
             if (p.isWinner()) return p;
@@ -119,6 +185,12 @@ public class Match extends Observable {
          return null;
     }
 
+    /**
+     * This method checks if a player has lost; if so that player is removed from
+     * {@link Match#players}, his workers are removed from the {@link Board} and the other players are notified.
+     * If only one {@link Player} is left, he is declared the winner
+     * @return Returns {@code true} if a player lost after eliminating him
+     */
     public Boolean checkLoser(){
         Player loser = currentPlayer;
         for (Worker w : currentPlayer.getWorkers()) {
@@ -134,11 +206,20 @@ public class Match extends Observable {
         return true;
     }
 
+    /**
+     * @param action one of the possible actions from  the enumeration {@link Action} i.e. {@link Action#BUILD}, {@link Action#BUILDDOME}, {@link Action#MOVE} or {@link Action#END}
+     * @throws InvalidActionException The action is not present among the current player's actions
+     */
     public void setAction(Action action) throws InvalidActionException{
         if (currentPlayer.getPossibleActions().contains(action)) userAction = action;
         else throw new InvalidActionException();
     }
 
+    /**
+     *Moves the {@link Match#selectedWorker} of the {@link Match#currentPlayer}
+     *on the corresponding {@link Tile}
+     * @throws InvalidMoveException The player chose an incorrect position
+     */
     public void move (int x, int y) throws InvalidMoveException {
         Tile t = board.getTile(x,y);
         if( t != null && currentPlayer.move(selectedWorker, t)){
@@ -147,6 +228,11 @@ public class Match extends Observable {
         else throw new InvalidMoveException();
     }
 
+    /**
+     *The {@link Match#currentPlayer} build with the {@link Match#selectedWorker}
+     *on the corresponding {@link Tile}
+     * @throws InvalidBuildException The player chose an incorrect tile
+     */
     public void build(int x, int y) throws InvalidBuildException{
         Tile t = board.getTile(x,y);
         if(t != null && currentPlayer.build(selectedWorker,t)){
@@ -155,6 +241,12 @@ public class Match extends Observable {
         else throw new InvalidBuildException();
     }
 
+    /**
+     * Called at the beginning of a match to load the player's
+     * selected divinity from an xml file
+     * @param divinityName Divinity name as {@code String}
+     * @return Returns {@code true} if the operation was succesfull
+     */
     public boolean loadDivinity(String divinityName) {
         Divinity divinity = XMLDecoderUtility.loadDivinity(divinityName);
         if(divinity != null) {

@@ -11,19 +11,24 @@ import java.util.Set;
 
 
 /**
- * Decorator Pattern
- * implements Divinity interface and can be decorated with effects
+ * Class that is to be "decorated" with the effects
+ * of a defined divinity. It can be decorated and undecorated
+ * more than one time.
+ * <p>
+ * StandardDivinity contains all the information and methods of a generic divinity: its name,
+ * heading, description and number; it also has the methods corresponding to base actions that
+ * are called through the invocation of the matching function on a worker.
  */
 public class StandardDivinity implements Divinity {
-    /**
-     * features of the divinity card
-     */
+
     private String name;
     private String heading;
     private String description;
     private int number;
 
-
+    /**
+     * Constructor used for testing
+     */
     public StandardDivinity(){
         this.name = null;
         this.heading = null;
@@ -31,6 +36,9 @@ public class StandardDivinity implements Divinity {
         this.number = 0;
     }
 
+    /**
+     *Constructor used to characterise a divinity upon filling its information fields
+     */
     public StandardDivinity(String name, String heading, String description, int number) {
         this.name = name;
         this.heading = heading;
@@ -39,9 +47,8 @@ public class StandardDivinity implements Divinity {
     }
 
     /**
-     * call the method move on the worker passed as param
-     * @param selectedWorker
-     * @param selectedTile
+     * Calls the method {@code move} on the {@link Worker} passed as parameter, given a {@link Tile}.
+     * Throws {@link InvalidMoveException} if the move was not valid
      */
     @Override
     public void move(Worker selectedWorker, Tile selectedTile) {
@@ -53,9 +60,8 @@ public class StandardDivinity implements Divinity {
     }
 
     /**
-     * call the method build on the worker passed as param
-     * @param selectedWorker
-     * @param selectedTile
+     * Calls the method {@code build} on the {@link Worker} passed as parameter, given a {@link Tile}.
+     * Throws {@link InvalidBuildException} if the build was not valid
      */
     @Override
     public void build(Worker selectedWorker, Tile selectedTile) {
@@ -67,10 +73,7 @@ public class StandardDivinity implements Divinity {
     }
 
     /**
-     * call the method legalMove on the worker passed as param
-     * @param selectedWorker
-     * @param selectedTile
-     * @return
+     *Checks if the selected {@link Worker} is able to move on the specified {@link Tile}
      */
     @Override
     public boolean legalMove(Worker selectedWorker, Tile selectedTile) {
@@ -78,10 +81,7 @@ public class StandardDivinity implements Divinity {
     }
 
     /**
-     * call the method legalBuild on the worker passed as param
-     * @param selectedWorker
-     * @param selectedTile
-     * @return
+     *Checks if the selected {@link Worker} is able to build on the specified {@link Tile}
      */
     @Override
     public boolean legalBuild(Worker selectedWorker, Tile selectedTile) {
@@ -91,7 +91,6 @@ public class StandardDivinity implements Divinity {
 
 
     /**
-     *
      * @return this instance of StandardDivinity
      */
     @Override
@@ -99,20 +98,30 @@ public class StandardDivinity implements Divinity {
         return this;
     }
 
+    /**
+     * It returns a set of possible actions, updated with
+     * the effects of the divinity.
+     * <p>
+     * The standard divinity does not update the set
+     * @param possibleActions Available actions of a player
+     * @return updated list of {@link Action}s
+     */
     @Override
     public Set<Action> updatePossibleActions(Set<Action> possibleActions) {
         return possibleActions;
     }
 
+    /**
+     * Function used to initialize the parameters of
+     * a divinity in able to update correctly the set
+     * of possible actions that {@link StandardDivinity#updatePossibleActions(Set)} will return
+     */
     @Override
     public void setupDivinity(Set<Action> possibleActions) {
         return;
     }
 
-    /**
-     * getter and setter for the card's features
-     * @return
-     */
+
     public String getName() {
         return name;
     }
@@ -129,6 +138,9 @@ public class StandardDivinity implements Divinity {
         this.heading = heading;
     }
 
+    /**
+     * @return The description of a divinity's effects
+     */
     public String getDescription() {
         return description;
     }

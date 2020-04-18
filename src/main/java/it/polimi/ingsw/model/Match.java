@@ -45,7 +45,6 @@ public class Match extends Observable {
     public Match(List<String> users) {
         userAction = null;
         selectedWorker = null;
-        currentPlayer = null;
         this.board = new Board();
         players = new ArrayList<>();
         Color[] colors = Color.values();
@@ -53,6 +52,7 @@ public class Match extends Observable {
             Player newPlayer = new Player(users.get(i),colors[i]);
             players.add(newPlayer);
         }
+        currentPlayer = players.get(0);
     }
 
 
@@ -92,23 +92,18 @@ public class Match extends Observable {
      * to initialize the next player's one
      */
     public void startNextTurn(){
-        if(currentPlayer!=null) {
-            int playerIndex = players.indexOf(currentPlayer);
+        int playerIndex = players.indexOf(currentPlayer);
             if (playerIndex + 1>= players.size()) {
                 playerIndex = 0;
             }else {
                 playerIndex = playerIndex + 1;
             }
             currentPlayer = players.get(playerIndex);
-        }
-        else {
-            currentPlayer = players.get(0);
-        }
         currentPlayer.startOfTurn();
     }
 
     /**
-     * {@link Worker} on which a {@link Player} decides to perform an action.
+     * {@link Worker} whom a {@link Player} decides to perform an action with.
      * Only the coordinates are passed; if the choice is not valid an exception is thrown
      * @param x expected {@link Worker} {@code x} coordinate
      * @param y expected {@link Worker} {@code y} coordinate
@@ -258,5 +253,20 @@ public class Match extends Observable {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Method to be called once per player at the beginning of the match
+     * to place his workers and to choose a divinity
+     */
+    public void playerInitializatinon(int x1, int y1, int x2, int y2, String divName){
+        int playerIndex = players.indexOf(currentPlayer);
+        if (playerIndex + 1>= players.size()) {
+           startNextTurn();
+        }else {
+            //placeWorkers(x1,x2,y1,y2);
+            //loadDivinity(divName);
+            playerIndex = playerIndex + 1;
+        }
     }
 }

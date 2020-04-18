@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.model.exceptions.InvalidMoveException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -45,8 +46,15 @@ public class SwapWithOpponent extends MoveOnOpponent {
 
     @Override
     public boolean legalMove(Worker selectedWorker, Tile selectedTile) {
-        /*List<Tile> l = Game.getMatch().getAvailableBuildTiles(Game.getMatch().getSelectedWorker());
-        if(l.size()==0) return false;*/
+        if(selectedTile.isOccupied()) {
+            List<Tile> l = Game.getMatch().getBoard().getAdjacentTiles(selectedTile);
+            List<Tile> l2 = new ArrayList<>();
+            for(int i=0; i<l.size(); i++) {
+                Tile t = l.get(i);
+                if(!t.isOccupied() && !t.isDome()) l2.add(t);
+            }
+            if(l2.size()==0) return false;
+        }
         return super.legalMove(selectedWorker, selectedTile);
     }
 

@@ -68,7 +68,7 @@ public class Player {
 
     public boolean build(Worker selectedWorker, Tile selectedTile) {
         if(divinity.legalBuild(selectedWorker,selectedTile)) {
-            possibleActions = new HashSet<>();
+            possibleActions.clear();
             divinity.build(selectedWorker,selectedTile);
             divinity.updatePossibleActions(possibleActions);
             return true;

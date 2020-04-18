@@ -7,15 +7,26 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The class to manage a player, saving his username, his workers' color and
+ * his chosen divinity; the class also contains the list of his workers
+ * and  a set of possible actions changing during the game.
+ * <p>
+ * It is remarkable that we unanimously decided that different players can
+ * have the same divinity
+ */
 public class Player {
     private String username;
     private Color color;
     private Divinity divinity;
     private boolean isWinner;
-    private Set<Action> possibleActions;    //empty list => end of turn
-    //other idea:
+    private Set<Action> possibleActions;
     private List<Worker> workers;
 
+    /**
+     * Constructor of the player, given his username and chosen a {@link Color}.
+     * All his other attributes are instantiated and set to {@code null}
+     */
     public Player(String username, Color color) {
         this.username = username;
         this.color = color;
@@ -25,14 +36,24 @@ public class Player {
         isWinner = false;
     }
 
+    /**
+     * Method to be called through {@link Match#placeWorkers(int, int, int, int)} at the beginning of a game
+     * @param initialTile {@link Tile} to place one worker onto
+     */
     public void addWorker(Tile initialTile) {
         workers.add(new Worker(initialTile,this));
     }
 
+    /**
+     * States that the player is the winner
+     */
     public void setWinner() {
         this.isWinner = true;
     }
 
+    /**
+     * @return {@code true} if the player is the winner
+     */
     public boolean isWinner() {
         return isWinner;
     }
@@ -41,6 +62,10 @@ public class Player {
         return username;
     }
 
+    /**
+     * Assigns a divinity to a player. It is invoked by {@link Match#loadDivinity(String)}
+     * passing the divinity's name.
+     */
     public void setDivinity(Divinity newDivinity) {
         divinity = newDivinity;
     }
@@ -49,12 +74,28 @@ public class Player {
         return divinity;
     }
 
+    /**
+     * @return Returns an {@code ArrayList} containing the workers
+     */
     public List<Worker> getWorkers() { return new ArrayList<>(workers); }
 
+    /**
+     * @return Returns a {@code HashSet} containing the player's next possible actions, i.e. {@link Action#MOVE}, {@link Action#BUILD}, {@link Action#BUILDDOME} and {@link Action#END}
+     */
     public Set<Action> getPossibleActions() { return new HashSet<Action>(possibleActions); }
 
     public Color getColor() { return color; }
 
+    /**
+     * Moves one worker on a tile through the invocation of {@code move}
+     * on the player's divinity in order to follow the pattern Decorator.
+     * <p>
+     * In addition it manages the next possible actions: if the move
+     * is possible, in first place, it clears the list from actions in order
+     * to respect the game logic; then it adds the possibility to build as in the
+     * basic Santorini's rules and it adds other possible actions deriving from a divinity's effects
+     * @return {@code true} whether the move was successful
+     */
     public boolean move(Worker selectedWorker, Tile selectedTile) {
         if(divinity.legalMove(selectedWorker,selectedTile)) {
             possibleActions.clear();
@@ -66,9 +107,18 @@ public class Player {
         else return false;
     }
 
+    /**
+     * Builds with a worker on a tile through the invocation of {@code build}
+     * on the player's divinity in order to follow the pattern Decorator.
+     * <p>
+     * In addition, it manages the next possible actions: if the build
+     * is possible, in first place, it clears the list from actions in order
+     * to respect the game logic; then it adds other possible actions deriving from a divinity's effects
+     * @return {@code true} whether the build was successful
+     */
     public boolean build(Worker selectedWorker, Tile selectedTile) {
         if(divinity.legalBuild(selectedWorker,selectedTile)) {
-            possibleActions = new HashSet<>();
+            possibleActions.clear();
             divinity.build(selectedWorker,selectedTile);
             divinity.updatePossibleActions(possibleActions);
             return true;
@@ -76,6 +126,11 @@ public class Player {
         else return false;
     }
 
+    /**
+     * Method called at the start of each turn to setup
+     * a player's possible actions, adding {@link Action#MOVE}
+     * and eventual others resulting from a divinity's properties
+     */
     public void startOfTurn(){
         possibleActions.clear();
         possibleActions.add(Action.MOVE);

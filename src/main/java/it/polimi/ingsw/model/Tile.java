@@ -20,7 +20,7 @@ public class Tile {
     }
 
     /**
-     * places a dome if it reaches level 3
+     * It increase a tile's level and places a dome once it reaches level 3, calling {@link Tile#setDome()}
      */
     public void increaseLevel() {
         if(isDome() || isOccupied) return;
@@ -42,28 +42,35 @@ public class Tile {
 
     public int getLevel() { return level; }
 
+    /**
+     * @return Returns {@code true} if there is a dome an a tile
+     */
     public Boolean isDome() { return isDome; }
 
+    /**
+     * @return Returns {@code true} if a {@link Worker} is on the tile
+     */
     public Boolean isOccupied() { return isOccupied; }
 
     /**
-     *
-     * @return the worker on this tile or null if is free
+     * @return The {@link Worker} on this tile or {@code null} if it is unoccupied
      */
     public Worker getWorker() { return worker; }
 
     public void setDome() { isDome = true; }
 
-
+    /**
+     * Sets a tile free, removing the {@link Worker}'s reference
+     * and stating that it is unoccupied
+     */
     public void free() {
         isOccupied = false;
         worker = null;
     }
 
     /**
-     *
-     * associate @param worker to this tile and set this tile as occupied
-     *
+     * Method to occupy a tile with a worker
+     *@param worker {@link Worker} associated to this tile
      */
     public void setWorker(Worker worker) {
         this.worker = worker;

@@ -215,6 +215,10 @@ public class Match extends Observable {
         else throw new InvalidActionException();
     }
 
+    public void setUserAction(Action action) {
+        userAction = action;
+    }
+
     /**
      *Moves the {@link Match#selectedWorker} of the {@link Match#currentPlayer}
      *on the corresponding {@link Tile}

@@ -35,9 +35,8 @@ public class MoveTwiceNotBack extends MoveTwice{
     @Override
     public Set<Action> updatePossibleActions(Set<Action> possibleActions) {
         if(getMoveCount() == 1 && !isHasBuilt()) {
-            /*List<Tile> l = Game.getMatch().getAvailableMoveTiles(Game.getMatch().getSelectedWorker());
-            if(l.size()>0)*/
-            possibleActions.add(Action.MOVE);
+            List<Tile> l = Game.getMatch().getAvailableMoveTiles(Game.getMatch().getSelectedWorker());
+            if(l.size()>0) possibleActions.add(Action.MOVE);
         }
         return super.updatePossibleActions(possibleActions);
     }

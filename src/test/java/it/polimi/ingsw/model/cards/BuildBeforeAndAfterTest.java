@@ -90,7 +90,7 @@ class BuildBeforeAndAfterTest {
     }
 
     @Test
-    public void test() {
+    public void updatePossibleActionTest() {
         List<String> l = new ArrayList<>();
         l.add("simone");
         l.add("marco");

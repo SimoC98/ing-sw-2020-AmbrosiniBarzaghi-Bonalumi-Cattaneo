@@ -5,8 +5,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.model.exceptions.InvalidWorkerSelectionException;
+import it.polimi.ingsw.model.exceptions.WorkerBadPlacementException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -16,79 +18,93 @@ import java.util.Set;
 
 class BuildTwiceNotSameTileTest {
 
-    private static Tile tile1;
-    private static Tile tile2;
-    private static Tile tile3;
+    private static Game game;
+    private static Match match;
+    private static Board board;
     private static BuildTwice div;
-    private static Worker worker;
-    private static Set<Action> actions;
 
-    @BeforeAll
-    static void setup(){
-        tile1 = new Tile(1,1);
-        tile2 = new Tile(2,2);
-        tile3 = new Tile(3,3);
+    @BeforeEach
+    void setup() throws WorkerBadPlacementException, InvalidWorkerSelectionException {
+        List<String> players = new ArrayList<>();
+        players.add("paolo");
+        players.add("francesco");
+        match = new Match(players);
+        game = new Game(match);
+        board = match.getBoard();
         div = new BuildTwiceNotSameTile(new StandardDivinity());
-        actions = new HashSet<>();
-    }
-
-    @AfterEach
-    void tearDown() {
-        tile1.free();
-        tile2.free();
-        tile3.free();
+        match.getPlayers().get(0).setDivinity(div);
+        match.startNextTurn();
+        match.placeWorkers(1,1,4,4);
+        match.selectWorker(1,1);
     }
 
     @Test
     public void buildTwiceNotSameTileTest(){
-        worker = new Worker(tile1, new Player("jack", Color.BLUE) );
-        div.setupDivinity(actions);
-        div.move(worker,tile2);
-        div.build(worker,tile1);
+        Worker worker = match.getSelectedWorker();
+        Tile tile1 = board.getTile(1,1);
+        Tile tile2 = board.getTile(2,2);
+        Tile tile3 = board.getTile(3,3);
+        Player p1 = match.getCurrentPlayer();
+
+        assert(p1.move(worker,tile2));
+        assert(p1.build(worker,tile1));
+
         assert(div.getBuildCount()==1);
         assertEquals(div.getFirstBuildTile(), tile1);
-        assertFalse(div.legalBuild(worker, tile1));
-        assertTrue(div.legalBuild(worker, tile3));
+        assertFalse(p1.build(worker,tile1));
+        assertTrue(p1.build(worker,tile3));
     }
 
     @Test
-    public void listControlTest(){
-        worker = new Worker(tile1, new Player("jack", Color.BLUE) );
-        div.setupDivinity(actions);
-        div.build(worker,tile2);
-        div.updatePossibleActions(actions);
-        assert(actions.size()==2);
-        assertTrue(actions.contains(Action.BUILD) && actions.contains(Action.END));
+    public void updatePossibleActionTest() {
+        Tile tile1 = board.getTile(1,1);
+        Tile tile2 = board.getTile(2,2);
+        Tile tile3 = board.getTile(3,3);
+        Worker w = match.getCurrentPlayer().getWorkers().get(0);
+        Player p1 = match.getCurrentPlayer();
+
+        assert(p1.getPossibleActions().size()==1);
+        assert(p1.getPossibleActions().contains(Action.MOVE));
+
+        p1.move(w,tile2);
+
+        assert(p1.getPossibleActions().size()==1);
+        assert(p1.getPossibleActions().contains(Action.BUILD));
+
+        p1.build(w,tile1);
+
+        assert(p1.getPossibleActions().size()==2);
+        assert(p1.getPossibleActions().contains(Action.END));
+        assert(p1.getPossibleActions().contains(Action.BUILD));
+
+        assertFalse(p1.build(w,tile1));
+
+        p1.build(w,tile3);
+
+        assert(p1.getPossibleActions().size()==0);
     }
 
-   /* @Test
-    public void test() throws InvalidWorkerSelectionException {
-        List<String> l = new ArrayList<>();
-        l.add("jack");
-        Match m = new Match(l);
-        Game g = new Game(m);
-        Board b = m.getBoard();
-        Player p = m.getPlayers().get(0);
-        Divinity div = new BuildTwiceNotSameTile(new StandardDivinity());
-        p.setDivinity(div);
+    @Test
+    public void updatePossibleAction2Test() {
+        Tile tile1 = board.getTile(1,1);
+        Tile tile2 = board.getTile(0,0);
+        Tile tile3 = board.getTile(3,3);
+        Worker w = match.getCurrentPlayer().getWorkers().get(0);
+        Player p1 = match.getCurrentPlayer();
 
-        p.addWorker(b.getTile(1,1));
+        board.getTile(0,1).setDome();
+        board.getTile(1,0).setDome();
 
-        m.setCurrentPlayer(p);
+        assert(p1.getPossibleActions().size()==1);
+        assert(p1.getPossibleActions().contains(Action.MOVE));
 
-        assert(b.getTile(1, 1).isOccupied());
-        assert(b.getTile(1, 1).getWorker().getPlayer().equals(m.getCurrentPlayer()));
+        p1.move(w,tile2);
 
-        m.selectWorker(1,1);
+        assert(p1.getPossibleActions().size()==1);
+        assert(p1.getPossibleActions().contains(Action.BUILD));
 
-        b.getTile(0,1).setDome();
-        b.getTile(1,0).setDome();
+        p1.build(w,tile1);
 
-        p.startOfTurn();
-
-       p.move(p.getWorkers().get(0),b.getTile(0,0));
-       assert(p.getPossibleActions().size()==1 && p.getPossibleActions().contains(Action.BUILD));
-       p.build(p.getWorkers().get(0),b.getTile(1,1));
-       assert(p.getPossibleActions().size()==0);
-    } */
+        assert(p1.getPossibleActions().size()==0);
+    }
 }

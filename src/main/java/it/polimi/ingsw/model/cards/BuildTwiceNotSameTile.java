@@ -68,10 +68,11 @@ public class BuildTwiceNotSameTile extends BuildTwice {
     @Override
     public Set<Action> updatePossibleActions(Set<Action> possibleActions) {
         if(getBuildCount()==1) {
-            /*List<Tile> l = Game.getMatch().getAvailableBuildTiles(Game.getMatch().getSelectedWorker());
-            if(l.size()>0)*/
-            possibleActions.add(Action.BUILD);
-            possibleActions.add(Action.END);
+            List<Tile> l = Game.getMatch().getAvailableBuildTiles(Game.getMatch().getSelectedWorker());
+            if(l.size()>0) {
+                possibleActions.add(Action.BUILD);
+                possibleActions.add(Action.END);
+            }
         }
         return super.updatePossibleActions(possibleActions);
     }

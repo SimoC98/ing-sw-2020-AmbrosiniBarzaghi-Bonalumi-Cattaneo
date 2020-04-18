@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.exceptions.InvalidWorkerSelectionException;
+import it.polimi.ingsw.model.exceptions.WorkerBadPlacementException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,51 +16,93 @@ import java.util.Set;
 
 class BuildTwiceSameTileTest {
 
-    private static Tile tile1;
-    private static Tile tile2;
-    private static Tile tile3;
+    private static Game game;
+    private static Match match;
+    private static Board board;
     private static BuildTwice div;
-    private static Worker worker;
-    private static Set<Action> actions;
 
     @BeforeEach
-      void setup(){
-        tile1 = new Tile(1,1);
-        tile2 = new Tile(2,2);
-        tile3 = new Tile(3,3);
+      void setup() throws WorkerBadPlacementException, InvalidWorkerSelectionException {
+        List<String> players = new ArrayList<>();
+        players.add("paolo");
+        players.add("francesco");
+        match = new Match(players);
+        game = new Game(match);
+        board = match.getBoard();
         div = new BuildTwiceSameTile(new StandardDivinity());
-        actions = new HashSet<>();
+        match.getPlayers().get(0).setDivinity(div);
+        match.startNextTurn();
+        match.placeWorkers(1,1,4,4);
+        match.selectWorker(1,1);
     }
 
     @Test
     public void buildTwiceSameTileTest(){
-        worker = new Worker(tile1, new Player("anakin", Color.BLUE) );
-        div.setupDivinity(actions);
-        div.move(worker,tile2);
-        div.build(worker,tile1);
+       Worker worker = match.getSelectedWorker();
+        Tile tile1 = board.getTile(1,1);
+        Tile tile2 = board.getTile(2,2);
+        Tile tile3 = board.getTile(3,3);
+        Player p1 = match.getCurrentPlayer();
+
+        assert(p1.move(worker,tile2));
+        assert(p1.build(worker,tile1));
+
         assert(div.getBuildCount()==1);
         assertEquals(div.getFirstBuildTile(), tile1);
-        assertFalse(div.legalBuild(worker, tile3));
-        assertTrue(div.legalBuild(worker, tile1));
+        assertFalse(p1.build(worker,tile3));
+        assertTrue(p1.build(worker,tile1));
     }
 
     @Test
-    public void listControlTest(){
-        worker = new Worker(tile1, new Player("anakin", Color.BLUE) );
-        div.setupDivinity(actions);
-        div.build(worker,tile2);
-        div.updatePossibleActions(actions);
-        assert(actions.size()==2);
-        assertTrue(actions.contains(Action.BUILD) && actions.contains(Action.END));
+    public void updatePossibleActionTest() {
+        Tile tile1 = board.getTile(1,1);
+        Tile tile2 = board.getTile(2,2);
+        Tile tile3 = board.getTile(3,3);
+        Worker w = match.getCurrentPlayer().getWorkers().get(0);
+        Player p1 = match.getCurrentPlayer();
+
+        assert(p1.getPossibleActions().size()==1);
+        assert(p1.getPossibleActions().contains(Action.MOVE));
+
+        p1.move(w,tile2);
+
+        assert(p1.getPossibleActions().size()==1);
+        assert(p1.getPossibleActions().contains(Action.BUILD));
+
+        p1.build(w,tile1);
+
+        assert(p1.getPossibleActions().size()==2);
+        assert(p1.getPossibleActions().contains(Action.END));
+        assert(p1.getPossibleActions().contains(Action.BUILD));
+
+        assertFalse(p1.build(w,tile3));
+
+        p1.build(w,tile1);
+
+        assert(p1.getPossibleActions().size()==0);
     }
 
     @Test
     public void buildNoDomesTest(){
-        worker = new Worker(tile1, new Player("anakin", Color.BLUE) );
-        tile2.increaseLevel();
-        tile2.increaseLevel();
-        div.build(worker,tile2);
-        div.updatePossibleActions(actions);
-        assertEquals(actions.size(),0);
+        Tile tile1 = board.getTile(1,1);
+        Tile tile2 = board.getTile(0,0);
+        Tile tile3 = board.getTile(3,3);
+        Worker w = match.getCurrentPlayer().getWorkers().get(0);
+        Player p1 = match.getCurrentPlayer();
+
+        assert(p1.getPossibleActions().size()==1);
+        assert(p1.getPossibleActions().contains(Action.MOVE));
+
+        p1.move(w,tile2);
+
+        tile1.increaseLevel();
+        tile1.increaseLevel();
+
+        assert(p1.getPossibleActions().size()==1);
+        assert(p1.getPossibleActions().contains(Action.BUILD));
+
+        p1.build(w,tile1);
+
+        assert(p1.getPossibleActions().size()==0);
     }
 }

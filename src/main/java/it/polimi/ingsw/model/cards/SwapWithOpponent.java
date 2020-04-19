@@ -48,7 +48,6 @@ public class SwapWithOpponent extends MoveOnOpponent {
 
     @Override
     public boolean legalMove(Worker selectedWorker, Tile selectedTile) {
-        //TODO: is this code useful? If yes, does it beelong here?
         if(selectedTile.isOccupied()) {
             List<Tile> l = Game.getMatch().getBoard().getAdjacentTiles(selectedTile);
             List<Tile> l2 = new ArrayList<>();

@@ -35,7 +35,7 @@ public class SetEffectOnOpponent extends DivinityDecoratorWithEffects {
             ArrayList<Player> players =  Game.getMatch().getPlayers();
             for(Player p:players) {
                 if(!p.getUsername().equals(playerUsername)) {
-                    p.setDivinity(new BlockLevelUp(p.getDivinity().getDivinity()));
+                    p.setDivinity(new BlockLevelUp(p.getDivinity()));
                 }
             }
         }
@@ -53,7 +53,7 @@ public class SetEffectOnOpponent extends DivinityDecoratorWithEffects {
             ArrayList<Player> players =  Game.getMatch().getPlayers();
             for(Player p:players) {
                 if(!p.equals(Game.getMatch().getCurrentPlayer())) {
-                    p.setDivinity(p.getDivinity().getDivinity());
+                    p.setDivinity(p.getDivinity());
                 }
             }
         }

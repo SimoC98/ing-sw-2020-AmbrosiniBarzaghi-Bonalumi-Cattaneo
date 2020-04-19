@@ -8,20 +8,25 @@ import it.polimi.ingsw.model.Worker;
 import java.util.Set;
 
 /**
- * Decorator Pattern
- * implements Divinity interface and can be used to decorate an object with Divinity as static type
- * all the methods are called on the divinity set as attribute
+ * General class to decorate a divinity with special effects in accordance to
+ * Decorator Pattern. All methods are overridden and a setup for the decoration
+ * shell is declared.
  */
 public class DivinityDecoratorWithEffects implements Divinity {
-    /**
-     * instance that has to be decorated
-     */
+
     private Divinity divinity;
 
+    /**
+     * Constructor used in tests
+     */
     public DivinityDecoratorWithEffects() {
         divinity = null;
     }
 
+    /**
+     * Main constructor to decorate a divinity.
+     * @param divinity Interface passed to realize Decorator Pattern
+     */
     public DivinityDecoratorWithEffects(Divinity divinity) {
         this.divinity = divinity;
     }

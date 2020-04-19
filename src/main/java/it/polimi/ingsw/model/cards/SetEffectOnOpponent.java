@@ -5,6 +5,12 @@ import it.polimi.ingsw.model.*;
 import java.util.ArrayList;
 import java.util.Set;
 
+/**
+ * Athena prevents other players from moving up during their next turns, if she has moved up.
+ * This effects lasts until her next turn.
+ * <p>
+ * To achieve such condition every opponent's divinity is decorated with another player that modifies {@code legalMove}
+ */
 public class SetEffectOnOpponent extends DivinityDecoratorWithEffects {
     private boolean hasMovedUp;
     private String playerUsername;
@@ -18,10 +24,8 @@ public class SetEffectOnOpponent extends DivinityDecoratorWithEffects {
     }
 
     /**
-     * if the worker tries to go to a higher level tile, other player's divinities are decorated
-     * with a class that prevents them to go to a higher level tile
-     * @param selectedWorker
-     * @param selectedTile
+     * If the worker goes to a higher level than their current one, other players' divinities are decorated
+     * with a class that blocks their ascension
      */
     @Override
     public void move(Worker selectedWorker, Tile selectedTile) {
@@ -38,10 +42,10 @@ public class SetEffectOnOpponent extends DivinityDecoratorWithEffects {
         super.move(selectedWorker, selectedTile);
     }
 
+
     /**
-     * if the previous turn a current player's worker has moved up, the last decoration of all other player's divinity
-     * has to be removed
-     * @param possibleActions
+     * If Athena had moved up during her previous turn, all the affected divinities
+     * needs to get rid of the "blocking" layer. Such condition is checked through a flag
      */
     @Override
     public void setupDivinity(Set<Action> possibleActions) {

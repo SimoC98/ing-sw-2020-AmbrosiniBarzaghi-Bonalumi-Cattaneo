@@ -5,6 +5,9 @@ import it.polimi.ingsw.model.DivinityDecoratorWithEffects;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
 
+/**
+ * Parent class for gods that can move on opponents
+ */
 public class MoveOnOpponent extends DivinityDecoratorWithEffects {
 
     public MoveOnOpponent() {
@@ -21,9 +24,8 @@ public class MoveOnOpponent extends DivinityDecoratorWithEffects {
     }
 
     /**
-     * @param selectedWorker
-     * @param selectedTile
-     * @return true even if the selected tile is occupied by another Player's worker
+     * Alters the method so that a worker can move on an opponent's worker
+     * @return {@code true} if the base move is valid and the worker is trying to  move on an enemy worker
      */
     @Override
     public boolean legalMove(Worker selectedWorker, Tile selectedTile) {

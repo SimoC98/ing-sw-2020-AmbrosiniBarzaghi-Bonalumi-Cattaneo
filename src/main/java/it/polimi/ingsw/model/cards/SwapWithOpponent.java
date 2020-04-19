@@ -6,6 +6,13 @@ import it.polimi.ingsw.model.exceptions.InvalidMoveException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * When this God, Apollo, moves onto an opponent tile, his worker and the opponent's swap their positions
+ * <p>
+ * {@code legalMove} and {@code move} are the functions affected in this class: {@link SwapWithOpponent#legalMove(Worker, Tile)} has to
+ * perform several tests to verify the possibility of movement; {@link PushOpponent#move(Worker, Tile)} has to access the {@link it.polimi.ingsw.model.Match}
+ * in order to retrieve and move the opponent's {@link Worker}
+ */
 public class SwapWithOpponent extends MoveOnOpponent {
 
     public SwapWithOpponent() {
@@ -17,9 +24,8 @@ public class SwapWithOpponent extends MoveOnOpponent {
     }
 
     /**
-     * if the Tile selected is occupied by another player's Worker, the two Workers can be swapped
-     * @param selectedWorker
-     * @param selectedTile
+     * If the selected tile is occupied by an opponent worker, such worker and his tile are
+     * saved and the swap takes place. Otherwise it is a simple move
      */
     @Override
     public void move(Worker selectedWorker, Tile selectedTile) {

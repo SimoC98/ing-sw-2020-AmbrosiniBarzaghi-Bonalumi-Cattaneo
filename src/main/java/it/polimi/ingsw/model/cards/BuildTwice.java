@@ -5,8 +5,10 @@ import it.polimi.ingsw.model.*;
 import java.util.Set;
 
 /**
- * Decorator Pattern
- * the Divinity decorated with this class is allowed to build 2 times
+ * General class to decorate divinities that are able to build twice consecutively.
+ * The functioning of {@code build} and {@code legalBuild} methods are changed;
+ * this type of divinities requires that a build counter is created and the tile
+ * the player builds on, is remembered. Other methods are unchanged.
  */
 public class BuildTwice extends DivinityDecoratorWithEffects {
     private Tile firstBuildTile;
@@ -18,11 +20,20 @@ public class BuildTwice extends DivinityDecoratorWithEffects {
         super(decoratedDivinity);
     }
 
+    /**
+     *The methods follows the call flow of parent classes to
+     * effectively "decorate" such method
+     */
     @Override
     public boolean legalBuild(Worker selectedWorker, Tile selectedTile) {
         return super.legalBuild(selectedWorker, selectedTile);
     }
 
+    /**
+     * The function saves the {@link Tile} where the {@link Worker}
+     * first builds and it increments the building counter in order to
+     * build only twice.
+     */
     @Override
     public void build(Worker selectedWorker, Tile selectedTile) {
         if(buildCount==0) {

@@ -1,13 +1,12 @@
 package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.model.Divinity;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
 
 /**
- * Decorator Pattern
- * the Divinity decorated with this class can also win by moving down
- * 2 or more levels
+ * Pan's player can also win if his worker drops by two level
  */
 public class WinByDropTwoLevel extends AdditionalWinCondition {
 
@@ -17,12 +16,18 @@ public class WinByDropTwoLevel extends AdditionalWinCondition {
         super(decoratedDivinity);
     }
 
+    /**
+     * @return {@code true} if Pan's winning condition is verified
+     */
     @Override
     protected boolean isWinner(Worker selectedWorker, Tile selectedTile) {
         int levelDifference = selectedWorker.getPositionOnBoard().getLevel() - selectedTile.getLevel();
         return levelDifference >= 2;
     }
 
+    /**
+     * This methods also needs to check that if the worker is dropping by two levels and in that case, it calls {@link Player#setWinner()}
+     */
     @Override
     public void move(Worker selectedWorker, Tile selectedTile) {
         if(isWinner(selectedWorker, selectedTile)) {
@@ -50,8 +55,5 @@ public class WinByDropTwoLevel extends AdditionalWinCondition {
     public Divinity getDivinity() {
         return super.getDivinity();
     }
-
-
-
 
 }

@@ -6,8 +6,12 @@ import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
 
 /**
- * Decorator Pattern
- * the selected Worker can move into an opponent Worker's Tile, if their Worker can be forced one space straight backwards to an unoccupied Tile
+ * This class represents Minotaur, whose effect is to push an opponent on the direction he is moving,
+ * if the tile the opponent is to be occupying is accessible.
+ * <p>
+ * {@code legalMove} and {@code move} are the functions affected in this class: {@link PushOpponent#legalMove(Worker, Tile)} has to
+ * perform several tests to verify the possibility of movement; {@link PushOpponent#move(Worker, Tile)} has to access the {@link it.polimi.ingsw.model.Match}
+ *in order to retrieve and move the opponent's {@link Worker}
  */
 public class PushOpponent extends MoveOnOpponent {
 
@@ -17,6 +21,11 @@ public class PushOpponent extends MoveOnOpponent {
         super(decoratedDivinity);
     }
 
+    /**
+     * The control verify that if the selected tile contains an opponent worker, then when he will be moved, he will not
+     * be moved out of the {@link it.polimi.ingsw.model.Board}, on a dome or on another worker
+     * @return {@code true} if the move is not illegal
+     */
     @Override
     public boolean legalMove(Worker selectedWorker, Tile selectedTile) {
         boolean moveOnOpponent = super.legalMove(selectedWorker,selectedTile);
@@ -41,6 +50,9 @@ public class PushOpponent extends MoveOnOpponent {
         }
     }
 
+    /**
+     * Moves both the current player's worker and the opponent one if the selected tile is occupied by the latter
+     */
     @Override
     public void move(Worker selectedWorker, Tile selectedTile) {
         int dx = selectedTile.getX() - selectedWorker.getPositionOnBoard().getX();

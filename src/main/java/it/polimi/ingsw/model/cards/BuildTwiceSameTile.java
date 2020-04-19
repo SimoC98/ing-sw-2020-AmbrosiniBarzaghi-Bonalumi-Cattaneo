@@ -8,9 +8,12 @@ import it.polimi.ingsw.model.Worker;
 import java.util.Set;
 
 /**
- * Decorator Pattern
- * the Divinity decorated with this class is allowed to build 2 times on the same tile
- * and only if the second built is not a dome
+ * This God, Hephaestus, can build twice but only on the same tile.
+ * <p>
+ * To carry out his effects it is required that {@code legalBuild} checks
+ * the player's second build position and that {@code updatePossibleActions}
+ * adds the possibility to end the build phase and thus the turn after the
+ * first build. This is why it adds {@link Action#BUILD} in the set of actions to pick from.
  */
 public class BuildTwiceSameTile extends BuildTwice {
 
@@ -50,6 +53,9 @@ public class BuildTwiceSameTile extends BuildTwice {
         return super.getFirstBuildTile();
     }
 
+    /**
+     * @return {@code true} if the build is correct: it is the first and in accordance to the game rules, or it is the second and on the same tile
+     */
     @Override
     public boolean legalBuild(Worker selectedWorker, Tile selectedTile) {
         if(getBuildCount()>0) {
@@ -63,6 +69,10 @@ public class BuildTwiceSameTile extends BuildTwice {
         return super.legalBuild(selectedWorker,selectedTile);
     }
 
+    /**
+     * After the first build the player can end his turn
+     * @return {@code Set} updated with {@link Action#BUILD} and {@link Action#END} when called after the first build
+     */
     @Override
     public Set<Action> updatePossibleActions(Set<Action> possibleActions) {
         if(getBuildCount()==1) {

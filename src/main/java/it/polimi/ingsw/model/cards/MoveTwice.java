@@ -5,8 +5,7 @@ import it.polimi.ingsw.model.*;
 import java.util.Set;
 
 /**
- * Decorator Pattern
- * the Divinity decorated with this class is allowed to move 2 times
+ * Parent class to realize divinities whose effect is to move twice in the same turn
  */
 public class MoveTwice extends DivinityDecoratorWithEffects {
     private Tile firstMovedTile;
@@ -20,9 +19,7 @@ public class MoveTwice extends DivinityDecoratorWithEffects {
     }
 
     /**
-     *saves the tile from which the move action starts
-     * @param selectedWorker
-     * @param selectedTile
+     * Saves the tile the worker was on his first movement and updates the move counter
      */
     @Override
     public void move(Worker selectedWorker, Tile selectedTile) {
@@ -33,6 +30,9 @@ public class MoveTwice extends DivinityDecoratorWithEffects {
         super.move(selectedWorker,selectedTile);
     }
 
+    /**
+     * The build can only happen upon a worker's change of position
+     */
     @Override
     public void build(Worker selectedWorker, Tile selectedTile) {
         hasBuilt = true;
@@ -73,8 +73,7 @@ public class MoveTwice extends DivinityDecoratorWithEffects {
     }
 
     /**
-     * initializes the attributes of the class
-     * @param possibleActions
+     * Initializes the attribute for the correct use of the gods' effects
      */
     @Override
     public void setupDivinity(Set<Action> possibleActions) {

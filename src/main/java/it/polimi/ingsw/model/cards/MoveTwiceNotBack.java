@@ -6,6 +6,14 @@ import it.polimi.ingsw.model.*;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * This Goddess, Artemis, can move twice but not back to its initial space.
+ * <p>
+ * For this divinity it is required that {@code legalMove} checks
+ * the player's second move selection and that {@code updatePossibleActions}
+ * adds the possibility to end the move phase and thus beginning the build phase,
+ * after the first move.
+ */
 public class MoveTwiceNotBack extends MoveTwice{
 
     public MoveTwiceNotBack() { super(); }
@@ -15,9 +23,7 @@ public class MoveTwiceNotBack extends MoveTwice{
     }
 
     /**
-     * @param selectedWorker
-     * @param selectedTile
-     * @return false if, during the second movement, the worker tries to move back to the tile where he started
+     * @return {@code true} if the move is correct: it is the first one and in accordance to the game rules, or it is the second and on a different tile
      */
     @Override
     public boolean legalMove(Worker selectedWorker, Tile selectedTile) {
@@ -29,6 +35,10 @@ public class MoveTwiceNotBack extends MoveTwice{
         return super.legalMove(selectedWorker,selectedTile);
     }
 
+    /**
+     * After the first move, the player can build
+     * @return {@code Set} updated with {@link Action#MOVE} when called after the first move, if a build has not happened
+     */
     @Override
     public Set<Action> updatePossibleActions(Set<Action> possibleActions) {
         if(getMoveCount() == 1 && !isHasBuilt()) {

@@ -77,6 +77,9 @@ public class Tile {
         isOccupied = true;
     }
 
+    /**
+     * @return {@code true} if the tile corresponding to the input coordinates is adjacent to the current one
+     */
     public boolean isAdjacent(int tx, int ty){
         return (Math.abs(tx-x)<=1) && (Math.abs(ty-y)<=1);
     }

@@ -1,6 +1,9 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.cards.MoveTwiceNotBack;
+import it.polimi.ingsw.model.cards.SetEffectOnOpponent;
 import it.polimi.ingsw.model.cards.StandardDivinity;
+import it.polimi.ingsw.model.cards.SwapWithOpponent;
 import it.polimi.ingsw.model.exceptions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,13 +41,13 @@ class MatchTest {
 
         Color[] colors = Color.values();
 
-        assertNull(match.getCurrentPlayer());
+        assert(match.getCurrentPlayer().equals(match.getPlayers().get(0)));
 
-        match.startNextTurn();
         assert(match.getCurrentPlayer().getUsername().equals("paolo"));
         assert(match.getCurrentPlayer().getColor().equals(colors[0]));
 
         match.startNextTurn();
+
         assert(match.getCurrentPlayer().getUsername().equals("giacomo"));
         assert(match.getCurrentPlayer().getColor().equals(colors[1]));
 
@@ -64,7 +67,7 @@ class MatchTest {
         p1.setDivinity(new StandardDivinity());
         p2.setDivinity(new StandardDivinity());
         p3.setDivinity(new StandardDivinity());
-        match.startNextTurn();
+
 
         match.placeWorkers(0,0,4,0);
 
@@ -107,7 +110,6 @@ class MatchTest {
     public void placeWorkersTest() {
         p1.setDivinity(new StandardDivinity());
         p2.setDivinity(new StandardDivinity());
-        match.startNextTurn();
 
         assertThrows(WorkerBadPlacementException.class,()-> match.placeWorkers(0,0,0,0));
         try {
@@ -120,7 +122,7 @@ class MatchTest {
         assertThrows(WorkerBadPlacementException.class,()-> match.placeWorkers(0,0,3,0));
         try {
             match.placeWorkers(2,0,3,0);
-        } catch (WorkerBadPlacementException e) { }
+        } catch (WorkerBadPlacementException e) {}
         assertTrue(p2.getWorkers().get(0).getPositionOnBoard().equals(board.getTile(2,0)));
         assertTrue(p2.getWorkers().get(1).getPositionOnBoard().equals(board.getTile(3,0)));
     }
@@ -130,7 +132,6 @@ class MatchTest {
         p1.setDivinity(new StandardDivinity());
         p2.setDivinity(new StandardDivinity());
         p3.setDivinity(new StandardDivinity());
-        match.startNextTurn();
         match.placeWorkers(0,0,4,0);
         match.startNextTurn();
         match.placeWorkers(0,4,4,4);
@@ -150,7 +151,7 @@ class MatchTest {
             match.selectWorker(4,0);
         } catch (InvalidWorkerSelectionException e) { }
 
-        assert(match.getSelectedWorker().equals(p1.getWorkers().get(1)));
+        assertEquals(match.getSelectedWorker(),p1.getWorkers().get(1));
     }
 
     @Test
@@ -214,7 +215,28 @@ class MatchTest {
         assertThrows(InvalidBuildException.class,()->match.build(1,1));
         assertThrows(InvalidBuildException.class,()->match.build(5,1));
         assertThrows(InvalidBuildException.class,()->match.build(0,0));
+    }
 
+    @Test
+    public void test() {
+        try {
+            match.playerInitialization(0,0,1,1,"Apollo");
+            match.playerInitialization(2,2,3,3,"Artemis");
+            match.playerInitialization(0,2,0,3,"Athena");
+        } catch (WorkerBadPlacementException e) {}
+
+        assertEquals(p1.getWorkers().get(0).getPositionOnBoard(),board.getTile(0,0));
+        assertEquals(p1.getWorkers().get(1).getPositionOnBoard(),board.getTile(1,1));
+        assertEquals(p2.getWorkers().get(0).getPositionOnBoard(),board.getTile(2,2));
+        assertEquals(p2.getWorkers().get(1).getPositionOnBoard(),board.getTile(3,3));
+        assertEquals(p3.getWorkers().get(0).getPositionOnBoard(),board.getTile(0,2));
+        assertEquals(p3.getWorkers().get(1).getPositionOnBoard(),board.getTile(0,3));
+
+        assertEquals(p1.getDivinity().getClass(),SwapWithOpponent.class);
+        assertEquals(p2.getDivinity().getClass(), MoveTwiceNotBack.class);
+        assertEquals(p3.getDivinity().getClass(), SetEffectOnOpponent.class);
+
+        assertEquals(match.getCurrentPlayer(),p1);
     }
 
 

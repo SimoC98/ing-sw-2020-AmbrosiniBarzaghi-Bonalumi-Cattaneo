@@ -33,9 +33,9 @@ class BuildTwiceNotSameTileTest {
         board = match.getBoard();
         div = new BuildTwiceNotSameTile(new StandardDivinity());
         match.getPlayers().get(0).setDivinity(div);
-        match.startNextTurn();
         match.placeWorkers(1,1,4,4);
         match.selectWorker(1,1);
+        match.getCurrentPlayer().startOfTurn();
     }
 
     @Test

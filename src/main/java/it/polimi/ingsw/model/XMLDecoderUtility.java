@@ -12,7 +12,7 @@ public class XMLDecoderUtility {
             FileInputStream fis = new FileInputStream(new File("src/main/java/it/polimi/ingsw/divinitiesxml/" + name + ".xml"));
             XMLDecoder decoder = new XMLDecoder(fis);
 
-            Divinity divinity = (DivinityDecoratorWithEffects) decoder.readObject();
+            Divinity divinity = (Divinity) decoder.readObject();
 
             decoder.close();
             fis.close();

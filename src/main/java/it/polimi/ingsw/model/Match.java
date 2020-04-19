@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.ModelUpdateEvent;
 import it.polimi.ingsw.Observable;
 import it.polimi.ingsw.model.exceptions.*;
 
@@ -15,7 +16,7 @@ import java.util.List;
  * The basic idea is to track an user decisions
  * and to communicate to other players the changes.
  */
-public class Match extends Observable {
+public class Match extends Observable<ModelUpdateEvent> {
     private ArrayList<Player> players;
     private Player currentPlayer;
     private Board board;
@@ -259,11 +260,10 @@ public class Match extends Observable {
      * Method to be called once per player at the beginning of the match
      * to place his workers and to choose a divinity
      */
-    public void playerInitializatinon(int x1, int y1, int x2, int y2, String divName) throws WorkerBadPlacementException {
-        placeWorkers(x1,y1,x1,y2);
+    public void playerInitialization(int x1, int y1, int x2, int y2, String divName) throws WorkerBadPlacementException {
+        placeWorkers(x1,y1,x2,y2);
         loadDivinity(divName);
         int index = players.indexOf(currentPlayer) + 1;
-
         if(index==players.size()) startNextTurn();
         else {
             currentPlayer = players.get(index);

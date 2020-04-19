@@ -28,7 +28,7 @@ class WinByDropTwoLevelTest {
         board = match.getBoard();
         div = new WinByDropTwoLevel(new StandardDivinity());
         match.getPlayers().get(0).setDivinity(div);
-        match.startNextTurn();
+        match.getCurrentPlayer().startOfTurn();
     }
 
     @Test

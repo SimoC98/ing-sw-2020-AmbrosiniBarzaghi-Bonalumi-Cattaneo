@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <java version="13.0.2" class="java.beans.XMLDecoder">
- <object class="it.polimi.ingsw.model.cards.BlockLevelUp">
+ <object class="it.polimi.ingsw.model.cards.SetEffectOnOpponent">
   <void property="divinity">
    <object class="it.polimi.ingsw.model.cards.StandardDivinity">
     <void property="description">

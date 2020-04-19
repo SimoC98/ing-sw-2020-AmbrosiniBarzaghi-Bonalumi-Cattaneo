@@ -22,23 +22,23 @@ public class App
     {
         String name, description, heading;
 
-        int number = 10; //MODIFY!
-        name = "Prometheus";   //MODIFY!
-        heading = "Titan Benefactor of Mankind";    //MODIFY!
-        description = "Your Turn: If your Worker does " +
-                "not move up, it may build both " +
-                "before and after moving.";   //MODIFY!
+        int number = 0; //MODIFY!
+        name = "Human";   //MODIFY!
+        heading = "Normal Human";    //MODIFY!
+        description = "Has no additional power or side-effect";   //MODIFY!
 
         StandardDivinity stdDiv = new StandardDivinity(name, heading, description, number);
         DivinityDecoratorWithEffects decDiv = new BuildBeforeAndAfter(stdDiv); //MODIFY!
 
         encoder(decDiv, name);
+//        encoder(stdDiv, name);
         decoder(name);
     }
 
-    public static void encoder(DivinityDecoratorWithEffects divinity, String name){
+    public static void encoder(Divinity divinity, String name){
         System.out.println("ENCODING...");
         System.out.println("FILE:\t\"" + name + ".xml\"");
+
         try{
             FileOutputStream fos = new FileOutputStream(new File("src/main/java/it/polimi/ingsw/divinitiesxml/" + name + ".xml"));
             XMLEncoder encoder = new XMLEncoder(fos);
@@ -62,6 +62,7 @@ public class App
 
             Divinity div = (DivinityDecoratorWithEffects) decoder.readObject();
             StandardDivinity stddiv = (StandardDivinity) div.getDivinity();
+//            StandardDivinity stddiv = (StandardDivinity) decoder.readObject();
             decoder.close();
             fis.close();
 

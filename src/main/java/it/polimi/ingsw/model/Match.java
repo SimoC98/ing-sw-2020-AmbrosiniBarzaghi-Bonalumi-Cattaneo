@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.Observable;
-import it.polimi.ingsw.model.cards.Divinity;
 import it.polimi.ingsw.model.exceptions.*;
 
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ public class Match extends Observable {
      * Constructor used to support other classes
      *  and to simplify testing
      */
-    public Match() {  }
+    public Match() {}
 
     /**
      * Constructor used to support other classes
@@ -210,6 +209,7 @@ public class Match extends Observable {
         else throw new InvalidActionException();
     }
 
+
     public void setUserAction(Action action) {
         userAction = action;
     }
@@ -259,14 +259,14 @@ public class Match extends Observable {
      * Method to be called once per player at the beginning of the match
      * to place his workers and to choose a divinity
      */
-    public void playerInitializatinon(int x1, int y1, int x2, int y2, String divName){
-        int playerIndex = players.indexOf(currentPlayer);
-        if (playerIndex + 1>= players.size()) {
-           startNextTurn();
-        }else {
-            //placeWorkers(x1,x2,y1,y2);
-            //loadDivinity(divName);
-            playerIndex = playerIndex + 1;
+    public void playerInitializatinon(int x1, int y1, int x2, int y2, String divName) throws WorkerBadPlacementException {
+        placeWorkers(x1,y1,x1,y2);
+        loadDivinity(divName);
+        int index = players.indexOf(currentPlayer) + 1;
+
+        if(index==players.size()) startNextTurn();
+        else {
+            currentPlayer = players.get(index);
         }
     }
 }

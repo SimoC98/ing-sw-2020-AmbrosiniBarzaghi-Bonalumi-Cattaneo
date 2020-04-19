@@ -5,19 +5,19 @@ import it.polimi.ingsw.model.Match;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Observable {
-    List<Observer<ModelUpdateEvent>> users = new ArrayList<>();
+public class Observable<T> {
+    List<Observer<T>> observers = new ArrayList<>();
 
-    public void addUser(Observer<ModelUpdateEvent> user) {
-        users.add(user);
+    public void addObserver(Observer<T> user) {
+        observers.add(user);
     }
 
-    public void removeUser(Observer<ModelUpdateEvent> user) {
-        users.remove(user);
+    public void removeObserver(Observer<T> user) {
+        observers.remove(user);
     }
 
     public void notifyUsers(Match model) {
-        for(Observer o : users) {
+        for(Observer o : observers) {
             //update with simplified copy of model
         }
     }

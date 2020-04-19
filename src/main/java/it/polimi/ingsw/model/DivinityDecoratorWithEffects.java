@@ -1,11 +1,10 @@
-package it.polimi.ingsw.model.cards;
+package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.Action;
+import it.polimi.ingsw.model.Divinity;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -13,7 +12,7 @@ import java.util.Set;
  * implements Divinity interface and can be used to decorate an object with Divinity as static type
  * all the methods are called on the divinity set as attribute
  */
-public class DivinityDecoratorWithEffects implements Divinity{
+public class DivinityDecoratorWithEffects implements Divinity {
     /**
      * instance that has to be decorated
      */

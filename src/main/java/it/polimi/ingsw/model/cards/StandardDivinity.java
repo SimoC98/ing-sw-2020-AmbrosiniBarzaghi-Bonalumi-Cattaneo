@@ -1,12 +1,12 @@
 package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.model.Action;
+import it.polimi.ingsw.model.Divinity;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.model.exceptions.InvalidBuildException;
 import it.polimi.ingsw.model.exceptions.InvalidMoveException;
 
-import java.util.List;
 import java.util.Set;
 
 

@@ -1,10 +1,7 @@
-package it.polimi.ingsw.model.cards;
+package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.Action;
-import it.polimi.ingsw.model.Tile;
-import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.cards.StandardDivinity;
 
-import java.util.List;
 import java.util.Set;
 
 /**

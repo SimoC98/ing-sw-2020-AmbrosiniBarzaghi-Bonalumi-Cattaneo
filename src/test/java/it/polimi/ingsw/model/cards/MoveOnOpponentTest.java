@@ -1,16 +1,11 @@
 package it.polimi.ingsw.model.cards;
 
-import it.polimi.ingsw.model.Color;
-import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.Tile;
-import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.*;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class MoveOnOpponentTest {
-
-
 
     @Test
     public void moveOnMyOtherWorker(){

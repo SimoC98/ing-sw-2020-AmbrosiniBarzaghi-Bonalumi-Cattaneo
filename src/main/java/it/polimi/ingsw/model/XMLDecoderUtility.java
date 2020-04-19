@@ -1,12 +1,8 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.cards.Divinity;
-import it.polimi.ingsw.model.cards.DivinityDecoratorWithEffects;
-
 import java.beans.XMLDecoder;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class XMLDecoderUtility {

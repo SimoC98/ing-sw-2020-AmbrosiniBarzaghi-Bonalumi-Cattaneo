@@ -1,19 +1,11 @@
 package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.model.*;
-import org.junit.Before;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class PushOpponentTest {
-    private static Board boarda;
-
-    @BeforeAll
-    static void setup() {
-        Board boarda = new Board();
-    }
 
     @Test
     public void pushOpponentSimple(){

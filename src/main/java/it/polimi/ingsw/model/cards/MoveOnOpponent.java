@@ -1,9 +1,11 @@
 package it.polimi.ingsw.model.cards;
 
+import it.polimi.ingsw.model.Divinity;
+import it.polimi.ingsw.model.DivinityDecoratorWithEffects;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
 
-public class MoveOnOpponent extends DivinityDecoratorWithEffects{
+public class MoveOnOpponent extends DivinityDecoratorWithEffects {
 
     public MoveOnOpponent() {
         super();

@@ -1,7 +1,5 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.cards.Divinity;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

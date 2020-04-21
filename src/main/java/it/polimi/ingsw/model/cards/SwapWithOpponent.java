@@ -46,6 +46,11 @@ public class SwapWithOpponent extends MoveOnOpponent {
         }
     }
 
+    /**
+     * An {@code ArrayList} is created to prevent the player from committing a rare losing condition:
+     * The player swaps on a {@link Tile} where he will not be able to build; i.e. the worker is surrounded by domes
+     * or other workers.
+     */
     @Override
     public boolean legalMove(Worker selectedWorker, Tile selectedTile) {
         if(selectedTile.isOccupied()) {

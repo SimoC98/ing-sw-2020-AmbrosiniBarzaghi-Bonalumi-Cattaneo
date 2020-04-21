@@ -7,6 +7,4 @@ public enum Action {
     BUILDDOME,
     END;
 
-
-
 }

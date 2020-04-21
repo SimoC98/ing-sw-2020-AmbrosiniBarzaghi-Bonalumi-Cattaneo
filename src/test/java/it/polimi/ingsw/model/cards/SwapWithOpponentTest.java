@@ -43,6 +43,7 @@ class SwapWithOpponentTest {
 
         Worker opponentWorker = new Worker(tile2,new Player("Marco",Color.BLUE));
 
+        assert(match.getCurrentPlayer().getUsername().equals("paolo"));
         assert(p1.move(worker,tile2));
 
         assertEquals(tile2.getWorker(),worker);
@@ -53,8 +54,8 @@ class SwapWithOpponentTest {
     public void swapdeniedTest() {
         Worker worker = match.getSelectedWorker();
         Tile tile1 = board.getTile(1,1);
-        Tile tile2 = board.getTile(0,0);
-        Tile tile3 = board.getTile(2,2);
+        Tile tile2 = board.getTile(2,2);
+        Tile tile3 = board.getTile(0,0);
         Player p1 = match.getCurrentPlayer();
 
         Worker opponentWorker1 = new Worker(tile2,new Player("Marco",Color.BLUE));
@@ -63,8 +64,8 @@ class SwapWithOpponentTest {
         board.getTile(0,1).setDome();
         board.getTile(1,0).setDome();
 
-        assertFalse(p1.move(worker,tile1));
-        assert(p1.move(worker,tile3));
+        assertFalse(p1.move(worker,tile3));
+        assert(p1.move(worker,tile2));
     }
 
     @Test

@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.ModelUpdateEvent;
 import it.polimi.ingsw.Observable;
+import it.polimi.ingsw.events.modelToView.*;
 import it.polimi.ingsw.model.exceptions.*;
 
 import java.util.ArrayList;

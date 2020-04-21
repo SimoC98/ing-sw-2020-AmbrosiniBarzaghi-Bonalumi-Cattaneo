@@ -80,7 +80,7 @@ public class Player {
     /**
      * @return Returns a {@code HashSet} containing the player's next possible actions, i.e. {@link Action#MOVE}, {@link Action#BUILD}, {@link Action#BUILDDOME} and {@link Action#END}
      */
-    public Set<Action> getPossibleActions() { return new HashSet<Action>(possibleActions); }
+    public HashSet<Action> getPossibleActions() { return new HashSet<Action>(possibleActions); }
 
     public Color getColor() { return color; }
 

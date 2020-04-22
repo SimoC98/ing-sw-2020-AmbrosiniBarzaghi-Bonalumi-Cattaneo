@@ -71,17 +71,16 @@ public class BuildTwiceSameTile extends BuildTwice {
 
     /**
      * After the first build the player can end his turn
-     * @return {@code Set} updated with {@link Action#BUILD} and {@link Action#END} when called after the first build
      */
     @Override
-    public Set<Action> updatePossibleActions(Set<Action> possibleActions) {
+    public void updatePossibleActions(Set<Action> possibleActions) {
         if(getBuildCount()==1) {
             if(getFirstBuildTile().getLevel()<=2) {
                 possibleActions.add(Action.BUILD);
                 possibleActions.add(Action.END);
             }
         }
-        return super.updatePossibleActions(possibleActions);
+        super.updatePossibleActions(possibleActions);
     }
 
     @Override

@@ -37,15 +37,14 @@ public class MoveTwiceNotBack extends MoveTwice{
 
     /**
      * After the first move, the player can build
-     * @return {@code Set} updated with {@link Action#MOVE} when called after the first move, if a build has not happened
      */
     @Override
-    public Set<Action> updatePossibleActions(Set<Action> possibleActions) {
+    public void updatePossibleActions(Set<Action> possibleActions) {
         if(getMoveCount() == 1 && !isHasBuilt()) {
             List<Tile> l = Game.getMatch().getAvailableMoveTiles(Game.getMatch().getSelectedWorker());
             if(l.size()>0) possibleActions.add(Action.MOVE);
         }
-        return super.updatePossibleActions(possibleActions);
+        super.updatePossibleActions(possibleActions);
     }
 
     @Override

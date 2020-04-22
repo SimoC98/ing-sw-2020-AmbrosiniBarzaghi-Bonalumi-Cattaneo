@@ -75,14 +75,13 @@ public class BuildBeforeAndAfter extends DivinityDecoratorWithEffects {
     }
 
     /**
-     * @return {@code Set} updated with {@link Action#MOVE} if the player decided to build previously
      */
     @Override
-    public Set<Action> updatePossibleActions(Set<Action> possibleActions) {
+    public void updatePossibleActions(Set<Action> possibleActions) {
         if(hasBuiltBefore && !hasMoved) {
             possibleActions.add(Action.MOVE);
         }
-        return super.updatePossibleActions(possibleActions);
+        super.updatePossibleActions(possibleActions);
     }
 
     /**

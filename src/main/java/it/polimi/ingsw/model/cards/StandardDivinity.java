@@ -104,11 +104,10 @@ public class StandardDivinity implements Divinity {
      * <p>
      * The standard divinity does not update the set
      * @param possibleActions Available actions of a player
-     * @return updated list of {@link Action}s
      */
     @Override
-    public Set<Action> updatePossibleActions(Set<Action> possibleActions) {
-        return possibleActions;
+    public void updatePossibleActions(Set<Action> possibleActions) {
+        return;
     }
 
     /**

@@ -1,10 +1,5 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.model.Action;
-import it.polimi.ingsw.model.Divinity;
-import it.polimi.ingsw.model.Tile;
-import it.polimi.ingsw.model.Worker;
-
 import java.util.Set;
 
 /**
@@ -53,8 +48,8 @@ public class DivinityDecoratorWithEffects implements Divinity {
     }
 
     @Override
-    public Set<Action> updatePossibleActions(Set<Action> possibleActions) {
-        return divinity.updatePossibleActions(possibleActions);
+    public void updatePossibleActions(Set<Action> possibleActions) {
+        divinity.updatePossibleActions(possibleActions);
     }
 
     @Override

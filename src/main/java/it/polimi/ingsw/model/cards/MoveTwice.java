@@ -68,8 +68,8 @@ public class MoveTwice extends DivinityDecoratorWithEffects {
     }
 
     @Override
-    public Set<Action> updatePossibleActions(Set<Action> possibleActions) {
-        return super.updatePossibleActions(possibleActions);
+    public void updatePossibleActions(Set<Action> possibleActions) {
+         super.updatePossibleActions(possibleActions);
     }
 
     /**

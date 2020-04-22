@@ -32,14 +32,13 @@ public class BuildDomeEverywhere extends DivinityDecoratorWithEffects {
     }
 
     /**
-     * @return {@code Set} decorated with the possibility to build a dome
      */
     @Override
-    public Set<Action> updatePossibleActions(Set<Action> possibleActions) {
+    public void updatePossibleActions(Set<Action> possibleActions) {
         if(!hasBuilt) {
             possibleActions.add(Action.BUILDDOME);
         }
-        return super.updatePossibleActions(possibleActions);
+        super.updatePossibleActions(possibleActions);
     }
 
     @Override

@@ -23,11 +23,13 @@ class XMLParserUtilityTest {
     @Test
     public void parsingTest(){
         StandardDivinity stdDiv = (StandardDivinity) divinities.get("Apollo").getDivinity();
-        assertEquals("Apollo", stdDiv.getName());
+        assertEquals("God of Music", stdDiv.getHeading());
         assertEquals(1, stdDiv.getNumber());
 
         stdDiv = (StandardDivinity) divinities.get("Atlas").getDivinity();
+        assertEquals("Atlas", stdDiv.getName());
         assertEquals(4, stdDiv.getNumber());
+
 
         stdDiv = (StandardDivinity) divinities.get("Minotaur").getDivinity();
         assertEquals(8, stdDiv.getNumber());

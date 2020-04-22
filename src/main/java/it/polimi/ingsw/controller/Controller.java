@@ -1,5 +1,7 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.Observer;
+import it.polimi.ingsw.events.viewToController.VCEvent;
 import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.exceptions.InvalidActionException;
@@ -11,13 +13,15 @@ import javax.swing.text.View;
 import java.util.HashSet;
 import java.util.List;
 
-public class Controller {
+public class Controller implements Observer<VCEvent> {
     private Match model;
     private List<View> users;
+    private int currentPlayerId;
 
     public Controller(Match model, List<View> users) {
         this.model = model;
         this.users = users;
+        currentPlayerId = 0;
     }
 
     public void handleActionValidation(Action action, int x, int y) {
@@ -30,7 +34,8 @@ public class Controller {
                 case "END": //
             }
         } catch (InvalidActionException e) {
-            //send error to current user and ask again
+            //view.show("sjdchue");
+            //view.askmovedncje
         }
     }
 
@@ -77,4 +82,9 @@ public class Controller {
     }
 
 
+    @Override
+    public void update(VCEvent event) {
+        //if(!(event instanceof VCEvent)) throw new RuntimeException("Wrong event type");
+        event.handleEvent(this);
+    }
 }

@@ -19,4 +19,8 @@ public class Game {
     public static Match getMatch() {
         return match;
     }
+
+    public static Board getBoard() {
+        return match.getBoard();
+    }
 }

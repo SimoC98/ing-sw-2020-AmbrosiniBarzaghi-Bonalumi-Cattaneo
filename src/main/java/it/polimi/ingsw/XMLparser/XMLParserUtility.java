@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import it.polimi.ingsw.model.Divinity;
+import it.polimi.ingsw.model.DivinityDecoratorWithEffects;
 import it.polimi.ingsw.model.cards.StandardDivinity;
 
 import java.lang.reflect.Constructor;
@@ -20,7 +21,7 @@ import org.xml.sax.*;
 public class XMLParserUtility {
 
     //given a StandardDivinity and the String containing the path to the DivinityDecoratorWithEffects's son class, instantiates a Divinity
-    private static Divinity parseDivinity(StandardDivinity stdDiv, String divClassPath) {
+    private static DivinityDecoratorWithEffects parseDivinity(String divClassPath) {
         /*
             code suggested in:
             https://stackoverflow.com/questions/6094575/creating-an-instance-using-the-class-name-and-calling-constructor/6094602
@@ -32,11 +33,11 @@ public class XMLParserUtility {
             e.printStackTrace();
         }
 
-        Constructor<?> cons = c.getConstructors()[1];
+        Constructor<?> cons = c.getConstructors()[0];
 
         Object obj = null;
         try {
-            obj = cons.newInstance(stdDiv);
+            obj = cons.newInstance();
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -45,7 +46,7 @@ public class XMLParserUtility {
             e.printStackTrace();
         }
 
-        return (Divinity) obj;
+        return (DivinityDecoratorWithEffects) obj;
     }
 
     //opens resources/divinities.xml and parses the divinities
@@ -96,7 +97,9 @@ public class XMLParserUtility {
 
             stdDiv = new StandardDivinity(name, heading, description, number);
 
-            divinitiesList.put(name, parseDivinity(stdDiv, divClassStr));
+            DivinityDecoratorWithEffects parsedDiv = parseDivinity(divClassStr);
+            parsedDiv.setDivinity(stdDiv);
+            divinitiesList.put(name, parsedDiv);
         }
 
         return divinitiesList;

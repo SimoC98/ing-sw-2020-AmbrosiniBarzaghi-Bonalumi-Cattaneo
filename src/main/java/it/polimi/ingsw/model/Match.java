@@ -181,6 +181,12 @@ public class Match extends Observable<ModelUpdateEvent> {
          return null;
     }
 
+    public int checkWinner() {
+        Player winner = findWinner();
+        if(winner==null) return -1;
+        else return players.indexOf(winner);
+    }
+
     /**
      * This method checks if a player has lost; if so that player is removed from
      * {@link Match#players}, his workers are removed from the {@link Board} and the other players are notified.

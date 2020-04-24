@@ -54,12 +54,12 @@ public class Controller implements Observer<VCEvent> {
     public void handleMove(int x, int y) {
         try {
             model.move(x,y);
-            //check winner or ask next move
-            nextActionHandler();
+            int winner = model.checkWinner();
+            //if(winner>=0) endGame(winner);
         } catch (InvalidMoveException e) {
             view.showMessage("error");
-            nextActionHandler();
         }
+        nextActionHandler();
     }
 
     public void handleBuild(int x, int y) {
@@ -75,18 +75,17 @@ public class Controller implements Observer<VCEvent> {
 
     public void nextActionHandler() {
         HashSet<Action> possibleActions =  model.getCurrentPlayer().getPossibleActions();
-
         if(possibleActions.size()==0) {
             view.showMessage("your turn is ended");
             handleStartNextTurn();
         }
         else {
-            //view.askAction();
+            //view.askAction(possibleActions);
         }
     }
 
     public void handleStartNextTurn() {
-        //
+        //control if current player is loser
         view.startTurn(model.getCurrentPlayer().getUsername());
     }
 

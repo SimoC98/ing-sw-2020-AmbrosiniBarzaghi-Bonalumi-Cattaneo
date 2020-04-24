@@ -33,7 +33,12 @@ public class XMLParserUtility {
             e.printStackTrace();
         }
 
-        Constructor<?> cons = c.getConstructors()[0];
+        Constructor<?> cons = null;
+        try {
+            cons = c.getConstructor();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
 
         Object obj = null;
         try {

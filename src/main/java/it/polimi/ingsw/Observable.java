@@ -18,7 +18,7 @@ public class Observable<T> {
 
     public void notify(T event) {
         for(Observer o : observers) {
-            //update with simplified copy of model
+            o.update(event);
         }
     }
 

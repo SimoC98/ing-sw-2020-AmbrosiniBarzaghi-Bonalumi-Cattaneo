@@ -1,8 +1,14 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.Divinity;
 import it.polimi.ingsw.model.DivinityDecoratorWithEffects;
+import it.polimi.ingsw.model.Game;
+import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.cards.*;
+import it.polimi.ingsw.model.exceptions.WorkerBadPlacementException;
+import it.polimi.ingsw.view.View;
+
 
 import java.beans.XMLDecoder;
 import java.io.File;
@@ -10,6 +16,8 @@ import java.beans.XMLEncoder;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Hello world!
@@ -18,7 +26,30 @@ import java.io.IOException;
 public class App 
 {
 
-    public static void main( String[] args )
+
+    public static void main(String[] args) {
+        List<String> players = new ArrayList<>();
+        players.add("simone");
+        players.add("riccardo");
+
+        Match match = new Match(players);
+        Game game = new Game(match);
+        View view = new View();
+        Controller controller = new Controller(match,view);
+
+        view.addObserver(controller);
+
+        try {
+            match.playerInitialization(1,1,2,2,"Apollo");
+            match.playerInitialization(3,3,4,4,"Demeter");
+        } catch (WorkerBadPlacementException e) {
+            System.out.println("hai sbagliato coglione");
+        }
+        view.startTurn("simone");
+
+    }
+
+ /*   public static void main( String[] args )
     {
         String name, description, heading;
 
@@ -77,5 +108,5 @@ public class App
         }
 
         System.out.println("\nDONE.\n");
-    }
+    }*/
 }

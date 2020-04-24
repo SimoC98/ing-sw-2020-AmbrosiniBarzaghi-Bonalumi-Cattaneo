@@ -8,19 +8,21 @@ import it.polimi.ingsw.model.exceptions.InvalidActionException;
 import it.polimi.ingsw.model.exceptions.InvalidBuildException;
 import it.polimi.ingsw.model.exceptions.InvalidMoveException;
 import it.polimi.ingsw.model.exceptions.InvalidWorkerSelectionException;
+import it.polimi.ingsw.view.View;
 
-import javax.swing.text.View;
+
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
 public class Controller implements Observer<VCEvent> {
     private Match model;
-    private View users;
+    private View view;
     private int currentPlayerId;
 
     public Controller(Match model, View user) {
         this.model = model;
-        this.users = user;
+        this.view = user;
         currentPlayerId = 0;
     }
 
@@ -34,17 +36,18 @@ public class Controller implements Observer<VCEvent> {
                 case "END": //
             }
         } catch (InvalidActionException e) {
-            //view.show("sjdchue");
-            //view.askmovedncje
+            view.showMessage("error");
+            nextActionHandler();
         }
     }
 
     public void handleSelectionWorker(int x, int y) {
         try {
             model.selectWorker(x,y);
-            //
+            nextActionHandler();
         } catch (InvalidWorkerSelectionException e) {
-            //send error to current user and ask again
+            view.showMessage("error");
+            view.selectWorker();
         }
     }
 
@@ -52,8 +55,10 @@ public class Controller implements Observer<VCEvent> {
         try {
             model.move(x,y);
             //check winner or ask next move
+            nextActionHandler();
         } catch (InvalidMoveException e) {
-            //send error to current user and ask again
+            view.showMessage("error");
+            nextActionHandler();
         }
     }
 
@@ -61,24 +66,28 @@ public class Controller implements Observer<VCEvent> {
         try {
             model.build(x,y);
             //check winner or ask next move
+            nextActionHandler();
         } catch (InvalidBuildException e) {
-            //send error to current user and ask again
+            view.showMessage("error");
+            nextActionHandler();
         }
     }
 
     public void nextActionHandler() {
         HashSet<Action> possibleActions =  model.getCurrentPlayer().getPossibleActions();
+
         if(possibleActions.size()==0) {
-            //send message end turn
-            //startNewTurn();
+            view.showMessage("your turn is ended");
+            handleStartNextTurn();
         }
         else {
-            //ask next action to user
+            //view.askAction();
         }
     }
 
     public void handleStartNextTurn() {
         //
+        view.startTurn(model.getCurrentPlayer().getUsername());
     }
 
 

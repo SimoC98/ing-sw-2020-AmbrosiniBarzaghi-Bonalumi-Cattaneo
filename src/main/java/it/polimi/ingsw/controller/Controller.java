@@ -15,12 +15,12 @@ import java.util.List;
 
 public class Controller implements Observer<VCEvent> {
     private Match model;
-    private List<View> users;
+    private View users;
     private int currentPlayerId;
 
-    public Controller(Match model, List<View> users) {
+    public Controller(Match model, View user) {
         this.model = model;
-        this.users = users;
+        this.users = user;
         currentPlayerId = 0;
     }
 

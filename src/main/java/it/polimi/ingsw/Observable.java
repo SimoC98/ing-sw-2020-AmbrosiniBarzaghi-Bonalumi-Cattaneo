@@ -8,15 +8,15 @@ import java.util.List;
 public class Observable<T> {
     List<Observer<T>> observers = new ArrayList<>();
 
-    public void addObserver(Observer<T> user) {
-        observers.add(user);
+    public void addObserver(Observer<T> observer) {
+        observers.add(observer);
     }
 
-    public void removeObserver(Observer<T> user) {
-        observers.remove(user);
+    public void removeObserver(Observer<T> observer) {
+        observers.remove(observer);
     }
 
-    public void notifyUsers(Match model) {
+    public void notify(T event) {
         for(Observer o : observers) {
             //update with simplified copy of model
         }

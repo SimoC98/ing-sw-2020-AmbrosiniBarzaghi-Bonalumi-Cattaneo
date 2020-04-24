@@ -6,7 +6,6 @@ import it.polimi.ingsw.events.modelToView.ModelUpdateEvent;
 import it.polimi.ingsw.events.viewToController.*;
 import it.polimi.ingsw.model.Action;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 

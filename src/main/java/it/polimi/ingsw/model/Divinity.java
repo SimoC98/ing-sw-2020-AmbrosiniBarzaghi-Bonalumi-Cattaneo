@@ -2,7 +2,7 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.cards.StandardDivinity;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * Interface implemented by all the divinities to
@@ -20,6 +20,6 @@ public interface Divinity {
     public boolean legalMove(Worker selectedWorker, Tile selectedTile);
     public boolean legalBuild(Worker selectedWorker, Tile selectedTile);
     public Divinity getDivinity();
-    public void updatePossibleActions(Set<Action> possibleActions);
-    public void setupDivinity(Set<Action> possibleActions);
+    public void updatePossibleActions(List<Action> possibleActions);
+    public void setupDivinity(List<Action> possibleActions);
 }

@@ -1,6 +1,6 @@
 package it.polimi.ingsw.model;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * General class to decorate a divinity with special effects in accordance to
@@ -48,12 +48,12 @@ public class DivinityDecoratorWithEffects implements Divinity {
     }
 
     @Override
-    public void updatePossibleActions(Set<Action> possibleActions) {
+    public void updatePossibleActions(List<Action> possibleActions) {
         divinity.updatePossibleActions(possibleActions);
     }
 
     @Override
-    public void setupDivinity(Set<Action> possibleActions) {
+    public void setupDivinity(List<Action> possibleActions) {
         divinity.setupDivinity(possibleActions);
     }
 

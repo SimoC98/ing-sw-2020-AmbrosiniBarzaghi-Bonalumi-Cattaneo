@@ -2,7 +2,7 @@ package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.model.*;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * Atlas is able to build a dome instead of a regular block during his
@@ -34,7 +34,7 @@ public class BuildDomeEverywhere extends DivinityDecoratorWithEffects {
     /**
      */
     @Override
-    public void updatePossibleActions(Set<Action> possibleActions) {
+    public void updatePossibleActions(List<Action> possibleActions) {
         if(!hasBuilt) {
             possibleActions.add(Action.BUILDDOME);
         }

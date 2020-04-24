@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,7 +23,7 @@ class SetEffectOnOpponentTest {
         match = new Match(users);
         game = new Game(match);
         div1 = new SetEffectOnOpponent(new StandardDivinity());
-        div1.setupDivinity(new HashSet<Action>());
+        div1.setupDivinity(new ArrayList<>());
         match.getPlayers().get(0).setDivinity(div1);
         div2 = new StandardDivinity();
         match.getPlayers().get(1).setDivinity(div2);
@@ -35,7 +34,7 @@ class SetEffectOnOpponentTest {
         Worker w1 = new Worker(match.getBoard().getTile(0,0), match.getPlayers().get(0));
         Worker w2 = new Worker(match.getBoard().getTile(4,4),match.getPlayers().get(1));
 
-        div1.setupDivinity(new HashSet<>());
+        div1.setupDivinity(new ArrayList<>());
         assertFalse(div1.isHasMovedUp());
 
 
@@ -48,7 +47,7 @@ class SetEffectOnOpponentTest {
         assert(match.getPlayers().get(1).getDivinity().legalMove(w2,match.getBoard().getTile(3,4)));          //opponent can stay on his level
 
 
-        div1.setupDivinity(new HashSet<>());
+        div1.setupDivinity(new ArrayList<>());
         assertTrue(match.getPlayers().get(1).getDivinity().legalMove(w2,match.getBoard().getTile(3,4)));      //dopo setup può muoversi su liv più alto
 
     }

@@ -12,7 +12,6 @@ import it.polimi.ingsw.view.View;
 
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 public class Controller implements Observer<VCEvent> {
@@ -74,7 +73,7 @@ public class Controller implements Observer<VCEvent> {
     }
 
     public void nextActionHandler() {
-        HashSet<Action> possibleActions =  model.getCurrentPlayer().getPossibleActions();
+        ArrayList<Action> possibleActions =  model.getCurrentPlayer().getPossibleActions();
 
         if(possibleActions.size()==0) {
             view.showMessage("your turn is ended");

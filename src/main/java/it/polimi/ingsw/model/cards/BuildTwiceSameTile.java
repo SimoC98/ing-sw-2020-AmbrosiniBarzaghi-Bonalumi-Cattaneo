@@ -5,7 +5,7 @@ import it.polimi.ingsw.model.Divinity;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.model.Worker;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * This God, Hephaestus, can build twice but only on the same tile.
@@ -73,7 +73,7 @@ public class BuildTwiceSameTile extends BuildTwice {
      * After the first build the player can end his turn
      */
     @Override
-    public void updatePossibleActions(Set<Action> possibleActions) {
+    public void updatePossibleActions(List<Action> possibleActions) {
         if(getBuildCount()==1) {
             if(getFirstBuildTile().getLevel()<=2) {
                 possibleActions.add(Action.BUILD);
@@ -84,7 +84,7 @@ public class BuildTwiceSameTile extends BuildTwice {
     }
 
     @Override
-    public void setupDivinity(Set<Action> possibleActions) {
+    public void setupDivinity(List<Action> possibleActions) {
         super.setupDivinity(possibleActions);
     }
 

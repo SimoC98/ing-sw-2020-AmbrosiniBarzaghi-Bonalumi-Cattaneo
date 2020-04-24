@@ -1,9 +1,7 @@
 package it.polimi.ingsw.model;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * The class to manage a player, saving his username, his workers' color and
@@ -18,7 +16,7 @@ public class Player {
     private Color color;
     private Divinity divinity;
     private boolean isWinner;
-    private Set<Action> possibleActions;
+    private List<Action> possibleActions;
     private List<Worker> workers;
 
     /**
@@ -30,7 +28,7 @@ public class Player {
         this.color = color;
         workers = new ArrayList<>();
         divinity = null;
-        possibleActions = new HashSet<>();
+        possibleActions = new ArrayList<>();
         isWinner = false;
     }
 
@@ -80,7 +78,7 @@ public class Player {
     /**
      * @return Returns a {@code HashSet} containing the player's next possible actions, i.e. {@link Action#MOVE}, {@link Action#BUILD}, {@link Action#BUILDDOME} and {@link Action#END}
      */
-    public HashSet<Action> getPossibleActions() { return new HashSet<Action>(possibleActions); }
+    public ArrayList<Action> getPossibleActions() { return new ArrayList<>(possibleActions); }
 
     public Color getColor() { return color; }
 

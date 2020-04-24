@@ -3,7 +3,6 @@ package it.polimi.ingsw.model.cards;
 import it.polimi.ingsw.model.*;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * This Goddess, Demeter, can build twice but not on the same tile.
@@ -11,7 +10,7 @@ import java.util.Set;
  * For this divinity it is required that {@code legalBuild} checks
  * the player's second build position and that {@code updatePossibleActions}
  * adds the possibility to end the build phase and thus the turn, after the
- * first build. This is why it adds {@link Action#END} in the set of actions to pick from.
+ * first build. This is why it adds {@link Action#END} in the list of actions to pick from.
  */
 public class BuildTwiceNotSameTile extends BuildTwice {
 
@@ -68,7 +67,7 @@ public class BuildTwiceNotSameTile extends BuildTwice {
      * After the first build the player can end his turn
      */
     @Override
-    public void updatePossibleActions(Set<Action> possibleActions) {
+    public void updatePossibleActions(List<Action> possibleActions) {
         if(getBuildCount()==1) {
             List<Tile> l = Game.getMatch().getAvailableBuildTiles(Game.getMatch().getSelectedWorker());
             if(l.size()>0) {
@@ -80,7 +79,7 @@ public class BuildTwiceNotSameTile extends BuildTwice {
     }
 
     @Override
-    public void setupDivinity(Set<Action> possibleActions) {
+    public void setupDivinity(List<Action> possibleActions) {
         super.setupDivinity(possibleActions);
     }
 

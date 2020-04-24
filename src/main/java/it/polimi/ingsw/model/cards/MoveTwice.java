@@ -2,7 +2,7 @@ package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.model.*;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * Parent class to realize divinities whose effect is to move twice in the same turn
@@ -68,7 +68,7 @@ public class MoveTwice extends DivinityDecoratorWithEffects {
     }
 
     @Override
-    public void updatePossibleActions(Set<Action> possibleActions) {
+    public void updatePossibleActions(List<Action> possibleActions) {
          super.updatePossibleActions(possibleActions);
     }
 
@@ -76,7 +76,7 @@ public class MoveTwice extends DivinityDecoratorWithEffects {
      * Initializes the attribute for the correct use of the gods' effects
      */
     @Override
-    public void setupDivinity(Set<Action> possibleActions) {
+    public void setupDivinity(List<Action> possibleActions) {
         firstMovedTile = null;
         moveCount = 0;
         hasBuilt=false;

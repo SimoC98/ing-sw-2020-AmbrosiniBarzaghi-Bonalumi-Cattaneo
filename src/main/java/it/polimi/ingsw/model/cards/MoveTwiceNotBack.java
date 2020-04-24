@@ -4,7 +4,6 @@ package it.polimi.ingsw.model.cards;
 import it.polimi.ingsw.model.*;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * This Goddess, Artemis, can move twice but not back to its initial space.
@@ -39,7 +38,7 @@ public class MoveTwiceNotBack extends MoveTwice{
      * After the first move, the player can build
      */
     @Override
-    public void updatePossibleActions(Set<Action> possibleActions) {
+    public void updatePossibleActions(List<Action> possibleActions) {
         if(getMoveCount() == 1 && !isHasBuilt()) {
             List<Tile> l = Game.getMatch().getAvailableMoveTiles(Game.getMatch().getSelectedWorker());
             if(l.size()>0) possibleActions.add(Action.MOVE);
@@ -68,7 +67,7 @@ public class MoveTwiceNotBack extends MoveTwice{
     }
 
     @Override
-    public void setupDivinity(Set<Action> possibleActions) {
+    public void setupDivinity(List<Action> possibleActions) {
         super.setupDivinity(possibleActions);
     }
 }

@@ -7,7 +7,7 @@ import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.model.exceptions.InvalidBuildException;
 import it.polimi.ingsw.model.exceptions.InvalidMoveException;
 
-import java.util.Set;
+import java.util.List;
 
 
 /**
@@ -106,17 +106,17 @@ public class StandardDivinity implements Divinity {
      * @param possibleActions Available actions of a player
      */
     @Override
-    public void updatePossibleActions(Set<Action> possibleActions) {
+    public void updatePossibleActions(List<Action> possibleActions) {
         return;
     }
 
     /**
      * Function used to initialize the parameters of
      * a divinity in able to update correctly the set
-     * of possible actions that {@link StandardDivinity#updatePossibleActions(Set)} will return
+     * of possible actions that {@link StandardDivinity#updatePossibleActions(List)} will return
      */
     @Override
-    public void setupDivinity(Set<Action> possibleActions) {
+    public void setupDivinity(List<Action> possibleActions) {
         return;
     }
 

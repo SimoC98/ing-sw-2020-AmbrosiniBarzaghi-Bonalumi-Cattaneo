@@ -4,7 +4,6 @@ import it.polimi.ingsw.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * This divinity, Prometheus, is able to build before and after moving only if
@@ -77,7 +76,7 @@ public class BuildBeforeAndAfter extends DivinityDecoratorWithEffects {
     /**
      */
     @Override
-    public void updatePossibleActions(Set<Action> possibleActions) {
+    public void updatePossibleActions(List<Action> possibleActions) {
         if(hasBuiltBefore && !hasMoved) {
             possibleActions.add(Action.MOVE);
         }
@@ -88,7 +87,7 @@ public class BuildBeforeAndAfter extends DivinityDecoratorWithEffects {
      * The {@link Action#BUILD} is added at the initial pool of possible action as stated by the divinity's effect
      */
     @Override
-    public void setupDivinity(Set<Action> possibleActions) {
+    public void setupDivinity(List<Action> possibleActions) {
         hasMoved=false;
         hasBuiltBefore = false;
         possibleActions.add(Action.BUILD);

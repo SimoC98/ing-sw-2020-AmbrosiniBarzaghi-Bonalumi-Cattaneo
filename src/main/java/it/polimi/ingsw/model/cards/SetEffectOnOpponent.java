@@ -3,7 +3,7 @@ package it.polimi.ingsw.model.cards;
 import it.polimi.ingsw.model.*;
 
 import java.util.ArrayList;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Athena prevents other players from moving up during their next turns, if she has moved up.
@@ -48,7 +48,7 @@ public class SetEffectOnOpponent extends DivinityDecoratorWithEffects {
      * needs to get rid of the "blocking" layer. Such condition is checked through a flag
      */
     @Override
-    public void setupDivinity(Set<Action> possibleActions) {
+    public void setupDivinity(List<Action> possibleActions) {
         if(hasMovedUp==true) {
             ArrayList<Player> players =  Game.getMatch().getPlayers();
             for(Player p:players) {

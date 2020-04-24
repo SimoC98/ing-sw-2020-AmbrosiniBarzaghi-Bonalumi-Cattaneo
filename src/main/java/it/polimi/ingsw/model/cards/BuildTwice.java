@@ -2,7 +2,7 @@ package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.model.*;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * General class to decorate divinities that are able to build twice consecutively.
@@ -68,14 +68,14 @@ public class BuildTwice extends DivinityDecoratorWithEffects {
     }
 
     @Override
-    public void setupDivinity(Set<Action> possibleActions) {
+    public void setupDivinity(List<Action> possibleActions) {
         firstBuildTile = null;
         buildCount = 0;
         super.setupDivinity(possibleActions);
     }
 
     @Override
-    public void updatePossibleActions(Set<Action> possibleActions) {
+    public void updatePossibleActions(List<Action> possibleActions) {
         super.updatePossibleActions(possibleActions);
     }
 }

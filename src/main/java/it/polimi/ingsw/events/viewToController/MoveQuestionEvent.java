@@ -17,6 +17,6 @@ public class MoveQuestionEvent implements VCEvent{
 
     @Override
     public void handleEvent(Controller controller) {
-        //controller.validateAction(action,x,y);
+        controller.handleActionValidation(action,x,y);
     }
 }

@@ -40,10 +40,10 @@ public class App
         view.addObserver(controller);
 
         try {
-            match.playerInitialization(1,1,2,2,"Apollo");
+            match.playerInitialization(1,1,2,2,"Pan");
             match.playerInitialization(3,3,4,4,"Demeter");
         } catch (WorkerBadPlacementException e) {
-            System.out.println("hai sbagliato coglione");
+            System.out.println("error");
         }
         view.startTurn("simone");
 

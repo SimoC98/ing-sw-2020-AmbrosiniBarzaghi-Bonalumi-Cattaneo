@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import static java.lang.System.exit;
+
 public class Controller implements Observer<VCEvent> {
     private Match model;
     private View view;
@@ -33,7 +35,7 @@ public class Controller implements Observer<VCEvent> {
                 case "MOVE": handleMove(x,y);
                 case "BUILD": handleBuild(x,y);
                 case "BUILDDOME": handleBuild(x,y);
-                case "END": //
+                case "END": handleStartNextTurn();
             }
         } catch (InvalidActionException e) {
             view.showMessage("error");
@@ -54,8 +56,13 @@ public class Controller implements Observer<VCEvent> {
     public void handleMove(int x, int y) {
         try {
             model.move(x,y);
-            //check winner or ask next move
-            nextActionHandler();
+
+            int winner = model.checkWinner();
+            if(winner>=0) {
+                endGame(winner);
+                return;
+            }
+            else nextActionHandler();
         } catch (InvalidMoveException e) {
             view.showMessage("error");
             nextActionHandler();
@@ -65,8 +72,9 @@ public class Controller implements Observer<VCEvent> {
     public void handleBuild(int x, int y) {
         try {
             model.build(x,y);
-            //check winner or ask next move
-            nextActionHandler();
+            int winner = model.checkWinner();
+            if(winner>=0) endGame(winner);
+            else nextActionHandler();
         } catch (InvalidBuildException e) {
             view.showMessage("error");
             nextActionHandler();
@@ -74,20 +82,34 @@ public class Controller implements Observer<VCEvent> {
     }
 
     public void nextActionHandler() {
-        HashSet<Action> possibleActions =  model.getCurrentPlayer().getPossibleActions();
+       List<Action> possibleActions =  model.getCurrentPlayer().getPossibleActions();
 
         if(possibleActions.size()==0) {
             view.showMessage("your turn is ended");
             handleStartNextTurn();
         }
         else {
-            //view.askAction();
+            view.askAction(possibleActions);
         }
     }
 
     public void handleStartNextTurn() {
-        //
+        model.startNextTurn();
         view.startTurn(model.getCurrentPlayer().getUsername());
+
+        /*String currentPlayer = model.getCurrentPlayer().getUsername();
+        boolean loser = model.checkLoser();
+        if(!loser) view.startTurn(model.getCurrentPlayer().getUsername());*/
+
+        //controllo quanti giocatori ci sono: -solo 2, allora l'altro è vincitore
+        //                                    -se >2 allora continua il gicoco
+
+    }
+
+    public void endGame(int winner) {
+        String winnerUsername = model.getPlayers().get(winner).getUsername();
+        view.endGame(winnerUsername);
+        exit(0);
     }
 
 

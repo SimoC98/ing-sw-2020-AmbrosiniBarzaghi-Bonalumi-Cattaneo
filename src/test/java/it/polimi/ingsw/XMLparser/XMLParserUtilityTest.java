@@ -7,31 +7,30 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class XMLParserUtilityTest {
 
-    Map<String, Divinity> divinities;
+    List<Divinity> divinities;
 
     @BeforeEach
     void setup() {
-        divinities = XMLParserUtility.getDivinityMap();
+        divinities = XMLParserUtility.getDivinityList();
+//        divinities = XMLParserUtility.getDivinitiesSimple();
     }
 
     @Test
     public void parsingTest(){
-        StandardDivinity stdDiv = (StandardDivinity) divinities.get("Apollo").getDivinity();
-        assertEquals("God of Music", stdDiv.getHeading());
+        StandardDivinity stdDiv = (StandardDivinity) divinities.get(1).getDivinity();
         assertEquals(1, stdDiv.getNumber());
+        assertEquals("God of Music", stdDiv.getHeading());
 
-        stdDiv = (StandardDivinity) divinities.get("Atlas").getDivinity();
+        stdDiv = (StandardDivinity) divinities.get(4).getDivinity();
         assertEquals("Atlas", stdDiv.getName());
         assertEquals(4, stdDiv.getNumber());
 
-
-        stdDiv = (StandardDivinity) divinities.get("Minotaur").getDivinity();
+        stdDiv = (StandardDivinity) divinities.get(7).getDivinity();    //there's no 6!!
         assertEquals(8, stdDiv.getNumber());
     }
 
@@ -50,7 +49,7 @@ class XMLParserUtilityTest {
         Tile t2 = board.getTile(2, 2);
 
         //THE JUICE
-        DivinityDecoratorWithEffects div = (DivinityDecoratorWithEffects) divinities.get("Apollo");
+        DivinityDecoratorWithEffects div = (DivinityDecoratorWithEffects) divinities.get(1);
         p.setDivinity(div);
 
         p.addWorker(t1);

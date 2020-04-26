@@ -1,7 +1,7 @@
 <divinities>
 
     <divinity>
-        <divClassName>it.polimi.ingsw.model.DivinityDecoratorWithEffects</divClassName>
+        <divClassPath>it.polimi.ingsw.model.DivinityDecoratorWithEffects</divClassPath>
         <stdDivProperties>
             <number>0</number>
             <name>Human</name>
@@ -11,7 +11,7 @@
     </divinity>
 
     <divinity>
-        <divClassName>it.polimi.ingsw.model.cards.SwapWithOpponent</divClassName>
+        <divClassPath>it.polimi.ingsw.model.cards.SwapWithOpponent</divClassPath>
         <stdDivProperties>
             <number>1</number>
             <name>Apollo</name>
@@ -21,7 +21,7 @@
     </divinity>
 
     <divinity>
-        <divClassName>it.polimi.ingsw.model.cards.MoveTwiceNotBack</divClassName>
+        <divClassPath>it.polimi.ingsw.model.cards.MoveTwiceNotBack</divClassPath>
         <stdDivProperties>
             <number>2</number>
             <name>Artemis</name>
@@ -31,7 +31,7 @@
     </divinity>
 
     <divinity>
-        <decDivReference>it.polimi.ingsw.model.cards.SetEffectOnOpponent</decDivReference>
+        <divClassPath>it.polimi.ingsw.model.cards.SetEffectOnOpponent</divClassPath>
         <stdDivProperties>
             <number>3</number>
             <name>Athena</name>
@@ -41,7 +41,7 @@
     </divinity>
 
     <divinity>
-        <decDivReference>it.polimi.ingsw.model.cards.BuildDomeEverywhere</decDivReference>
+        <divClassPath>it.polimi.ingsw.model.cards.BuildDomeEverywhere</divClassPath>
         <stdDivProperties>
             <number>4</number>
             <name>Atlas</name>
@@ -51,7 +51,7 @@
     </divinity>
 
     <divinity>
-        <decDivReference>it.polimi.ingsw.model.cards.BuildTwiceNotSameTile</decDivReference>
+        <divClassPath>it.polimi.ingsw.model.cards.BuildTwiceNotSameTile</divClassPath>
         <stdDivProperties>
             <number>5</number>
             <name>Demeter</name>
@@ -61,7 +61,7 @@
     </divinity>
 
     <divinity>
-        <decDivReference>it.polimi.ingsw.model.cards.BuildTwiceSameTile</decDivReference>
+        <divClassPath>it.polimi.ingsw.model.cards.BuildTwiceSameTile</divClassPath>
         <stdDivProperties>
             <number>6</number>
             <name>Hephaestus</name>
@@ -71,7 +71,7 @@
     </divinity>
 
     <divinity>
-        <decDivReference>it.polimi.ingsw.model.cards.PushOpponent</decDivReference>
+        <divClassPath>it.polimi.ingsw.model.cards.PushOpponent</divClassPath>
         <stdDivProperties>
             <number>8</number>
             <name>Minotaur</name>
@@ -81,7 +81,7 @@
     </divinity>
 
     <divinity>
-        <decDivReference>it.polimi.ingsw.model.cards.WinByDropTwoLevel</decDivReference>
+        <divClassPath>it.polimi.ingsw.model.cards.WinByDropTwoLevel</divClassPath>
         <stdDivProperties>
             <number>9</number>
             <name>Pan</name>
@@ -91,7 +91,7 @@
     </divinity>
 
     <divinity>
-        <decDivReference>it.polimi.ingsw.model.cards.BuildBeforeAndAfter</decDivReference>
+        <divClassPath>it.polimi.ingsw.model.cards.BuildBeforeAndAfter</divClassPath>
         <stdDivProperties>
             <number>10</number>
             <name>Prometheus</name>

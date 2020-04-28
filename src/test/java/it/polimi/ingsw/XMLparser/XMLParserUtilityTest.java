@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class XMLParserUtilityTest {
 
-   /* Map<String, Divinity> divinities;
+    Map<String, Divinity> divinities;
 
     @BeforeEach
     void setup() {
@@ -63,6 +63,6 @@ class XMLParserUtilityTest {
 
         assertEquals(w1.getPositionOnBoard(), t2);
         assertEquals(w2.getPositionOnBoard(), t1);
-    }*/
+    }
 
 }

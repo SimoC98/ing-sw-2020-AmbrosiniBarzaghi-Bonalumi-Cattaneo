@@ -17,7 +17,7 @@ class XMLParserUtilityTest {
 
     @BeforeEach
     void setup() {
-        divinities = XMLParserUtility.getDivinityMap();
+        divinities = XMLParserUtility.getDivinities();
     }
 
     @Test
@@ -57,9 +57,9 @@ class XMLParserUtilityTest {
         Worker w1 = p.getWorkers().get(0);
         Worker w2 = new Worker(t2, p2);
 
-        assertTrue(div.legalMove(w1, t2));
+        assertTrue(div.legalMove(board, w1, t2));
 
-        p.move(w1, t2);
+        p.move(board, w1, t2);
 
         assertEquals(w1.getPositionOnBoard(), t2);
         assertEquals(w2.getPositionOnBoard(), t1);

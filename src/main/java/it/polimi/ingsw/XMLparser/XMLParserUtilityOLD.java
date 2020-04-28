@@ -51,9 +51,9 @@ public class XMLParserUtilityOLD {
         return (DivinityDecoratorWithEffects) obj;
     }
 
-    //opens resources/divinities.xml and parses the divinities
+    //opens resources/divinitiesOLD.xml and parses the divinities
     private static List<Divinity> XMLParse() {
-        File xmlFile = new File("resources/divinities.xml");
+        File xmlFile = new File("resources/divinitiesOLD.xml");
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = null;
@@ -114,7 +114,7 @@ public class XMLParserUtilityOLD {
 
 
     public static List<Divinity> getDivinitiesSimple(){
-        File xmlFile = new File("resources/divinities2.xml");
+        File xmlFile = new File("resources/divinities.xml");
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = null;

@@ -1,0 +1,103 @@
+<divinities>
+
+    <divinity>
+        <divClassPath>it.polimi.ingsw.model.DivinityDecoratorWithEffects</divClassPath>
+        <stdDivProperties>
+            <number>0</number>
+            <name>Human</name>
+            <heading>Normal Human Being</heading>
+            <description>Has no additional power or side-effect</description>
+        </stdDivProperties>
+    </divinity>
+
+    <divinity>
+        <divClassPath>it.polimi.ingsw.model.cards.SwapWithOpponent</divClassPath>
+        <stdDivProperties>
+            <number>1</number>
+            <name>Apollo</name>
+            <heading>God of Music</heading>
+            <description>Your Move: Your Worker may move into an opponent Worker’s space by forcing their Worker to the space yours just vacated.</description>
+        </stdDivProperties>
+    </divinity>
+
+    <divinity>
+        <divClassPath>it.polimi.ingsw.model.cards.MoveTwiceNotBack</divClassPath>
+        <stdDivProperties>
+            <number>2</number>
+            <name>Artemis</name>
+            <heading>Goddess of the Hunt</heading>
+            <description>Your Move: Your Worker may move one additional time, but not back to its initial space.</description>
+        </stdDivProperties>
+    </divinity>
+
+    <divinity>
+        <divClassPath>it.polimi.ingsw.model.cards.SetEffectOnOpponent</divClassPath>
+        <stdDivProperties>
+            <number>3</number>
+            <name>Athena</name>
+            <heading>Goddess of Wisdom</heading>
+            <description>Opponent’s Turn: If one of your Workers moved up on your last turn, opponent Workers cannot move up this turn.</description>
+        </stdDivProperties>
+    </divinity>
+
+    <divinity>
+        <divClassPath>it.polimi.ingsw.model.cards.BuildDomeEverywhere</divClassPath>
+        <stdDivProperties>
+            <number>4</number>
+            <name>Atlas</name>
+            <heading>Titan Shouldering the Heavens</heading>
+            <description>Your Build: Your Worker may build a dome at any level.</description>
+        </stdDivProperties>
+    </divinity>
+
+    <divinity>
+        <divClassPath>it.polimi.ingsw.model.cards.BuildTwiceNotSameTile</divClassPath>
+        <stdDivProperties>
+            <number>5</number>
+            <name>Demeter</name>
+            <heading>Goddess of the Harvest</heading>
+            <description>Your Build: Your Worker may build one additional time, but not on the same space.</description>
+        </stdDivProperties>
+    </divinity>
+
+    <divinity>
+        <divClassPath>it.polimi.ingsw.model.cards.BuildTwiceSameTile</divClassPath>
+        <stdDivProperties>
+            <number>6</number>
+            <name>Hephaestus</name>
+            <heading>God of Blacksmiths</heading>
+            <description>Your Build: Your Worker may build one additional block (not dome) on top of your first block.</description>
+        </stdDivProperties>
+    </divinity>
+
+    <divinity>
+        <divClassPath>it.polimi.ingsw.model.cards.PushOpponent</divClassPath>
+        <stdDivProperties>
+            <number>8</number>
+            <name>Minotaur</name>
+            <heading>Bull-headed Monster</heading>
+            <description>Your Move: Your Worker may move into an opponent Worker’s space, if their Worker can be forced one space straight backwards to an unoccupied space at any level.</description>
+        </stdDivProperties>
+    </divinity>
+
+    <divinity>
+        <divClassPath>it.polimi.ingsw.model.cards.WinByDropTwoLevel</divClassPath>
+        <stdDivProperties>
+            <number>9</number>
+            <name>Pan</name>
+            <heading>God of the Wild</heading>
+            <description>Win Condition: You also win if your Worker moves down two or more levels.</description>
+        </stdDivProperties>
+    </divinity>
+
+    <divinity>
+        <divClassPath>it.polimi.ingsw.model.cards.BuildBeforeAndAfter</divClassPath>
+        <stdDivProperties>
+            <number>10</number>
+            <name>Prometheus</name>
+            <heading>Titan Benefactor of Mankind</heading>
+            <description>Your Turn: If your Worker does not move up, it may build both before and after moving.</description>
+        </stdDivProperties>
+    </divinity>
+
+</divinities>

@@ -55,7 +55,7 @@ public class XMLParserUtility {
     };
 
     public static Map<String, Divinity> getDivinities(){
-        File xmlFile = new File("resources/divinities2.xml");
+        File xmlFile = new File("resources/divinities.xml");
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = null;

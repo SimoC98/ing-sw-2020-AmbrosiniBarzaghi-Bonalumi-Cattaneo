@@ -14,7 +14,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MatchTest {
-    private static Board board;
+    /*private static Board board;
     private static Match match;
     private static Player p1;
     private static Player p2;
@@ -238,7 +238,7 @@ class MatchTest {
 
         assertEquals(match.getCurrentPlayer(),p1);
     }
-
+*/
 
 
 

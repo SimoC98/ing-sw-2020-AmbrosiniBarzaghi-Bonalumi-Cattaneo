@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.cards;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.exceptions.InvalidWorkerSelectionException;
 import it.polimi.ingsw.model.exceptions.WorkerBadPlacementException;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,10 +14,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class WinByDropTwoLevelTest {
 
-    private static Game game;
+   /* private static Game game;
     private static Match match;
     private static Board board;
     private static WinByDropTwoLevel div;
+    private static ActionManager a;
+
 
     @BeforeEach
     void setUp() throws WorkerBadPlacementException, InvalidWorkerSelectionException {
@@ -24,6 +27,7 @@ class WinByDropTwoLevelTest {
         players.add("paolo");
         players.add("francesco");
         match = new Match(players);
+        a = new ActionManager(match);
         game = new Game(match);
         board = match.getBoard();
         div = new WinByDropTwoLevel(new StandardDivinity());
@@ -61,4 +65,9 @@ class WinByDropTwoLevelTest {
         assert(p1.move(w,t2));
         assertTrue(p1.isWinner());
     }
+
+    @AfterAll
+    static void afterAll() {
+        a.clearMatch();
+    }*/
 }

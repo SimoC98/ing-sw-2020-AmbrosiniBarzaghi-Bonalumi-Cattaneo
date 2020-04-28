@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.model.*;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,10 +11,11 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SetEffectOnOpponentTest {
-    private static Game game;
+    /*private static Game game;
     private static Match match;
     private static SetEffectOnOpponent div1;
     private static StandardDivinity div2;
+    private static ActionManager a;
 
     @BeforeEach
     void setUp() {
@@ -21,6 +23,7 @@ class SetEffectOnOpponentTest {
         users.add("simone");
         users.add("marco");
         match = new Match(users);
+        a = new ActionManager(match);
         game = new Game(match);
         div1 = new SetEffectOnOpponent(new StandardDivinity());
         div1.setupDivinity(new ArrayList<>());
@@ -51,4 +54,9 @@ class SetEffectOnOpponentTest {
         assertTrue(match.getPlayers().get(1).getDivinity().legalMove(w2,match.getBoard().getTile(3,4)));      //dopo setup può muoversi su liv più alto
 
     }
+
+    @AfterAll
+    static void afterAll() {
+        a.clearMatch();
+    }*/
 }

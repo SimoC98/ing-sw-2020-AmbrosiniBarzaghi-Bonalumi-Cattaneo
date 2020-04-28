@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.model.*;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,18 +29,21 @@ public class SetEffectOnOpponent extends DivinityDecoratorWithEffects {
      * with a class that blocks their ascension
      */
     @Override
-    public void move(Worker selectedWorker, Tile selectedTile) {
-        if(selectedTile.getLevel()>selectedWorker.getPositionOnBoard().getLevel()) {
+    public void move(Board board,Worker selectedWorker, Tile selectedTile) {
+        /*if(selectedTile.getLevel()>selectedWorker.getPositionOnBoard().getLevel()) {
             hasMovedUp = true;
             playerUsername = selectedWorker.getPlayer().getUsername();
-            ArrayList<Player> players =  Game.getMatch().getPlayers();
+            ArrayList<Player> players =  ActionManager.getMatch().getPlayers();
             for(Player p:players) {
                 if(!p.getUsername().equals(playerUsername)) {
                     p.setDivinity(new BlockLevelUp(p.getDivinity()));
                 }
             }
+        }*/
+        if(selectedTile.getLevel()== 1 + selectedWorker.getPositionOnBoard().getLevel()) {
+            hasMovedUp = true;
         }
-        super.move(selectedWorker, selectedTile);
+        super.move(board,selectedWorker, selectedTile);
     }
 
 
@@ -49,17 +53,29 @@ public class SetEffectOnOpponent extends DivinityDecoratorWithEffects {
      */
     @Override
     public void setupDivinity(List<Action> possibleActions) {
-        if(hasMovedUp==true) {
+        /*if(hasMovedUp==true) {
             ArrayList<Player> players =  Game.getMatch().getPlayers();
             for(Player p:players) {
-                if(!p.equals(Game.getMatch().getCurrentPlayer())) {
+                if(!p.equals(ActionManager.getMatch().getCurrentPlayer())) {
                     p.setDivinity(p.getDivinity().getDivinity());
                 }
             }
-        }
+        }*/
 
         hasMovedUp = false;
         super.setupDivinity(possibleActions);
+    }
+
+    @Override
+    public boolean hasSetEffectOnOpponentWorkers() {
+        if(hasMovedUp) return true;
+        else return super.hasSetEffectOnOpponentWorkers();
+    }
+
+    @Override
+    public void setEffectOnOpponentWorkers(Player opponentPlayer) {
+        opponentPlayer.setDivinity(new BlockLevelUp(opponentPlayer.getDivinity()));
+        super.setEffectOnOpponentWorkers(opponentPlayer);
     }
 
     public boolean isHasMovedUp() {

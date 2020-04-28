@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.model.*;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,17 +29,17 @@ public class BuildBeforeAndAfter extends DivinityDecoratorWithEffects {
      * If the player builds before moving, a flag is set to remember this decision
      */
     @Override
-    public void build(Worker selectedWorker, Tile selectedTile) {
+    public void build(Board board,Worker selectedWorker, Tile selectedTile) {
         if(hasMoved==false) {
             hasBuiltBefore=true;
         }
-        super.build(selectedWorker,selectedTile);
+        super.build(board,selectedWorker,selectedTile);
     }
 
     @Override
-    public void move(Worker selectedWorker, Tile selectedTile) {
+    public void move(Board board,Worker selectedWorker, Tile selectedTile) {
         hasMoved = true;
-        super.move(selectedWorker, selectedTile);
+        super.move(board,selectedWorker, selectedTile);
     }
 
     /**
@@ -47,9 +48,9 @@ public class BuildBeforeAndAfter extends DivinityDecoratorWithEffects {
      * @return {@code true} if the second build is viable, or the first build will not stall the {@link Worker}
      */
     @Override
-    public boolean legalBuild(Worker selectedWorker, Tile selectedTile) {
+    public boolean legalBuild(Board board,Worker selectedWorker, Tile selectedTile) {
         if(!hasMoved && selectedTile.getLevel()>=selectedWorker.getPositionOnBoard().getLevel()) {
-            List<Tile> l = new ArrayList<>( Game.getMatch().getAvailableMoveTiles(selectedWorker));
+            List<Tile> l = new ArrayList<>( board.getAvailableMoveTiles(selectedWorker));
             List<Tile> ret = new ArrayList<>();
             for(int i=0;i<l.size();i++) {
                 Tile t = l.get(i);
@@ -57,20 +58,20 @@ public class BuildBeforeAndAfter extends DivinityDecoratorWithEffects {
             }
             if(ret.size()==0) return false;
         }
-        return super.legalBuild(selectedWorker, selectedTile);
+        return super.legalBuild(board,selectedWorker, selectedTile);
     }
 
     /**
      * @return {@code true} when the worker is moving on a valid position before or after building
      */
     @Override
-    public boolean legalMove(Worker selectedWorker, Tile selectedTile) {
+    public boolean legalMove(Board board,Worker selectedWorker, Tile selectedTile) {
         if(hasBuiltBefore==true) {
             if(selectedTile.getLevel()==1 + selectedWorker.getPositionOnBoard().getLevel()) {
                 return false;
             }
         }
-        return super.legalMove(selectedWorker,selectedTile);
+        return super.legalMove(board,selectedWorker,selectedTile);
     }
 
     /**

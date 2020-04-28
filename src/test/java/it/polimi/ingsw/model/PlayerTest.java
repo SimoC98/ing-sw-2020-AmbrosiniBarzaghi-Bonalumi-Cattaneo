@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
 
-    Player p;
+  /*  Player p;
     Worker w;
     Board b;
 
@@ -57,10 +57,8 @@ class PlayerTest {
         assertTrue(p.isWinner());
     }
 
-    /**
-     *
-     */
-    @Test
+
+   /* @Test
     public void wrongMoves(){
         Tile t1 = b.getTile(1, 1);
         Tile t2 = b.getTile(1, 2);
@@ -81,9 +79,9 @@ class PlayerTest {
 
         assertFalse(success);
         assertTrue(p.getPossibleActions().contains(Action.MOVE));
-    }
+    }*/
 
-    @Test
+   /* @Test
     public void buildTest(){
         Tile t1 = b.getTile(1, 1);
         Tile t2 = b.getTile(1, 2);
@@ -97,5 +95,5 @@ class PlayerTest {
         boolean success = p.build(w, t2);
 
         assertTrue(success);
-    }
+    }*/
 }

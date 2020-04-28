@@ -15,11 +15,14 @@ import java.util.List;
  * each divinity is then "decorated" with other special moves and builds deriving from a specific divinity
  */
 public interface Divinity {
-    public void move(Worker selectedWorker, Tile selectedTile) ;
-    public void build(Worker selectedWorker, Tile selectedTile);
-    public boolean legalMove(Worker selectedWorker, Tile selectedTile);
-    public boolean legalBuild(Worker selectedWorker, Tile selectedTile);
+    public void move(Board board, Worker selectedWorker, Tile selectedTile) ;
+    public void build(Board board, Worker selectedWorker, Tile selectedTile);
+    public boolean legalMove(Board board,Worker selectedWorker, Tile selectedTile);
+    public boolean legalBuild(Board board,Worker selectedWorker, Tile selectedTile);
     public Divinity getDivinity();
     public void updatePossibleActions(List<Action> possibleActions);
     public void setupDivinity(List<Action> possibleActions);
+
+    public boolean hasSetEffectOnOpponentWorkers();
+    public void setEffectOnOpponentWorkers(Player opponentPlayer);
 }

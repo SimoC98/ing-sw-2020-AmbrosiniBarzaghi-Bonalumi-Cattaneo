@@ -4,6 +4,8 @@ import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.exceptions.InvalidActionException;
 import it.polimi.ingsw.model.exceptions.InvalidWorkerSelectionException;
 import it.polimi.ingsw.model.exceptions.WorkerBadPlacementException;
+
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,10 +17,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BuildDomeEverywhereTest {
 
-    private static Game game;
+   /* private static Game game;
     private static Match match;
     private static Board board;
     private static BuildDomeEverywhere div;
+    private static ActionManager a;
 
     @BeforeEach
     void setUp() throws WorkerBadPlacementException, InvalidWorkerSelectionException {
@@ -26,6 +29,7 @@ class BuildDomeEverywhereTest {
         players.add("paolo");
         players.add("francesco");
         match = new Match(players);
+        a = new ActionManager(match);
         game = new Game(match);
         board = match.getBoard();
         div = new BuildDomeEverywhere(new StandardDivinity());
@@ -77,4 +81,9 @@ class BuildDomeEverywhereTest {
         assert(tile1.isDome());
         assertFalse(tile1.getLevel()==3);
     }
+
+    @AfterAll
+    static void afterAll() {
+        a.clearMatch();
+    }*/
 }

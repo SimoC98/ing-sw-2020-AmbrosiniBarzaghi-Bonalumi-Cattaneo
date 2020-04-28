@@ -15,7 +15,6 @@ public class View extends Observable<VCEvent> implements Observer<ModelUpdateEve
 
     public View(){
         scan = new Scanner(System.in);
-
     }
 
     @Override
@@ -50,6 +49,7 @@ public class View extends Observable<VCEvent> implements Observer<ModelUpdateEve
 
     public void askMove(){
         System.out.println("Where do you want to move?: ");
+        scan = new Scanner(System.in);
         String s = scan.nextLine();
         String[] coord = s.split(",");
         int x = Integer.parseInt(coord[0]);
@@ -59,6 +59,7 @@ public class View extends Observable<VCEvent> implements Observer<ModelUpdateEve
 
     public void askBuild(){
         System.out.println("Where do you want to build?: ");
+        scan = new Scanner(System.in);
         String s = scan.nextLine();
         String[] coord = s.split(",");
         int x = Integer.parseInt(coord[0]);
@@ -68,6 +69,7 @@ public class View extends Observable<VCEvent> implements Observer<ModelUpdateEve
 
     public void askBuildDome(){
         System.out.println("Where do you want to place a dome?");
+        scan = new Scanner(System.in);
         String s = scan.nextLine();
         String[] coord = s.split(",");
         int x = Integer.parseInt(coord[0]);
@@ -77,6 +79,7 @@ public class View extends Observable<VCEvent> implements Observer<ModelUpdateEve
 
     public void askAction(List<Action> actions) {
         Action chosenAction = actions.get(0);
+        scan = new Scanner(System.in);
 
         if(actions.size()>1) {
             System.out.println("These are your possible actions: ");

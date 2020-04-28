@@ -1,7 +1,10 @@
 package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.exceptions.InvalidWorkerSelectionException;
+import it.polimi.ingsw.model.exceptions.WorkerBadPlacementException;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -11,26 +14,26 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BuildBeforeAndAfterTest {
-    private static Tile tile1;
-    private static Tile tile2;
-    private static Tile tile3;
+    private static Match match;
+    private static Board board;
     private static BuildBeforeAndAfter div;
-    private static Worker worker;
-    private static Player p;
 
-    @BeforeAll
-    static void setup(){
-        tile1 = new Tile(1,1);
-        tile2 = new Tile(2,2);
-        tile3 = new Tile(1,2);
+    @BeforeEach
+    void setUp() {
+        List<String> players = new ArrayList<>();
+        players.add("paolo");
+        match = new Match(players);
+        board = match.getBoard();
         div = new BuildBeforeAndAfter(new StandardDivinity());
+        match.getPlayers().get(0).setDivinity(div);
     }
 
     @Test
-    public void setupTest() {
-        p = new Player("jack", Color.BLUE);
-        p.setDivinity(div);
-        p.startOfTurn();
+    public void setupTest() throws WorkerBadPlacementException, InvalidWorkerSelectionException {
+        match.placeWorkers(0,0,4,4);
+        match.selectWorker(0,0);
+        match.getCurrentPlayer().startOfTurn();
+        Player p = match.getPlayers().get(0);
 
         List actions = p.getPossibleActions();
 
@@ -38,102 +41,98 @@ class BuildBeforeAndAfterTest {
         assert(actions.contains(Action.MOVE) && actions.contains(Action.BUILD));
     }
 
-    public void buildBeforeMoveTest() {
-        p = new Player("jack", Color.BLUE);
-        p.setDivinity(div);
-        p.startOfTurn();
-        p.addWorker(tile1);
-        worker = p.getWorkers().get(0);
+    @Test
+    public void buildBeforeMoveTest() throws WorkerBadPlacementException, InvalidWorkerSelectionException {
+        match.placeWorkers(0,0,4,4);
+        match.selectWorker(0,0);
+        match.getCurrentPlayer().startOfTurn();
+        Player p = match.getPlayers().get(0);
+        Tile tile1 = board.getTile(1,1);
+        Tile tile2 = board.getTile(0,1);
+        Worker worker = match.getSelectedWorker();
 
-        p.build(worker,tile2);
+        p.build(board,worker,tile1);
 
         assert(p.getPossibleActions().size()==1 && p.getPossibleActions().contains(Action.MOVE));
 
-        assertFalse(p.move(worker,tile2));
-        assertFalse(div.legalMove(worker,tile2));
+        assertFalse(p.move(board,worker,tile1)); //can't move here because is on level 1
 
-        boolean res = p.move(worker,tile3);
-
-        assert(res);
+        assert(p.move(board,worker,tile2));
         assert((p.getPossibleActions().size()==1) && p.getPossibleActions().contains(Action.BUILD));
 
-        p.build(worker,tile1);
+        p.build(board,worker,tile1);
         assert(p.getPossibleActions().size()==0);
     }
 
     @Test
-    public void CannotBuildIfCannotMoveTest() {
-        List<String> l = new ArrayList<>();
-        l.add("simone");
-        l.add("marco");
-        Match match = new Match(l);
-        Game g = new Game(match);
-        Board b = match.getBoard();
-
+    public void CannotBuildIfCannotMoveTest() throws WorkerBadPlacementException, InvalidWorkerSelectionException {
+        match.placeWorkers(0,0,4,4);
+        match.selectWorker(0,0);
+        match.getCurrentPlayer().startOfTurn();
         Player p = match.getPlayers().get(0);
-        p.setDivinity(div);
-        p.startOfTurn();
-        p.addWorker(b.getTile(0,0));
+        Tile tile1 = board.getTile(0,1);
+        Tile tile2 = board.getTile(1,0);
+        Tile tile3 = board.getTile(1,1);
+        Tile tile4 = board.getTile(0,0);
+        Worker worker = match.getSelectedWorker();
 
         assert(p.getWorkers().get(0).getPositionOnBoard().getX()==0 && p.getWorkers().get(0).getPositionOnBoard().getY()==0);
 
-        b.getTile(0,1).setDome();
-        b.getTile(1,0).setDome();
-        assertFalse(div.legalBuild(p.getWorkers().get(0),b.getTile(1,1)));
-        assert(div.legalMove(p.getWorkers().get(0),b.getTile(1,1)));
+        tile1.setDome();
+        tile2.setDome();
+        assertFalse(div.legalBuild(board,worker,tile3));
+        assert(div.legalMove(board,worker,tile3));
 
-        p.move(p.getWorkers().get(0),b.getTile(1,1));
-        p.move(p.getWorkers().get(0),b.getTile(0,0));
+        p.move(board,worker,tile3);
+        p.move(board,worker,tile4);
 
-        assert(div.legalBuild(p.getWorkers().get(0),b.getTile(1,1)));
+        assert(div.legalBuild(board,worker,tile3));
     }
 
     @Test
-    public void updatePossibleActionTest() {
-        List<String> l = new ArrayList<>();
-        l.add("simone");
-        l.add("marco");
-        Match match = new Match(l);
-        Game g = new Game(match);
-        Board b = match.getBoard();
-
+    public void updatePossibleActionTest() throws WorkerBadPlacementException, InvalidWorkerSelectionException {
         Player p = match.getPlayers().get(0);
-        p.setDivinity(div);
-        p.startOfTurn();
-        b.getTile(0,0).increaseLevel();
-        b.getTile(0,1).increaseLevel();
-        b.getTile(0,1).increaseLevel();
-        b.getTile(1,0).increaseLevel();
-        b.getTile(1,0).increaseLevel();
-        p.addWorker(b.getTile(0,0));
+        Tile tile1 = board.getTile(0,1);
+        Tile tile2 = board.getTile(1,0);
+        Tile tile3 = board.getTile(1,1);
+        Tile tile4 = board.getTile(0,0);
+
+        tile4.increaseLevel();
+        tile1.increaseLevel();
+        tile1.increaseLevel();
+        tile2.increaseLevel();
+        tile2.increaseLevel();
+
+        match.placeWorkers(0,0,4,4);
+        match.selectWorker(0,0);
+        Worker worker = match.getSelectedWorker();
+        match.getCurrentPlayer().startOfTurn();
 
         //(0,0) level 1, (0,1) level 2, (1,0) level 2, (1,1) level 0
 
-        assert(p.getWorkers().get(0).getPositionOnBoard().getX()==0 && p.getWorkers().get(0).getPositionOnBoard().getY()==0 && b.getTile(0,0).getLevel()==1);
-        assert(b.getTile(1,0).getLevel()==2 && b.getTile(0,1).getLevel()==2);
+        assert(worker.getPositionOnBoard().getX()==0 && worker.getPositionOnBoard().getY()==0 && tile4.getLevel()==1);
+        assert(tile2.getLevel()==2 && tile1.getLevel()==2);
 
-        assert(div.legalBuild(p.getWorkers().get(0),b.getTile(1,1)));  //se ha liv più basso può costruire
-        b.getTile(1,1).increaseLevel();
-        assertFalse(div.legalBuild(p.getWorkers().get(0),b.getTile(1,1))); //se ha stesso livello non può --> non potrebbe più muovere
-        assert(div.legalBuild(p.getWorkers().get(0),b.getTile(0,1)));
+        assert(div.legalBuild(board,worker,tile3));  //se ha liv più basso può costruire
+        tile3.increaseLevel();
+        assertFalse(div.legalBuild(board,worker,tile3)); //se ha stesso livello non può --> non potrebbe più muovere
+        assert(div.legalBuild(board,worker,tile1));
 
         assert(p.getPossibleActions().size()==2);
         assert(p.getPossibleActions().contains(Action.MOVE));
         assert(p.getPossibleActions().contains(Action.BUILD));
 
-        assertFalse(p.build(p.getWorkers().get(0),b.getTile(1,1)));
-        assert(p.build(p.getWorkers().get(0),b.getTile(1,0)));
+        assertFalse(p.build(board,worker,tile3));
+        assert(p.build(board,worker,tile2));
         assert(p.getPossibleActions().size()==1 && p.getPossibleActions().contains(Action.MOVE));
-        assert(b.getTile(0,1).getLevel()==2);
-        assertFalse(p.move(p.getWorkers().get(0),b.getTile(0,1))); //dopo che ha costruito non può salire di livello
-        assertFalse(p.move(p.getWorkers().get(0),b.getTile(1,0))); // same
-        assert(p.move(p.getWorkers().get(0),b.getTile(1,1)));
+        //assert(b.getTile(0,1).getLevel()==2);
+        assertFalse(p.move(board,worker,tile1)); //dopo che ha costruito non può salire di livello
+        assertFalse(p.move(board,worker,tile2)); // same
+        assert(p.move(board,worker,tile3));
         assert(p.getPossibleActions().size()==1 && p.getPossibleActions().contains(Action.BUILD));
 
-        p.build(p.getWorkers().get(0),b.getTile(0,0));
+        p.build(board,worker,tile4);
         assert(p.getPossibleActions().size()==0);
-
-
     }
 
 

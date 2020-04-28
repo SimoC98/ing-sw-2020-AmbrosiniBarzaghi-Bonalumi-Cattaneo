@@ -3,6 +3,7 @@ package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.model.*;
 
+
 import java.util.List;
 
 /**
@@ -25,13 +26,13 @@ public class MoveTwiceNotBack extends MoveTwice{
      * @return {@code true} if the move is correct: it is the first one and in accordance to the game rules, or it is the second and on a different tile
      */
     @Override
-    public boolean legalMove(Worker selectedWorker, Tile selectedTile) {
+    public boolean legalMove(Board board,Worker selectedWorker, Tile selectedTile) {
         if(getMoveCount()>0) {
             if(getFirstMovedTile().getX()==selectedTile.getX() && getFirstMovedTile().getY()==selectedTile.getY()) {
                 return false;
             }
         }
-        return super.legalMove(selectedWorker,selectedTile);
+        return super.legalMove(board,selectedWorker,selectedTile);
     }
 
     /**
@@ -39,26 +40,28 @@ public class MoveTwiceNotBack extends MoveTwice{
      */
     @Override
     public void updatePossibleActions(List<Action> possibleActions) {
-        if(getMoveCount() == 1 && !isHasBuilt()) {
-            List<Tile> l = Game.getMatch().getAvailableMoveTiles(Game.getMatch().getSelectedWorker());
+        /*if(getMoveCount() == 1 && !isHasBuilt()) {
+            List<Tile> l = ActionManager.getMatch().getAvailableMoveTiles(Game.getMatch().getSelectedWorker());
             if(l.size()>0) possibleActions.add(Action.MOVE);
-        }
+        }*/
+
+        if(getMoveCount()==1 && !isHasBuilt()) possibleActions.add(Action.MOVE);
         super.updatePossibleActions(possibleActions);
     }
 
     @Override
-    public void move(Worker selectedWorker, Tile selectedTile) {
-        super.move(selectedWorker, selectedTile);
+    public void move(Board board,Worker selectedWorker, Tile selectedTile) {
+        super.move(board,selectedWorker, selectedTile);
     }
 
     @Override
-    public void build(Worker selectedWorker, Tile selectedTile) {
-        super.build(selectedWorker, selectedTile);
+    public void build(Board board,Worker selectedWorker, Tile selectedTile) {
+        super.build(board,selectedWorker, selectedTile);
     }
 
     @Override
-    public boolean legalBuild(Worker selectedWorker, Tile selectedTile) {
-        return super.legalBuild(selectedWorker, selectedTile);
+    public boolean legalBuild(Board board,Worker selectedWorker, Tile selectedTile) {
+        return super.legalBuild(board,selectedWorker, selectedTile);
     }
 
     @Override

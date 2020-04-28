@@ -58,6 +58,48 @@ public class Board {
     public void removePlayerWorkers(Player player){
      for(Worker w : player.getWorkers()){
          w.getPositionOnBoard().free();
-     }
+        }
     }
+
+
+
+    /**
+     * List of possible {@link Tile}s for the current {@link Player}
+     * to move onto with his selected worker, when he chooses {@link Action#MOVE}
+     * @param selectedWorker {@link Worker} that is going to move
+     * @return The list is created checking that each of the {@link }'s adjacent tiles are free to move onto; such conditions are verified through the call of {@code legalMove} on {@link Player}
+     */
+    public List<Tile> getAvailableMoveTiles(Worker selectedWorker){
+        List<Tile> list = new ArrayList<>();
+        list = getAdjacentTiles(selectedWorker.getPositionOnBoard());
+        List<Tile> ret = new ArrayList<>();
+        for(int i=0; i<list.size();i++){
+            Tile t = list.get(i);
+            if (selectedWorker.getPlayer().getDivinity().legalMove(this,selectedWorker,t)==true) {
+                ret.add(t);
+            }
+        }
+        return ret;
+    }
+
+    /**
+     * List of possible {@link Tile}s for the current {@link Player}
+     * to build on with his selected worker, when he chooses {@link Action#MOVE}
+     * @param selectedWorker {@link Worker} that is going to build
+     * @return The list is created checking that each of the {}'s adjacent tiles are free to build on; such conditions are verified through the call of {@code legalBuild} on {@link Player}
+     */
+    public List<Tile> getAvailableBuildTiles(Worker selectedWorker){
+        List<Tile> list;
+        list = getAdjacentTiles(selectedWorker.getPositionOnBoard());
+        List<Tile> ret = new ArrayList<>();
+        for(int i=0; i<list.size();i++){
+            Tile t = list.get(i);
+            if (selectedWorker.getPlayer().getDivinity().legalBuild(this,selectedWorker,t)==true) {
+                ret.add(t);
+            }
+        }
+        return ret;
+    }
+
+
 }

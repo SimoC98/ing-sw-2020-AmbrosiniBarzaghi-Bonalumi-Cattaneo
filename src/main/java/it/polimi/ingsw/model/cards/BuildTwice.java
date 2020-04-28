@@ -25,8 +25,8 @@ public class BuildTwice extends DivinityDecoratorWithEffects {
      * effectively "decorate" such method
      */
     @Override
-    public boolean legalBuild(Worker selectedWorker, Tile selectedTile) {
-        return super.legalBuild(selectedWorker, selectedTile);
+    public boolean legalBuild(Board board,Worker selectedWorker, Tile selectedTile) {
+        return super.legalBuild(board,selectedWorker, selectedTile);
     }
 
     /**
@@ -35,22 +35,22 @@ public class BuildTwice extends DivinityDecoratorWithEffects {
      * build only twice.
      */
     @Override
-    public void build(Worker selectedWorker, Tile selectedTile) {
+    public void build(Board board,Worker selectedWorker, Tile selectedTile) {
         if(buildCount==0) {
             firstBuildTile = selectedTile;
         }
         buildCount++;
-        super.build(selectedWorker,selectedTile);
+        super.build(board,selectedWorker,selectedTile);
     }
 
     @Override
-    public void move(Worker selectedWorker, Tile selectedTile) {
-        super.move(selectedWorker, selectedTile);
+    public void move(Board board,Worker selectedWorker, Tile selectedTile) {
+        super.move(board,selectedWorker, selectedTile);
     }
 
     @Override
-    public boolean legalMove(Worker selectedWorker, Tile selectedTile) {
-        return super.legalMove(selectedWorker, selectedTile);
+    public boolean legalMove(Board board,Worker selectedWorker, Tile selectedTile) {
+        return super.legalMove(board,selectedWorker, selectedTile);
     }
 
 

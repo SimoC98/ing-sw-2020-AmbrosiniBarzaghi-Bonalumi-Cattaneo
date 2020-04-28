@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MoveOnOpponentTest {
 
-    @Test
+    /*@Test
     public void moveOnMyOtherWorker(){
         Player p = new Player("Giova", Color.CREAM);
 
@@ -38,6 +38,6 @@ class MoveOnOpponentTest {
         MoveOnOpponent d = new MoveOnOpponent(sd);
 
         assertTrue(d.legalMove(w1,t2));
-    }
+    }*/
 
 }

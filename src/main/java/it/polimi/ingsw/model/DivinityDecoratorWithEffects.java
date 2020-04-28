@@ -28,23 +28,23 @@ public class DivinityDecoratorWithEffects implements Divinity {
 
 
     @Override
-    public void move(Worker selectedWorker, Tile selectedTile) {
-        divinity.move(selectedWorker,selectedTile);
+    public void move(Board board, Worker selectedWorker, Tile selectedTile) {
+        divinity.move(board,selectedWorker,selectedTile);
     }
 
     @Override
-    public void build(Worker selectedWorker, Tile selectedTile) {
-        divinity.build(selectedWorker,selectedTile);
+    public void build(Board board,Worker selectedWorker, Tile selectedTile) {
+        divinity.build(board,selectedWorker,selectedTile);
     }
 
     @Override
-    public boolean legalMove(Worker selectedWorker, Tile selectedTile) {
-        return divinity.legalMove(selectedWorker,selectedTile);
+    public boolean legalMove(Board board,Worker selectedWorker, Tile selectedTile) {
+        return divinity.legalMove(board,selectedWorker,selectedTile);
     }
 
     @Override
-    public boolean legalBuild(Worker selectedWorker, Tile selectedTile) {
-        return divinity.legalBuild(selectedWorker,selectedTile);
+    public boolean legalBuild(Board board,Worker selectedWorker, Tile selectedTile) {
+        return divinity.legalBuild(board,selectedWorker,selectedTile);
     }
 
     @Override
@@ -55,6 +55,16 @@ public class DivinityDecoratorWithEffects implements Divinity {
     @Override
     public void setupDivinity(List<Action> possibleActions) {
         divinity.setupDivinity(possibleActions);
+    }
+
+    @Override
+    public boolean hasSetEffectOnOpponentWorkers() {
+        return divinity.hasSetEffectOnOpponentWorkers();
+    }
+
+    @Override
+    public void setEffectOnOpponentWorkers(Player opponentPlayer) {
+        divinity.setEffectOnOpponentWorkers(opponentPlayer);
     }
 
     @Override

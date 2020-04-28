@@ -1,21 +1,11 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.controller.Controller;
-import it.polimi.ingsw.model.Divinity;
-import it.polimi.ingsw.model.DivinityDecoratorWithEffects;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Match;
-import it.polimi.ingsw.model.cards.*;
 import it.polimi.ingsw.model.exceptions.WorkerBadPlacementException;
 import it.polimi.ingsw.view.View;
 
-
-import java.beans.XMLDecoder;
-import java.io.File;
-import java.beans.XMLEncoder;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,13 +16,16 @@ import java.util.List;
 public class App 
 {
 
-
     public static void main(String[] args) {
         List<String> players = new ArrayList<>();
         players.add("simone");
         players.add("riccardo");
 
         Match match = new Match(players);
+
+        match.getBoard().getTile(0,1).setDome();
+        match.getBoard().getTile(1,0).setDome();
+
         Game game = new Game(match);
         View view = new View();
         Controller controller = new Controller(match,view);
@@ -40,13 +33,12 @@ public class App
         view.addObserver(controller);
 
         try {
-            match.playerInitialization(1,1,2,2,"Pan");
-            match.playerInitialization(3,3,4,4,"Demeter");
+            match.playerInitialization(1,1,2,2,"Prometheus");
+            match.playerInitialization(3,3,4,4,"Minotaur");
         } catch (WorkerBadPlacementException e) {
             System.out.println("error");
         }
         view.startTurn("simone");
-
     }
 
  /*   public static void main( String[] args )

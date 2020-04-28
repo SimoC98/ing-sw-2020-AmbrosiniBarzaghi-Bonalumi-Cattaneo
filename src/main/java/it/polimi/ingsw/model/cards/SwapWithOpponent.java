@@ -9,8 +9,8 @@ import java.util.List;
 /**
  * When this God, Apollo, moves onto an opponent tile, his worker and the opponent's swap their positions
  * <p>
- * {@code legalMove} and {@code move} are the functions affected in this class: {@link SwapWithOpponent#legalMove(Worker, Tile)} has to
- * perform several tests to verify the possibility of movement; {@link PushOpponent#move(Worker, Tile)} has to access the {@link it.polimi.ingsw.model.Match}
+ * {@code legalMove} and {@code move} are the functions affected in this class: {@link SwapWithOpponent#legalMove(Board,Worker, Tile)} has to
+ * perform several tests to verify the possibility of movement; {@link PushOpponent#move(Board,Worker, Tile)} has to access the {@link it.polimi.ingsw.model.Match}
  * in order to retrieve and move the opponent's {@link Worker}
  */
 public class SwapWithOpponent extends MoveOnOpponent {
@@ -28,7 +28,7 @@ public class SwapWithOpponent extends MoveOnOpponent {
      * saved and the swap takes place. Otherwise it is a simple move
      */
     @Override
-    public void move(Worker selectedWorker, Tile selectedTile) {
+    public void move(Board board,Worker selectedWorker, Tile selectedTile) {
         if (selectedTile.getWorker() != null) {
             Worker opponentWorker = selectedTile.getWorker();
             Tile myActualTile = selectedWorker.getPositionOnBoard();
@@ -42,7 +42,7 @@ public class SwapWithOpponent extends MoveOnOpponent {
             opponentWorker.setPositionOnBoard(myActualTile);
 
         }else{
-            super.move(selectedWorker, selectedTile);
+            super.move(board,selectedWorker, selectedTile);
         }
     }
 
@@ -52,9 +52,9 @@ public class SwapWithOpponent extends MoveOnOpponent {
      * or other workers.
      */
     @Override
-    public boolean legalMove(Worker selectedWorker, Tile selectedTile) {
+    public boolean legalMove(Board board,Worker selectedWorker, Tile selectedTile) {
         if(selectedTile.isOccupied()) {
-            List<Tile> l = Game.getMatch().getBoard().getAdjacentTiles(selectedTile);
+            List<Tile> l = board.getAdjacentTiles(selectedTile);
             List<Tile> l2 = new ArrayList<>();
             for(int i=0; i<l.size(); i++) {
                 Tile t = l.get(i);
@@ -62,7 +62,7 @@ public class SwapWithOpponent extends MoveOnOpponent {
             }
             if(l2.size()==0) return false;
         }
-        return super.legalMove(selectedWorker, selectedTile);
+        return super.legalMove(board,selectedWorker, selectedTile);
     }
 
 

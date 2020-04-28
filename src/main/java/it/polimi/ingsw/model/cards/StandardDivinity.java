@@ -1,9 +1,6 @@
 package it.polimi.ingsw.model.cards;
 
-import it.polimi.ingsw.model.Action;
-import it.polimi.ingsw.model.Divinity;
-import it.polimi.ingsw.model.Tile;
-import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.exceptions.InvalidBuildException;
 import it.polimi.ingsw.model.exceptions.InvalidMoveException;
 
@@ -51,7 +48,7 @@ public class StandardDivinity implements Divinity {
      * Throws {@link InvalidMoveException} if the move was not valid
      */
     @Override
-    public void move(Worker selectedWorker, Tile selectedTile) {
+    public void move(Board board,Worker selectedWorker, Tile selectedTile) {
         try {
             selectedWorker.move(selectedTile);
         } catch (InvalidMoveException e) {
@@ -64,7 +61,7 @@ public class StandardDivinity implements Divinity {
      * Throws {@link InvalidBuildException} if the build was not valid
      */
     @Override
-    public void build(Worker selectedWorker, Tile selectedTile) {
+    public void build(Board board,Worker selectedWorker, Tile selectedTile) {
         try {
             selectedWorker.build(selectedTile);
         } catch (InvalidBuildException e) {
@@ -76,7 +73,7 @@ public class StandardDivinity implements Divinity {
      *Checks if the selected {@link Worker} is able to move on the specified {@link Tile}
      */
     @Override
-    public boolean legalMove(Worker selectedWorker, Tile selectedTile) {
+    public boolean legalMove(Board board,Worker selectedWorker, Tile selectedTile) {
         return selectedWorker.legalMove(selectedTile);
     }
 
@@ -84,7 +81,7 @@ public class StandardDivinity implements Divinity {
      *Checks if the selected {@link Worker} is able to build on the specified {@link Tile}
      */
     @Override
-    public boolean legalBuild(Worker selectedWorker, Tile selectedTile) {
+    public boolean legalBuild(Board board,Worker selectedWorker, Tile selectedTile) {
         return selectedWorker.legalBuild(selectedTile);
     }
 
@@ -120,6 +117,15 @@ public class StandardDivinity implements Divinity {
         return;
     }
 
+    @Override
+    public boolean hasSetEffectOnOpponentWorkers() {
+        return false;
+    }
+
+    @Override
+    public void setEffectOnOpponentWorkers(Player opponentPlayer) {
+        return;
+    }
 
     public String getName() {
         return name;

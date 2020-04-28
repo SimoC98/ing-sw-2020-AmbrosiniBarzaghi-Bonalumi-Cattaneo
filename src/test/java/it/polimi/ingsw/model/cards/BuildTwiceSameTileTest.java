@@ -6,6 +6,8 @@ import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.model.exceptions.InvalidWorkerSelectionException;
 import it.polimi.ingsw.model.exceptions.WorkerBadPlacementException;
+
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,10 +16,11 @@ import java.util.List;
 
 class BuildTwiceSameTileTest {
 
-    private static Game game;
+/*    private static Game game;
     private static Match match;
     private static Board board;
     private static BuildTwice div;
+    private static ActionManager a;
 
     @BeforeEach
       void setup() throws WorkerBadPlacementException, InvalidWorkerSelectionException {
@@ -25,6 +28,7 @@ class BuildTwiceSameTileTest {
         players.add("paolo");
         players.add("francesco");
         match = new Match(players);
+        a = new ActionManager(match);
         game = new Game(match);
         board = match.getBoard();
         div = new BuildTwiceSameTile(new StandardDivinity());
@@ -103,4 +107,9 @@ class BuildTwiceSameTileTest {
 
         assert(p1.getPossibleActions().size()==0);
     }
+
+    @AfterAll
+    static void afterAll() {
+        a.clearMatch();
+    }*/
 }

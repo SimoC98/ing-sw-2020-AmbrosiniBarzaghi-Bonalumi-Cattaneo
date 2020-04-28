@@ -92,12 +92,18 @@ public class Player {
      * basic Santorini's rules and it adds other possible actions deriving from a divinity's effects
      * @return {@code true} whether the move was successful
      */
-    public boolean move(Worker selectedWorker, Tile selectedTile) {
-        if(divinity.legalMove(selectedWorker,selectedTile)) {
+    public boolean move(Board board, Worker selectedWorker, Tile selectedTile) {
+        if(divinity.legalMove(board,selectedWorker,selectedTile)) {
             possibleActions.clear();
-            divinity.move(selectedWorker,selectedTile);
+            divinity.move(board,selectedWorker,selectedTile);
             possibleActions.add(Action.BUILD);
             divinity.updatePossibleActions(possibleActions);
+
+            if(possibleActions.contains(Action.MOVE)) {
+                List<Tile> l = board.getAvailableMoveTiles(selectedWorker);
+                if(l.size()==0) possibleActions.remove(Action.MOVE);
+            }
+
             return true;
         }
         else return false;
@@ -112,11 +118,19 @@ public class Player {
      * to respect the game logic; then it adds other possible actions deriving from a divinity's effects
      * @return {@code true} whether the build was successful
      */
-    public boolean build(Worker selectedWorker, Tile selectedTile) {
-        if(divinity.legalBuild(selectedWorker,selectedTile)) {
-            possibleActions.clear();
-            divinity.build(selectedWorker,selectedTile);
+    public boolean build(Board board,Worker selectedWorker, Tile selectedTile) {
+        if(divinity.legalBuild(board,selectedWorker,selectedTile)) {
+            possibleActions = new ArrayList<>();
+            divinity.build(board,selectedWorker,selectedTile);
             divinity.updatePossibleActions(possibleActions);
+
+            if(possibleActions.contains(Action.BUILD)) {
+                List<Tile> l = board.getAvailableBuildTiles(selectedWorker);
+                if(l.size()==0) possibleActions.remove(Action.BUILD);
+            }
+            if(possibleActions.size()==1 && possibleActions.contains(Action.END)) possibleActions.clear();
+
+
             return true;
         }
         else return false;

@@ -1,9 +1,7 @@
 package it.polimi.ingsw.model.cards;
 
-import it.polimi.ingsw.model.Divinity;
-import it.polimi.ingsw.model.Game;
-import it.polimi.ingsw.model.Tile;
-import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.*;
+
 
 /**
  * This class represents Minotaur, whose effect is to push an opponent on the direction he is moving,
@@ -27,8 +25,8 @@ public class PushOpponent extends MoveOnOpponent {
      * @return {@code true} if the move is not illegal
      */
     @Override
-    public boolean legalMove(Worker selectedWorker, Tile selectedTile) {
-        boolean moveOnOpponent = super.legalMove(selectedWorker,selectedTile);
+    public boolean legalMove(Board board,Worker selectedWorker, Tile selectedTile) {
+        boolean moveOnOpponent = super.legalMove(board,selectedWorker,selectedTile);
         int dx = selectedTile.getX() - selectedWorker.getPositionOnBoard().getX();
         int dy = selectedTile.getY() - selectedWorker.getPositionOnBoard().getY();
 
@@ -54,16 +52,16 @@ public class PushOpponent extends MoveOnOpponent {
      * Moves both the current player's worker and the opponent one if the selected tile is occupied by the latter
      */
     @Override
-    public void move(Worker selectedWorker, Tile selectedTile) {
+    public void move(Board board,Worker selectedWorker, Tile selectedTile) {
         int dx = selectedTile.getX() - selectedWorker.getPositionOnBoard().getX();
         int dy = selectedTile.getY() - selectedWorker.getPositionOnBoard().getY();
 
         if(selectedTile.isOccupied()) {
-            Tile pushOpponentTile = Game.getMatch().getBoard().getTile(selectedTile.getX()+dx,selectedTile.getY()+dy);
+            Tile pushOpponentTile = board.getTile(selectedTile.getX()+dx,selectedTile.getY()+dy);
             pushOpponentTile.setWorker(selectedTile.getWorker());
             selectedTile.getWorker().setPositionOnBoard(pushOpponentTile);
             selectedTile.free();
         }
-        super.move(selectedWorker,selectedTile);
+        super.move(board,selectedWorker,selectedTile);
     }
 }

@@ -1,9 +1,6 @@
 package it.polimi.ingsw.model.cards;
 
-import it.polimi.ingsw.model.Action;
-import it.polimi.ingsw.model.Divinity;
-import it.polimi.ingsw.model.Tile;
-import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.*;
 
 import java.util.List;
 
@@ -24,18 +21,18 @@ public class BuildTwiceSameTile extends BuildTwice {
     }
 
     @Override
-    public void build(Worker selectedWorker, Tile selectedTile) {
-        super.build(selectedWorker, selectedTile);
+    public void build(Board board,Worker selectedWorker, Tile selectedTile) {
+        super.build(board,selectedWorker, selectedTile);
     }
 
     @Override
-    public void move(Worker selectedWorker, Tile selectedTile) {
-        super.move(selectedWorker, selectedTile);
+    public void move(Board board,Worker selectedWorker, Tile selectedTile) {
+        super.move(board,selectedWorker, selectedTile);
     }
 
     @Override
-    public boolean legalMove(Worker selectedWorker, Tile selectedTile) {
-        return super.legalMove(selectedWorker, selectedTile);
+    public boolean legalMove(Board board,Worker selectedWorker, Tile selectedTile) {
+        return super.legalMove(board,selectedWorker, selectedTile);
     }
 
     @Override
@@ -57,7 +54,7 @@ public class BuildTwiceSameTile extends BuildTwice {
      * @return {@code true} if the build is correct: it is the first and in accordance to the game rules, or it is the second and on the same tile
      */
     @Override
-    public boolean legalBuild(Worker selectedWorker, Tile selectedTile) {
+    public boolean legalBuild(Board board,Worker selectedWorker, Tile selectedTile) {
         if(getBuildCount()>0) {
             if(getFirstBuildTile().getX()==selectedTile.getX() && getFirstBuildTile().getY()==selectedTile.getY()) {
                 return true;
@@ -66,7 +63,7 @@ public class BuildTwiceSameTile extends BuildTwice {
                 return false;
             }
         }
-        return super.legalBuild(selectedWorker,selectedTile);
+        return super.legalBuild(board,selectedWorker,selectedTile);
     }
 
     /**

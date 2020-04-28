@@ -1,9 +1,6 @@
 package it.polimi.ingsw.model.cards;
 
-import it.polimi.ingsw.model.Divinity;
-import it.polimi.ingsw.model.DivinityDecoratorWithEffects;
-import it.polimi.ingsw.model.Tile;
-import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.*;
 
 /**
  * Parent class for gods that can move on opponents
@@ -19,8 +16,8 @@ public class MoveOnOpponent extends DivinityDecoratorWithEffects {
     }
 
     @Override
-    public void move(Worker selectedWorker, Tile selectedTile) {
-        super.move(selectedWorker, selectedTile);
+    public void move(Board board,Worker selectedWorker, Tile selectedTile) {
+        super.move(board,selectedWorker, selectedTile);
     }
 
     /**
@@ -28,7 +25,7 @@ public class MoveOnOpponent extends DivinityDecoratorWithEffects {
      * @return {@code true} if the base move is valid and the worker is trying to  move on an enemy worker
      */
     @Override
-    public boolean legalMove(Worker selectedWorker, Tile selectedTile) {
+    public boolean legalMove(Board board,Worker selectedWorker, Tile selectedTile) {
        if(selectedTile.isOccupied()) {
            if(!selectedTile.getWorker().getPlayer().equals(selectedWorker.getPlayer())) {
                return true;
@@ -38,6 +35,6 @@ public class MoveOnOpponent extends DivinityDecoratorWithEffects {
            }
        }
 
-       return super.legalMove(selectedWorker,selectedTile);
+       return super.legalMove(board,selectedWorker,selectedTile);
     }
 }

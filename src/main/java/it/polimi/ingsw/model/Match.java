@@ -4,9 +4,10 @@ import it.polimi.ingsw.Observable;
 import it.polimi.ingsw.events.modelToView.*;
 import it.polimi.ingsw.model.exceptions.*;
 
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
 
 /**
  * Core class of the game logic in the model.
@@ -21,7 +22,7 @@ public class Match extends Observable<ModelUpdateEvent> {
     private ArrayList<Player> players;
     private Player currentPlayer;
     private Board board;
-    private Action userAction; //soluzione momentanea
+    private static Action userAction; //soluzione momentanea
     private Worker selectedWorker;
 
     /**
@@ -83,7 +84,7 @@ public class Match extends Observable<ModelUpdateEvent> {
      * in order to evaluate if it is correct
      * and in that case to execute it
      */
-    public Action getUserAction() {
+    public static Action getUserAction() {
         return userAction;
     }
 
@@ -93,13 +94,26 @@ public class Match extends Observable<ModelUpdateEvent> {
      * to initialize the next player's one
      */
     public void startNextTurn(){
-        int playerIndex = players.indexOf(currentPlayer);
-            if (playerIndex + 1>= players.size()) {
-                playerIndex = 0;
-            }else {
-                playerIndex = playerIndex + 1;
+        for(Player p : players) {
+            if(!p.equals(currentPlayer)) {
+                if(p.getDivinity().hasSetEffectOnOpponentWorkers()) currentPlayer.setDivinity(p.getDivinity().getDivinity());
             }
-            currentPlayer = players.get(playerIndex);
+        }
+
+        int playerIndex = players.indexOf(currentPlayer);
+        if (playerIndex + 1>= players.size()) {
+            playerIndex = 0;
+        }else {
+            playerIndex = playerIndex + 1;
+        }
+        currentPlayer = players.get(playerIndex);
+
+        for(Player p : players) {
+            if(!p.equals(currentPlayer)) {
+                if(p.getDivinity().hasSetEffectOnOpponentWorkers()) p.getDivinity().setEffectOnOpponentWorkers(currentPlayer);
+            }
+        }
+
         currentPlayer.startOfTurn();
     }
 
@@ -111,7 +125,7 @@ public class Match extends Observable<ModelUpdateEvent> {
      * @throws InvalidWorkerSelectionException thrown whether the worker is not in the specified position, the worker does not belong to the current player or such worker has no available moves
      */
     public void selectWorker(int x, int y) throws InvalidWorkerSelectionException{
-        if (board.getTile(x,y).isOccupied() && board.getTile(x, y).getWorker().getPlayer().equals(currentPlayer) && getAvailableMoveTiles(board.getTile(x,y).getWorker()).size()>0)
+        if (board.getTile(x,y).isOccupied() && board.getTile(x, y).getWorker().getPlayer().equals(currentPlayer) && board.getAvailableMoveTiles(board.getTile(x,y).getWorker()).size()>0)
             selectedWorker = board.getTile(x, y).getWorker();
         else throw new InvalidWorkerSelectionException();
     }
@@ -132,14 +146,14 @@ public class Match extends Observable<ModelUpdateEvent> {
         }
         else throw new WorkerBadPlacementException();
     }
-
+/*
     /**
      * List of possible {@link Tile}s for the current {@link Player}
      * to move onto with his selected worker, when he chooses {@link Action#MOVE}
      * @param selectedWorker {@link Worker} that is going to move
      * @return The list is created checking that each of the {@link Match#selectedWorker}'s adjacent tiles are free to move onto; such conditions are verified through the call of {@code legalMove} on {@link Player}
      */
-    public List<Tile> getAvailableMoveTiles(Worker selectedWorker){
+    /*public List<Tile> getAvailableMoveTiles(Worker selectedWorker){
         List<Tile> list = new ArrayList<>();
         list = board.getAdjacentTiles(selectedWorker.getPositionOnBoard());
         List<Tile> ret = new ArrayList<>();
@@ -158,8 +172,8 @@ public class Match extends Observable<ModelUpdateEvent> {
      * @param selectedWorker {@link Worker} that is going to build
      * @return The list is created checking that each of the {@link Match#selectedWorker}'s adjacent tiles are free to build on; such conditions are verified through the call of {@code legalBuild} on {@link Player}
      */
-    public List<Tile> getAvailableBuildTiles(Worker selectedWorker){
-        List<Tile> list = new ArrayList<>();
+    /*public List<Tile> getAvailableBuildTiles(Worker selectedWorker){
+        List<Tile> list;
         list = board.getAdjacentTiles(selectedWorker.getPositionOnBoard());
         List<Tile> ret = new ArrayList<>();
         for(int i=0; i<list.size();i++){
@@ -169,7 +183,7 @@ public class Match extends Observable<ModelUpdateEvent> {
             }
         }
         return ret;
-    }
+    }*/
 
     /**
      * @return The winning {@link Player}
@@ -196,7 +210,7 @@ public class Match extends Observable<ModelUpdateEvent> {
     public Boolean checkLoser(){
         Player loser = currentPlayer;
         for (Worker w : currentPlayer.getWorkers()) {
-            if(getAvailableMoveTiles(w).size() > 0) return false;
+            if(board.getAvailableMoveTiles(w).size() > 0) return false;
         }
         board.removePlayerWorkers(currentPlayer);
         startNextTurn();
@@ -229,8 +243,8 @@ public class Match extends Observable<ModelUpdateEvent> {
      */
     public void move (int x, int y) throws InvalidMoveException {
         Tile t = board.getTile(x,y);
-        if( t != null && currentPlayer.move(selectedWorker, t)){
-            //notify view & controller
+        if( t != null && currentPlayer.move(board,selectedWorker,t)){
+            //notify view
         }
         else throw new InvalidMoveException();
     }
@@ -242,8 +256,8 @@ public class Match extends Observable<ModelUpdateEvent> {
      */
     public void build(int x, int y) throws InvalidBuildException{
         Tile t = board.getTile(x,y);
-        if(t != null && currentPlayer.build(selectedWorker,t)){
-            //notify view & controller
+        if(t != null && currentPlayer.build(board,selectedWorker,t)){
+            //notify view
         }
         else throw new InvalidBuildException();
     }
@@ -255,11 +269,6 @@ public class Match extends Observable<ModelUpdateEvent> {
      * @return Returns {@code true} if the operation was succesfull
      */
     public boolean loadDivinity(String divinityName) {
-        Divinity divinity = XMLDecoderUtility.loadDivinity(divinityName);
-        if(divinity != null) {
-            currentPlayer.setDivinity(divinity);
-            return true;
-        }
         return false;
     }
 

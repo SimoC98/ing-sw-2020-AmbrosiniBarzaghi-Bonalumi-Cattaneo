@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.model.*;
 
+
 import java.util.List;
 
 /**
@@ -22,12 +23,12 @@ public class BuildDomeEverywhere extends DivinityDecoratorWithEffects {
      * The choice is done in {@link Match}
      */
     @Override
-    public void build(Worker selectedWorker, Tile selectedTile) {
-        if(Game.getMatch().getUserAction().equals(Action.BUILDDOME)) {
+    public void build(Board board,Worker selectedWorker, Tile selectedTile) {
+        if(Match.getUserAction().equals(Action.BUILDDOME)) {
             selectedTile.setDome();
         }
         else {
-            super.build(selectedWorker,selectedTile);
+            super.build(board,selectedWorker,selectedTile);
         }
     }
 

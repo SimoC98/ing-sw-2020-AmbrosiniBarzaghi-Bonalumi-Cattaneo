@@ -1,9 +1,6 @@
 package it.polimi.ingsw.model.cards;
 
-import it.polimi.ingsw.model.Divinity;
-import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.Tile;
-import it.polimi.ingsw.model.Worker;
+import it.polimi.ingsw.model.*;
 
 /**
  * Pan's player can also win if his worker drops by two level
@@ -29,26 +26,26 @@ public class WinByDropTwoLevel extends AdditionalWinCondition {
      * This methods also needs to check that if the worker is dropping by two levels and in that case, it calls {@link Player#setWinner()}
      */
     @Override
-    public void move(Worker selectedWorker, Tile selectedTile) {
+    public void move(Board board, Worker selectedWorker, Tile selectedTile) {
         if(isWinner(selectedWorker, selectedTile)) {
             selectedWorker.getPlayer().setWinner();
         }
-        super.move(selectedWorker, selectedTile);
+        super.move(board,selectedWorker, selectedTile);
     }
 
     @Override
-    public void build(Worker selectedWorker, Tile selectedTile) {
-        super.build(selectedWorker, selectedTile);
+    public void build(Board board,Worker selectedWorker, Tile selectedTile) {
+        super.build(board,selectedWorker, selectedTile);
     }
 
     @Override
-    public boolean legalMove(Worker selectedWorker, Tile selectedTile) {
-        return super.legalMove(selectedWorker, selectedTile);
+    public boolean legalMove(Board board,Worker selectedWorker, Tile selectedTile) {
+        return super.legalMove(board,selectedWorker, selectedTile);
     }
 
     @Override
-    public boolean legalBuild(Worker selectedWorker, Tile selectedTile) {
-        return super.legalBuild(selectedWorker, selectedTile);
+    public boolean legalBuild(Board board,Worker selectedWorker, Tile selectedTile) {
+        return super.legalBuild(board,selectedWorker, selectedTile);
     }
 
     @Override

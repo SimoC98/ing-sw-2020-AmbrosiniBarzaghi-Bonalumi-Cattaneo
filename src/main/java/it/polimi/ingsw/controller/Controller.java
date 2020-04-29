@@ -8,11 +8,9 @@ import it.polimi.ingsw.model.exceptions.InvalidActionException;
 import it.polimi.ingsw.model.exceptions.InvalidBuildException;
 import it.polimi.ingsw.model.exceptions.InvalidMoveException;
 import it.polimi.ingsw.model.exceptions.InvalidWorkerSelectionException;
-import it.polimi.ingsw.view.View;
+import it.polimi.ingsw.serverView.View;
 
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import static java.lang.System.exit;

@@ -1,7 +1,9 @@
 package it.polimi.ingsw.events.modelToView;
 
+import it.polimi.ingsw.serverView.ServerView;
+
 import java.io.Serializable;
 
 public interface MVEvent extends Serializable {
-    public void handleEvent();
+    void handleEvent(ServerView serverView);
 }

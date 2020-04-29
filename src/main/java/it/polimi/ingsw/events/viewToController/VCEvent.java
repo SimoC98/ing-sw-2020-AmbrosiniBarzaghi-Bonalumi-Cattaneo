@@ -5,5 +5,5 @@ import it.polimi.ingsw.controller.Controller;
 import java.io.Serializable;
 
 public interface VCEvent extends Serializable {
-    public void handleEvent(Controller controller);
+    void handleEvent(Controller controller);
 }

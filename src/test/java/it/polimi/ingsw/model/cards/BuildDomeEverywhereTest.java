@@ -5,8 +5,6 @@ import it.polimi.ingsw.model.exceptions.InvalidActionException;
 import it.polimi.ingsw.model.exceptions.InvalidWorkerSelectionException;
 import it.polimi.ingsw.model.exceptions.WorkerBadPlacementException;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,20 +15,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BuildDomeEverywhereTest {
 
-   /* private static Game game;
     private static Match match;
     private static Board board;
     private static BuildDomeEverywhere div;
-    private static ActionManager a;
 
     @BeforeEach
     void setUp() throws WorkerBadPlacementException, InvalidWorkerSelectionException {
         List<String> players = new ArrayList<>();
         players.add("paolo");
-        players.add("francesco");
         match = new Match(players);
-        a = new ActionManager(match);
-        game = new Game(match);
         board = match.getBoard();
         div = new BuildDomeEverywhere(new StandardDivinity());
         match.getPlayers().get(0).setDivinity(div);
@@ -49,13 +42,13 @@ class BuildDomeEverywhereTest {
         Player p1 = match.getCurrentPlayer();
         match.setUserAction(Action.BUILD);
 
-        assert(p1.move(w,tile2));
+        assert(p1.move(board,w,tile2));
 
         assert(p1.getPossibleActions().size()==2);
         assert(p1.getPossibleActions().contains(Action.BUILD));
         assert(p1.getPossibleActions().contains(Action.BUILDDOME));
 
-        assert(p1.build(w,tile1));
+        assert(p1.build(board,w,tile1));
 
         assertFalse(tile1.isDome());
         assert(tile1.getLevel()==1);
@@ -70,20 +63,16 @@ class BuildDomeEverywhereTest {
         Player p1 = match.getCurrentPlayer();
         match.setUserAction(Action.BUILDDOME);
 
-        assert(p1.move(w,tile2));
+        assert(p1.move(board,w,tile2));
 
         assert(p1.getPossibleActions().size()==2);
         assert(p1.getPossibleActions().contains(Action.BUILD));
         assert(p1.getPossibleActions().contains(Action.BUILDDOME));
 
-        assert(p1.build(w,tile1));
+        assert(p1.build(board,w,tile1));
 
         assert(tile1.isDome());
         assertFalse(tile1.getLevel()==3);
     }
 
-    @AfterAll
-    static void afterAll() {
-        a.clearMatch();
-    }*/
 }

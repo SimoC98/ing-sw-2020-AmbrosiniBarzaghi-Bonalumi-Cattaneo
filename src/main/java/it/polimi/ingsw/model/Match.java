@@ -6,7 +6,9 @@ import it.polimi.ingsw.model.exceptions.*;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -24,6 +26,7 @@ public class Match extends Observable<ModelUpdateEvent> {
     private Board board;
     private static Action userAction; //soluzione momentanea
     private Worker selectedWorker;
+    private Map<String,Divinity> divinities;
 
     /**
      * Constructor used to support other classes
@@ -49,6 +52,7 @@ public class Match extends Observable<ModelUpdateEvent> {
         selectedWorker = null;
         this.board = new Board();
         players = new ArrayList<>();
+        divinities = new HashMap<>();
         Color[] colors = Color.values();
         for(int i=0; i < users.size();i++) {
             Player newPlayer = new Player(users.get(i),colors[i]);
@@ -265,11 +269,15 @@ public class Match extends Observable<ModelUpdateEvent> {
     /**
      * Called at the beginning of a match to load the player's
      * selected divinity from an xml file
-     * @param divinityName Divinity name as {@code String}
+     * @param divinities Divinity name as {@code String}
      * @return Returns {@code true} if the operation was succesfull
      */
-    public boolean loadDivinity(String divinityName) {
-        return false;
+    public void setDivinityMap(Map<String,Divinity> divinities) {
+        this.divinities = divinities;
+    }
+
+    public void loadPlayerDivinity(String divinityName) {
+        currentPlayer.setDivinity(divinities.get(divinityName));
     }
 
     /**
@@ -278,7 +286,7 @@ public class Match extends Observable<ModelUpdateEvent> {
      */
     public void playerInitialization(int x1, int y1, int x2, int y2, String divName) throws WorkerBadPlacementException {
         placeWorkers(x1,y1,x2,y2);
-        loadDivinity(divName);
+        //loadDivinity(divName);
         int index = players.indexOf(currentPlayer) + 1;
         if(index==players.size()) startNextTurn();
         else {

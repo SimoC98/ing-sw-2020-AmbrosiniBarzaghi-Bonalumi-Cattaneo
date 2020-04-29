@@ -7,7 +7,6 @@ import it.polimi.ingsw.model.Worker;
 import it.polimi.ingsw.model.exceptions.InvalidWorkerSelectionException;
 import it.polimi.ingsw.model.exceptions.WorkerBadPlacementException;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,11 +15,9 @@ import java.util.List;
 
 class BuildTwiceSameTileTest {
 
-/*    private static Game game;
-    private static Match match;
-    private static Board board;
-    private static BuildTwice div;
-    private static ActionManager a;
+    private Match match;
+    private Board board;
+    private BuildTwice div;
 
     @BeforeEach
       void setup() throws WorkerBadPlacementException, InvalidWorkerSelectionException {
@@ -28,8 +25,6 @@ class BuildTwiceSameTileTest {
         players.add("paolo");
         players.add("francesco");
         match = new Match(players);
-        a = new ActionManager(match);
-        game = new Game(match);
         board = match.getBoard();
         div = new BuildTwiceSameTile(new StandardDivinity());
         match.getPlayers().get(0).setDivinity(div);
@@ -40,19 +35,19 @@ class BuildTwiceSameTileTest {
 
     @Test
     public void buildTwiceSameTileTest(){
-       Worker worker = match.getSelectedWorker();
+        Worker worker = match.getSelectedWorker();
         Tile tile1 = board.getTile(1,1);
         Tile tile2 = board.getTile(2,2);
         Tile tile3 = board.getTile(3,3);
         Player p1 = match.getCurrentPlayer();
 
-        assert(p1.move(worker,tile2));
-        assert(p1.build(worker,tile1));
+        assert(p1.move(board,worker,tile2));
+        assert(p1.build(board,worker,tile1));
 
         assert(div.getBuildCount()==1);
         assertEquals(div.getFirstBuildTile(), tile1);
-        assertFalse(p1.build(worker,tile3));
-        assertTrue(p1.build(worker,tile1));
+        assertFalse(p1.build(board,worker,tile3));
+        assertTrue(p1.build(board,worker,tile1));
     }
 
     @Test
@@ -66,20 +61,20 @@ class BuildTwiceSameTileTest {
         assert(p1.getPossibleActions().size()==1);
         assert(p1.getPossibleActions().contains(Action.MOVE));
 
-        p1.move(w,tile2);
+        p1.move(board,w,tile2);
 
         assert(p1.getPossibleActions().size()==1);
         assert(p1.getPossibleActions().contains(Action.BUILD));
 
-        p1.build(w,tile1);
+        p1.build(board,w,tile1);
 
         assert(p1.getPossibleActions().size()==2);
         assert(p1.getPossibleActions().contains(Action.END));
         assert(p1.getPossibleActions().contains(Action.BUILD));
 
-        assertFalse(p1.build(w,tile3));
+        assertFalse(p1.build(board,w,tile3));
 
-        p1.build(w,tile1);
+        p1.build(board,w,tile1);
 
         assert(p1.getPossibleActions().size()==0);
     }
@@ -95,7 +90,7 @@ class BuildTwiceSameTileTest {
         assert(p1.getPossibleActions().size()==1);
         assert(p1.getPossibleActions().contains(Action.MOVE));
 
-        p1.move(w,tile2);
+        p1.move(board,w,tile2);
 
         tile1.increaseLevel();
         tile1.increaseLevel();
@@ -103,13 +98,9 @@ class BuildTwiceSameTileTest {
         assert(p1.getPossibleActions().size()==1);
         assert(p1.getPossibleActions().contains(Action.BUILD));
 
-        p1.build(w,tile1);
+        p1.build(board,w,tile1);
 
         assert(p1.getPossibleActions().size()==0);
     }
 
-    @AfterAll
-    static void afterAll() {
-        a.clearMatch();
-    }*/
 }

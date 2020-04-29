@@ -63,7 +63,7 @@ public class MoveTwice extends DivinityDecoratorWithEffects {
         return firstMovedTile;
     }
 
-    protected boolean isHasBuilt() {
+    protected boolean hasBuilt() {
         return hasBuilt;
     }
 

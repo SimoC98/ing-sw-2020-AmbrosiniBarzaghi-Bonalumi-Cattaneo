@@ -270,7 +270,7 @@ public class Match extends Observable<ModelUpdateEvent> {
      * Called at the beginning of a match to load the player's
      * selected divinity from an xml file
      * @param divinities Divinity name as {@code String}
-     * @return Returns {@code true} if the operation was succesfull
+     * @return Returns {@code true} if the operation was successful
      */
     public void setDivinityMap(Map<String,Divinity> divinities) {
         this.divinities = divinities;

@@ -1,9 +1,9 @@
 package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.exceptions.InvalidMoveException;
 import it.polimi.ingsw.model.exceptions.InvalidWorkerSelectionException;
 import it.polimi.ingsw.model.exceptions.WorkerBadPlacementException;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,25 +15,23 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SwapWithOpponentTest {
 
- /*   private static Game game;
-    private static Match match;
-    private static Board board;
-    private static MoveOnOpponent div;
-    private static ActionManager a;
+    private Match match;
+    private Board board;
+    private SwapWithOpponent div;
 
     @BeforeEach
     void setUp() throws WorkerBadPlacementException, InvalidWorkerSelectionException {
         List<String> players = new ArrayList<>();
-        players.add("paolo");
+        players.add("Paolo");
+        players.add("Felix");
         match = new Match(players);
-        a = new ActionManager(match);
-        game = new Game(match);
         board = match.getBoard();
         div = new SwapWithOpponent(new StandardDivinity());
         match.getPlayers().get(0).setDivinity(div);
-        match.startNextTurn();
         match.placeWorkers(1,1,4,4);
         match.selectWorker(1,1);
+        match.getPlayers().get(1).addWorker(board.getTile(2,2));
+        match.getPlayers().get(1).addWorker(board.getTile(0,0));
     }
 
     @Test
@@ -41,13 +39,10 @@ class SwapWithOpponentTest {
         Worker worker = match.getSelectedWorker();
         Tile tile1 = board.getTile(1,1);
         Tile tile2 = board.getTile(2,2);
-        Tile tile3 = board.getTile(3,3);
-        Player p1 = match.getCurrentPlayer();
+        Player p = match.getCurrentPlayer();
+        Worker opponentWorker = board.getTile(2,2).getWorker();
 
-        Worker opponentWorker = new Worker(tile2,new Player("Marco",Color.BLUE));
-
-        assert(match.getCurrentPlayer().getUsername().equals("paolo"));
-        assert(p1.move(worker,tile2));
+        assertTrue(p.move(board,worker,tile2));
 
         assertEquals(tile2.getWorker(),worker);
         assertEquals(tile1.getWorker(),opponentWorker);
@@ -56,57 +51,39 @@ class SwapWithOpponentTest {
     @Test
     public void swapdeniedTest() {
         Worker worker = match.getSelectedWorker();
-        Tile tile1 = board.getTile(1,1);
-        Tile tile2 = board.getTile(2,2);
-        Tile tile3 = board.getTile(0,0);
+        Tile t = board.getTile(0,0);
         Player p1 = match.getCurrentPlayer();
-
-        Worker opponentWorker1 = new Worker(tile2,new Player("Marco",Color.BLUE));
-        Worker opponentWorker2 = new Worker(tile3,new Player("jack",Color.CREAM));
 
         board.getTile(0,1).setDome();
         board.getTile(1,0).setDome();
 
-        assertFalse(p1.move(worker,tile3));
-        assert(p1.move(worker,tile2));
+        assertFalse(p1.move(board,worker,t));
     }
 
     @Test
-    public void moveOn() {
+    public void moveOn() throws InvalidMoveException {
         Worker worker = match.getSelectedWorker();
-        Tile tile1 = board.getTile(1,1);
-        Tile tile2 = board.getTile(2,2);
-        Tile tile3 = board.getTile(3,3);
+        Tile tile2 = board.getTile(0,1);
         Player p1 = match.getCurrentPlayer();
 
         tile2.increaseLevel();
-        Worker opponentWorker1 = new Worker(tile2,new Player("Marco",Color.BLUE));
+        board.getTile(0,0).getWorker().move(tile2);
 
-        assert(tile2.getLevel()==1);
-        assert(p1.move(worker,tile2));
+        assert(p1.move(board,worker,tile2));
     }
 
-    /*@Test
-    public void test() {
-        board.getTile(0,0).increaseLevel();
-        board.getTile(0,0).increaseLevel();
-        board.getTile(0,0).increaseLevel();
-        board.getTile(0,1).increaseLevel();
-        board.getTile(0,1).increaseLevel();
+    @Test
+    public void NoWinBySwapping() throws InvalidMoveException {
+        Tile t1 = board.getTile(0,1);
+        t1.increaseLevel();
+        t1.increaseLevel();
+        t1.increaseLevel();
+        match.getCurrentPlayer().addWorker(t1);
 
-        assert(board.getTile(0,0).getLevel()==3 && board.getTile(0,1).getLevel()==2);
+        match.getCurrentPlayer().move(board,t1.getWorker(),board.getTile(0,0)); //third worker to simplify test
 
-        Worker opponentWorker1 = new Worker(board.getTile(0,0),new Player("Marco",Color.BLUE));
-        Worker opponentWorker2 = new Worker(board.getTile(0,1),new Player("jack",Color.CREAM));
-
-        div.move(opponentWorker1,board.getTile(0,1));
-
-        assertFalse(opponentWorker2.getPlayer().isWinner());
+        assertFalse(t1.getWorker().getPlayer().isWinner());
     }
 
 
-    @AfterAll
-    static void afterAll() {
-        a.clearMatch();
-    }*/
 }

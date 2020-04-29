@@ -1,43 +1,52 @@
 package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.exceptions.InvalidWorkerSelectionException;
+import it.polimi.ingsw.model.exceptions.WorkerBadPlacementException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class MoveOnOpponentTest {
 
-    /*@Test
+    private Match match;
+    private Board board;
+    private MoveOnOpponent div;
+
+    @BeforeEach
+    void setup() throws WorkerBadPlacementException, InvalidWorkerSelectionException {
+        List<String> players = new ArrayList<>();
+        players.add("Jackie");
+        players.add("Rose");
+        match = new Match(players);
+        board = match.getBoard();
+        div = new MoveOnOpponent(new StandardDivinity());
+        match.getPlayers().get(0).setDivinity(div);
+        match.placeWorkers(3,3,4,4);
+        match.selectWorker(3,3);
+        match.getPlayers().get(1).addWorker(board.getTile(2,2));
+    }
+
+    @Test
     public void moveOnMyOtherWorker(){
-        Player p = new Player("Giova", Color.CREAM);
 
-        Tile t1 = new Tile(2,2);
-        Tile t2 = new Tile(3,2);
+        Tile t = board.getTile(4,4);
+        Worker worker = match.getSelectedWorker();
 
-        Worker w1 = new Worker(t1, p);
-        Worker w2 = new Worker(t2, p);
-
-        StandardDivinity sd = new StandardDivinity();
-        MoveOnOpponent d = new MoveOnOpponent(sd);
-
-        assertFalse(d.legalMove(w1,t2));
+        assertFalse(div.legalMove(board,worker,t));
     }
 
     @Test
     public void moveOnOpponent() {
-        Player p1 = new Player("Giova", Color.CREAM);
-        Player p2 = new Player("Franco", Color.BLUE);
 
-        Tile t1 = new Tile(2,2);
-        Tile t2 = new Tile(3,2);
+        Tile t = board.getTile(2,2);
+        Worker worker = match.getSelectedWorker();
 
-        Worker w1 = new Worker(t1, p1);
-        Worker w2 = new Worker(t2, p2);
-
-        Divinity sd = new StandardDivinity();
-        MoveOnOpponent d = new MoveOnOpponent(sd);
-
-        assertTrue(d.legalMove(w1,t2));
-    }*/
+        assertTrue(div.legalMove(board,worker,t));
+    }
 
 }

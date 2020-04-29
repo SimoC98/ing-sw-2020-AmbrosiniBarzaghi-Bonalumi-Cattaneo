@@ -13,11 +13,10 @@ import java.util.List;
 
 class BuildTwiceNotSameTileTest {
 
-   /* private static Game game;
-    private static Match match;
-    private static Board board;
-    private static BuildTwice div;
-    private static ActionManager a;
+    private Match match;
+    private Board board;
+    private BuildTwice div;
+
 
     @BeforeEach
     void setup() throws WorkerBadPlacementException, InvalidWorkerSelectionException {
@@ -25,8 +24,6 @@ class BuildTwiceNotSameTileTest {
         players.add("paolo");
         players.add("francesco");
         match = new Match(players);
-        a = new ActionManager(match);
-        game = new Game(match);
         board = match.getBoard();
         div = new BuildTwiceNotSameTile(new StandardDivinity());
         match.getPlayers().get(0).setDivinity(div);
@@ -43,13 +40,13 @@ class BuildTwiceNotSameTileTest {
         Tile tile3 = board.getTile(3,3);
         Player p1 = match.getCurrentPlayer();
 
-        assert(p1.move(worker,tile2));
-        assert(p1.build(worker,tile1));
+        assert(p1.move(board,worker,tile2));
+        assert(p1.build(board,worker,tile1));
 
         assert(div.getBuildCount()==1);
         assertEquals(div.getFirstBuildTile(), tile1);
-        assertFalse(p1.build(worker,tile1));
-        assertTrue(p1.build(worker,tile3));
+        assertFalse(p1.build(board,worker,tile1));
+        assertTrue(p1.build(board,worker,tile3));
     }
 
     @Test
@@ -63,20 +60,20 @@ class BuildTwiceNotSameTileTest {
         assert(p1.getPossibleActions().size()==1);
         assert(p1.getPossibleActions().contains(Action.MOVE));
 
-        p1.move(w,tile2);
+        p1.move(board,w,tile2);
 
         assert(p1.getPossibleActions().size()==1);
         assert(p1.getPossibleActions().contains(Action.BUILD));
 
-        p1.build(w,tile1);
+        p1.build(board,w,tile1);
 
         assert(p1.getPossibleActions().size()==2);
         assert(p1.getPossibleActions().contains(Action.END));
         assert(p1.getPossibleActions().contains(Action.BUILD));
 
-        assertFalse(p1.build(w,tile1));
+        assertFalse(p1.build(board,w,tile1));
 
-        p1.build(w,tile3);
+        p1.build(board,w,tile3);
 
         assert(p1.getPossibleActions().size()==0);
     }
@@ -95,18 +92,14 @@ class BuildTwiceNotSameTileTest {
         assert(p1.getPossibleActions().size()==1);
         assert(p1.getPossibleActions().contains(Action.MOVE));
 
-        p1.move(w,tile2);
+        p1.move(board,w,tile2);
 
         assert(p1.getPossibleActions().size()==1);
         assert(p1.getPossibleActions().contains(Action.BUILD));
 
-        p1.build(w,tile1);
+        p1.build(board,w,tile1);
 
         assert(p1.getPossibleActions().size()==0);
     }
 
-    @AfterAll
-    static void afterAll() {
-        a.clearMatch();
-    }*/
 }

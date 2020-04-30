@@ -118,4 +118,5 @@ public class Controller implements Observer<VCEvent> {
         //if(!(event instanceof VCEvent)) throw new RuntimeException("Wrong event type");
         event.handleEvent(this);
     }
+
 }

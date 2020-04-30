@@ -1,5 +1,6 @@
 package it.polimi.ingsw;
 
+import it.polimi.ingsw.XMLparser.XMLParserUtility;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Match;
@@ -29,16 +30,19 @@ public class App
         Game game = new Game(match);
         View view = new View();
         Controller controller = new Controller(match,view);
+        match.setDivinityMap(XMLParserUtility.getDivinities());
 
         view.addObserver(controller);
 
+
         try {
-            match.playerInitialization(1,1,2,2,"Prometheus");
-            match.playerInitialization(3,3,4,4,"Minotaur");
+            match.playerInitialization(1,1,2,2,"Minotaur");
+            match.playerInitialization(3,3,2,4,"Human");
         } catch (WorkerBadPlacementException e) {
             System.out.println("error");
         }
         view.startTurn("simone");
+
     }
 
  /*   public static void main( String[] args )

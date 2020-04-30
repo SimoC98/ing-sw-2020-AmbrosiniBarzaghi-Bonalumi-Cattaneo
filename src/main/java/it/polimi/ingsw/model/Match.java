@@ -286,7 +286,7 @@ public class Match extends Observable<ModelUpdateEvent> {
      */
     public void playerInitialization(int x1, int y1, int x2, int y2, String divName) throws WorkerBadPlacementException {
         placeWorkers(x1,y1,x2,y2);
-        //loadDivinity(divName);
+        loadPlayerDivinity(divName);
         int index = players.indexOf(currentPlayer) + 1;
         if(index==players.size()) startNextTurn();
         else {

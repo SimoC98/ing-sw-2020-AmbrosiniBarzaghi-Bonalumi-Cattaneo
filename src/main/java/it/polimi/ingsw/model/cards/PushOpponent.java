@@ -7,8 +7,8 @@ import it.polimi.ingsw.model.*;
  * This class represents Minotaur, whose effect is to push an opponent on the direction he is moving,
  * if the tile the opponent is to be occupying is accessible.
  * <p>
- * {@code legalMove} and {@code move} are the functions affected in this class: {@link PushOpponent#legalMove(Worker, Tile)} has to
- * perform several tests to verify the possibility of movement; {@link PushOpponent#move(Worker, Tile)} has to access the {@link it.polimi.ingsw.model.Match}
+ * {@code legalMove} and {@code move} are the functions affected in this class: has to
+ * perform several tests to verify the possibility of movement; {@link PushOpponent(Worker, Tile)} has to access the {@link it.polimi.ingsw.model.Match}
  *in order to retrieve and move the opponent's {@link Worker}
  */
 public class PushOpponent extends MoveOnOpponent {
@@ -32,7 +32,7 @@ public class PushOpponent extends MoveOnOpponent {
 
         if(moveOnOpponent) {
             if(selectedTile.isOccupied()) {
-                if(selectedTile.getX()+dx>4 || selectedTile.getX()+dx<0 || selectedTile.getY()+dy>4 || selectedTile.getY()+dy<0 || Game.getMatch().getBoard().getTile(selectedTile.getX()+dx,selectedTile.getY()+dy).isOccupied() || Game.getMatch().getBoard().getTile(selectedTile.getX()+dx,selectedTile.getY()+dy).isDome()) {
+                if(selectedTile.getX()+dx>4 || selectedTile.getX()+dx<0 || selectedTile.getY()+dy>4 || selectedTile.getY()+dy<0 || board.getTile(selectedTile.getX()+dx,selectedTile.getY()+dy).isOccupied() || board.getTile(selectedTile.getX()+dx,selectedTile.getY()+dy).isDome()) {
                     return false;
                 }
                 else {

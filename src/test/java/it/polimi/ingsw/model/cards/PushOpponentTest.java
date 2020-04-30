@@ -1,131 +1,107 @@
 package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.exceptions.InvalidWorkerSelectionException;
+import it.polimi.ingsw.model.exceptions.WorkerBadPlacementException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class PushOpponentTest {
 
-   /* @Test
-    public void pushOpponentSimple(){
-        Board board = new Board();
-        Match match = new Match(board);
-        Game g = new Game(match);
-        ActionManager a = new ActionManager(match);
+    private Match match;
+    private Board board;
+    private PushOpponent div;
 
-        Tile t1 = board.getTile(2,1);
-        Tile t2 = board.getTile(2,2);
+    @BeforeEach
+    void setup() throws WorkerBadPlacementException, InvalidWorkerSelectionException {
+        List<String> players = new ArrayList<>();
+        players.add("Mike");
+        players.add("Oscar");
+        match = new Match(players);
+        board = match.getBoard();
+        div = new PushOpponent(new StandardDivinity());
+        match.getPlayers().get(0).setDivinity(div);
+        match.placeWorkers(2,3,3,2);
+        match.getPlayers().get(1).setDivinity(new StandardDivinity());
+        match.getPlayers().get(1).addWorker(board.getTile(3,3));
+        match.getPlayers().get(1).addWorker(board.getTile(4,3));
+    }
+        @Test
+        public void pushOpponentSimple(){
+        Player p = match.getCurrentPlayer();
+        Worker w = p.getWorkers().get(1);
+        Tile t1 = board.getTile(3,2);
+        Tile t2 = board.getTile(3,3);
+        Worker w2 = t2.getWorker();
 
-        Worker w1 = new Worker(t1, new Player("simone", Color.BLUE));
-        Worker w2 = new Worker(t2 ,new Player("Giova", Color.BLUE));
 
-        Divinity d = new StandardDivinity();
-        PushOpponent pushD = new PushOpponent(d);
+        assertTrue(div.legalMove(board,w, t2));
 
-        assertTrue(pushD.legalMove(w1, t2));
+        p.move(board,w, t2);
 
-        pushD.move(w1, t2);
-
-        assertEquals(w1.getPositionOnBoard(), t2);
+        assertEquals(w.getPositionOnBoard(), t2);
         assertEquals(w2.getPositionOnBoard(), board.getTile(t2.getX(), t2.getY()+1));
-        assertTrue(!t1.isOccupied());
-        a.clearMatch();
+        assertFalse(t1.isOccupied());
 
     }
 
     @Test
     public void pushOpponentOnHigherTile(){
-        Board board = new Board();
-        Match match = new Match(board);
-        ActionManager a = new ActionManager(match);
-        Game g = new Game(match);
 
-        Tile t1 = board.getTile(2,1);
-        Tile t2 = board.getTile(2,2);
-        Tile t3 = board.getTile(2,3);
+        Player p = match.getCurrentPlayer();
+        Worker w = p.getWorkers().get(1);
+        Tile t1 = board.getTile(3,2);
+        Tile t2 = board.getTile(3,3);
+        Tile t3 = board.getTile(3,4);
+        Worker w2 = t2.getWorker();
 
         t3.increaseLevel();
         t3.increaseLevel();
         t3.increaseLevel();
 
-        Worker w1 = new Worker(t1, new Player("simone", Color.BLUE));
-        Worker w2 = new Worker(t2 ,new Player("Giova", Color.BLUE));
+        assertTrue(div.legalMove(board,w, t2));
 
-        Divinity d = new StandardDivinity();
-        PushOpponent pushD = new PushOpponent(d);
+        p.move(board,w, t2);
 
-        assertTrue(pushD.legalMove(w1, t2));
-
-        pushD.move(w1, t2);
-
-        assertEquals(w1.getPositionOnBoard(), t2);
+        assertEquals(w.getPositionOnBoard(), t2);
         assertEquals(w2.getPositionOnBoard(), board.getTile(t2.getX(), t2.getY()+1));
-        assertTrue(!t1.isOccupied());
+        assertFalse(t1.isOccupied());
         assertFalse(w2.getPlayer().isWinner());
-        a.clearMatch();
     }
 
     @Test
     public void pushOpponentOffEdge(){
-        Board board = new Board();
-        Match match = new Match(board);
-        ActionManager a = new ActionManager(match);
-        Game g = new Game(match);
+        Player p = match.getCurrentPlayer();
+        Worker w = p.getWorkers().get(1);
+        Tile t = board.getTile(4,3);
 
-        Tile t1 = board.getTile(2,1);
-        Tile t2 = board.getTile(2,0);
-
-        Worker w1 = new Worker(t1, new Player("simone", Color.BLUE));
-        Worker w2 = new Worker(t2 ,new Player("Giova", Color.BLUE));
-
-        Divinity d = new StandardDivinity();
-        PushOpponent pushD = new PushOpponent(d);
-
-        assertFalse(pushD.legalMove(w1, t2));
+        assertFalse(div.legalMove(board,w, t));
     }
 
     @Test
     public void pushOpponentOnOccupiedTile(){
-        Board board = new Board();
-        Match match = new Match(board);
-        ActionManager a  = new ActionManager(match);
-        Game g = new Game(match);
 
-        Tile t1 = board.getTile(1,1);
-        Tile t2 = board.getTile(2,2);
-        Tile t3 = board.getTile(3,3);
+        Player p = match.getCurrentPlayer();
+        Worker w = p.getWorkers().get(0);
+        Tile t = board.getTile(3,3);
 
-        Worker w1 = new Worker(t1, new Player("simone", Color.BLUE));
-        Worker w2 = new Worker(t2 ,new Player("Giova", Color.BLUE));
-        Worker w3 = new Worker(t3 ,new Player("franco", Color.BLUE));
-
-        Divinity d = new StandardDivinity();
-        PushOpponent pushD = new PushOpponent(d);
-
-        assertFalse(pushD.legalMove(w1, t2));
-        a.clearMatch();
+        assertFalse(div.legalMove(board,w, t));
     }
 
     @Test
     public void pushOpponentOnDome(){
-        Board board = new Board();
-        Match match = new Match(board);
-        ActionManager a = new ActionManager(match);
-        Game g = new Game(match);
 
-        Tile t1 = board.getTile(1,1);
-        Tile t2 = board.getTile(2,2);
-        Tile t3 = board.getTile(3,3);
-        t3.setDome();
+        Player p = match.getCurrentPlayer();
+        Worker w = p.getWorkers().get(1);
+        Tile t = board.getTile(3,2);
+        Tile t1 = board.getTile(3,4);
+        t1.setDome();
 
-        Worker w1 = new Worker(t1, new Player("simone", Color.BLUE));
-        Worker w2 = new Worker(t2 ,new Player("Giova", Color.BLUE));
-
-        Divinity d = new StandardDivinity();
-        PushOpponent pushD = new PushOpponent(d);
-
-        assertFalse(pushD.legalMove(w1, t2));
-        a.clearMatch();
-    }*/
+        assertFalse(div.legalMove(board,w,t));
+    }
 }

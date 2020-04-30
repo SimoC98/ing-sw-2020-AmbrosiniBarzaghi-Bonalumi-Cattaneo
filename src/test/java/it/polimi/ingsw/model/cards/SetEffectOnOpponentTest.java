@@ -1,7 +1,9 @@
 package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.model.*;
-import org.junit.jupiter.api.AfterAll;
+import it.polimi.ingsw.model.exceptions.InvalidMoveException;
+import it.polimi.ingsw.model.exceptions.InvalidWorkerSelectionException;
+import it.polimi.ingsw.model.exceptions.WorkerBadPlacementException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -11,52 +13,54 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class SetEffectOnOpponentTest {
-    /*private static Game game;
-    private static Match match;
-    private static SetEffectOnOpponent div1;
-    private static StandardDivinity div2;
-    private static ActionManager a;
+
+    private Match match;
+    private Board board;
+    private SetEffectOnOpponent div1;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws WorkerBadPlacementException, InvalidWorkerSelectionException {
         List<String> users = new ArrayList<String>();
-        users.add("simone");
-        users.add("marco");
+        users.add("Hello");
+        users.add("World");
         match = new Match(users);
-        a = new ActionManager(match);
-        game = new Game(match);
+        board = match.getBoard();
         div1 = new SetEffectOnOpponent(new StandardDivinity());
-        div1.setupDivinity(new ArrayList<>());
         match.getPlayers().get(0).setDivinity(div1);
-        div2 = new StandardDivinity();
-        match.getPlayers().get(1).setDivinity(div2);
+        match.placeWorkers(0,0,1,1);
+        match.selectWorker(0,0);
+        match.getPlayers().get(1).setDivinity(new StandardDivinity());
+        match.getPlayers().get(1).addWorker(board.getTile(2,2));
+        match.getPlayers().get(1).addWorker(board.getTile(3,3));
     }
 
     @Test
     public void test() {
-        Worker w1 = new Worker(match.getBoard().getTile(0,0), match.getPlayers().get(0));
-        Worker w2 = new Worker(match.getBoard().getTile(4,4),match.getPlayers().get(1));
+        Worker w1 = match.getSelectedWorker();
+        Worker w2 = board.getTile(2,2).getWorker();
+        Player p1 = match.getCurrentPlayer();
+        Tile t1 = board.getTile(0,1);
+        Tile t2 = board.getTile(2,3);
+        Tile t3 = board.getTile(2,2);
+        Tile t4 = board.getTile(2,1);
 
-        div1.setupDivinity(new ArrayList<>());
-        assertFalse(div1.isHasMovedUp());
+        t1.increaseLevel();
+        p1.move(board,w1,t1);
+        p1.build(board,w1,board.getTile(0,0));
+        match.startNextTurn();
 
+        t2.increaseLevel();
+        Player p2 = match.getCurrentPlayer();
+        assertFalse(p2.getDivinity().legalMove(board,w2,t2));
+        assertTrue(p2.getDivinity().legalMove(board,w2,t4));
+        p2.move(board,w2,t4);
+        p2.build(board,w2,t3);
+        match.startNextTurn();
 
-        match.getBoard().getTile(0,1).increaseLevel();      //athena move here
-        match.getBoard().getTile(4,3).increaseLevel();      //other player move here
-        div1.move(w1,match.getBoard().getTile(0,1));        //worker with athena moves up
+        p1.move(board,w1,board.getTile(0,0));
+        p1.build(board,w1,t1);
+        match.startNextTurn();
 
-
-        assertFalse(match.getPlayers().get(1).getDivinity().legalMove(w2,match.getBoard().getTile(4,3)));     //opponent can't move up
-        assert(match.getPlayers().get(1).getDivinity().legalMove(w2,match.getBoard().getTile(3,4)));          //opponent can stay on his level
-
-
-        div1.setupDivinity(new ArrayList<>());
-        assertTrue(match.getPlayers().get(1).getDivinity().legalMove(w2,match.getBoard().getTile(3,4)));      //dopo setup può muoversi su liv più alto
-
+        assertTrue(p2.getDivinity().legalMove(board,w2,t3));
     }
-
-    @AfterAll
-    static void afterAll() {
-        a.clearMatch();
-    }*/
 }

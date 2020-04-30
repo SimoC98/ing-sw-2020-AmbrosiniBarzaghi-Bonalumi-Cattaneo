@@ -15,9 +15,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BuildDomeEverywhereTest {
 
-    private static Match match;
-    private static Board board;
-    private static BuildDomeEverywhere div;
+    private Match match;
+    private Board board;
+    private BuildDomeEverywhere div;
 
     @BeforeEach
     void setUp() throws WorkerBadPlacementException, InvalidWorkerSelectionException {

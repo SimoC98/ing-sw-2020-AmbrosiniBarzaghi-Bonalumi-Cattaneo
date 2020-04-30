@@ -3,20 +3,18 @@ package it.polimi.ingsw.model.cards;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.exceptions.InvalidWorkerSelectionException;
 import it.polimi.ingsw.model.exceptions.WorkerBadPlacementException;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class BuildBeforeAndAfterTest {
-    private static Match match;
-    private static Board board;
-    private static BuildBeforeAndAfter div;
+    private Match match;
+    private Board board;
+    private BuildBeforeAndAfter div;
 
     @BeforeEach
     void setUp() {
@@ -113,9 +111,9 @@ class BuildBeforeAndAfterTest {
         assert(worker.getPositionOnBoard().getX()==0 && worker.getPositionOnBoard().getY()==0 && tile4.getLevel()==1);
         assert(tile2.getLevel()==2 && tile1.getLevel()==2);
 
-        assert(div.legalBuild(board,worker,tile3));  //se ha liv più basso può costruire
+        assert(div.legalBuild(board,worker,tile3));  //if at lower level, he can build
         tile3.increaseLevel();
-        assertFalse(div.legalBuild(board,worker,tile3)); //se ha stesso livello non può --> non potrebbe più muovere
+        assertFalse(div.legalBuild(board,worker,tile3)); //if on the same level he can't build, because therefore he couldn't move
         assert(div.legalBuild(board,worker,tile1));
 
         assert(p.getPossibleActions().size()==2);
@@ -126,7 +124,7 @@ class BuildBeforeAndAfterTest {
         assert(p.build(board,worker,tile2));
         assert(p.getPossibleActions().size()==1 && p.getPossibleActions().contains(Action.MOVE));
         //assert(b.getTile(0,1).getLevel()==2);
-        assertFalse(p.move(board,worker,tile1)); //dopo che ha costruito non può salire di livello
+        assertFalse(p.move(board,worker,tile1)); //after building he can't move up
         assertFalse(p.move(board,worker,tile2)); // same
         assert(p.move(board,worker,tile3));
         assert(p.getPossibleActions().size()==1 && p.getPossibleActions().contains(Action.BUILD));

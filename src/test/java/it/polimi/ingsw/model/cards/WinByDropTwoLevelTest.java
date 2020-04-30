@@ -14,12 +14,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class WinByDropTwoLevelTest {
 
-   /* private static Game game;
-    private static Match match;
-    private static Board board;
-    private static WinByDropTwoLevel div;
-    private static ActionManager a;
-
+    private Match match;
+    private Board board;
+    private WinByDropTwoLevel div;
 
     @BeforeEach
     void setUp() throws WorkerBadPlacementException, InvalidWorkerSelectionException {
@@ -27,8 +24,6 @@ class WinByDropTwoLevelTest {
         players.add("paolo");
         players.add("francesco");
         match = new Match(players);
-        a = new ActionManager(match);
-        game = new Game(match);
         board = match.getBoard();
         div = new WinByDropTwoLevel(new StandardDivinity());
         match.getPlayers().get(0).setDivinity(div);
@@ -46,7 +41,7 @@ class WinByDropTwoLevelTest {
         p1.addWorker(t1);
         Worker w = p1.getWorkers().get(0);
 
-        assert(p1.move(w,t2));
+        p1.move(board,w,t2);
         assertTrue(p1.isWinner());
     }
 
@@ -62,12 +57,8 @@ class WinByDropTwoLevelTest {
         p1.addWorker(t1);
         Worker w = p1.getWorkers().get(0);
 
-        assert(p1.move(w,t2));
+        p1.move(board,w,t2);
         assertTrue(p1.isWinner());
     }
 
-    @AfterAll
-    static void afterAll() {
-        a.clearMatch();
-    }*/
 }

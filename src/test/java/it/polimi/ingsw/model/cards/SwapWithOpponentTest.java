@@ -49,7 +49,7 @@ class SwapWithOpponentTest {
     }
 
     @Test
-    public void swapdeniedTest() {
+    public void swapDeniedTest() {
         Worker worker = match.getSelectedWorker();
         Tile t = board.getTile(0,0);
         Player p1 = match.getCurrentPlayer();
@@ -73,7 +73,7 @@ class SwapWithOpponentTest {
     }
 
     @Test
-    public void NoWinBySwapping() throws InvalidMoveException {
+    public void NoWinBySwapping()  {
         Tile t1 = board.getTile(0,1);
         t1.increaseLevel();
         t1.increaseLevel();

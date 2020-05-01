@@ -1,41 +1,51 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.cards.BuildDomeEverywhere;
+import it.polimi.ingsw.model.cards.StandardDivinity;
 import it.polimi.ingsw.model.exceptions.InvalidBuildException;
 import it.polimi.ingsw.model.exceptions.InvalidMoveException;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class WorkerTest {
-    private Worker workerTest;
-    private Tile positionOnBoard;
+    private Worker w;
+    private Board board;
+    private Match match;
 
+    @BeforeEach
+    void setup(){
+        board = new Board();
+        match = new Match(board);
+        w = new Worker(new Player("Kirk",Color.CREAM));
+    }
 
      @Test
     public void moveTest() {
-        Worker workerTest = new Worker();
-        Tile tileTest1 = new Tile(5,5);
-        workerTest.setPositionOnBoard(tileTest1);
-        Tile tileTest2 = new Tile(5,4);
+        Tile tileTest1 = board.getTile(4,4);
+        w.setPositionOnBoard(tileTest1);
+        Tile tileTest2 = new Tile(4,3);
 
         try {
-            workerTest.move(tileTest2);
+            w.move(tileTest2);
         } catch (InvalidMoveException e) {
             e.printStackTrace();
         }
 
-        assertNotEquals(tileTest1,workerTest.getPositionOnBoard());
+        assertNotEquals(tileTest1,w.getPositionOnBoard());
         assertFalse(tileTest1.isOccupied());
-        assertEquals(tileTest2.getWorker(),workerTest);
+        assertEquals(tileTest2.getWorker(),w);
     }
 
     @Test
     public void moveOnOpponent() {
-        Worker w = new Worker();
-        w.setPositionOnBoard(new Tile(5,5));
+        w.setPositionOnBoard(board.getTile(3,3));
 
-        Tile t = new Tile(5,4);
+        Tile t = board.getTile(3,2);
         t.setWorker(new Worker());
 
         assertThrows(InvalidMoveException.class,()->w.move(t));
@@ -44,99 +54,95 @@ class WorkerTest {
 
     @Test
     public void moveOnDome() {
-        Worker workerTest = new Worker();
-        Tile tileTest1 = new Tile(5,5);
-        workerTest.setPositionOnBoard(tileTest1);
-        tileTest1.setWorker(workerTest);
-        Tile tileTest2 = new Tile(5,4);
+        Tile tileTest1 = board.getTile(2,2);
+        w.setPositionOnBoard(tileTest1);
+        tileTest1.setWorker(w);
+        Tile tileTest2 = board.getTile(2,3);
         tileTest2.setDome();
 
-        assertThrows(InvalidMoveException.class,()->workerTest.move(tileTest2));
-
-
+        assertThrows(InvalidMoveException.class,()->w.move(tileTest2));
     }
 
     @Test
     public void moveOnDifferentLevels() {
-        Worker workerTest = new Worker();
-        Tile tileTest1 = new Tile(5,5);
-        workerTest.setPositionOnBoard(tileTest1);
-        tileTest1.setWorker(workerTest);
-        Tile tileTest2 = new Tile(5,4);
+        Tile tileTest1 =board.getTile(3,3);
+        w.setPositionOnBoard(tileTest1);
+        tileTest1.setWorker(w);
+        Tile tileTest2 = board.getTile(4,4);
         tileTest2.increaseLevel();
         tileTest2.increaseLevel();
 
-        assertThrows(InvalidMoveException.class,()->workerTest.move(tileTest2));
+        assertThrows(InvalidMoveException.class,()->w.move(tileTest2));
     }
 
     @Test
     public void winCondition() {
-        Tile tileTest1 = new Tile(5,5);
+        Tile tileTest1 = board.getTile(3,3);
         tileTest1.increaseLevel();
         tileTest1.increaseLevel();
 
-        Worker workerTest = new Worker(tileTest1,new Player("username",Color.CREAM));
+        w.setPositionOnBoard(tileTest1);
+        tileTest1.setWorker(w);
 
-        Tile tileTest2 = new Tile(5,4);
+        Tile tileTest2 = board.getTile(4,4);
         tileTest2.increaseLevel();
         tileTest2.increaseLevel();
         tileTest2.increaseLevel();
 
         try {
-            workerTest.move(tileTest2);
+            w.move(tileTest2);
         } catch (InvalidMoveException e) {
             e.printStackTrace();
         }
 
-        assert(workerTest.getPlayer().isWinner());
+        assert(w.getPlayer().isWinner());
 
     }
 
     @Test
     public void NotWinIfAlreadyLevel3() {
-        Tile tileTest1 = new Tile(5,5);
-        Worker workerTest = new Worker(tileTest1,new Player("username",Color.CREAM));
+        Tile tileTest1 = board.getTile(3,3);
 
         tileTest1.increaseLevel();
         tileTest1.increaseLevel();
         tileTest1.increaseLevel();
-        tileTest1.setWorker(workerTest);
+        w.setPositionOnBoard(tileTest1);
+        tileTest1.setWorker(w);
 
 
-        Tile tileTest2 = new Tile(5,4);
+        Tile tileTest2 = board.getTile(4,4);
         tileTest2.increaseLevel();
         tileTest2.increaseLevel();
         tileTest2.increaseLevel();
 
         try {
-            workerTest.move(tileTest2);
+            w.move(tileTest2);
         } catch (InvalidMoveException e) {
             e.printStackTrace();
         }
 
-        assert(!workerTest.getPlayer().isWinner());
+        assertFalse(w.getPlayer().isWinner());
 
     }
 
     @Test
     public void buildTest()  {
-        Worker workerTest = new Worker();
-        Tile tileTest1 = new Tile(5,5);
-        workerTest.setPositionOnBoard(tileTest1);
-        tileTest1.setWorker(workerTest);
-        Tile tileTest2 = new Tile(5,4);
+        Tile tileTest1 = board.getTile(4,4);
+        w.setPositionOnBoard(tileTest1);
+        tileTest1.setWorker(w);
+        Tile tileTest2 = board.getTile(3,4);
 
         for(int i=0;i<=3;i++) {
             assertEquals(i,tileTest2.getLevel());
             try {
-                workerTest.build(tileTest2);
+                w.build(tileTest2);
             } catch (InvalidBuildException e) {
                 e.printStackTrace();
             }
         }
 
         assert(tileTest2.isDome());
-        assertThrows(InvalidBuildException.class,()->workerTest.build(tileTest2));
+        assertThrows(InvalidBuildException.class,()->w.build(tileTest2));
     }
 
 

@@ -41,7 +41,6 @@ class XMLParserUtilityTest {
         pList.add("Marco");
         pList.add("Gino");
         Match match = new Match(pList);
-        Game game = new Game(match);
         Board board = match.getBoard();
 
         Player p = match.getPlayers().get(0);

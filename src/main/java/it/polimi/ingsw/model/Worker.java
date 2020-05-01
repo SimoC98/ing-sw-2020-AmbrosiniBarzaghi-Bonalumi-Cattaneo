@@ -16,6 +16,11 @@ public class Worker {
         this.player = null;
     }
 
+    public Worker(Player player){
+        this.positionOnBoard = null;
+        this.player = player;
+    }
+
     /**
      * Constructor to initially place a worker on a given {@link Tile}.
      * <p>

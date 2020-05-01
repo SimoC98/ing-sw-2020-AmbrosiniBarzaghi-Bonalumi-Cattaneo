@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
 
-  /*  Player p;
+    Player p;
     Worker w;
     Board b;
 
@@ -31,7 +31,7 @@ class PlayerTest {
         assertFalse(p.getWorkers().isEmpty());
         assertTrue(p.getPossibleActions().contains(Action.MOVE));
 
-        boolean success = p.move(w, t2);
+        boolean success = p.move(b,w, t2);
 
         assertTrue(success);
         assertTrue(p.getPossibleActions().contains(Action.BUILD));
@@ -52,13 +52,13 @@ class PlayerTest {
         p.addWorker(t1);
         w = p.getWorkers().get(0);
 
-        boolean success = p.move(w, t2);
+        boolean success = p.move(b,w, t2);
 
         assertTrue(p.isWinner());
     }
 
 
-   /* @Test
+    @Test
     public void wrongMoves(){
         Tile t1 = b.getTile(1, 1);
         Tile t2 = b.getTile(1, 2);
@@ -70,18 +70,18 @@ class PlayerTest {
         p.addWorker(t1);
         w = p.getWorkers().get(0);
 
-        boolean success = p.move(w, t2);
+        boolean success = p.move(b,w, t2);
 
         assertFalse(success);
         assertTrue(p.getPossibleActions().contains(Action.MOVE));   //no moves no changes on possibleMoves
 
-        success = p.move(w, t3);
+        success = p.move(b,w, t3);
 
         assertFalse(success);
         assertTrue(p.getPossibleActions().contains(Action.MOVE));
-    }*/
+    }
 
-   /* @Test
+    @Test
     public void buildTest(){
         Tile t1 = b.getTile(1, 1);
         Tile t2 = b.getTile(1, 2);
@@ -92,8 +92,8 @@ class PlayerTest {
         p.addWorker(t1);
         w = p.getWorkers().get(0);
 
-        boolean success = p.build(w, t2);
+        boolean success = p.build(b,w, t2);
 
         assertTrue(success);
-    }*/
+    }
 }

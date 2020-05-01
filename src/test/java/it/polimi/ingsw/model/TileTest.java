@@ -44,8 +44,4 @@ class TileTest {
         assertNull(tileTest.getWorker());
    }
 
-
-
-
-
 }

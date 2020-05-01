@@ -1,17 +1,17 @@
-package it.polimi.ingsw.events.viewToController;
+package it.polimi.ingsw.events.clientToServer;
 
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.Action;
 
-public class EndTurnQuestionEvent implements VCEvent{
+public class BuildQuestionEvent implements VCEvent{
     private Action action;
-    private int x;
-    private int y;
+    int x;
+    int y;
 
-    public EndTurnQuestionEvent() {
-        action = Action.END;
-        x = -1;
-        y = -1;
+    public BuildQuestionEvent(int x, int y) {
+        action = Action.BUILD;
+        this.x = x;
+        this.y = y;
     }
 
     @Override

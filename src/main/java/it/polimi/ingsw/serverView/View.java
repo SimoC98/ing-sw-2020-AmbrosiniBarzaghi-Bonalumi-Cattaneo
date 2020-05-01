@@ -2,14 +2,14 @@ package it.polimi.ingsw.serverView;
 
 import it.polimi.ingsw.Observable;
 import it.polimi.ingsw.Observer;
-import it.polimi.ingsw.events.modelToView.ModelUpdateEvent;
-import it.polimi.ingsw.events.viewToController.*;
+import it.polimi.ingsw.events.serverToClient.ServerEvent;
+import it.polimi.ingsw.events.clientToServer.*;
 import it.polimi.ingsw.model.Action;
 
 import java.util.List;
 import java.util.Scanner;
 
-public class View extends Observable<VCEvent> implements Observer<ModelUpdateEvent> {
+public class View extends Observable<VCEvent> implements Observer<ServerEvent> {
 
     private Scanner scan;
 
@@ -18,7 +18,7 @@ public class View extends Observable<VCEvent> implements Observer<ModelUpdateEve
     }
 
     @Override
-    public void update(ModelUpdateEvent event) {
+    public void update(ServerEvent event) {
 
     }
 

@@ -1,9 +1,9 @@
-package it.polimi.ingsw.events.modelToView;
+package it.polimi.ingsw.events.serverToClient;
 
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.serverView.ServerView;
 
-public class MoveEvent implements MVEvent{
+public class MoveEvent implements ServerEvent {
 
     //TODO: do I need "Worker"? probably not
     private Tile fromTile, toTile;

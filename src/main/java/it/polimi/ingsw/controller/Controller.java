@@ -1,7 +1,7 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.Observer;
-import it.polimi.ingsw.events.viewToController.VCEvent;
+import it.polimi.ingsw.events.clientToServer.VCEvent;
 import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.exceptions.InvalidActionException;

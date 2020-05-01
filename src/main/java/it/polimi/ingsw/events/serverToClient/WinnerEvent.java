@@ -1,9 +1,9 @@
-package it.polimi.ingsw.events.modelToView;
+package it.polimi.ingsw.events.serverToClient;
 
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.serverView.ServerView;
 
-public class WinnerEvent implements MVEvent {
+public class WinnerEvent implements ServerEvent {
 
     private Player player;
 

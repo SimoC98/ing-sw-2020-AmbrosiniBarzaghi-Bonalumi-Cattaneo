@@ -1,10 +1,10 @@
-package it.polimi.ingsw.events.modelToView;
+package it.polimi.ingsw.events.serverToClient;
 
 import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Tile;
 import it.polimi.ingsw.serverView.ServerView;
 
-public class BuildEvent implements MVEvent {
+public class BuildEvent implements ServerEvent {
 
     private Action action;
     private Tile builtTile;

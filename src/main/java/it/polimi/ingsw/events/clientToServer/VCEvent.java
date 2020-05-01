@@ -1,4 +1,4 @@
-package it.polimi.ingsw.events.viewToController;
+package it.polimi.ingsw.events.clientToServer;
 
 import it.polimi.ingsw.controller.Controller;
 

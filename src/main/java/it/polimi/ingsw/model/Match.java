@@ -1,7 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.Observable;
-import it.polimi.ingsw.events.modelToView.*;
+import it.polimi.ingsw.events.serverToClient.*;
 import it.polimi.ingsw.model.exceptions.*;
 
 
@@ -20,7 +20,7 @@ import java.util.Map;
  * The basic idea is to track an user decisions
  * and to communicate to other players the changes.
  */
-public class Match extends Observable<ModelUpdateEvent> {
+public class Match extends Observable<ServerEvent> {
     private ArrayList<Player> players;
     private Player currentPlayer;
     private Board board;

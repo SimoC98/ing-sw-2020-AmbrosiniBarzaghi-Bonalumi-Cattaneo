@@ -1,11 +1,11 @@
-package it.polimi.ingsw.events.modelToView;
+package it.polimi.ingsw.events.serverToClient;
 
 import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.serverView.ServerView;
 
 import java.util.List;
 
-public class PossibleActionsEvent implements MVEvent {
+public class PossibleActionsEvent implements ServerEvent {
 
     List<Action> possibleActions;
 

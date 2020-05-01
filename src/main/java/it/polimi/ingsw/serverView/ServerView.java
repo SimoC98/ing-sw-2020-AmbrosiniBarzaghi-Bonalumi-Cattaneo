@@ -2,22 +2,27 @@ package it.polimi.ingsw.serverView;
 
 import it.polimi.ingsw.Observable;
 import it.polimi.ingsw.Observer;
-import it.polimi.ingsw.events.modelToView.MVEvent;
-import it.polimi.ingsw.events.viewToController.VCEvent;
+import it.polimi.ingsw.events.serverToClient.ServerEvent;
+import it.polimi.ingsw.events.serverToClient.PossibleActionsEvent;
+import it.polimi.ingsw.events.clientToServer.VCEvent;
 import it.polimi.ingsw.model.Action;
 
 import java.util.List;
 
-public class ServerView extends Observable<VCEvent> implements Observer<MVEvent>{
+public class ServerView extends Observable<VCEvent> implements Observer<ServerEvent>{
 
-    String playerName;
+    private String playerName;
+    private ServerSocketHandler proxy;
+
 
     public ServerView(){
         playerName = null;
     }
 
-    public ServerView(String name){
-        playerName = name;
+    public ServerView(String name, ServerSocketHandler proxy){
+        this.playerName = name;
+        this.proxy = proxy;
+
     }
 
 
@@ -27,7 +32,6 @@ public class ServerView extends Observable<VCEvent> implements Observer<MVEvent>
      *-----------------------------
      */
     public void startTurn(){
-
     }
 
     public void selectWorker(){
@@ -35,8 +39,8 @@ public class ServerView extends Observable<VCEvent> implements Observer<MVEvent>
     }
 
     //includes Move, Build, BuildDome, EndTurn
-    public void askAction(Action action, int x, int y){
-
+    public void askAction(List<Action> possibleActions){
+        proxy.sendEvent(new PossibleActionsEvent(possibleActions));
     }
 
     public void askAction(){
@@ -50,7 +54,7 @@ public class ServerView extends Observable<VCEvent> implements Observer<MVEvent>
 
     /*
      *-----------------------------
-     *   MVEvent-related methods
+     *   ServerEvent-related methods
      *-----------------------------
      */
     public void notifyMove(int fromX, int fromY, int toX, int toY){
@@ -79,8 +83,8 @@ public class ServerView extends Observable<VCEvent> implements Observer<MVEvent>
 
 
     @Override
-    public void update(MVEvent event) {
-
+    public void update(ServerEvent event) {
+        event.handleEvent(this);
     }
 
 }

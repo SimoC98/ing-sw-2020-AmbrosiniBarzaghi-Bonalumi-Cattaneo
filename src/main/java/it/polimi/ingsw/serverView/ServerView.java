@@ -4,16 +4,15 @@ import it.polimi.ingsw.Observable;
 import it.polimi.ingsw.Observer;
 import it.polimi.ingsw.events.serverToClient.ServerEvent;
 import it.polimi.ingsw.events.serverToClient.PossibleActionsEvent;
-import it.polimi.ingsw.events.clientToServer.VCEvent;
+import it.polimi.ingsw.events.clientToServer.ClientEvent;
 import it.polimi.ingsw.model.Action;
 
 import java.util.List;
 
-public class ServerView extends Observable<VCEvent> implements Observer<ServerEvent>{
+public class ServerView extends Observable<ClientEvent> implements Observer<ServerEvent>{
 
     private String playerName;
     private ServerSocketHandler proxy;
-
 
     public ServerView(){
         playerName = null;
@@ -22,9 +21,7 @@ public class ServerView extends Observable<VCEvent> implements Observer<ServerEv
     public ServerView(String name, ServerSocketHandler proxy){
         this.playerName = name;
         this.proxy = proxy;
-
     }
-
 
     /*
      *-----------------------------
@@ -43,7 +40,7 @@ public class ServerView extends Observable<VCEvent> implements Observer<ServerEv
         proxy.sendEvent(new PossibleActionsEvent(possibleActions));
     }
 
-    public void askAction(){
+    public void doAction(Action action, int x, int y){
 
     }
 
@@ -81,10 +78,9 @@ public class ServerView extends Observable<VCEvent> implements Observer<ServerEv
         System.out.println("We're in the endgame now");
     }
 
-
     @Override
     public void update(ServerEvent event) {
-        event.handleEvent(this);
+        //TODO: send things to client
     }
 
 }

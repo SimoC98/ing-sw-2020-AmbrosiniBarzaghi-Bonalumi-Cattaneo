@@ -1,21 +1,23 @@
 package it.polimi.ingsw.events.serverToClient;
 
+import it.polimi.ingsw.clientView.ClientView;
 import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Tile;
-import it.polimi.ingsw.serverView.ServerView;
 
 public class BuildEvent implements ServerEvent {
 
-    private Action action;
-    private Tile builtTile;
+    private final String player;
+    private final Action action;
+    private final Tile builtTile;
 
-    public BuildEvent(Action action, Tile builtTile) {
+    public BuildEvent(String player, Action action, Tile builtTile) {
+        this.player = player;
         this.action = action;
         this.builtTile = builtTile;
     }
 
     @Override
-    public void handleEvent(ServerView serverView) {
-        serverView.notifyBuild(builtTile.getX(), builtTile.getY(), action);
+    public void handleEvent(ClientView clientView) {
+        clientView.manageBuild(player, builtTile.getX(), builtTile.getY(), action);
     }
 }

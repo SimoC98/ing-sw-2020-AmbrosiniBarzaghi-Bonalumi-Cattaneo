@@ -2,7 +2,7 @@ package it.polimi.ingsw.events.clientToServer;
 
 import it.polimi.ingsw.controller.Controller;
 
-public class WorkerSelectionQuestionEvent implements VCEvent{
+public class WorkerSelectionQuestionEvent implements ClientEvent {
     private int x;
     private int y;
 

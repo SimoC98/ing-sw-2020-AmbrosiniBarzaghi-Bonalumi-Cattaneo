@@ -3,7 +3,7 @@ package it.polimi.ingsw.events.clientToServer;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.Action;
 
-public class BuildDomeQuestionEvent implements VCEvent{
+public class BuildDomeQuestionEvent implements ClientEvent {
     private Action action;
     int x;
     int y;

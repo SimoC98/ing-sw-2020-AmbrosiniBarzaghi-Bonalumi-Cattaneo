@@ -9,7 +9,7 @@ import it.polimi.ingsw.model.Action;
 import java.util.List;
 import java.util.Scanner;
 
-public class View extends Observable<VCEvent> implements Observer<ServerEvent> {
+public class View extends Observable<ClientEvent> implements Observer<ServerEvent> {
 
     private Scanner scan;
 

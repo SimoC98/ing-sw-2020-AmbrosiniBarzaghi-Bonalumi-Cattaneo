@@ -1,7 +1,7 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.Observer;
-import it.polimi.ingsw.events.clientToServer.VCEvent;
+import it.polimi.ingsw.events.clientToServer.ClientEvent;
 import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.exceptions.InvalidActionException;
@@ -15,7 +15,7 @@ import java.util.List;
 
 import static java.lang.System.exit;
 
-public class Controller implements Observer<VCEvent> {
+public class Controller implements Observer<ClientEvent> {
     private Match model;
     private View view;
     private int currentPlayerId;
@@ -112,7 +112,7 @@ public class Controller implements Observer<VCEvent> {
 
 
     @Override
-    public void update(VCEvent event) {
+    public void update(ClientEvent event) {
         //if(!(event instanceof VCEvent)) throw new RuntimeException("Wrong event type");
         event.handleEvent(this);
     }

@@ -2,12 +2,12 @@ package it.polimi.ingsw.serverView;
 
 import it.polimi.ingsw.Observable;
 import it.polimi.ingsw.events.serverToClient.ServerEvent;
-import it.polimi.ingsw.events.clientToServer.VCEvent;
+import it.polimi.ingsw.events.clientToServer.ClientEvent;
 
 import java.io.*;
 import java.net.Socket;
 
-public class ServerSocketHandler extends Observable<VCEvent> implements Runnable {
+public class ServerSocketHandler extends Observable<ClientEvent> implements Runnable {
 
     private Socket socket;
     private Server server;
@@ -30,7 +30,7 @@ public class ServerSocketHandler extends Observable<VCEvent> implements Runnable
         //
         try {
             while(true) {
-                VCEvent event = (VCEvent) in.readObject();
+                ClientEvent event = (ClientEvent) in.readObject();
                 notify(event);
             }
         }catch (Exception e) {

@@ -1,20 +1,21 @@
 package it.polimi.ingsw.events.serverToClient;
 
+import it.polimi.ingsw.clientView.ClientView;
 import it.polimi.ingsw.model.Tile;
-import it.polimi.ingsw.serverView.ServerView;
 
 public class MoveEvent implements ServerEvent {
 
-    //TODO: do I need "Worker"? probably not
-    private Tile fromTile, toTile;
+    private final Tile from, to;
+    private final String player;
 
-    public MoveEvent(Tile fromTile, Tile toTile){
-        this.fromTile = fromTile;
-        this.toTile = toTile;
+    public MoveEvent(String player, Tile from, Tile to){
+        this.from = from;
+        this.to = to;
+        this.player = player;
     }
 
     @Override
-    public void handleEvent(ServerView serverView) {
-        serverView.notifyMove(fromTile.getX(), fromTile.getY(), toTile.getX(), toTile.getY());
+    public void handleEvent(ClientView clientView) {
+        clientView.manageMove(player, from.getX(), from.getY(), to.getX(), to.getY());
     }
 }

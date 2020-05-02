@@ -1,5 +1,9 @@
 package it.polimi.ingsw.serverView;
 
+import it.polimi.ingsw.events.serverToClient.InvalidUsernameEvent;
+import it.polimi.ingsw.events.serverToClient.LobbyFullEvent;
+import it.polimi.ingsw.events.serverToClient.PresentationEvent;
+
 import java.net.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,18 +42,18 @@ public class Server{
                registerConnection(connection);
 
                if(playerId==0) {
-                   //connection.sendEvent(new presentationRequestEvent(playerId));
+                   connection.sendEvent(new PresentationEvent(playerId));
                    while(true) {
-                       //Thread.sleep(100);
+                       Thread.sleep(100);
                        if(playerGameNumber>0) break;
                    }
                }
                else if(isLobbyFull()) {
-                   //connection.sendEvent(new LobbyFullEvent());
+                   connection.sendEvent(new LobbyFullEvent());
                    connection.close();
                }
                else {
-                   //connection.sendEvent(new presentationRequestEvent(playerId));
+                   connection.sendEvent(new PresentationEvent(playerId));
                }
            }
         } catch (Exception e) {
@@ -97,16 +101,16 @@ public class Server{
         return (playerGameNumber>0 && connections.size()==playerGameNumber);
     }
 
-    public void loginUser(int playerNumber, String username, ServerSocketHandler connection) {
+    public synchronized void loginUser(int playerNumber, String username, ServerSocketHandler connection) {
         if(playerNumber>0) playerGameNumber = playerNumber;
         else if(loggedPlayers.containsKey(username)) {
-            //send InvalidUsernameEvent
+            List<String> loggedUsernames = new ArrayList<>(loggedPlayers.keySet());
+            connection.sendEvent(new InvalidUsernameEvent(loggedUsernames));
         }
         loggedPlayers.put(username,connection);
         if(loggedPlayers.size()==playerNumber) {
             //startGame
         }
-
     }
 
 

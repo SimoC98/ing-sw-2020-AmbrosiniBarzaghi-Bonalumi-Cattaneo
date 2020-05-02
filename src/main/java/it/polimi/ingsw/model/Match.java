@@ -293,4 +293,8 @@ public class Match extends Observable<ServerEvent> {
             currentPlayer = players.get(index);
         }
     }
+
+    public int getCurrentPlayerId() {
+        return players.indexOf(currentPlayer);
+    }
 }

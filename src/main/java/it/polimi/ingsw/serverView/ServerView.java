@@ -2,10 +2,11 @@ package it.polimi.ingsw.serverView;
 
 import it.polimi.ingsw.Observable;
 import it.polimi.ingsw.Observer;
-import it.polimi.ingsw.events.serverToClient.ServerEvent;
-import it.polimi.ingsw.events.serverToClient.PossibleActionsEvent;
+import it.polimi.ingsw.events.serverToClient.*;
 import it.polimi.ingsw.events.clientToServer.ClientEvent;
 import it.polimi.ingsw.model.Action;
+import it.polimi.ingsw.model.Worker;
+import jdk.javadoc.internal.tool.Start;
 
 import java.util.List;
 
@@ -23,64 +24,38 @@ public class ServerView extends Observable<ClientEvent> implements Observer<Serv
         this.proxy = proxy;
     }
 
-    /*
-     *-----------------------------
-     *   VCEvent-related methods
-     *-----------------------------
-     */
-    public void startTurn(){
+    public String getUsername() {
+        return this.playerName;
+    }
+
+    public void startTurn(String username){
+        sendEvent(new StartTurnEvent(username));
     }
 
     public void selectWorker(){
-
+        sendEvent(new WorkerSelectionEvent());
     }
 
     //includes Move, Build, BuildDome, EndTurn
     public void askAction(List<Action> possibleActions){
-        proxy.sendEvent(new PossibleActionsEvent(possibleActions));
+        sendEvent(new PossibleActionsEvent(possibleActions));
     }
 
-    public void doAction(Action action, int x, int y){
-
+    public void showMessage(String message) {
+        sendEvent(new TextMessageEvent(message));
     }
 
-
-    public void sendTCPMessage(String msg) {
-
+    private void sendEvent(ServerEvent event) {
+        proxy.sendEvent(event);
     }
 
-    /*
-     *-----------------------------
-     *   ServerEvent-related methods
-     *-----------------------------
-     */
-    public void notifyMove(int fromX, int fromY, int toX, int toY){
-
-    }
-
-    public void notifyBuild(int x, int y, Action action){
-
-    }
-
-    public void notifyWinner(String playerName){
-
-    }
-
-    public void notifyLoser(String playerName){
-
-    }
-
-    public void notifyPossibleActions(List<Action> possibleActions){
-
-    }
-
-    public void endGame(){
-        System.out.println("We're in the endgame now");
+    public void disconnectPlayer() {
+        proxy.close();
     }
 
     @Override
     public void update(ServerEvent event) {
-        //TODO: send things to client
+        sendEvent(event);
     }
 
 }

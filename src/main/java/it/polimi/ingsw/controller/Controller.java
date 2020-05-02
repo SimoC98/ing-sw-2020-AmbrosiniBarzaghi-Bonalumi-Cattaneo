@@ -8,6 +8,7 @@ import it.polimi.ingsw.model.exceptions.InvalidActionException;
 import it.polimi.ingsw.model.exceptions.InvalidBuildException;
 import it.polimi.ingsw.model.exceptions.InvalidMoveException;
 import it.polimi.ingsw.model.exceptions.InvalidWorkerSelectionException;
+import it.polimi.ingsw.serverView.ServerView;
 import it.polimi.ingsw.serverView.View;
 
 
@@ -17,12 +18,18 @@ import static java.lang.System.exit;
 
 public class Controller implements Observer<ClientEvent> {
     private Match model;
-    private View view;
+    private List<ServerView> playersInGame;
+    private List<String> playersUsernames;
     private int currentPlayerId;
 
-    public Controller(Match model, View user) {
+    public Controller(Match model, List<ServerView> playersInGame) {
         this.model = model;
-        this.view = user;
+        this.playersInGame = playersInGame;
+
+        for(int i=0;i<playersInGame.size();i++) {
+            playersUsernames.add(playersInGame.get(i).getUsername());
+        }
+
         currentPlayerId = 0;
     }
 
@@ -36,7 +43,7 @@ public class Controller implements Observer<ClientEvent> {
                 case "END": handleStartNextTurn();
             }
         } catch (InvalidActionException e) {
-            view.showMessage("error");
+            playersInGame.get(currentPlayerId).showMessage("error");
             nextActionHandler();
         }
     }
@@ -46,8 +53,8 @@ public class Controller implements Observer<ClientEvent> {
             model.selectWorker(x,y);
             nextActionHandler();
         } catch (InvalidWorkerSelectionException e) {
-            view.showMessage("error");
-            view.selectWorker();
+            playersInGame.get(currentPlayerId).showMessage("error");
+            playersInGame.get(currentPlayerId).selectWorker();
         }
     }
 
@@ -57,12 +64,12 @@ public class Controller implements Observer<ClientEvent> {
 
             int winner = model.checkWinner();
             if(winner>=0) {
-                endGame(winner);
+                //disconnect all
                 return;
             }
             else nextActionHandler();
         } catch (InvalidMoveException e) {
-            view.showMessage("error");
+            playersInGame.get(currentPlayerId).showMessage("error");
             nextActionHandler();
         }
     }
@@ -70,11 +77,14 @@ public class Controller implements Observer<ClientEvent> {
     public void handleBuild(int x, int y) {
         try {
             model.build(x,y);
+
             int winner = model.checkWinner();
-            if(winner>=0) endGame(winner);
+            if(winner>=0) {
+                //disconnect all
+            }
             else nextActionHandler();
         } catch (InvalidBuildException e) {
-            view.showMessage("error");
+            playersInGame.get(currentPlayerId).showMessage("error");
             nextActionHandler();
         }
     }
@@ -83,32 +93,57 @@ public class Controller implements Observer<ClientEvent> {
        List<Action> possibleActions =  model.getCurrentPlayer().getPossibleActions();
 
         if(possibleActions.size()==0) {
-            view.showMessage("your turn is ended");
+            playersInGame.get(currentPlayerId).showMessage("your turn is ended");
             handleStartNextTurn();
         }
         else {
-            view.askAction(possibleActions);
+            playersInGame.get(currentPlayerId).askAction(possibleActions);
         }
     }
 
     public void handleStartNextTurn() {
         model.startNextTurn();
-        view.startTurn(model.getCurrentPlayer().getUsername());
+        currentPlayerId = model.getCurrentPlayerId();
 
-        /*String currentPlayer = model.getCurrentPlayer().getUsername();
-        boolean loser = model.checkLoser();
-        if(!loser) view.startTurn(model.getCurrentPlayer().getUsername());*/
-
-        //controllo quanti giocatori ci sono: -solo 2, allora l'altro è vincitore
-        //                                    -se >2 allora continua il gicoco
-
+        boolean isLoser = model.checkLoser();
+        if(isLoser) {
+            if(playersInGame.size()==2) {
+                //there is a winner --> disconnect all
+            }
+            else {
+                //disconnect loser player
+                String message = "User " + playersUsernames.get(currentPlayerId) + " has been disconnected. You remain in " + playersInGame.size();
+                playersInGame.remove(playersInGame.get(currentPlayerId));
+                playersUsernames.remove(playersUsernames.get(currentPlayerId));
+                //send message to all
+                currentPlayerId = model.getCurrentPlayerId();
+                playersInGame.get(currentPlayerId).startTurn(playersUsernames.get(currentPlayerId));
+            }
+        }
+        else playersInGame.get(currentPlayerId).startTurn(playersUsernames.get(currentPlayerId));
     }
 
-    public void endGame(int winner) {
+    public void disconnectAll() {
+        for(int i=0; i<playersInGame.size(); i++) {
+            //TODO
+        }
+    }
+
+    public void disconnectPlayer(int idPlayer) {
+        //TODO
+    }
+
+    public void sendMessgeToAll(String message) {
+        for(ServerView s : playersInGame) {
+            s.showMessage(message);
+        }
+    }
+
+    /*public void endGame(int winner) {
         String winnerUsername = model.getPlayers().get(winner).getUsername();
-        view.endGame(winnerUsername);
+        //view.endGame(winnerUsername);
         exit(0);
-    }
+    }*/
 
 
     @Override

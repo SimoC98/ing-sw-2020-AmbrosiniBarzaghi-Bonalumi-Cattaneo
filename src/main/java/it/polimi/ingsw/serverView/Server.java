@@ -1,10 +1,8 @@
 package it.polimi.ingsw.serverView;
 
-import it.polimi.ingsw.Observable;
 import it.polimi.ingsw.events.serverToClient.InvalidUsernameEvent;
 import it.polimi.ingsw.events.serverToClient.LobbyFullEvent;
 import it.polimi.ingsw.events.serverToClient.PresentationEvent;
-import it.polimi.ingsw.events.serverToClient.ServerEvent;
 
 import java.net.*;
 import java.util.ArrayList;
@@ -21,6 +19,7 @@ public class Server{
     private int playerId;
     private int playerGameNumber;
     private Map<String, ServerSocketHandler> loggedPlayers;
+
 
 
     public Server(int port){

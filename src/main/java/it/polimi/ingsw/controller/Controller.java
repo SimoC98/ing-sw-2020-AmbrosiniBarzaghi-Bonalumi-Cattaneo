@@ -133,7 +133,11 @@ public class Controller implements Observer<ClientEvent> {
         //TODO
     }
 
-    public void sendMessgeToAll(String message) {
+    public void handleDisconnection(String playerName) {
+        model.setLoser(playerName);
+    }
+
+    public void sendMessageToAll(String message) {
         for(ServerView s : playersInGame) {
             s.showMessage(message);
         }

@@ -221,7 +221,6 @@ public class Match extends Observable<ServerEvent> {
         players.remove(loser);
         if (players.size() == 1)
             currentPlayer.setWinner();
-        //remove loser user form observer list
         //notify all players
         return true;
     }
@@ -247,8 +246,9 @@ public class Match extends Observable<ServerEvent> {
      */
     public void move (int x, int y) throws InvalidMoveException {
         Tile t = board.getTile(x,y);
+        Tile startTile = selectedWorker.getPositionOnBoard();
         if( t != null && currentPlayer.move(board,selectedWorker,t)){
-            //notify view
+            notify(new MoveEvent(currentPlayer.getUsername(),startTile,t));
         }
         else throw new InvalidMoveException();
     }

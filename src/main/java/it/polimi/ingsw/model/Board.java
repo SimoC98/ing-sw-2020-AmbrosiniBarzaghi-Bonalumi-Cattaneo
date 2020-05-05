@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.events.serverToClient.ServerEvent;
+import jdk.internal.vm.compiler.collections.Pair;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,13 +12,14 @@ import java.util.List;
  */
 public class Board {
 
+    private final int dim=5;
     private Tile [][] board;
 
     /**
      * Constructor of the board. It allocates the 25 tiles.
      */
     public Board(){
-        board = new Tile[5][5];
+        board = new Tile[dim][dim];
         for(int i=0; i<5; i++) {
             for(int j=0; j<5; j++) {
                 board[i][j] = new Tile(i,j);

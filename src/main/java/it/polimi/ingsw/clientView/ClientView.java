@@ -1,17 +1,21 @@
 package it.polimi.ingsw.clientView;
 
+import it.polimi.ingsw.Observer;
+import it.polimi.ingsw.events.serverToClient.ServerEvent;
 import it.polimi.ingsw.model.Action;
 
 import java.util.List;
 
 //TODO: I'm thinking of Observer Pattern to connect ClientView and CLI/GUI
 //so for example in managePossibleActions ClientView modifies the attribute and notifies the CLI/GUI
-public class ClientView {
+public class ClientView implements Observer<ServerEvent> {
 
     private ClientSocketHandler csh;
     BoardRepresentation rep;
     private String username;
     private List<Action> possibleActions;
+
+
 
     public ClientView(){
         csh = new ClientSocketHandler();
@@ -69,5 +73,10 @@ public class ClientView {
 
     public void managePossibleActions(List<Action> possibleActions){
         //TODO
+    }
+
+    @Override
+    public void update(ServerEvent event) {
+        event.handleEvent(this);
     }
 }

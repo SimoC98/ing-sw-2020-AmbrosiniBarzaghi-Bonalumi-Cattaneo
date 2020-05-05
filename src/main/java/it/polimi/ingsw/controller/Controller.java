@@ -111,7 +111,7 @@ public class Controller implements Observer<ClientEvent> {
                 //there is a winner --> disconnect all
             }
             else {
-                //disconnect loser player
+                playersInGame.get(currentPlayerId).disconnectPlayer();
                 String message = "User " + playersUsernames.get(currentPlayerId) + " has been disconnected. You remain in " + playersInGame.size();
                 playersInGame.remove(playersInGame.get(currentPlayerId));
                 playersUsernames.remove(playersUsernames.get(currentPlayerId));

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.clientView;
 
+import it.polimi.ingsw.Observable;
 import it.polimi.ingsw.events.serverToClient.ServerEvent;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -10,7 +11,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.net.Socket;
 
-public class ClientSocketHandler {
+public class ClientSocketHandler extends Observable<ServerEvent> {
 
     Socket socket;
     private ObjectInputStream in;
@@ -38,7 +39,7 @@ public class ClientSocketHandler {
             }
 
             if(event != null)
-                event.handleEvent(view);
+                notify(event);
         }
     }
 

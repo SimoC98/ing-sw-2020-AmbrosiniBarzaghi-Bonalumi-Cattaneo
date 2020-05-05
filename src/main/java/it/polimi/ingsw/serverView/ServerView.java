@@ -12,6 +12,14 @@ import java.util.List;
 
 public class ServerView extends Observable<ClientEvent> implements Observer<ServerEvent>{
 
+    private class ClientEventReceiver implements Observer<ClientEvent> {
+
+        @Override
+        public void update(ClientEvent event) {
+            sendToController(event);
+        }
+    }
+
     private String playerName;
     private ServerSocketHandler proxy;
 
@@ -22,6 +30,11 @@ public class ServerView extends Observable<ClientEvent> implements Observer<Serv
     public ServerView(String name, ServerSocketHandler proxy){
         this.playerName = name;
         this.proxy = proxy;
+        proxy.addObserver(new ClientEventReceiver());
+    }
+
+    private void sendToController(ClientEvent event) {
+        notify(event);
     }
 
     public String getUsername() {
@@ -36,7 +49,6 @@ public class ServerView extends Observable<ClientEvent> implements Observer<Serv
         sendEvent(new WorkerSelectionEvent());
     }
 
-    //includes Move, Build, BuildDome, EndTurn
     public void askAction(List<Action> possibleActions){
         sendEvent(new PossibleActionsEvent(possibleActions));
     }
@@ -50,6 +62,7 @@ public class ServerView extends Observable<ClientEvent> implements Observer<Serv
     }
 
     public void disconnectPlayer() {
+        //send disconnectionEvent
         proxy.close();
     }
 

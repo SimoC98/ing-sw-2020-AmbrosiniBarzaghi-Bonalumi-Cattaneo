@@ -226,6 +226,15 @@ public class Match extends Observable<ServerEvent> {
         return true;
     }
 
+    //happens when disconnected
+    public void setLoser(String playerName){
+        for(Player player : players){
+            if(player.getUsername().equals(playerName)){
+                board.removePlayerWorkers(player);
+            }
+        }
+    }
+
     /**
      * @param action one of the possible actions from  the enumeration {@link Action} i.e. {@link Action#BUILD}, {@link Action#BUILDDOME}, {@link Action#MOVE} or {@link Action#END}
      * @throws InvalidActionException The action is not present among the current player's actions

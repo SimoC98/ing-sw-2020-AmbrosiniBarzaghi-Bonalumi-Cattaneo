@@ -1,11 +1,13 @@
 package it.polimi.ingsw.serverView;
 
 import it.polimi.ingsw.Observable;
+import it.polimi.ingsw.events.clientToServer.UnexpectedDisconnectionEvent;
 import it.polimi.ingsw.events.serverToClient.ServerEvent;
 import it.polimi.ingsw.events.clientToServer.ClientEvent;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Map;
 
 public class ServerSocketHandler extends Observable<ClientEvent> implements Runnable {
 
@@ -46,7 +48,6 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
             //
             e.printStackTrace();
         }
-
     }
 
     public void close() {
@@ -56,6 +57,16 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    //CALLME (maybe) when timer expires
+    //you can even copy the code and put it somewhere else
+    public void notifyDisconnection() {
+        //if you are here your client has probably disconnected
+        Map<String, ServerSocketHandler> playersLogged = server.getLoggedPlayers();
+        for(String player : playersLogged.keySet())
+            if(playersLogged.get(player).equals(this))
+                notify(new UnexpectedDisconnectionEvent(player));
     }
 
 

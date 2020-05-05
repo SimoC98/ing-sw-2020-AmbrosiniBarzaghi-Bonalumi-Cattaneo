@@ -20,8 +20,6 @@ public class Server{
     private int playerGameNumber;
     private Map<String, ServerSocketHandler> loggedPlayers;
 
-
-
     public Server(int port){
         this.port = port;
         executor = Executors.newCachedThreadPool();
@@ -29,6 +27,10 @@ public class Server{
         loggedPlayers = new HashMap<>();
         playerId = 0;
         playerGameNumber = -1;
+    }
+
+    public Map<String, ServerSocketHandler> getLoggedPlayers() {
+        return loggedPlayers;
     }
 
     public void startServer() {
@@ -59,7 +61,6 @@ public class Server{
         } catch (Exception e) {
             //
         }
-
 
 
 

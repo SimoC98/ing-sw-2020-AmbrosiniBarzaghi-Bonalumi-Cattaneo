@@ -231,6 +231,11 @@ public class Match extends Observable<ServerEvent> {
         for(Player player : players){
             if(player.getUsername().equals(playerName)){
                 board.removePlayerWorkers(player);
+                players.remove(player);
+                if (players.size() == 1)
+                    currentPlayer.setWinner();
+                //remove loser user form observer list
+                //notify all players
             }
         }
     }

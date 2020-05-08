@@ -35,9 +35,9 @@ public class CLI extends UI{
             for(int j=0; j<board.boardDimension; j++) {
                 System.out.print("| ");
                 if(map[i][j] == 4 )
-                    System.out.print("D");
+                    System.out.print(ANSI_PURPLE + "D" + ANSI_RESET);
                 else
-                    System.out.print(map[i][j]);
+                    System.out.print(ANSI_PURPLE + map[i][j] + ANSI_RESET);
                 System.out.print("   ");
             }
             System.out.println("|");

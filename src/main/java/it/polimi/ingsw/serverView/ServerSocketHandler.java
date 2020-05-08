@@ -1,24 +1,26 @@
 package it.polimi.ingsw.serverView;
 
 import it.polimi.ingsw.Observable;
+import it.polimi.ingsw.events.clientToServer.PresentationQuestionEvent;
+import it.polimi.ingsw.events.serverToClient.Ping;
+import it.polimi.ingsw.events.serverToClient.PresentationEvent;
 import it.polimi.ingsw.events.serverToClient.ServerEvent;
 import it.polimi.ingsw.events.clientToServer.ClientEvent;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ServerSocketHandler extends Observable<ClientEvent> implements Runnable {
-
     private Socket socket;
     private Server server;
-    private boolean isGameStart;
     private ObjectInputStream in;
     private ObjectOutputStream out;
 
     public ServerSocketHandler(Socket socket, Server server) {
         this.socket = socket;
         this.server = server;
-        isGameStart = false;
 
         try {
             in = new ObjectInputStream(socket.getInputStream());
@@ -33,7 +35,11 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
         try {
             while(true) {
                 ClientEvent event = (ClientEvent) in.readObject();
-                notify(event);
+                if(event instanceof PresentationQuestionEvent) {
+                    PresentationQuestionEvent presentation = (PresentationQuestionEvent) event;
+                    login(presentation);
+                }
+                else notify(event);
             }
         }catch (Exception e) {
             //
@@ -55,9 +61,41 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
             in.close();
             out.close();
             socket.close();
-            //server.deregisterConnection();
+            server.deregisterConnection(this);
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void startPing() {
+        /*timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if(pingCounter==3) disconnect();
+                else {
+                    pingCounter++;
+                    sendEvent(new Ping());
+                }
+            }
+        },0,5000);*/
+        PingSender ping = new PingSender(this);
+        ping.startPing();
+    }
+
+    private void login(PresentationQuestionEvent event) {
+        synchronized (server) {
+            server.loginUser(event.getPlayerNumber(),event.getUsername(),this);
+        }
+    }
+
+    protected void disconnect() {
+        synchronized (server) {
+            if(server.isGameStarted()) {
+                //notify to virtual view disconnection event --> the game will end
+            }
+            else {
+                close();
+            }
         }
     }
 

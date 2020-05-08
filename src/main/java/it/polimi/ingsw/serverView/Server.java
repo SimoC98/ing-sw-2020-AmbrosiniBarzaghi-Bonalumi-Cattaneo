@@ -1,8 +1,10 @@
 package it.polimi.ingsw.serverView;
 
+import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.events.serverToClient.InvalidUsernameEvent;
 import it.polimi.ingsw.events.serverToClient.LobbyFullEvent;
 import it.polimi.ingsw.events.serverToClient.PresentationEvent;
+import it.polimi.ingsw.model.Match;
 
 import java.net.*;
 import java.util.ArrayList;
@@ -18,7 +20,8 @@ public class Server{
     private List<ServerSocketHandler> connections;
     private int playerId;
     private int playerGameNumber;
-    private Map<String, ServerSocketHandler> loggedPlayers;
+    private boolean isGameStarted;
+    private Map<ServerSocketHandler,String> loggedPlayers;
 
 
 
@@ -27,6 +30,7 @@ public class Server{
         executor = Executors.newCachedThreadPool();
         connections = new ArrayList<>();
         loggedPlayers = new HashMap<>();
+        isGameStarted=false;
         playerId = 0;
         playerGameNumber = -1;
     }
@@ -43,10 +47,18 @@ public class Server{
 
                if(playerId==0) {
                    connection.sendEvent(new PresentationEvent(playerId));
+                   int cont=0;
                    while(true) {
-                       Thread.sleep(100);
-                       if(playerGameNumber>0) break;
+                       Thread.sleep(1000);
+                       cont++;
+                       if(playerGameNumber>0 || cont==60) break;
                    }
+                   if(cont==60) {
+                       connection.close();
+                       continue;
+                   }
+                   playerId++;
+                   connection.startPing();
                }
                else if(isLobbyFull()) {
                    connection.sendEvent(new LobbyFullEvent());
@@ -54,6 +66,8 @@ public class Server{
                }
                else {
                    connection.sendEvent(new PresentationEvent(playerId));
+                   playerId++;
+                   connection.startPing();
                }
            }
         } catch (Exception e) {
@@ -95,22 +109,47 @@ public class Server{
 
     public synchronized void deregisterConnection(ServerSocketHandler connection) {
         connections.remove(connection);
+        if(loggedPlayers.keySet().contains(connection)) {
+            loggedPlayers.remove(connection);
+        }
     }
 
-    public synchronized boolean isLobbyFull() {
+    public synchronized boolean isLobbyFull() throws InterruptedException {
+        Thread.sleep(1000);
         return (playerGameNumber>0 && connections.size()==playerGameNumber);
     }
 
     public synchronized void loginUser(int playerNumber, String username, ServerSocketHandler connection) {
         if(playerNumber>0) playerGameNumber = playerNumber;
         else if(loggedPlayers.containsKey(username)) {
-            List<String> loggedUsernames = new ArrayList<>(loggedPlayers.keySet());
+            List<String> loggedUsernames = new ArrayList<>(loggedPlayers.values());
             connection.sendEvent(new InvalidUsernameEvent(loggedUsernames));
         }
-        loggedPlayers.put(username,connection);
+        loggedPlayers.put(connection,username);
         if(loggedPlayers.size()==playerNumber) {
-            //startGame
+            isGameStarted=true;
+
+            List<ServerView> users = new ArrayList<>();
+            for(ServerSocketHandler s : connections) {
+                ServerView newUser = new ServerView(loggedPlayers.get(s), s);
+                users.add(newUser);
+            }
+
+            Match match = new Match((List<String>)loggedPlayers.values());
+            Controller controller = new Controller(match,users);
+
+            for(ServerView s : users) {
+                s.addObserver(controller);
+                match.addObserver(s);
+            }
+
+            //controller.startGame();
+
         }
+    }
+
+    public boolean isGameStarted() {
+        return isGameStarted;
     }
 
 

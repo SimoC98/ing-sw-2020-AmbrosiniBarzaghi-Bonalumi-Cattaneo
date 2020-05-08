@@ -29,10 +29,10 @@ public class App
 
         Game game = new Game(match);
         View view = new View();
-        Controller controller = new Controller(match,view);
+        //Controller controller = new Controller(match,view);
         match.setDivinityMap(XMLParserUtility.getDivinities());
 
-        view.addObserver(controller);
+        //view.addObserver(controller);
 
 
         try {

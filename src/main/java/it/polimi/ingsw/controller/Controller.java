@@ -2,6 +2,7 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.Observer;
 import it.polimi.ingsw.events.clientToServer.ClientEvent;
+import it.polimi.ingsw.events.clientToServer.PresentationQuestionEvent;
 import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.exceptions.InvalidActionException;
@@ -108,14 +109,14 @@ public class Controller implements Observer<ClientEvent> {
         boolean isLoser = model.checkLoser();
         if(isLoser) {
             if(playersInGame.size()==2) {
-                //there is a winner --> disconnect all
+                disconnectAll();
             }
             else {
-                playersInGame.get(currentPlayerId).disconnectPlayer();
-                String message = "User " + playersUsernames.get(currentPlayerId) + " has been disconnected. You remain in " + playersInGame.size();
+                playersInGame.get(currentPlayerId).disconnect();
                 playersInGame.remove(playersInGame.get(currentPlayerId));
                 playersUsernames.remove(playersUsernames.get(currentPlayerId));
-                //send message to all
+                String message = "User " + playersUsernames.get(currentPlayerId) + " has been disconnected. You remain in " + playersInGame.size();
+                sendMessageToAll(message);
                 currentPlayerId = model.getCurrentPlayerId();
                 playersInGame.get(currentPlayerId).startTurn(playersUsernames.get(currentPlayerId));
             }
@@ -124,16 +125,20 @@ public class Controller implements Observer<ClientEvent> {
     }
 
     public void disconnectAll() {
-        for(int i=0; i<playersInGame.size(); i++) {
-            //TODO
+        for(ServerView s : playersInGame) {
+            s.disconnect();
         }
     }
 
-    public void disconnectPlayer(int idPlayer) {
-        //TODO
+    public void disconnectPlayer(String playerName) {
+        for(ServerView s : playersInGame) {
+            if(!s.getUsername().equals(playerName)) s.playerDisconnection(playerName);
+            s.disconnect();
+        }
+        //model.setLoser(playerName);
     }
 
-    public void handleDisconnection(String playerName) {
+    public void handleUnexpectedDisconnection(String playerName) {
         model.setLoser(playerName);
     }
 

@@ -6,7 +6,7 @@ import it.polimi.ingsw.events.serverToClient.*;
 import it.polimi.ingsw.events.clientToServer.ClientEvent;
 import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Worker;
-import jdk.javadoc.internal.tool.Start;
+
 
 import java.util.List;
 
@@ -57,12 +57,16 @@ public class ServerView extends Observable<ClientEvent> implements Observer<Serv
         sendEvent(new TextMessageEvent(message));
     }
 
+    public void playerDisconnection(String playerName) {
+        sendEvent(new PlayerDisconnectionEvent(playerName));
+    }
+
     private void sendEvent(ServerEvent event) {
         proxy.sendEvent(event);
     }
 
-    public void disconnectPlayer() {
-        //send disconnectionEvent
+    public void disconnect() {
+        sendEvent(new PlayerDisconnectionEvent(playerName));
         proxy.close();
     }
 

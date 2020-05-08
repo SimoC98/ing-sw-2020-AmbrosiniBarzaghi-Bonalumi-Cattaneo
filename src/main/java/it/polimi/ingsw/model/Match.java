@@ -221,7 +221,10 @@ public class Match extends Observable<ServerEvent> {
         players.remove(loser);
         if (players.size() == 1)
             currentPlayer.setWinner();
-        //notify all players
+            //notify winner
+        else {
+            //notify loser
+        }
         return true;
     }
 
@@ -233,8 +236,11 @@ public class Match extends Observable<ServerEvent> {
                 players.remove(player);
                 if (players.size() == 1)
                     currentPlayer.setWinner();
+                    //notify winner
+                else {
+                    //notify loser
+                }
                 //remove loser user form observer list
-                //notify all players
             }
         }
     }

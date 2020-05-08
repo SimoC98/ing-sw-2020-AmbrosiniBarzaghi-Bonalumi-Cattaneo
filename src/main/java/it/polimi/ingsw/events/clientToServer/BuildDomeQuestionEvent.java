@@ -14,6 +14,18 @@ public class BuildDomeQuestionEvent implements ClientEvent {
         this.y = y;
     }
 
+    public Action getAction() {
+        return action;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
     @Override
     public void handleEvent(Controller controller) {
         controller.handleActionValidation(action,x,y);

@@ -10,8 +10,12 @@ public class UnexpectedDisconnectionEvent implements ClientEvent {
         this.playerName = playerName;
     }
 
+    public String getPlayerName() {
+        return playerName;
+    }
+
     @Override
     public void handleEvent(Controller controller) {
-        controller.handleDisconnection(playerName);
+        controller.handleUnexpectedDisconnection(playerName);
     }
 }

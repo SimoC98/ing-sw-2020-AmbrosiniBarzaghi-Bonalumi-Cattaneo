@@ -10,22 +10,32 @@ import java.util.List;
 //so for example in managePossibleActions ClientView modifies the attribute and notifies the CLI/GUI
 public class ClientView implements Observer<ServerEvent> {
 
-    private ClientSocketHandler csh;
-    BoardRepresentation rep;
+    private ClientSocketHandler proxy;
+    private BoardRepresentation board;
     private String username;
     private List<Action> possibleActions;
 
-
-
     public ClientView(){
-        csh = new ClientSocketHandler();
-        rep = new BoardRepresentation();
+//        proxy = new ClientSocketHandler();
+        board = new BoardRepresentation();
         username = null;
         possibleActions = null;
     }
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public BoardRepresentation getBoard() {
+        return board;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public List<Action> getPossibleActions() {
+        return possibleActions;
     }
 
     /*
@@ -41,12 +51,10 @@ public class ClientView implements Observer<ServerEvent> {
     }
 
     //includes Move, Build, BuildDome, EndTurn
-    public void askAction(List<Action> possibleActions){
+    public void askMove(){
 //        proxy.sendEvent(new PossibleActionsEvent(possibleActions));
-    }
-
-    public void doAction(Action action, int x, int y){
-
+//        ClientEvent event = new MoveQuestionEvent()
+        //TODO: SISTEMARE I ClientEvent (esempio: MoveQuestionEvent ha x, y ma servono sia quelli di partenza che quelli di arrivo)
     }
 
 
@@ -56,23 +64,24 @@ public class ClientView implements Observer<ServerEvent> {
      *-----------------------------
      */
     public void manageMove(String username, int fromX, int fromY, int toX, int toY){
-        //TODO
+        board.moveWorker(username, fromX, fromY, toX, toY);
     }
 
     public void manageBuild(String playerName, int x, int y, Action action){
-        //TODO
+        //NB actually idc who built
+        board.buildTile(x, y, action);
     }
 
     public void manageLoser(String userName){
-        //TODO
+        board.setLoser(userName);
     }
 
     public void manageWinner(String userName){
-        //TODO
+        board.setWinner(userName);
     }
 
     public void managePossibleActions(List<Action> possibleActions){
-        //TODO
+        this.possibleActions = possibleActions;
     }
 
     @Override

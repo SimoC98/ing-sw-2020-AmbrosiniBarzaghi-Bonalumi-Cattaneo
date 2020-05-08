@@ -17,7 +17,6 @@ public class ClientSocketHandler extends Observable<ServerEvent> {
     Socket socket;
     private ObjectInputStream in;
     private ObjectOutputStream out;
-    ClientView view;
 
     public ClientSocketHandler(){
         try {
@@ -49,7 +48,6 @@ public class ClientSocketHandler extends Observable<ServerEvent> {
             out.writeObject(event);
             out.flush();
         } catch (IOException e) {
-            //
             e.printStackTrace();
         }
     }

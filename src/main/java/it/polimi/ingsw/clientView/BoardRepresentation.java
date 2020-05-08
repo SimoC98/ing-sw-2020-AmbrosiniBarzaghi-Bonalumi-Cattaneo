@@ -1,5 +1,8 @@
 package it.polimi.ingsw.clientView;
 
+import it.polimi.ingsw.model.Action;
+import it.polimi.ingsw.model.Color;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,7 +10,7 @@ import java.util.Map;
 
 public class BoardRepresentation {
 
-    private final int boardDimension = 5;
+    protected final int boardDimension = 5;
     private int [][] board;
     Map<String, PlayerRepresentation> players;
 
@@ -20,7 +23,21 @@ public class BoardRepresentation {
     }
 
     public void addPlayer(String player) {
-        players.put(player, new PlayerRepresentation(player));
+        Color color;
+        switch(players.size()){
+            case 0:
+                color = Color.BLUE;
+                break;
+
+            case 1:
+                color = Color.CREAM;
+                break;
+
+            default:
+                color = Color.WHITE;
+        }
+
+        players.put(player, new PlayerRepresentation(player, color));
     }
 
     public void incTile(int x, int y){
@@ -48,12 +65,41 @@ public class BoardRepresentation {
         return new ArrayList<>(players.keySet());
     }
 
-    public void moveWorker(){
+    public Color isThereAWorker(int x, int y) {
+        Pair<Integer, Integer> goal = new Pair<>(x, y);
+        for(PlayerRepresentation player : getPlayersList()){
+            for(Pair<Integer, Integer> worker : player.getWorkers()){
+                if(worker.equals(goal))
+                    return player.getColor();
+            }
+        }
+        return null;
+    }
+
+    public void moveWorker(String username, int fromX, int fromY, int toX, int toY){
+        players.get(username).moveWorker(fromX, fromY, toX, toY);
+        //maybe can use return value
+    }
+
+    public void buildTile(int x, int y, Action action){
+        if(action == Action.BUILD)
+            board[x][y] += 1;
+        else if(action == Action.BUILDDOME)
+            board[x][y] = 4;
+    }
+
+    public void setLoser(String username){
+
+    }
+
+    public void setWinner(String username){
 
     }
 
 
 
 
-    //MANCA UN BOTTO
+
+
+    //MANCA UN BOTTO forse
 }

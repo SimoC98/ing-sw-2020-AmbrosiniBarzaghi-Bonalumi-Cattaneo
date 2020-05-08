@@ -43,6 +43,6 @@ public class PingSender implements Observer<ClientEvent> {
 
     @Override
     public void update(ClientEvent event) {
-
+        event.handleEvent(this);
     }
 }

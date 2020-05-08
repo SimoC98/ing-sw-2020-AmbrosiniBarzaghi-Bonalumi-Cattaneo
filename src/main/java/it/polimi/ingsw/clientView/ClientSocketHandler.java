@@ -1,6 +1,7 @@
 package it.polimi.ingsw.clientView;
 
 import it.polimi.ingsw.Observable;
+import it.polimi.ingsw.events.clientToServer.ClientEvent;
 import it.polimi.ingsw.events.serverToClient.ServerEvent;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -43,7 +44,15 @@ public class ClientSocketHandler extends Observable<ServerEvent> {
         }
     }
 
-    //TODO: handle the sending functionality
+    public void sendEvent(ClientEvent event) {
+        try {
+            out.writeObject(event);
+            out.flush();
+        } catch (IOException e) {
+            //
+            e.printStackTrace();
+        }
+    }
 
 
 

@@ -28,7 +28,7 @@ public class CLI extends UI{
         for(int i=0; i<board.boardDimension; i++){
 
             //first line
-            System.out.println("\t" + "+-----+-----+-----+-----+-----+");
+            System.out.println("\t" + "+-------+-------+-------+-------+-------+");
 
             //second line and board height
             System.out.print("\t");
@@ -38,19 +38,19 @@ public class CLI extends UI{
                     System.out.print(ANSI_PURPLE + "D" + ANSI_RESET);
                 else
                     System.out.print(ANSI_PURPLE + map[i][j] + ANSI_RESET);
-                System.out.print("   ");
+                System.out.print("     ");
             }
             System.out.println("|");
 
             //third line and worker position
             System.out.print("\t");
             for(int j=0; j<board.boardDimension; j++) {
-                System.out.print("|   ");
+                System.out.print("|     ");
                 Color worker = board.isThereAWorker(i, j);
                 if(worker == null)
                     System.out.print(" ");
-                else
-                    switch(worker) {
+                else {
+                    switch (worker) {
                         case CREAM:
                             System.out.print(ANSI_YELLOW + "W" + ANSI_RESET);
                             break;
@@ -62,13 +62,14 @@ public class CLI extends UI{
                         case WHITE:
                             System.out.print(ANSI_WHITE + "W" + ANSI_RESET);
                     }
+                }
                 System.out.print(" ");
             }
             System.out.println("|");
             //end of third line
         }
         //last line
-        System.out.println("\t" + "+-----+-----+-----+-----+-----+");
+        System.out.println("\t" + "+-------+-------+-------+-------+-------+");
     }
 
 

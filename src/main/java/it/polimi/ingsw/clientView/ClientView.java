@@ -22,8 +22,9 @@ public class ClientView implements Observer<ServerEvent> {
         possibleActions = null;
     }
 
-    public void setUsername(String username) {
+    public void setUser(String username) {
         this.username = username;
+        board.addPlayer(username);
     }
 
     public BoardRepresentation getBoard() {

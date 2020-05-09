@@ -65,9 +65,8 @@ public class PlayerRepresentation {
 //    }
 
     public boolean moveWorker(int fromX, int fromY, int toX, int toY) {
-        Pair<Integer, Integer> goal = new Pair(fromX, fromY);
         for(int i=0; i < workers.size(); i++) {
-            if(workers.get(i).equals(goal)) {
+            if(workers.get(i).equals(new Pair(fromX, fromY))) {
                 workers.remove(i);
                 workers.add(new Pair(toX, toY));
                 return true;

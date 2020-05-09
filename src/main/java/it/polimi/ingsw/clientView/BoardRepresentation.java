@@ -66,10 +66,9 @@ public class BoardRepresentation {
     }
 
     public Color isThereAWorker(int x, int y) {
-        Pair<Integer, Integer> goal = new Pair<>(x, y);
         for(PlayerRepresentation player : getPlayersList()){
             for(Pair<Integer, Integer> worker : player.getWorkers()){
-                if(worker.equals(goal))
+                if(worker.equals(new Pair<>(x, y)))
                     return player.getColor();
             }
         }
@@ -89,11 +88,16 @@ public class BoardRepresentation {
     }
 
     public void setLoser(String username){
-
+        players.get(username).setLoser();
     }
 
     public void setWinner(String username){
-
+        for(PlayerRepresentation player : getPlayersList()) {
+            if(! player.getUsername().equals(username))
+                player.setLoser();
+            else
+                player.setWinner();
+        }
     }
 
 

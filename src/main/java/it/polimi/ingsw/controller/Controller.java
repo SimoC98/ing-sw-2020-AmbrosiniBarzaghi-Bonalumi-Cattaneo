@@ -2,7 +2,6 @@ package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.Observer;
 import it.polimi.ingsw.events.clientToServer.ClientEvent;
-import it.polimi.ingsw.events.clientToServer.PresentationQuestionEvent;
 import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.exceptions.InvalidActionException;
@@ -10,12 +9,9 @@ import it.polimi.ingsw.model.exceptions.InvalidBuildException;
 import it.polimi.ingsw.model.exceptions.InvalidMoveException;
 import it.polimi.ingsw.model.exceptions.InvalidWorkerSelectionException;
 import it.polimi.ingsw.serverView.ServerView;
-import it.polimi.ingsw.serverView.View;
 
 
 import java.util.List;
-
-import static java.lang.System.exit;
 
 public class Controller implements Observer<ClientEvent> {
     private Match model;

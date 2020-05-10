@@ -2,15 +2,13 @@ package it.polimi.ingsw.events.serverToClient;
 
 import it.polimi.ingsw.clientView.ClientView;
 
-public class PresentationEvent implements ServerEvent{
-    private int id;
+import java.util.List;
 
-    public PresentationEvent(int id) {
-        this.id = id;
-    }
+public class SelectedDivinitiesEvent implements ServerEvent{
+    private List<String> divinities;
 
     @Override
     public void handleEvent(ClientView clientView) {
-        //TODO
+
     }
 }

@@ -3,7 +3,7 @@ package it.polimi.ingsw.events.clientToServer;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.serverView.PingSender;
 
-public class PresentationQuestionEvent implements ClientEvent{
+public class LoginEvent implements ClientEvent{
     private int playerNumber=-1;
     private String username;
 

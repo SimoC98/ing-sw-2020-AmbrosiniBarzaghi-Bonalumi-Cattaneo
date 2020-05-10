@@ -1,16 +1,12 @@
 package it.polimi.ingsw.serverView;
 
 import it.polimi.ingsw.Observable;
-import it.polimi.ingsw.events.clientToServer.PresentationQuestionEvent;
-import it.polimi.ingsw.events.serverToClient.Ping;
-import it.polimi.ingsw.events.serverToClient.PresentationEvent;
+import it.polimi.ingsw.events.clientToServer.LoginEvent;
 import it.polimi.ingsw.events.serverToClient.ServerEvent;
 import it.polimi.ingsw.events.clientToServer.ClientEvent;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class ServerSocketHandler extends Observable<ClientEvent> implements Runnable {
     private Socket socket;
@@ -35,8 +31,8 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
         try {
             while(true) {
                 ClientEvent event = (ClientEvent) in.readObject();
-                if(event instanceof PresentationQuestionEvent) {
-                    PresentationQuestionEvent presentation = (PresentationQuestionEvent) event;
+                if(event instanceof LoginEvent) {
+                    LoginEvent presentation = (LoginEvent) event;
                     login(presentation);
                 }
                 else notify(event);
@@ -82,7 +78,7 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
         ping.startPing();
     }
 
-    private void login(PresentationQuestionEvent event) {
+    private void login(LoginEvent event) {
         synchronized (server) {
             server.loginUser(event.getPlayerNumber(),event.getUsername(),this);
         }

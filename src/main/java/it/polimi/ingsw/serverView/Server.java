@@ -3,7 +3,7 @@ package it.polimi.ingsw.serverView;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.events.serverToClient.InvalidUsernameEvent;
 import it.polimi.ingsw.events.serverToClient.LobbyFullEvent;
-import it.polimi.ingsw.events.serverToClient.PresentationEvent;
+import it.polimi.ingsw.events.serverToClient.LoginRequestEvent;
 import it.polimi.ingsw.model.Match;
 
 import java.net.*;
@@ -46,7 +46,7 @@ public class Server{
                registerConnection(connection);
 
                if(playerId==0) {
-                   connection.sendEvent(new PresentationEvent(playerId));
+                   connection.sendEvent(new LoginRequestEvent(playerId));
                    int cont=0;
                    while(true) {
                        Thread.sleep(1000);
@@ -65,7 +65,7 @@ public class Server{
                    connection.close();
                }
                else {
-                   connection.sendEvent(new PresentationEvent(playerId));
+                   connection.sendEvent(new LoginRequestEvent(playerId));
                    playerId++;
                    connection.startPing();
                }

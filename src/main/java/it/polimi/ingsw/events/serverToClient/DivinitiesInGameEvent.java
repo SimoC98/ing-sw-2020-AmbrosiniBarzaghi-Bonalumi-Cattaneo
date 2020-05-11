@@ -20,7 +20,7 @@ public class DivinitiesInGameEvent implements ServerEvent{
 
     @Override
     public void handleEvent(ClientView clientView) {
-
+        clientView.managePlayableDivinitiesSelection(divinities, description, playersNumber);
     }
 
     @Override

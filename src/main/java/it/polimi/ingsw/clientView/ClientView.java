@@ -98,10 +98,17 @@ public class ClientView implements Observer<ServerEvent> {
         //ui.wrongUsername
     }
 
-    public void managePlayersNumber(int userID) {
+    public void setUserID(int userID) {
         this.userID = userID;
     }
 
+    public void managePlayersNumber() {
+        ui.selectPlayersNumber();
+    }
+
+    public void managePlayableDivinitiesSelection(List<String> divinitiesNames, List<String> divinitiesDescriptions, int playersNumber) {
+        ui.selectPlayableDivinities(divinitiesNames, divinitiesDescriptions, playersNumber);
+    }
 
     public void playersSetup(List<String> playersNames, List<Color> colors) {
 
@@ -119,14 +126,14 @@ public class ClientView implements Observer<ServerEvent> {
         board.setDivinities(divinities);
     }
 
-    public void chooseDivinity(List<String> availableDivinities) {
-        //ui.selectDivinity(availableDivinities);
-        //ui.placeWorkers();
+    public void manageChooseDivinity(List<String> availableDivinities) {
+        ui.selectDivinity(availableDivinities);
+        ui.placeWorkers();
 
-//        PlayerRepresentation player = board.getPlayersMap().get(username);
-//        List<Pair<Integer, Integer>> workers = player.getWorkers();
-//
-//        divinitySelectionAndWorkerPlacement(player.getDivinity(), workers.get(0).getFirst(), workers.get(0).getSecond(), workers.get(0).getFirst(), workers.get(0).getSecond());
+        PlayerRepresentation player = board.getPlayersMap().get(username);
+        List<Pair<Integer, Integer>> workers = player.getWorkers();
+
+        divinitySelectionAndWorkerPlacement(player.getDivinity(), workers.get(0).getFirst(), workers.get(0).getSecond(), workers.get(1).getFirst(), workers.get(1).getSecond());
     }
 
     public void manageTextMessage(String msg) {
@@ -224,5 +231,6 @@ public class ClientView implements Observer<ServerEvent> {
             proxy.sendEvent(new LoginEvent(this.username));
         }
     }
+
 
 }

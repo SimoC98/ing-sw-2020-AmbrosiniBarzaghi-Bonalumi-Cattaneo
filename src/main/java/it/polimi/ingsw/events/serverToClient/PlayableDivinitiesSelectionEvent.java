@@ -15,7 +15,7 @@ public class PlayableDivinitiesSelectionEvent implements ServerEvent{
 
     @Override
     public void handleEvent(ClientView clientView) {
-        clientView.chooseDivinity(playableDivinities);
+        clientView.manageChooseDivinity(playableDivinities);
     }
 
     @Override

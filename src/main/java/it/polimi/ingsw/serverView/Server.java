@@ -8,10 +8,7 @@ import it.polimi.ingsw.events.serverToClient.LoginRequestEvent;
 import it.polimi.ingsw.model.Match;
 
 import java.net.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -45,7 +42,7 @@ public class Server{
                System.out.println("accepted" + socket.getInetAddress());
                ServerSocketHandler connection = new ServerSocketHandler(socket,this);
                executor.submit(connection);
-               //registerConnection(connection);
+               registerConnection(connection);
 
                if(playerId==0) {
                    connection.sendEvent(new LoginRequestEvent(playerId));
@@ -53,16 +50,15 @@ public class Server{
                    while(true) {
                        Thread.sleep(1000);
                        cont++;
-                       if(playerGameNumber>0 || cont==5) break;
+                       if(playerGameNumber>0 || cont==60) break;
                    }
-                   if(cont==5) {
+                   if(cont==60) {
                        connection.sendEvent(new Disconnect());
                        connection.close();
                        continue;
                    }
                    playerId++;
-                   System.out.println("ok player number");
-                   registerConnection(connection);
+                   //registerConnection(connection);
                    connection.startPing();
                }
                else if(isLobbyFull()) {
@@ -74,7 +70,7 @@ public class Server{
                    System.out.println("player id" + playerId);
                    connection.sendEvent(new LoginRequestEvent(playerId));
                    playerId++;
-                   registerConnection(connection);
+                   //registerConnection(connection);
                    connection.startPing();
                }
            }
@@ -96,14 +92,14 @@ public class Server{
     }
 
     public synchronized boolean isLobbyFull() throws InterruptedException {
-        Thread.sleep(1000);
-        return (playerGameNumber>0 && connections.size()==playerGameNumber);
+        //Thread.sleep(1000);
+        return (playerGameNumber!=-1 && connections.size()>playerGameNumber);
     }
 
     public synchronized void loginUser(int playerNumber, String username, ServerSocketHandler connection) {
         if(playerNumber>0) {
             playerGameNumber = playerNumber;
-            System.out.println("player numbers chosen:" + playerNumber);
+            System.out.println("player numbers chosen: " + playerNumber);
         }
         else if(loggedPlayers.containsKey(username)) {
             List<String> loggedUsernames = new ArrayList<>(loggedPlayers.values());
@@ -124,7 +120,9 @@ public class Server{
                 users.add(newUser);
             }
 
-            Match match = new Match((List<String>)loggedPlayers.values());
+            Collection<String> c = loggedPlayers.values();
+            ArrayList<String> l = new ArrayList<>(c);
+            Match match = new Match(l);
             Controller controller = new Controller(match,users);
 
             for(ServerView s : users) {
@@ -138,7 +136,7 @@ public class Server{
     }
 
     private void printUsers() {
-        System.out.println("logged players: ");
+        System.out.println("\nlogged players: ");
         for(ServerSocketHandler s : loggedPlayers.keySet()) {
             System.out.println(loggedPlayers.get(s));
         }

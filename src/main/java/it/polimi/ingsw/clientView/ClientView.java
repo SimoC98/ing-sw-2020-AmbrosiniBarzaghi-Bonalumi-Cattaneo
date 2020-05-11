@@ -122,7 +122,6 @@ public class ClientView implements Observer<ServerEvent> {
 
         ClientSocketHandler proxy = new ClientSocketHandler(socket);
         proxy.addObserver(this);
-
         this.proxy = proxy;
 
         new Thread(proxy).run();
@@ -136,7 +135,7 @@ public class ClientView implements Observer<ServerEvent> {
     }
 
     public void disconnect() {
-        proxy.close();
+        //proxy.close();
         System.out.println("disconnecting");
         exit(0);
     }
@@ -152,7 +151,6 @@ public class ClientView implements Observer<ServerEvent> {
             proxy.sendEvent(new LoginEvent(this.username));
         }
     }
-
 
 
 }

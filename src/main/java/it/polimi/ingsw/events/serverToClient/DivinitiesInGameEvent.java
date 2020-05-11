@@ -5,6 +5,7 @@ import it.polimi.ingsw.clientView.PingReceiver;
 
 import java.util.List;
 
+//first event sent
 public class DivinitiesInGameEvent implements ServerEvent{
 
     private List<String> divinities;

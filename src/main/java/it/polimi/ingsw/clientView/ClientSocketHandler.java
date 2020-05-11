@@ -60,7 +60,7 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
         try {
             while(true) {
                 ServerEvent event = (ServerEvent) in.readObject();
-                System.out.println("received event...");
+                //System.out.println("received event...");
 
                 if(event != null) {
                     //System.out.println("event not null");
@@ -83,9 +83,9 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
 
     public void close() {
         try {
-            in.close();
-            out.close();
-            socket.close();
+           in.close();
+           out.close();
+           socket.close();
         }
         catch(Exception e) {
             e.printStackTrace();
@@ -103,7 +103,7 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
             out.writeObject(event);
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            notify(new Disconnect());
         }
     }
 

@@ -5,6 +5,7 @@ import it.polimi.ingsw.events.clientToServer.LoginEvent;
 import it.polimi.ingsw.events.serverToClient.ServerEvent;
 import it.polimi.ingsw.events.clientToServer.ClientEvent;
 
+import javax.swing.plaf.TableHeaderUI;
 import java.io.*;
 import java.net.Socket;
 
@@ -13,7 +14,7 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
     private Server server;
     private ObjectInputStream in;
     private ObjectOutputStream out;
-    PingSender sender;
+    private PingSender sender;
 
     public ServerSocketHandler(Socket socket, Server server) {
         this.socket = socket;
@@ -32,15 +33,29 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
         try {
             while(true) {
                 ClientEvent event = (ClientEvent) in.readObject();
-                if(event instanceof LoginEvent) {
+                Runnable r = () -> {
+                    manageEvent(event);
+                };
+                new Thread(r).start();
+
+
+                /*if(event instanceof LoginEvent) {
                     LoginEvent presentation = (LoginEvent) event;
                     login(presentation);
                 }
-                else notify(event);
+                else notify(event);*/
             }
         }catch (Exception e) {
             //
         }
+    }
+
+    private void manageEvent(ClientEvent event) {
+        if(event instanceof LoginEvent) {
+            LoginEvent presentation = (LoginEvent) event;
+            login(presentation);
+        }
+        else notify(event);
     }
 
     public void sendEvent(ServerEvent event) {
@@ -49,7 +64,7 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
             //if(event!=null) System.out.println("not null");
             //out.flush();
         } catch (Exception e) {
-            System.out.println("error send");
+            System.out.println("client disconnected");
             disconnect();
         }
     }
@@ -91,13 +106,13 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
         synchronized (server) {
             if(server.isGameStarted()) {
                 System.out.println("game already started...");
+                sender.stop();
                 //notify to virtual view disconnection event --> the game will end
             }
             else {
-                System.out.println("deregistering...");
+                System.out.println("game not already started...");
                 sender.stop();
                 server.deregisterConnection(this);
-
             }
         }
     }

@@ -9,21 +9,33 @@ import java.util.TimerTask;
 
 public class PingSender implements Observer<ClientEvent> {
     private ServerSocketHandler connection;
-    private int pingCounter;
+    private boolean ping;
     private Timer timer;
+    private TimerTask task;
 
     public PingSender(ServerSocketHandler connection) {
         this.connection = connection;
         connection.addObserver(this);
-        pingCounter = 0;
-        timer = new Timer();
+        ping = true;
+        //timer = new Timer();
     }
 
     public void receivePing() {
-        pingCounter=0;
+        /*ping = true;
+        System.out.println("pong");*/
+        timer.cancel();
+        System.out.println("PING");
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        startPing();
     }
 
-    public void startPing() {
+    /*public void startPing() {
+        System.out.println("start timer");
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -37,11 +49,26 @@ public class PingSender implements Observer<ClientEvent> {
                     //System.out.println("ping");
                     connection.sendEvent(new Ping());
                 }*/
-                connection.sendEvent(new Ping());
+                //connection.sendEvent(new Ping());
 
+            /*}
+        },0,5000);
+    }*/
+
+
+    public void startPing() {
+        timer = new Timer();
+        task = new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("timer");
+                connection.disconnect();
             }
-        },0,3000);
+        };
+        connection.sendEvent(new Ping());
+        timer.schedule(task,5000);
     }
+
 
     public void stop() {
         timer.cancel();

@@ -28,7 +28,7 @@ public class Controller implements Observer<ClientEvent> {
         this.playersInGame = playersInGame;
 
         for(int i=0;i<playersInGame.size();i++) {
-            playersUsernames.add(playersInGame.get(i).getUsername());
+            playersUsernames = model.getPlayersUsernames();
         }
 
         currentPlayerId = 0;

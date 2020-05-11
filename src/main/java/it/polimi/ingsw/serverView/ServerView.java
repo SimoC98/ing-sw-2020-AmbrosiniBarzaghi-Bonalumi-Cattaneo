@@ -67,7 +67,7 @@ public class ServerView extends Observable<ClientEvent> implements Observer<Serv
     }
 
     public void chooseDivinity(List<String> divinities) {
-        sendEvent(new SelectedDivinitiesEvent(divinities));
+        //sendEvent(new SelectedDivinitiesEvent(divinities));
     }
 
     public void startGame(List<String> players, List<Color> colors, List<String> divinities) {

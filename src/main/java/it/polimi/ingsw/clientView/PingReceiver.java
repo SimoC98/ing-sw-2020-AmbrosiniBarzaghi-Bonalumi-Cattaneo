@@ -18,6 +18,6 @@ public class PingReceiver implements Observer<ServerEvent> {
 
     @Override
     public void update(ServerEvent event) {
-        //event.handleEvent(this);
+        event.handleEvent(this);
     }
 }

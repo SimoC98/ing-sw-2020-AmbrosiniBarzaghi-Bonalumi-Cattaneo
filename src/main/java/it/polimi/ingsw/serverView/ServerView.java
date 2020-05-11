@@ -5,6 +5,7 @@ import it.polimi.ingsw.Observer;
 import it.polimi.ingsw.events.serverToClient.*;
 import it.polimi.ingsw.events.clientToServer.ClientEvent;
 import it.polimi.ingsw.model.Action;
+import it.polimi.ingsw.model.Color;
 import it.polimi.ingsw.model.Worker;
 
 
@@ -59,6 +60,18 @@ public class ServerView extends Observable<ClientEvent> implements Observer<Serv
 
     public void playerDisconnection(String playerName) {
         sendEvent(new PlayerDisconnectionEvent(playerName));
+    }
+
+    public void chooseDivinitiesInGame(List<String> divinities, List<String> descriptions, int playerNumber) {
+        sendEvent(new DivinitiesInGameEvent(divinities,descriptions,playerNumber));
+    }
+
+    public void chooseDivinity(List<String> divinities) {
+        sendEvent(new SelectedDivinitiesEvent(divinities));
+    }
+
+    public void startGame(List<String> players, List<Color> colors, List<String> divinities) {
+        sendEvent(new MatchBeginEvent(players,colors,divinities));
     }
 
     private void sendEvent(ServerEvent event) {

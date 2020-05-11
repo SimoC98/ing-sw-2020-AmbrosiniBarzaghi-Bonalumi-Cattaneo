@@ -1,6 +1,7 @@
 package it.polimi.ingsw.events.serverToClient;
 
 import it.polimi.ingsw.clientView.ClientView;
+import it.polimi.ingsw.clientView.PingReceiver;
 import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Tile;
 
@@ -19,5 +20,10 @@ public class BuildEvent implements ServerEvent {
     @Override
     public void handleEvent(ClientView clientView) {
         clientView.manageBuild(player, builtTile.getX(), builtTile.getY(), action);
+    }
+
+    @Override
+    public void handleEvent(PingReceiver ping) {
+        return;
     }
 }

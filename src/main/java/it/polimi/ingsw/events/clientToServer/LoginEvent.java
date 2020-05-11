@@ -7,6 +7,15 @@ public class LoginEvent implements ClientEvent{
     private int playerNumber=-1;
     private String username;
 
+    public LoginEvent(String username) {
+        this.username = username;
+    }
+
+    public LoginEvent(int playerNumber, String username) {
+        this.playerNumber = playerNumber;
+        this.username = username;
+    }
+
     public int getPlayerNumber() {
         return playerNumber;
     }

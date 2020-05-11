@@ -9,6 +9,10 @@ public class DivinitiesInGameSelectionEvent implements ClientEvent {
 
     private List<String> divinities;
 
+    public DivinitiesInGameSelectionEvent(List<String> divinities) {
+        this.divinities = divinities;
+    }
+
     @Override
     public void handleEvent(Controller controller) {
 

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.events.serverToClient;
 
 import it.polimi.ingsw.clientView.ClientView;
+import it.polimi.ingsw.clientView.PingReceiver;
 import it.polimi.ingsw.serverView.PingSender;
 
 public class PlayerDisconnectionEvent implements ServerEvent{
@@ -13,6 +14,11 @@ public class PlayerDisconnectionEvent implements ServerEvent{
 
     @Override
     public void handleEvent(ClientView clientView) {
+
+    }
+
+    @Override
+    public void handleEvent(PingReceiver ping) {
 
     }
 }

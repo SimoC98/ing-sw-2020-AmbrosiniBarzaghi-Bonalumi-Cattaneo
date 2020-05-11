@@ -1,6 +1,7 @@
 package it.polimi.ingsw.serverView;
 
 import it.polimi.ingsw.controller.Controller;
+import it.polimi.ingsw.events.serverToClient.Disconnect;
 import it.polimi.ingsw.events.serverToClient.InvalidUsernameEvent;
 import it.polimi.ingsw.events.serverToClient.LobbyFullEvent;
 import it.polimi.ingsw.events.serverToClient.LoginRequestEvent;
@@ -41,9 +42,10 @@ public class Server{
            serverSocket = new ServerSocket(port);
            while(true) {
                Socket socket = serverSocket.accept();
+               System.out.println("accepted" + socket.getInetAddress());
                ServerSocketHandler connection = new ServerSocketHandler(socket,this);
                executor.submit(connection);
-               registerConnection(connection);
+               //registerConnection(connection);
 
                if(playerId==0) {
                    connection.sendEvent(new LoginRequestEvent(playerId));
@@ -51,56 +53,34 @@ public class Server{
                    while(true) {
                        Thread.sleep(1000);
                        cont++;
-                       if(playerGameNumber>0 || cont==60) break;
+                       if(playerGameNumber>0 || cont==5) break;
                    }
-                   if(cont==60) {
+                   if(cont==5) {
+                       connection.sendEvent(new Disconnect());
                        connection.close();
                        continue;
                    }
                    playerId++;
+                   System.out.println("ok player number");
+                   registerConnection(connection);
                    connection.startPing();
                }
                else if(isLobbyFull()) {
+                   System.out.println("lobby full");
                    connection.sendEvent(new LobbyFullEvent());
                    connection.close();
                }
                else {
+                   System.out.println("player id" + playerId);
                    connection.sendEvent(new LoginRequestEvent(playerId));
                    playerId++;
+                   registerConnection(connection);
                    connection.startPing();
                }
            }
         } catch (Exception e) {
             //
         }
-
-
-
-
-        /*ExecutorService executor = Executors.newCachedThreadPool();
-        ServerSocket serverSocket = null;
-        try{
-            serverSocket = new ServerSocket(port);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
-
-        int i = 0;
-        while(true){
-            System.out.println("while(true), just me and you");
-            try{
-                Socket clientSock = serverSocket.accept();
-                System.out.println("Here comes the client #" + i + "...");
-                i++;
-                executor.submit(new ServerSocketHandler(clientSock,this));
-                System.out.println("#" + i + "managed!");
-            } catch (IOException e) {
-                e.printStackTrace();
-                break;
-            }
-        }
-        executor.shutdown();*/
     }
 
     public synchronized void registerConnection(ServerSocketHandler connection) {
@@ -112,6 +92,7 @@ public class Server{
         if(loggedPlayers.keySet().contains(connection)) {
             loggedPlayers.remove(connection);
         }
+        printUsers();
     }
 
     public synchronized boolean isLobbyFull() throws InterruptedException {
@@ -120,13 +101,21 @@ public class Server{
     }
 
     public synchronized void loginUser(int playerNumber, String username, ServerSocketHandler connection) {
-        if(playerNumber>0) playerGameNumber = playerNumber;
+        if(playerNumber>0) {
+            playerGameNumber = playerNumber;
+            System.out.println("player numbers chosen:" + playerNumber);
+        }
         else if(loggedPlayers.containsKey(username)) {
             List<String> loggedUsernames = new ArrayList<>(loggedPlayers.values());
             connection.sendEvent(new InvalidUsernameEvent(loggedUsernames));
         }
+
         loggedPlayers.put(connection,username);
-        if(loggedPlayers.size()==playerNumber) {
+        printUsers();
+
+
+        if(loggedPlayers.keySet().size()==playerGameNumber) {
+            System.out.println("GAME START");
             isGameStarted=true;
 
             List<ServerView> users = new ArrayList<>();
@@ -145,6 +134,13 @@ public class Server{
 
             //controller.startGame();
 
+        }
+    }
+
+    private void printUsers() {
+        System.out.println("logged players: ");
+        for(ServerSocketHandler s : loggedPlayers.keySet()) {
+            System.out.println(loggedPlayers.get(s));
         }
     }
 

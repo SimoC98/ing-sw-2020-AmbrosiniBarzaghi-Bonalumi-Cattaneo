@@ -75,4 +75,12 @@ public class DivinityDecoratorWithEffects implements Divinity {
     public void setDivinity(Divinity decoratedDivinity) {
         this.divinity = decoratedDivinity;
     }
+
+    public String getDescription() {
+        return divinity.getDescription();
+    }
+
+    public String getName() {
+        return divinity.getName();
+    }
 }

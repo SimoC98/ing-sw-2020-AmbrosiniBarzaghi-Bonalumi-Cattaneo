@@ -1,6 +1,7 @@
 package it.polimi.ingsw.events.serverToClient;
 
 import it.polimi.ingsw.clientView.ClientView;
+import it.polimi.ingsw.clientView.PingReceiver;
 
 import java.util.List;
 
@@ -14,5 +15,10 @@ public class InvalidUsernameEvent implements ServerEvent {
     @Override
     public void handleEvent(ClientView clientView) {
         //TODO
+    }
+
+    @Override
+    public void handleEvent(PingReceiver ping) {
+
     }
 }

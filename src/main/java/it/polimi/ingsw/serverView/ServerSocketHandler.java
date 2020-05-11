@@ -13,13 +13,14 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
     private Server server;
     private ObjectInputStream in;
     private ObjectOutputStream out;
+    PingSender sender;
 
     public ServerSocketHandler(Socket socket, Server server) {
         this.socket = socket;
         this.server = server;
 
         try {
-            in = new ObjectInputStream(socket.getInputStream());
+            in = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
             out = new ObjectOutputStream(socket.getOutputStream());
         } catch (IOException e) {
             e.printStackTrace();
@@ -45,10 +46,11 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
     public void sendEvent(ServerEvent event) {
         try {
             out.writeObject(event);
-            out.flush();
-        } catch (IOException e) {
-            //
-            e.printStackTrace();
+            //if(event!=null) System.out.println("not null");
+            //out.flush();
+        } catch (Exception e) {
+            System.out.println("error send");
+            disconnect();
         }
     }
 
@@ -74,8 +76,8 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
                 }
             }
         },0,5000);*/
-        PingSender ping = new PingSender(this);
-        ping.startPing();
+        sender =  new PingSender(this);
+        sender.startPing();
     }
 
     private void login(LoginEvent event) {
@@ -85,12 +87,17 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
     }
 
     protected void disconnect() {
+        System.out.println("disconnection");
         synchronized (server) {
             if(server.isGameStarted()) {
+                System.out.println("game already started...");
                 //notify to virtual view disconnection event --> the game will end
             }
             else {
-                close();
+                System.out.println("deregistering...");
+                sender.stop();
+                server.deregisterConnection(this);
+
             }
         }
     }

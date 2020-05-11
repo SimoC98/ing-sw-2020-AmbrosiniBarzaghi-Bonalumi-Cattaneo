@@ -307,11 +307,50 @@ public class Match extends Observable<ServerEvent> {
     public void playerInitialization(int x1, int y1, int x2, int y2, String divName) throws WorkerBadPlacementException {
         placeWorkers(x1,y1,x2,y2);
         loadPlayerDivinity(divName);
+
+        notify(new WorkerPlacementEvent(x1,y1,x2,y2));
+
         int index = players.indexOf(currentPlayer) + 1;
         if(index==players.size()) startNextTurn();
         else {
             currentPlayer = players.get(index);
         }
+    }
+
+    public List<String> getAllDivinities() {
+        return new ArrayList<>(divinities.keySet());
+    }
+
+    public List<String> getAllDivinitiesDescriptions() {
+        ArrayList<String> descriptions = new ArrayList<>();
+        for(Divinity d : divinities.values()) {
+            descriptions.add(d.getDescription());
+        }
+        return descriptions;
+    }
+
+    public List<String> getPlayersUsernames() {
+        ArrayList<String> usernames = new ArrayList<>();
+        for(Player p : players) {
+            usernames.add(p.getUsername());
+        }
+        return usernames;
+    }
+
+    public List<Color> getPlayersColors() {
+        ArrayList<Color> colors = new ArrayList<>();
+        for(Player p : players) {
+            colors.add(p.getColor());
+        }
+        return colors;
+    }
+
+    public List<String> getPlayersDivinities() {
+        ArrayList<String> divinities = new ArrayList<>();
+        for(Player p : players) {
+            divinities.add(p.getDivinity().getName());
+        }
+        return divinities;
     }
 
     public int getCurrentPlayerId() {

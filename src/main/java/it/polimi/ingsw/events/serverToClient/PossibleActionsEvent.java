@@ -1,6 +1,7 @@
 package it.polimi.ingsw.events.serverToClient;
 
 import it.polimi.ingsw.clientView.ClientView;
+import it.polimi.ingsw.clientView.PingReceiver;
 import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.serverView.ServerView;
 
@@ -17,5 +18,10 @@ public class PossibleActionsEvent implements ServerEvent {
     @Override
     public void handleEvent(ClientView clientView) {
         clientView.managePossibleActions(possibleActions);
+    }
+
+    @Override
+    public void handleEvent(PingReceiver ping) {
+
     }
 }

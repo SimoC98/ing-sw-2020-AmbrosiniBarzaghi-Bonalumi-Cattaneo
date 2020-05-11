@@ -1,8 +1,6 @@
 package it.polimi.ingsw;
 
 import it.polimi.ingsw.XMLparser.XMLParserUtility;
-import it.polimi.ingsw.controller.Controller;
-import it.polimi.ingsw.model.Game;
 import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.exceptions.WorkerBadPlacementException;
 import it.polimi.ingsw.serverView.View;
@@ -27,7 +25,7 @@ public class App
         match.getBoard().getTile(0,1).setDome();
         match.getBoard().getTile(1,0).setDome();
 
-        Game game = new Game(match);
+        //Game game = new Game(match);
         View view = new View();
         //Controller controller = new Controller(match,view);
         match.setDivinityMap(XMLParserUtility.getDivinities());

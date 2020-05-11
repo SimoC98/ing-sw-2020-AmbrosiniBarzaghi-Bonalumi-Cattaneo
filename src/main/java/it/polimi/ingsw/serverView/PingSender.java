@@ -27,7 +27,8 @@ public class PingSender implements Observer<ClientEvent> {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                if(pingCounter==3) {
+                /*if(pingCounter==3) {
+                    System.out.println("ping timeout");
                     timer.cancel();
                     connection.disconnect();
                 }
@@ -35,13 +36,18 @@ public class PingSender implements Observer<ClientEvent> {
                     pingCounter++;
                     //System.out.println("ping");
                     connection.sendEvent(new Ping());
-                }
+                }*/
+                connection.sendEvent(new Ping());
 
             }
         },0,3000);
     }
 
-    @Override
+    public void stop() {
+        timer.cancel();
+    }
+
+     @Override
     public void update(ClientEvent event) {
         event.handleEvent(this);
     }

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.events.serverToClient;
 
 import it.polimi.ingsw.clientView.ClientView;
+import it.polimi.ingsw.clientView.PingReceiver;
 import it.polimi.ingsw.model.Tile;
 
 public class MoveEvent implements ServerEvent {
@@ -17,5 +18,10 @@ public class MoveEvent implements ServerEvent {
     @Override
     public void handleEvent(ClientView clientView) {
         clientView.manageMove(player, from.getX(), from.getY(), to.getX(), to.getY());
+    }
+
+    @Override
+    public void handleEvent(PingReceiver ping) {
+
     }
 }

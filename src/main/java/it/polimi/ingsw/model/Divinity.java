@@ -25,4 +25,7 @@ public interface Divinity {
 
     public boolean hasSetEffectOnOpponentWorkers();
     public void setEffectOnOpponentWorkers(Player opponentPlayer);
+
+    public String getDescription();
+    public String getName();
 }

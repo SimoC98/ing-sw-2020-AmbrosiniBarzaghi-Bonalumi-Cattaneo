@@ -6,7 +6,6 @@ import it.polimi.ingsw.events.serverToClient.*;
 import it.polimi.ingsw.events.clientToServer.ClientEvent;
 import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Color;
-import it.polimi.ingsw.model.Worker;
 
 
 import java.util.List;
@@ -67,11 +66,11 @@ public class ServerView extends Observable<ClientEvent> implements Observer<Serv
     }
 
     public void chooseDivinity(List<String> divinities) {
-        //sendEvent(new SelectedDivinitiesEvent(divinities));
+        sendEvent(new PlayableDivinitiesSelectionEvent(divinities));
     }
 
-    public void startGame(List<String> players, List<Color> colors, List<String> divinities) {
-        sendEvent(new MatchBeginEvent(players,colors,divinities));
+    public void startGame(List<String> players, List<Color> colors, List<String> divinities, List<String> divinitiesDescriptions) {
+        sendEvent(new MatchBeginEvent(players,colors,divinities, divinitiesDescriptions));
     }
 
     private void sendEvent(ServerEvent event) {

@@ -26,7 +26,7 @@ public class LoginEvent implements ClientEvent{
 
     @Override
     public void handleEvent(Controller controller) {
-        return;
+        //TODO
     }
 
     @Override

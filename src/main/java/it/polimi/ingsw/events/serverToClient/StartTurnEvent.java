@@ -12,7 +12,7 @@ public class StartTurnEvent implements ServerEvent{
 
     @Override
     public void handleEvent(ClientView clientView) {
-        //TODO
+        clientView.manageStartTurn();
     }
 
     @Override

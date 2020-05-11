@@ -181,7 +181,7 @@ public class Controller implements Observer<ClientEvent> {
                 currentPlayerId = model.getCurrentPlayerId();
 
                 for(ServerView s : playersInGame) {
-                    s.startGame(model.getPlayersUsernames(),model.getPlayersColors(),model.getPlayersDivinities());
+                    s.startGame(model.getPlayersUsernames(), model.getPlayersColors(), model.getPlayersDivinities(), model.getPlayersDivinitiesDescriptions());
                 }
 
                 playersInGame.get(currentPlayerId).startTurn(playersUsernames.get(currentPlayerId));

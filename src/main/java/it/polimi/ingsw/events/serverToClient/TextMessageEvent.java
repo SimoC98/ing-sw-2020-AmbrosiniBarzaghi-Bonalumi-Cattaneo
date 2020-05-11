@@ -12,7 +12,7 @@ public class TextMessageEvent implements ServerEvent{
 
     @Override
     public void handleEvent(ClientView clientView) {
-        //TODO
+        clientView.manageTextMessage(message);
     }
 
     @Override

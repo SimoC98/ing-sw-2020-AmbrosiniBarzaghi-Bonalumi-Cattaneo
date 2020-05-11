@@ -8,6 +8,7 @@ public class WorkerSelectionEvent implements ServerEvent{
     @Override
     public void handleEvent(ClientView clientView) {
         //TODO
+        //actually the client is expecting the possibleActions
     }
 
     @Override

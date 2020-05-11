@@ -15,7 +15,7 @@ public class DivinitiesInGameSelectionEvent implements ClientEvent {
 
     @Override
     public void handleEvent(Controller controller) {
-
+        controller.startGame(divinities);
     }
 
     @Override

@@ -3,6 +3,7 @@ package it.polimi.ingsw.clientView;
 import it.polimi.ingsw.events.serverToClient.BuildEvent;
 import it.polimi.ingsw.events.serverToClient.MoveEvent;
 import it.polimi.ingsw.model.Action;
+import it.polimi.ingsw.model.Color;
 import it.polimi.ingsw.model.Tile;
 import org.junit.jupiter.api.Test;
 
@@ -14,13 +15,13 @@ class ClientViewTest {
     public void basicTest() {
         ClientView cv = new ClientView();
         CLI cli = new CLI(cv);
-        String myUser = "Marco";
-        cv.setUser(myUser);
-
         BoardRepresentation board = cv.getBoard();
 
+        String myUser = "Marco";
+        cv.setUsername(myUser);
+        board.addPlayer(myUser, Color.BLUE);
         String user2 = "Gino";
-        board.addPlayer(user2);
+        board.addPlayer(user2, Color.CREAM);
 
         board.addWorker(myUser, 1, 2);
         board.addWorker(myUser, 4, 2);

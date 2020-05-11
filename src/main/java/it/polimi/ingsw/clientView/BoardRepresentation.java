@@ -1,5 +1,6 @@
 package it.polimi.ingsw.clientView;
 
+import it.polimi.ingsw.Pair;
 import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Color;
 
@@ -12,7 +13,8 @@ public class BoardRepresentation {
 
     protected final int boardDimension = 5;
     private int [][] board;
-    Map<String, PlayerRepresentation> players;
+    private Map<String, PlayerRepresentation> players;
+    private Map<String, String> divinitiesDescriptions;
 
     public BoardRepresentation() {
         board = new int[boardDimension][boardDimension];
@@ -22,21 +24,7 @@ public class BoardRepresentation {
         players = new HashMap<>();
     }
 
-    public void addPlayer(String player) {
-        Color color;
-        switch(players.size()){
-            case 0:
-                color = Color.BLUE;
-                break;
-
-            case 1:
-                color = Color.CREAM;
-                break;
-
-            default:
-                color = Color.WHITE;
-        }
-
+    public void addPlayer(String player, Color color) {
         players.put(player, new PlayerRepresentation(player, color));
     }
 
@@ -63,6 +51,14 @@ public class BoardRepresentation {
 
     public List<String> getPlayersNames() {
         return new ArrayList<>(players.keySet());
+    }
+
+    public Map<String, String> getDivinities() {
+        return divinitiesDescriptions;
+    }
+
+    public void setDivinities(Map<String, String> divinitiesDescriptions) {
+        this.divinitiesDescriptions = divinitiesDescriptions;
     }
 
     public Color isThereAWorker(int x, int y) {

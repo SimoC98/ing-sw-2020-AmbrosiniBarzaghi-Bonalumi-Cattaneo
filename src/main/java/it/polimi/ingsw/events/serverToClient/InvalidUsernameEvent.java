@@ -6,15 +6,15 @@ import it.polimi.ingsw.clientView.PingReceiver;
 import java.util.List;
 
 public class InvalidUsernameEvent implements ServerEvent {
-    private List<String> username;
+    private final List<String> usernames;
 
-    public InvalidUsernameEvent(List<String> username) {
-        this.username = username;
+    public InvalidUsernameEvent(List<String> usernames) {
+        this.usernames = usernames;
     }
 
     @Override
     public void handleEvent(ClientView clientView) {
-        //TODO
+        clientView.manageWrongUsername(usernames);
     }
 
     @Override

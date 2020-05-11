@@ -1,4 +1,4 @@
-package it.polimi.ingsw.clientView;
+package it.polimi.ingsw;
 
 public class Pair<T, V> {
     private T first;

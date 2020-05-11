@@ -1,5 +1,6 @@
 package it.polimi.ingsw.clientView;
 
+import it.polimi.ingsw.Pair;
 import it.polimi.ingsw.model.Color;
 
 import java.util.ArrayList;
@@ -11,6 +12,7 @@ public class PlayerRepresentation {
     private Color color;
     private boolean hasWon, hasLost;
     private List<Pair<Integer, Integer>> workers;
+    private String divinity;
 
     public PlayerRepresentation(String username, Color color) {
         this.username = username;
@@ -18,7 +20,7 @@ public class PlayerRepresentation {
         hasWon = false;
         hasLost = false;
         workers = new ArrayList<>();
-
+        divinity = null;
     }
 
     public String getUsername() {
@@ -63,6 +65,14 @@ public class PlayerRepresentation {
 //
 //        return null;
 //    }
+
+    public void setDivinity(String divinity){
+        this.divinity = divinity;
+    }
+
+    public String getDivinity() {
+        return divinity;
+    }
 
     public boolean moveWorker(int fromX, int fromY, int toX, int toY) {
         for(int i=0; i < workers.size(); i++) {

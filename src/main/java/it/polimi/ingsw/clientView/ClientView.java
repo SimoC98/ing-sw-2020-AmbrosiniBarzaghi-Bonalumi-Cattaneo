@@ -1,39 +1,45 @@
 package it.polimi.ingsw.clientView;
 
 import it.polimi.ingsw.Observer;
-import it.polimi.ingsw.events.clientToServer.LoginEvent;
+import it.polimi.ingsw.Pair;
+import it.polimi.ingsw.events.clientToServer.*;
 import it.polimi.ingsw.events.serverToClient.ServerEvent;
 import it.polimi.ingsw.model.Action;
+import it.polimi.ingsw.model.Color;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 import static java.lang.System.exit;
 
-//TODO: I'm thinking of Observer Pattern to connect ClientView and CLI/GUI
-//so for example in managePossibleActions ClientView modifies the attribute and notifies the CLI/GUI
 public class ClientView implements Observer<ServerEvent> {
 
     private ClientSocketHandler proxy;
     private BoardRepresentation board;
+    private UI ui;
     private String username;
-    private List<Action> possibleActions;
+    private int userID;
 
     public ClientView(){
 //        proxy = new ClientSocketHandler();
         board = new BoardRepresentation();
         username = null;
-        possibleActions = null;
+        userID = -1;      //may become userID but we have no method to tell for now
     }
 
-    public void setUser(String username) {
-        this.username = username;
-        board.addPlayer(username);
+    public ClientView(UI ui){
+//        proxy = new ClientSocketHandler();
+        board = new BoardRepresentation();
+        this.ui = ui;
+        username = null;
+        userID = -1;      //may become userID but we have no method to tell for now
     }
+
+
 
     public BoardRepresentation getBoard() {
         return board;
@@ -43,28 +49,44 @@ public class ClientView implements Observer<ServerEvent> {
         return username;
     }
 
-    public List<Action> getPossibleActions() {
-        return possibleActions;
+    //USED JUST FOR TEST
+    public void setUsername(String username) {
+        this.username = username;
     }
+
 
     /*
      *-----------------------------
      *      Client -> Server
      *-----------------------------
      */
-    public void startTurn(){
+    public void loginQuestion(String username) {
+        this.username = username;
+        proxy.sendEvent(new LoginEvent(username));
     }
 
-    public void selectWorker(){
-
+    //IF USERID==0
+    public void playersNumberQuestion(int num) {
+        proxy.sendEvent(new PlayersNumberQuestionEvent(num));
     }
 
-    //includes Move, Build, BuildDome, EndTurn
-    public void askMove(){
-//        proxy.sendEvent(new PossibleActionsEvent(possibleActions));
-//        ClientEvent event = new MoveQuestionEvent()
-        //TODO: SISTEMARE I ClientEvent (esempio: MoveQuestionEvent ha x, y ma servono sia quelli di partenza che quelli di arrivo)
+    //IF USERID==PLAYERSNUMBER
+    public void playableDivinitiesSelection(List<String> playableDivinities) {
+        proxy.sendEvent(new DivinitiesInGameSelectionEvent(playableDivinities));
     }
+
+    public void divinitySelectionAndWorkerPlacement(String divinity, int x1, int y1, int x2, int y2) {
+        proxy.sendEvent(new DivinitySelectionAndWorkersPlacementEvent(divinity, x1, y1, x2, y2));
+    }
+
+    public void selectWorkerQuestion(int x, int y){
+        proxy.sendEvent(new WorkerSelectionQuestionEvent(x, y));
+    }
+
+    public void actionQuestion(Action action, int x, int y) {
+        proxy.sendEvent(new ActionQuestionEvent(action, x, y));
+    }
+
 
 
     /*
@@ -72,25 +94,68 @@ public class ClientView implements Observer<ServerEvent> {
      *      Server -> Client
      *-----------------------------
      */
+    public void manageWrongUsername(List<String> usernames) {
+        //ui.wrongUsername
+    }
+
+    public void managePlayersNumber(int userID) {
+        this.userID = userID;
+    }
+
+
+    public void playersSetup(List<String> playersNames, List<Color> colors) {
+
+        for(int i=0; i<playersNames.size(); i++) {
+            board.addPlayer(playersNames.get(i), colors.get(i));
+        }
+    }
+
+    public void setDivinitiesDescriptions(List<String> divinitiesNames, List<String> divinitiesDescriptions) {
+        Map<String, String> divinities = new HashMap<String, String>();
+
+        for(int i=0; i<divinitiesNames.size(); i++)
+            divinities.put(divinitiesNames.get(i), divinitiesDescriptions.get(i));
+
+        board.setDivinities(divinities);
+    }
+
+    public void chooseDivinity(List<String> availableDivinities) {
+        //ui.selectDivinity(availableDivinities);
+        //ui.placeWorkers();
+
+//        PlayerRepresentation player = board.getPlayersMap().get(username);
+//        List<Pair<Integer, Integer>> workers = player.getWorkers();
+//
+//        divinitySelectionAndWorkerPlacement(player.getDivinity(), workers.get(0).getFirst(), workers.get(0).getSecond(), workers.get(0).getFirst(), workers.get(0).getSecond());
+    }
+
+    public void manageTextMessage(String msg) {
+        //ui.textMessage(msg);
+    }
+
+    public void manageStartTurn() {
+        //ui.startTurn();
+    }
+
+    public void managePossibleActions(List<Action> possibleActions){
+        //ui.performAction();
+    }
+
     public void manageMove(String username, int fromX, int fromY, int toX, int toY){
         board.moveWorker(username, fromX, fromY, toX, toY);
     }
 
+    //NB actually idc who built
     public void manageBuild(String playerName, int x, int y, Action action){
-        //NB actually idc who built
         board.buildTile(x, y, action);
     }
 
-    public void manageLoser(String userName){
-        board.setLoser(userName);
+    public void manageLoser(String username){
+        board.setLoser(username);
     }
 
-    public void manageWinner(String userName){
-        board.setWinner(userName);
-    }
-
-    public void managePossibleActions(List<Action> possibleActions){
-        this.possibleActions = possibleActions;
+    public void manageWinner(String username){
+        board.setWinner(username);
     }
 
     @Override
@@ -99,11 +164,18 @@ public class ClientView implements Observer<ServerEvent> {
     }
 
 
+
+
+
+
+
+
+
+    //temp main and start
     public static void main(String[] args) {
         ClientView c = new ClientView();
         c.start();
     }
-
 
     public void start() {
         System.out.println("start");
@@ -122,6 +194,7 @@ public class ClientView implements Observer<ServerEvent> {
 
         ClientSocketHandler proxy = new ClientSocketHandler(socket);
         proxy.addObserver(this);
+
         this.proxy = proxy;
 
         new Thread(proxy).run();
@@ -151,6 +224,5 @@ public class ClientView implements Observer<ServerEvent> {
             proxy.sendEvent(new LoginEvent(this.username));
         }
     }
-
 
 }

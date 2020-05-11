@@ -353,6 +353,14 @@ public class Match extends Observable<ServerEvent> {
         return divinities;
     }
 
+    public List<String> getPlayersDivinitiesDescriptions() {
+        ArrayList<String> divinitiesDescriptions = new ArrayList<>();
+        for(Player p : players) {
+            divinitiesDescriptions.add(p.getDivinity().getDescription());
+        }
+        return divinitiesDescriptions;
+    }
+
     public int getCurrentPlayerId() {
         return players.indexOf(currentPlayer);
     }

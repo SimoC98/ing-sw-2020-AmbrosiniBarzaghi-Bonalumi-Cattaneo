@@ -8,6 +8,10 @@ public abstract class UI {
     ClientView clientView;
 
     //metodi to have
+    public void start() {}
+    public void login() {}
+    public void failedLogin(List<String> usernames) {}
+
     public void selectPlayersNumber() {}
     public void selectPlayableDivinities(List<String> divinitiesNames, List<String> divinitiesDescriptions, int playersNumber) {}
 

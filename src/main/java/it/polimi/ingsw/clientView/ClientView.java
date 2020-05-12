@@ -54,6 +54,13 @@ public class ClientView implements Observer<ServerEvent> {
         this.username = username;
     }
 
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
+
+    public int getUserID() {
+        return userID;
+    }
 
     /*
      *-----------------------------
@@ -63,6 +70,12 @@ public class ClientView implements Observer<ServerEvent> {
     public void loginQuestion(String username) {
         this.username = username;
         proxy.sendEvent(new LoginEvent(username));
+    }
+
+    //TEMP
+    public void loginQuestion2(int playersNumber, String username) {
+        this.username = username;
+        proxy.sendEvent(new LoginEvent(playersNumber, username));
     }
 
     //IF USERID==0
@@ -94,12 +107,14 @@ public class ClientView implements Observer<ServerEvent> {
      *      Server -> Client
      *-----------------------------
      */
-    public void manageWrongUsername(List<String> usernames) {
-        //ui.wrongUsername
+
+    public void manageLogin(int id){
+        setUserID(id);  //TEMP
+        ui.login();
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public void manageWrongUsername(List<String> usernames) {
+        ui.failedLogin(usernames);
     }
 
     public void managePlayersNumber() {
@@ -136,16 +151,29 @@ public class ClientView implements Observer<ServerEvent> {
         divinitySelectionAndWorkerPlacement(player.getDivinity(), workers.get(0).getFirst(), workers.get(0).getSecond(), workers.get(1).getFirst(), workers.get(1).getSecond());
     }
 
+    public void manageWorkersInitialPlacement() {
+        //TODO
+    }
+
+    public void managePlayersDivinities(Map<String, String> divinities) {
+        for(String player : board.getPlayersNames())
+            board.getPlayersMap().get(player).setDivinity(divinities.get(player));
+    }
+
     public void manageTextMessage(String msg) {
-        //ui.textMessage(msg);
+        ui.textMessage(msg);
     }
 
     public void manageStartTurn() {
-        //ui.startTurn();
+        ui.startTurn();
+    }
+
+    public void manageNewWorkerSelection() {
+        ui.selectWorker();
     }
 
     public void managePossibleActions(List<Action> possibleActions){
-        //ui.performAction();
+        ui.performAction(possibleActions);
     }
 
     public void manageMove(String username, int fromX, int fromY, int toX, int toY){

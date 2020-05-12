@@ -15,7 +15,7 @@ public class WorkerPlacementEvent implements ServerEvent{
 
     @Override
     public void handleEvent(ClientView clientView) {
-
+        //TODO
     }
 
     @Override

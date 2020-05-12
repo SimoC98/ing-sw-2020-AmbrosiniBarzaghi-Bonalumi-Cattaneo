@@ -5,6 +5,7 @@ import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Color;
 
 import java.lang.reflect.Array;
+import java.sql.SQLOutput;
 import java.util.*;
 
 public class CLI extends UI{
@@ -42,11 +43,65 @@ public class CLI extends UI{
      */
 
     @Override
+    public void start() {
+        System.out.println("Welcome to Santorini, please login.");
+    }
+
+//    @Override
+//    public void login() {
+//        String username;
+//        do {
+//            System.out.print("Choose your username (at least 3 characters): ");
+//            username = scanner.nextLine();
+//        }while(username.length() < 3);
+//        clientView.loginQuestion(username);
+//    }
+    @Override
+    public void login() {
+        String username;
+        do {
+            System.out.print("Choose your username (at least 3 characters): ");
+            username = scanner.nextLine();
+        }while(username.length() < 3);
+
+        if(clientView.getUserID() == 0)
+        {
+            System.out.println("You're the first logged user, so you have to choose the number of players for this match.");
+            System.out.println("You can choose between 2 and 3 players.");
+
+            int playersNumber;
+            do{
+                System.out.print("Choose: ");
+                playersNumber = scanner.nextInt();
+            }while(playersNumber < 2 || playersNumber > 3);
+            clientView.loginQuestion2(playersNumber, username);
+            return;
+        }
+
+        clientView.loginQuestion(username);
+    }
+
+
+
+    @Override
+    public void failedLogin(List<String> users) {
+        String username;
+        System.out.println("Other users are logged in, and the username you chose is not available.");
+        do {
+            System.out.println("Please avoid choosing:");
+            for(String user : users)
+                System.out.println("\t- " + user);
+            System.out.print("Choose your username (at least 3 characters): ");
+            username = scanner.nextLine();
+        }while(username.length()<3 && !users.contains(username));
+    }
+
+    @Override
     public void selectPlayersNumber() {
         System.out.println("You're the first logged user, so you have to choose the number of players for this match.");
         System.out.println("You can choose between 2 and 3 players.");
 
-        int playersNumber = 1;
+        int playersNumber;
         do{
             System.out.print("Choose: ");
             playersNumber = scanner.nextInt();
@@ -61,13 +116,12 @@ public class CLI extends UI{
         System.out.println("You must choose exactly " + playersNumber + " cards.");
         System.out.println("\n");
 
-
         List<String> playableDivinities = new ArrayList<>();
         int selection=0;
 
         while(playableDivinities.size() != playersNumber) {
             for(int i=0;i<divinitiesNames.size();i++) {
-                System.out.println(i+1 + ") " + divinitiesNames.get(i) + "\n" + divinitiesDescriptions.get(i));
+                System.out.println(i+1 + ") " + divinitiesNames.get(i) + "\t" + divinitiesDescriptions.get(i));
             }
             do {
                 System.out.print("Select #" + (playableDivinities.size()+1) + " divinity: ");
@@ -78,8 +132,9 @@ public class CLI extends UI{
             divinitiesDescriptions.remove(selection-1);
         }
 
+        System.out.print("The divinities you have chosen: ");
         for(String div : playableDivinities)
-            System.out.println(div);
+            System.out.print("\t" + div);
 
         clientView.playableDivinitiesSelection(playableDivinities);
     }
@@ -92,7 +147,7 @@ public class CLI extends UI{
                 System.out.println("\t" + (i + 1) + ") " + divinitiesNames.get(i));
             System.out.println("\t" + (divinitiesNames.size() + 1) + ") " + "See divinities descriptions");
 
-            int selection = 0;
+            int selection;
             do {
                 System.out.print("\nChoose: ");
                 selection = scanner.nextInt();
@@ -126,10 +181,10 @@ public class CLI extends UI{
 
         String selection;
         do{
-            System.out.print("\tChoose: ");
+            System.out.print("\tChoose a position: ");
             selection = scanner.nextLine().toUpperCase();
         }while(!coordinates.contains(selection));
-        x1 = Integer.parseInt(selection.substring(0,0));
+        x1 = Integer.parseInt(selection.substring(0,1));
         y1 = Integer.parseInt(selection.substring(1));
 
         player.addWorker(x1,y1);
@@ -142,7 +197,7 @@ public class CLI extends UI{
             System.out.print("\tChoose: ");
             selection = scanner.nextLine().toUpperCase();
         }while(!coordinates.contains(selection));
-        x2 = Integer.parseInt(selection.substring(0,0));
+        x2 = Integer.parseInt(selection.substring(0,1));
         y2 = Integer.parseInt(selection.substring(1));
 
         player.addWorker(x2,y2);
@@ -150,12 +205,33 @@ public class CLI extends UI{
 
     @Override
     public void textMessage(String msg) {
-        //TODO
+        System.out.println("Received text message: \"" + msg + "\"");
     }
 
     @Override
     public void selectWorker() {
-        //TODO
+        System.out.println("You have to select a worker to do an action with:");
+        int i = 0;
+        for (Pair<Integer, Integer> worker : player.getWorkers())
+            System.out.println("\t" + (i+1) + ")\t" + worker.getFirst() + ", " + worker.getSecond());
+        int selection;
+        String confirmSelection;
+
+        do {
+            do {
+                System.out.print("\nSelect: ");
+                selection = scanner.nextInt();
+            } while (selection <= 0 || selection > player.getWorkers().size());
+            System.out.println();
+
+            do {
+                System.out.print("Do you confirm? [type y or yes to confirm, n or no to deny] \t");
+                confirmSelection = scanner.nextLine();
+            } while (!confirmSelection.equals("n") && !confirmSelection.equals("no") && !confirmSelection.equals("y") && !confirmSelection.equals("yes"));
+        }while(!confirmSelection.equals("y") && !confirmSelection.equals("yes"));
+
+        Pair<Integer, Integer> selectedWorker = player.getWorkers().get(selection-1);
+        clientView.selectWorkerQuestion(selectedWorker.getFirst(), selectedWorker.getSecond());
     }
 
     @Override
@@ -165,19 +241,9 @@ public class CLI extends UI{
 
     @Override
     public void startTurn() {
-        System.out.println("It's your turn, select a worker:");
-        int i = 0;
-        for (Pair<Integer, Integer> worker : player.getWorkers())
-            System.out.println("\t" + (i+1) + ")\t" + worker.getFirst() + ", " + worker.getSecond());
-
-        int selection = 0;
-        do {
-            System.out.print("\nSelect: ");
-            selection = scanner.nextInt();
-        } while (selection <= 0 || selection > player.getWorkers().size());
-
-        Pair<Integer, Integer> selectedWorker = player.getWorkers().get(selection-1);
-        clientView.selectWorkerQuestion(selectedWorker.getFirst(), selectedWorker.getSecond());
+        System.out.println("Your turn is started!");
+        printBoard();
+        selectWorker();
     }
 
     @Override

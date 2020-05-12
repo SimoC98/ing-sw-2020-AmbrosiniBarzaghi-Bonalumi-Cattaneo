@@ -44,21 +44,13 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
         }
     }
 
-    protected void manageEvent(ClientEvent event) {
-        if(event instanceof LoginEvent) {
-            LoginEvent presentation = (LoginEvent) event;
-            login(presentation);
-        }
-        else notify(event);
-    }
 
     public void sendEvent(ServerEvent event) {
         try {
             out.writeObject(event);
-            //if(event!=null) System.out.println("not null");
             out.flush();
         } catch (Exception e) {
-            System.out.println("client disconnected exceptioon");
+            //System.out.println("client disconnected exceptioon");
             //disconnect();
         }
     }
@@ -74,21 +66,6 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
         }
     }
 
-    /*public void startPing() {
-        /*timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if(pingCounter==3) disconnect();
-                else {
-                    pingCounter++;
-                    sendEvent(new Ping());
-                }
-            }
-        },0,5000);*/
-        /*sender =  new PingManager(this);
-        sender.startPing();
-    }*/
-
     private void login(LoginEvent event) {
         synchronized (server) {
             server.loginUser(event.getPlayerNumber(),event.getUsername(),this);
@@ -101,7 +78,6 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
             if(server.isGameStarted()) {
                 System.out.println("game already started...");
                 //sender.stop();
-                //notify to virtual view disconnection event --> the game will end
                 server.disconnectAll(this);
             }
             else {

@@ -8,6 +8,7 @@ import java.util.List;
 public class DivinitiesInGameSelectionEvent implements ClientEvent {
 
     private List<String> divinities;
+    private List<String> descriptions;
 
     public DivinitiesInGameSelectionEvent(List<String> divinities) {
         this.divinities = divinities;

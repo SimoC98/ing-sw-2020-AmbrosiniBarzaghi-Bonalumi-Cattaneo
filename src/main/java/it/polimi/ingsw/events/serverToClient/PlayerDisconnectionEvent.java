@@ -13,7 +13,7 @@ public class PlayerDisconnectionEvent implements ServerEvent{
 
     @Override
     public void handleEvent(ClientView clientView) {
-
+        clientView.playerDisconnection(username);
     }
 
     @Override

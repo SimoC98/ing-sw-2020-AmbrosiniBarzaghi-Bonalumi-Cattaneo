@@ -8,7 +8,9 @@ import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Color;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ServerView extends Observable<ClientEvent> implements Observer<ServerEvent>{
 
@@ -69,8 +71,20 @@ public class ServerView extends Observable<ClientEvent> implements Observer<Serv
         sendEvent(new PlayableDivinitiesSelectionEvent(divinities));
     }
 
-    public void startGame(List<String> players, List<Color> colors, List<String> divinities, List<String> divinitiesDescriptions) {
+    /*public void startGame(List<String> players, List<Color> colors, List<String> divinities, List<String> divinitiesDescriptions) {
         sendEvent(new MatchBeginEvent(players,colors,divinities, divinitiesDescriptions));
+    }*/
+
+    public void sendGameSetupInfo(List<String> players, List<Color> colors, List<String> divinities, List<String> descriptions) {
+        sendEvent(new GameSetupEvent(players,colors,divinities,descriptions));
+    }
+
+    public void sendDivinitiesSetup(List<String> player, List<String> divinities) {
+        Map<String,String> playersDivinities = new HashMap<>();
+        for(int i=0;i<player.size();i++) {
+            playersDivinities.put(player.get(i),divinities.get(i));
+        }
+        sendEvent(new DivinitiesSetupEvent(playersDivinities));
     }
 
     private void sendEvent(ServerEvent event) {

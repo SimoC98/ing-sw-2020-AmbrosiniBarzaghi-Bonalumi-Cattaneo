@@ -27,7 +27,7 @@ public class PingManager implements Observer<ClientEvent> {
         else isNew = false;
 
         ping = true;
-        System.out.println("PING");
+        //System.out.println("PING");
 
         Timer waitPing = new Timer();
         waitPing.schedule(new TimerTask() {

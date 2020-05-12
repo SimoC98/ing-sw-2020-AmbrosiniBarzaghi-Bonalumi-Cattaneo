@@ -148,14 +148,18 @@ public class Server{
         return isGameStarted;
     }
 
-    protected void disconnectAll(ServerSocketHandler connection) {
+    protected void disconnectAll(ServerSocketHandler connection){
 
-        for(ServerSocketHandler s : loggedPlayers.keySet().stream().filter(x -> !x.equals(connection)).collect(Collectors.toList())) {
-            //s.sendEvent(new PlayerDisconnectionEvent(loggedPlayers.get(connection)));
-            //s.close();
+        for(ServerSocketHandler s : connections) {
+            s.sendEvent(new PlayerDisconnectionEvent(loggedPlayers.get(connection)));
         }
 
         System.out.println("GAME IS ENDED");
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         exit(0);
     }
 

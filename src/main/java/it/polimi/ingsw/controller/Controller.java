@@ -164,13 +164,30 @@ public class Controller implements Observer<ClientEvent> {
     }*/
 
     public void startGame(List<String> gameDivinities) {
+        List<String> allDivinities = model.getAllDivinities();
+        List<String> allDivinitiesDescription = model.getAllDivinitiesDescriptions();
         if(gameDivinities.size()==0) {
             Map<String, Divinity> divinityMap =  XMLParserUtility.getDivinities();
             model.setDivinityMap(divinityMap);
-            playersInGame.get(playersInGame.size()-1).chooseDivinitiesInGame(model.getAllDivinities(),model.getAllDivinitiesDescriptions(),playersInGame.size());
+            playersInGame.get(playersInGame.size()-1).chooseDivinitiesInGame(allDivinities,allDivinitiesDescription,playersInGame.size());
         }
         else {
             this.gameDivinities = gameDivinities;
+            List<String> descriptions = new ArrayList<>();
+            for(int i=0; i<gameDivinities.size();i++) {
+                descriptions.add(allDivinitiesDescription.get(allDivinities.indexOf(gameDivinities.get(i))));
+            }
+
+            /*
+            * send to every player:
+            * -list of players in game
+            * -list of player colors
+            * -divinities in game (random order)
+            * -divinities descriptions
+            * */
+            for(ServerView s : playersInGame) {
+                s.sendGameSetupInfo(model.getPlayersUsernames(),model.getPlayersColors(),gameDivinities,descriptions);
+            }
             playersInGame.get(0).chooseDivinity(this.gameDivinities);
         }
     }
@@ -189,7 +206,8 @@ public class Controller implements Observer<ClientEvent> {
 
             if(endInitialization) {
                 for(ServerView s : playersInGame) {
-                    s.startGame(model.getPlayersUsernames(), model.getPlayersColors(), model.getPlayersDivinities(), model.getPlayersDivinitiesDescriptions());
+                    //s.startGame(model.getPlayersUsernames(), model.getPlayersColors(), model.getPlayersDivinities(), model.getPlayersDivinitiesDescriptions());
+                    s.sendDivinitiesSetup(model.getPlayersUsernames(),model.getPlayersDivinities());
                 }
 
                 playersInGame.get(currentPlayerId).startTurn(playersUsernames.get(currentPlayerId));

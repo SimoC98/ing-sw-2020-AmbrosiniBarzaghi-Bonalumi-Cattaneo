@@ -14,7 +14,7 @@ public class LoginRequestEvent implements ServerEvent, Serializable {
 
     @Override
     public void handleEvent(ClientView clientView) {
-        clientView.login(id);
+        clientView.manageLogin(id);
     }
 
     @Override

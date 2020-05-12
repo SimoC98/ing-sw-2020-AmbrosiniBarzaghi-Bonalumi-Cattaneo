@@ -142,17 +142,20 @@ public class ClientView implements Observer<ServerEvent> {
     }
 
     public void manageChooseDivinity(List<String> availableDivinities) {
-        ui.selectDivinity(availableDivinities);
-        ui.placeWorkers();
+//        ui.selectDivinity(availableDivinities);
+//        ui.placeWorkers();
+        ui.selectDivinityAndPlaceWorkers(availableDivinities);
 
-        PlayerRepresentation player = board.getPlayersMap().get(username);
-        List<Pair<Integer, Integer>> workers = player.getWorkers();
-
-        divinitySelectionAndWorkerPlacement(player.getDivinity(), workers.get(0).getFirst(), workers.get(0).getSecond(), workers.get(1).getFirst(), workers.get(1).getSecond());
+//        PlayerRepresentation player = board.getPlayersMap().get(username);
+//        List<Pair<Integer, Integer>> workers = player.getWorkers();
+//
+//        divinitySelectionAndWorkerPlacement(player.getDivinity(), workers.get(0).getFirst(), workers.get(0).getSecond(), workers.get(1).getFirst(), workers.get(1).getSecond());
     }
 
-    public void manageWorkersInitialPlacement() {
-        //TODO
+    public void manageWorkersInitialPlacement(String username, int x1, int y1, int x2, int y2) {
+        board.getPlayersMap().get(username).addWorker(x1,y1);
+        board.getPlayersMap().get(username).addWorker(x2,y2);
+        ui.updateBoard();
     }
 
     public void managePlayersDivinities(Map<String, String> divinities) {
@@ -178,11 +181,13 @@ public class ClientView implements Observer<ServerEvent> {
 
     public void manageMove(String username, int fromX, int fromY, int toX, int toY){
         board.moveWorker(username, fromX, fromY, toX, toY);
+        ui.updateBoard();
     }
 
     //NB actually idc who built
     public void manageBuild(String playerName, int x, int y, Action action){
         board.buildTile(x, y, action);
+        ui.updateBoard();
     }
 
     public void manageLoser(String username){
@@ -191,6 +196,11 @@ public class ClientView implements Observer<ServerEvent> {
 
     public void manageWinner(String username){
         board.setWinner(username);
+    }
+
+    public void managePlayerDisconnection(String username) {
+        ui.textMessage("Internal error, game crashed, disconnecting...");
+        exit(0);
     }
 
     @Override
@@ -214,10 +224,11 @@ public class ClientView implements Observer<ServerEvent> {
 
     public void start() {
         this.ui = new CLI(this);
-        System.out.println("start");
-        System.out.println("Username?");
-        Scanner scanner = new Scanner(System.in);
-        this.username = scanner.nextLine();
+        ui.start();
+//        System.out.println("start");
+//        System.out.println("Username?");
+//        Scanner scanner = new Scanner(System.in);
+//        this.username = scanner.nextLine();
 
         Socket socket = null;
 
@@ -264,7 +275,7 @@ public class ClientView implements Observer<ServerEvent> {
         pingTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-                System.out.println("PING");
+//                System.out.println("PING");
                 proxy.sendEvent(new Ping());
             }
         },0,5000);

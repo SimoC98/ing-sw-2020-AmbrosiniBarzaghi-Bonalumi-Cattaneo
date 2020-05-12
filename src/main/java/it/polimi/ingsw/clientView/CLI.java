@@ -23,13 +23,11 @@ public class CLI extends UI{
 
     //I'm inheriting a ClientView attribute
     BoardRepresentation board;
-    PlayerRepresentation player;
     Scanner scanner;
 
     public CLI(ClientView clientView) {
         this.clientView = clientView;
         board = clientView.getBoard();
-        player = board.getPlayersMap().get(clientView.getUsername());
         scanner = new Scanner(System.in);
     }
 
@@ -44,7 +42,7 @@ public class CLI extends UI{
 
     @Override
     public void start() {
-        System.out.println("Welcome to Santorini, please login.");
+        System.out.println("Welcome to SANTORINI, please login.");
     }
 
 //    @Override
@@ -69,19 +67,22 @@ public class CLI extends UI{
             System.out.println("You're the first logged user, so you have to choose the number of players for this match.");
             System.out.println("You can choose between 2 and 3 players.");
 
-            int playersNumber;
+            String input;
+            int playersNumber = 0;
+
             do{
                 System.out.print("Choose: ");
-                playersNumber = scanner.nextInt();
-            }while(playersNumber < 2 || playersNumber > 3);
+                input = scanner.nextLine();
+                if(input.matches("[0-9]+"))
+                    playersNumber = Integer.parseInt(input);
+
+            }while(playersNumber<2 || playersNumber>3);
             clientView.loginQuestion2(playersNumber, username);
             return;
         }
 
         clientView.loginQuestion(username);
     }
-
-
 
     @Override
     public void failedLogin(List<String> users) {
@@ -94,6 +95,7 @@ public class CLI extends UI{
             System.out.print("Choose your username (at least 3 characters): ");
             username = scanner.nextLine();
         }while(username.length()<3 && !users.contains(username));
+        clientView.loginQuestion(username);
     }
 
     @Override
@@ -101,10 +103,13 @@ public class CLI extends UI{
         System.out.println("You're the first logged user, so you have to choose the number of players for this match.");
         System.out.println("You can choose between 2 and 3 players.");
 
-        int playersNumber;
+        String input;
+        int playersNumber = 0;
         do{
             System.out.print("Choose: ");
-            playersNumber = scanner.nextInt();
+            input = scanner.nextLine();
+            if(input.matches("[0-9]+"))
+                playersNumber = Integer.parseInt(input);
         }while(playersNumber < 2 || playersNumber > 3);
 
         clientView.playersNumberQuestion(playersNumber);
@@ -112,20 +117,27 @@ public class CLI extends UI{
 
     @Override
     public void selectPlayableDivinities(List<String> divinitiesNames, List<String> divinitiesDescriptions, int playersNumber) {
+        clearScreen();
         System.out.println("You're the last user logged in, so you must choose the divinities among which players will choose theirs.");
         System.out.println("You must choose exactly " + playersNumber + " cards.");
         System.out.println("\n");
 
         List<String> playableDivinities = new ArrayList<>();
-        int selection=0;
+        String input;
+        int selection = 0;
 
+        for(int i=0;i<divinitiesNames.size();i++) {
+            System.out.println(i+1 + ") " + divinitiesNames.get(i) + "\n\t" + divinitiesDescriptions.get(i));
+        }
         while(playableDivinities.size() != playersNumber) {
-            for(int i=0;i<divinitiesNames.size();i++) {
-                System.out.println(i+1 + ") " + divinitiesNames.get(i) + "\t" + divinitiesDescriptions.get(i));
-            }
             do {
                 System.out.print("Select #" + (playableDivinities.size()+1) + " divinity: ");
-                selection = scanner.nextInt();
+                input = scanner.nextLine();
+
+                //found at https://stackoverflow.com/questions/10575624/java-string-see-if-a-string-contains-only-numbers-and-not-letters
+                if(input.matches("[0-9]+"))
+                    selection = Integer.parseInt(input);
+
             } while (selection <= 0 || selection > divinitiesNames.size());
             playableDivinities.add(divinitiesNames.get(selection-1));
             divinitiesNames.remove(selection-1);
@@ -140,68 +152,133 @@ public class CLI extends UI{
     }
 
     @Override
-    public void selectDivinity(List<String> divinitiesNames) {
-        while(true) {
-            System.out.println("You have to select you divinity. Choose from:");
-            for (int i = 0; i < divinitiesNames.size(); i++)
-                System.out.println("\t" + (i + 1) + ") " + divinitiesNames.get(i));
-            System.out.println("\t" + (divinitiesNames.size() + 1) + ") " + "See divinities descriptions");
+    public void selectDivinityAndPlaceWorkers(List<String> divinitiesNames) {
+        String divinity=null;
 
-            int selection;
+        System.out.println("You have to select your divinity. Choose from:");
+        for (int i = 0; i < divinitiesNames.size(); i++)
+            System.out.println("\t" + (i + 1) + ") " + divinitiesNames.get(i));
+        System.out.println("\t" + (divinitiesNames.size() + 1) + ") " + "See divinities descriptions");
+
+
+        String input;
+        int selection = 0;
+        do {
             do {
                 System.out.print("\nChoose: ");
-                selection = scanner.nextInt();
+                input = scanner.nextLine();
+                if (input.matches("[0-9]+"))
+                    selection = Integer.parseInt(input);
             } while (selection <= 0 || selection > divinitiesNames.size() + 1);
 
-            if (selection == divinitiesNames.size() + 1)  {
+            if (selection == divinitiesNames.size() + 1)
                 printDescriptions();
-            }else{
-                board.getPlayersMap().get(clientView.getUsername()).setDivinity(divinitiesNames.get(selection));    //sets player's divinity
-                return;
-            }
-        }
-    }
+            else
+                divinity = divinitiesNames.get(selection - 1);
+        }while(divinity==null);
 
-    @Override
-    public void placeWorkers() {
+        //----------------------------------------------------------------------
+
         int x1, y1, x2, y2;
-        List<String> coordinates = Arrays.asList("A1", "A2", "A3", "A4", "A5",
-                "B1", "B2", "B3", "B4", "B5",
-                "C1", "C2", "C3", "C4", "C5",
-                "D1", "D2", "D3", "D4", "D5",
-                "E1", "E2", "E3", "E4", "E5");
 
         System.out.println("You have to choose your workers' initial position.");
         System.out.println("You must type the coordinate (E.G. A5, D2, E4) in which you want to place you workers, one at a time.");
         System.out.println("You cannot place workers on occupied tiles.");
 
-        System.out.println();
-        printBoard();
-        System.out.println();
+        System.out.println("+----+----+----+----+----+");
+        System.out.println("| A1 | A2 | A3 | A4 | A5 |");
+        System.out.println("+----+----+----+----+----+");
+        System.out.println("| B1 | B2 | B3 | B4 | B5 |");
+        System.out.println("+----+----+----+----+----+");
+        System.out.println("| C1 | C2 | C3 | C4 | C5 |");
+        System.out.println("+----+----+----+----+----+");
+        System.out.println("| D1 | D2 | D3 | D4 | D5 |");
+        System.out.println("+----+----+----+----+----+");
+        System.out.println("| E1 | E2 | E3 | E4 | E5 |");
+        System.out.println("+----+----+----+----+----+");
 
-        String selection;
-        do{
-            System.out.print("\tChoose a position: ");
-            selection = scanner.nextLine().toUpperCase();
-        }while(!coordinates.contains(selection));
-        x1 = Integer.parseInt(selection.substring(0,1));
-        y1 = Integer.parseInt(selection.substring(1));
-
-        player.addWorker(x1,y1);
-
-        System.out.println();
-        printBoard();
-        System.out.println();
 
         do{
-            System.out.print("\tChoose: ");
-            selection = scanner.nextLine().toUpperCase();
-        }while(!coordinates.contains(selection));
-        x2 = Integer.parseInt(selection.substring(0,1));
-        y2 = Integer.parseInt(selection.substring(1));
+            System.out.print("\tChoose a position for first worker: ");
+            input = scanner.nextLine().toUpperCase();
+        }while(!input.matches("[A-E][1-5]"));
+        x1 = (input.charAt(0) - 'A');
+        y1 = (input.charAt(1) - '1');
 
-        player.addWorker(x2,y2);
+        do{
+            System.out.print("\tChoose a position for second worker: ");
+            input = scanner.nextLine().toUpperCase();
+        }while(!input.matches("[A-E][1-5]"));
+        x2 = (input.charAt(0) - 'A');
+        y2 = (input.charAt(1) - '1');
+
+        clientView.divinitySelectionAndWorkerPlacement(divinity, x1, y1, x2, y2);
     }
+
+//    @Override
+//    public void selectDivinity(List<String> divinitiesNames) {
+//        clearScreen();
+//        while(true) {
+//            System.out.println("You have to select your divinity. Choose from:");
+//            for (int i = 0; i < divinitiesNames.size(); i++)
+//                System.out.println("\t" + (i + 1) + ") " + divinitiesNames.get(i));
+//            System.out.println("\t" + (divinitiesNames.size() + 1) + ") " + "See divinities descriptions");
+//
+//            String input;
+//            int selection = 0;
+//            do {
+//                System.out.print("\nChoose: ");
+//                input = scanner.nextLine();
+//                if(input.matches("[0-9]+"))
+//                    selection = Integer.parseInt(input);
+//            } while (selection <=0 || selection > divinitiesNames.size()+1);
+//
+//            if (selection == divinitiesNames.size() + 1)  {
+//                printDescriptions();
+//            }else{
+//                board.getPlayersMap().get(clientView.getUsername()).setDivinity(divinitiesNames.get(selection-1));    //sets player's divinity
+//                System.out.println(board.getPlayersMap().get(clientView.getUsername()).getDivinity());
+//                return;
+//            }
+//        }
+//    }
+//
+//    @Override
+//    public void placeWorkers() {
+//        int x1, y1, x2, y2;
+//
+//        System.out.println("You have to choose your workers' initial position.");
+//        System.out.println("You must type the coordinate (E.G. A5, D2, E4) in which you want to place you workers, one at a time.");
+//        System.out.println("You cannot place workers on occupied tiles.");
+//
+//        System.out.println();
+//        printBoard();
+//        System.out.println();
+//
+//        String selection;
+//        do{
+//            System.out.print("\tChoose a position: ");
+//            selection = scanner.nextLine().toUpperCase();
+//        }while(!selection.matches("[A-E][1-5]"));
+//        x1 = (selection.charAt(0) - 'A');
+//        y1 = (selection.charAt(1) - '1');
+//
+////        PlayerRepresentation player = board.getPlayersMap().get(clientView.getUsername());
+////        player.addWorker(x1,y1);
+//
+//        System.out.println();
+//        printBoard();
+//        System.out.println();
+//
+//        do{
+//            System.out.print("\tChoose: ");
+//            selection = scanner.nextLine().toUpperCase();
+//        }while(!selection.matches("[A-E][1-5]"));
+//        x2 = (selection.charAt(0) - 'A');
+//        y2 = (selection.charAt(1) - '1');
+//
+////        player.addWorker(x2,y2);
+//    }
 
     @Override
     public void textMessage(String msg) {
@@ -211,24 +288,31 @@ public class CLI extends UI{
     @Override
     public void selectWorker() {
         System.out.println("You have to select a worker to do an action with:");
+        PlayerRepresentation player = board.getPlayersMap().get(clientView.getUsername());
+        //TODO: convert coordinates of worker from 0,1 to -> A2 ecc...
         int i = 0;
-        for (Pair<Integer, Integer> worker : player.getWorkers())
+        for (Pair<Integer, Integer> worker : player.getWorkers()){
             System.out.println("\t" + (i+1) + ")\t" + worker.getFirst() + ", " + worker.getSecond());
-        int selection;
-        String confirmSelection;
+            i++;
+        }
+
+        String input;
+        int selection = 0;
 
         do {
             do {
                 System.out.print("\nSelect: ");
-                selection = scanner.nextInt();
-            } while (selection <= 0 || selection > player.getWorkers().size());
+                input = scanner.nextLine();
+                if(input.matches("[0-9]+"))
+                    selection = Integer.parseInt(input);
+            } while(selection <= 0 || selection > player.getWorkers().size());
             System.out.println();
 
             do {
                 System.out.print("Do you confirm? [type y or yes to confirm, n or no to deny] \t");
-                confirmSelection = scanner.nextLine();
-            } while (!confirmSelection.equals("n") && !confirmSelection.equals("no") && !confirmSelection.equals("y") && !confirmSelection.equals("yes"));
-        }while(!confirmSelection.equals("y") && !confirmSelection.equals("yes"));
+                input = scanner.nextLine().toLowerCase();
+            } while (!input.matches("[yn]|(yes)|(no)"));
+        }while(!input.matches("y|(yes)"));
 
         Pair<Integer, Integer> selectedWorker = player.getWorkers().get(selection-1);
         clientView.selectWorkerQuestion(selectedWorker.getFirst(), selectedWorker.getSecond());
@@ -265,15 +349,18 @@ public class CLI extends UI{
                 System.out.println("\t" + (i + 1) + ") " + divNames.get(i));
 
             int selection = -1;
+            String input;
             do {
                 System.out.print("Choose: ");
-                selection = scanner.nextInt();
-            } while (selection < 0 || selection > divNames.size() + 1);
+                input = scanner.nextLine();
+                if(input.matches("[0-9]+"))
+                    selection = Integer.parseInt(input);
+            } while (selection < 0 || selection > divNames.size());
 
             if (selection == 0)
                 return;
             else
-                System.out.println("\t" + divDescriptions.get(divNames.get(selection)) + "\n");
+                System.out.println("\t" + divDescriptions.get(divNames.get(selection-1)) + "\n");
         }
     }
 
@@ -331,6 +418,11 @@ public class CLI extends UI{
         }
         //fifth and last line
         System.out.println("\t" + "+-------+-------+-------+-------+-------+");
+    }
+
+    public static void clearScreen() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 
 

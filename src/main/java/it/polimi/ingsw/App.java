@@ -7,6 +7,7 @@ import it.polimi.ingsw.serverView.View;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Hello world!
@@ -16,32 +17,54 @@ public class App
 {
 
     public static void main(String[] args) {
-        List<String> players = new ArrayList<>();
-        players.add("simone");
-        players.add("riccardo");
+        Scanner scanner = new Scanner(System.in);
+//        System.out.print("Write: ");
+        String input;
+        do {
+            input = scanner.nextLine().toLowerCase();
+            if (input.matches("[yn]|(yes)|(no)"))
+                System.out.println("Bravo");
+            else
+                System.out.println("gne");
 
-        Match match = new Match(players);
-
-        match.getBoard().getTile(0,1).setDome();
-        match.getBoard().getTile(1,0).setDome();
-
-        //Game game = new Game(match);
-        View view = new View();
-        //Controller controller = new Controller(match,view);
-        match.setDivinityMap(XMLParserUtility.getDivinities());
-
-        //view.addObserver(controller);
-
-
-        try {
-            match.playerInitialization(1,1,2,2,"Minotaur");
-            match.playerInitialization(3,3,2,4,"Human");
-        } catch (WorkerBadPlacementException e) {
-            System.out.println("error");
-        }
-        view.startTurn("simone");
-
+//            do{
+//                System.out.print("Choose a position: ");
+//                input = scanner.nextLine().toUpperCase();
+//            }while(!input.matches("[A-E][1-5]"));
+//            int x1 = (input.charAt(0) - 'A');
+//            int y1 = (input.charAt(1) - '1');
+//
+//            System.out.println(x1 + ", " + y1);
+        }while(!input.equals("yes"));
     }
+
+//    public static void main(String[] args) {
+//        List<String> players = new ArrayList<>();
+//        players.add("simone");
+//        players.add("riccardo");
+//
+//        Match match = new Match(players);
+//
+//        match.getBoard().getTile(0,1).setDome();
+//        match.getBoard().getTile(1,0).setDome();
+//
+//        //Game game = new Game(match);
+//        View view = new View();
+//        //Controller controller = new Controller(match,view);
+//        match.setDivinityMap(XMLParserUtility.getDivinities());
+//
+//        //view.addObserver(controller);
+//
+//
+//        try {
+//            match.playerInitialization(1,1,2,2,"Minotaur");
+//            match.playerInitialization(3,3,2,4,"Human");
+//        } catch (WorkerBadPlacementException e) {
+//            System.out.println("error");
+//        }
+//        view.startTurn("simone");
+//
+//    }
 
  /*   public static void main( String[] args )
     {

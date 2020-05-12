@@ -169,7 +169,7 @@ public class Controller implements Observer<ClientEvent> {
         if(gameDivinities.size()==0) {
             Map<String, Divinity> divinityMap =  XMLParserUtility.getDivinities();
             model.setDivinityMap(divinityMap);
-            playersInGame.get(playersInGame.size()-1).chooseDivinitiesInGame(allDivinities,allDivinitiesDescription,playersInGame.size());
+            playersInGame.get(playersInGame.size()-1).chooseDivinitiesInGame(model.getAllDivinities(),model.getAllDivinitiesDescriptions(),playersInGame.size());
         }
         else {
             this.gameDivinities = gameDivinities;

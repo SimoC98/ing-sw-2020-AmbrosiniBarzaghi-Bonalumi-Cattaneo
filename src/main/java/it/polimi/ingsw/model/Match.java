@@ -308,7 +308,7 @@ public class Match extends Observable<ServerEvent> {
         placeWorkers(x1,y1,x2,y2);
         loadPlayerDivinity(divName);
 
-        notify(new WorkerPlacementEvent(x1,y1,x2,y2));
+        notify(new WorkerPlacementEvent(currentPlayer.getUsername(),x1,y1,x2,y2));
 
         int index = players.indexOf(currentPlayer) + 1;
         if(index==players.size()) startNextTurn();

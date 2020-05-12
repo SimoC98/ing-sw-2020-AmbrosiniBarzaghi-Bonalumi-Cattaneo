@@ -15,8 +15,9 @@ public abstract class UI {
     public void selectPlayersNumber() {}
     public void selectPlayableDivinities(List<String> divinitiesNames, List<String> divinitiesDescriptions, int playersNumber) {}
 
-    public void selectDivinity(List<String> divinitiesNames) {}
-    public void placeWorkers() {}
+//    public void selectDivinity(List<String> divinitiesNames) {}
+//    public void placeWorkers() {}
+    public void selectDivinityAndPlaceWorkers(List<String> divinityNames) {}
 
     public void updateBoard() {}
     public void textMessage(String msg) {}

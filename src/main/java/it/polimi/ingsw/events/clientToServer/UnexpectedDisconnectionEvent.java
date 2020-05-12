@@ -1,7 +1,7 @@
 package it.polimi.ingsw.events.clientToServer;
 
 import it.polimi.ingsw.controller.Controller;
-import it.polimi.ingsw.serverView.PingSender;
+import it.polimi.ingsw.serverView.PingManager;
 
 public class UnexpectedDisconnectionEvent implements ClientEvent {
 
@@ -17,7 +17,7 @@ public class UnexpectedDisconnectionEvent implements ClientEvent {
     }
 
     @Override
-    public void handleEvent(PingSender pingSender) {
+    public void handleEvent(PingManager pingSender) {
         return;
     }
 }

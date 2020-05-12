@@ -2,10 +2,9 @@ package it.polimi.ingsw.clientView;
 
 import it.polimi.ingsw.Observable;
 import it.polimi.ingsw.events.clientToServer.ClientEvent;
+import it.polimi.ingsw.events.clientToServer.LoginEvent;
 import it.polimi.ingsw.events.serverToClient.Disconnect;
 import it.polimi.ingsw.events.serverToClient.ServerEvent;
-import it.polimi.ingsw.serverView.PingSender;
-import it.polimi.ingsw.serverView.Server;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -14,13 +13,14 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class ClientSocketHandler extends Observable<ServerEvent> implements Runnable {
 
     Socket socket;
     private ObjectInputStream in;
     private ObjectOutputStream out;
+    private Runnable r;
+    private PingReceiver pinger;
 
     public ClientSocketHandler(){
         try {
@@ -32,6 +32,7 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
             e.printStackTrace();
         }
     }
+
 
     public ClientSocketHandler(Socket socket) {
         this.socket = socket;
@@ -49,7 +50,7 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
         this.in = tempin;
         this.out = tempout;
 
-        PingReceiver ping = new PingReceiver(this);
+       // pinger = new PingReceiver(this);
     }
 
 
@@ -60,14 +61,13 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
         try {
             while(true) {
                 ServerEvent event = (ServerEvent) in.readObject();
-                //System.out.println("received event...");
 
                 if(event != null) {
-                    //System.out.println("event not null");
-                    ServerEvent finalEvent = event;
-                    new Thread(()->{
-                        receiveEvent(finalEvent);
-                    }).run();
+                    notify(event);
+
+                   /* new Thread(()->{
+                        receiveEvent(event);
+                    }).start();*/
                     //notify(event);
                 }
                 else {
@@ -75,9 +75,12 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
                 }
             }
         } catch(Exception e) {
+            System.out.print("exception");
+            e.printStackTrace();
 
             notify(new Disconnect());
         }
+
 
     }
 
@@ -95,6 +98,7 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
 
 
     private void receiveEvent(ServerEvent event) {
+
         notify(event);
     }
 

@@ -59,16 +59,23 @@ public class CLI extends UI{
     public void selectPlayableDivinities(List<String> divinitiesNames, List<String> divinitiesDescriptions, int playersNumber) {
         System.out.println("You're the last user logged in, so you must choose the divinities among which players will choose theirs.");
         System.out.println("You must choose exactly " + playersNumber + " cards.");
+        System.out.println("\n");
+
 
         List<String> playableDivinities = new ArrayList<>();
-        int selection=0, sel2=0, sel3=0;
+        int selection=0;
 
         while(playableDivinities.size() != playersNumber) {
+            for(int i=0;i<divinitiesNames.size();i++) {
+                System.out.println(i+1 + ") " + divinitiesNames.get(i) + "\n" + divinitiesDescriptions.get(i));
+            }
             do {
-                System.out.print("Select #" + (playableDivinities.size()+1) + "divinity: ");
+                System.out.print("Select #" + (playableDivinities.size()+1) + " divinity: ");
                 selection = scanner.nextInt();
             } while (selection <= 0 || selection > divinitiesNames.size());
-            playableDivinities.remove(selection);
+            playableDivinities.add(divinitiesNames.get(selection-1));
+            divinitiesNames.remove(selection-1);
+            divinitiesDescriptions.remove(selection-1);
         }
 
         for(String div : playableDivinities)

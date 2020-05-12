@@ -2,7 +2,7 @@ package it.polimi.ingsw.events.clientToServer;
 
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.Action;
-import it.polimi.ingsw.serverView.PingSender;
+import it.polimi.ingsw.serverView.PingManager;
 
 public class EndTurnQuestionEvent implements ClientEvent {
     private Action action;
@@ -21,7 +21,7 @@ public class EndTurnQuestionEvent implements ClientEvent {
     }
 
     @Override
-    public void handleEvent(PingSender pingSender) {
+    public void handleEvent(PingManager pingSender) {
         return;
     }
 }

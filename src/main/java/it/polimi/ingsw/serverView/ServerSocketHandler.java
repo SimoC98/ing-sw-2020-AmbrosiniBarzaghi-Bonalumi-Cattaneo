@@ -5,7 +5,6 @@ import it.polimi.ingsw.events.clientToServer.LoginEvent;
 import it.polimi.ingsw.events.serverToClient.ServerEvent;
 import it.polimi.ingsw.events.clientToServer.ClientEvent;
 
-import javax.swing.plaf.TableHeaderUI;
 import java.io.*;
 import java.net.Socket;
 
@@ -14,11 +13,12 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
     private Server server;
     private ObjectInputStream in;
     private ObjectOutputStream out;
-    private PingSender sender;
+    private PingManager sender;
 
     public ServerSocketHandler(Socket socket, Server server) {
         this.socket = socket;
         this.server = server;
+        sender = new PingManager(this);
 
         try {
             in = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
@@ -33,24 +33,18 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
         try {
             while(true) {
                 ClientEvent event = (ClientEvent) in.readObject();
-                Runnable r = () -> {
-                    manageEvent(event);
-                };
-                new Thread(r).start();
-
-
-                /*if(event instanceof LoginEvent) {
+                if(event instanceof LoginEvent) {
                     LoginEvent presentation = (LoginEvent) event;
                     login(presentation);
                 }
-                else notify(event);*/
+                else notify(event);
             }
         }catch (Exception e) {
             //
         }
     }
 
-    private void manageEvent(ClientEvent event) {
+    protected void manageEvent(ClientEvent event) {
         if(event instanceof LoginEvent) {
             LoginEvent presentation = (LoginEvent) event;
             login(presentation);
@@ -62,10 +56,10 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
         try {
             out.writeObject(event);
             //if(event!=null) System.out.println("not null");
-            //out.flush();
+            out.flush();
         } catch (Exception e) {
-            System.out.println("client disconnected");
-            disconnect();
+            System.out.println("client disconnected exceptioon");
+            //disconnect();
         }
     }
 
@@ -80,7 +74,7 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
         }
     }
 
-    public void startPing() {
+    /*public void startPing() {
         /*timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -91,9 +85,9 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
                 }
             }
         },0,5000);*/
-        sender =  new PingSender(this);
+        /*sender =  new PingManager(this);
         sender.startPing();
-    }
+    }*/
 
     private void login(LoginEvent event) {
         synchronized (server) {
@@ -106,12 +100,13 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
         synchronized (server) {
             if(server.isGameStarted()) {
                 System.out.println("game already started...");
-                sender.stop();
+                //sender.stop();
                 //notify to virtual view disconnection event --> the game will end
+                server.disconnectAll(this);
             }
             else {
                 System.out.println("game not already started...");
-                sender.stop();
+                //sender.stop();
                 server.deregisterConnection(this);
             }
         }

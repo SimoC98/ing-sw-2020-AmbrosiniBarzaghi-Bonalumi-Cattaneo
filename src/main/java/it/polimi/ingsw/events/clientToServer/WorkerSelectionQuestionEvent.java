@@ -1,7 +1,7 @@
 package it.polimi.ingsw.events.clientToServer;
 
 import it.polimi.ingsw.controller.Controller;
-import it.polimi.ingsw.serverView.PingSender;
+import it.polimi.ingsw.serverView.PingManager;
 
 public class WorkerSelectionQuestionEvent implements ClientEvent {
     private int x;
@@ -18,7 +18,7 @@ public class WorkerSelectionQuestionEvent implements ClientEvent {
     }
 
     @Override
-    public void handleEvent(PingSender pingSender) {
+    public void handleEvent(PingManager pingSender) {
         return;
     }
 }

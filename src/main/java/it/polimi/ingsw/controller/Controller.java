@@ -16,6 +16,11 @@ import java.util.List;
 import java.util.Map;
 
 public class Controller implements Observer<ClientEvent> {
+
+    private final static String invalidMove = "ERROR! -> YOU CAN'T MOVE HERE!";
+    private final static String invalidBuild = "ERROR! -> YOU CAN'T BUILD HERE!";
+    //other error messages
+
     private Match model;
     private List<ServerView> playersInGame;
     private List<String> playersUsernames;
@@ -132,13 +137,14 @@ public class Controller implements Observer<ClientEvent> {
         }
     }
 
-    public void disconnectPlayer(String playerName) {
+    //probably not necessary
+    /*public void disconnectPlayer(String playerName) {
         for(ServerView s : playersInGame) {
             if(!s.getUsername().equals(playerName)) s.playerDisconnection(playerName);
             s.disconnect();
         }
         //model.setLoser(playerName);
-    }
+    }*/
 
     public void handleUnexpectedDisconnection(String playerName) {
         model.setLoser(playerName);
@@ -150,6 +156,7 @@ public class Controller implements Observer<ClientEvent> {
         }
     }
 
+    //probably not necessary
     /*public void endGame(int winner) {
         String winnerUsername = model.getPlayers().get(winner).getUsername();
         //view.endGame(winnerUsername);
@@ -172,14 +179,15 @@ public class Controller implements Observer<ClientEvent> {
         boolean endInitialization=false;
         if(gameDivinities.size()==1) endInitialization=true;
 
+        currentPlayerId = model.getCurrentPlayerId();
+
         try {
             model.playerInitialization(x1,y1,x2,y2,chosenDivinity);
+            currentPlayerId = model.getCurrentPlayerId();
 
             gameDivinities.remove(chosenDivinity);
 
             if(endInitialization) {
-                currentPlayerId = model.getCurrentPlayerId();
-
                 for(ServerView s : playersInGame) {
                     s.startGame(model.getPlayersUsernames(), model.getPlayersColors(), model.getPlayersDivinities(), model.getPlayersDivinitiesDescriptions());
                 }
@@ -187,12 +195,12 @@ public class Controller implements Observer<ClientEvent> {
                 playersInGame.get(currentPlayerId).startTurn(playersUsernames.get(currentPlayerId));
             }
             else {
-                int i = playersInGame.size() - gameDivinities.size();
-                playersInGame.get(i).chooseDivinity(gameDivinities);
+                playersInGame.get(currentPlayerId).chooseDivinity(gameDivinities);
             }
 
         } catch (WorkerBadPlacementException e) {
-            //
+            playersInGame.get(currentPlayerId).showMessage("error");
+            playersInGame.get(currentPlayerId).chooseDivinity(gameDivinities);
         }
 
     }

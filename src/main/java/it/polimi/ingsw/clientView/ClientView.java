@@ -9,10 +9,7 @@ import it.polimi.ingsw.model.Color;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 import static java.lang.System.exit;
 
@@ -23,16 +20,19 @@ public class ClientView implements Observer<ServerEvent> {
     private UI ui;
     private String username;
     private int userID;
+    private Timer pingTimer;
 
     public ClientView(){
 //        proxy = new ClientSocketHandler();
         board = new BoardRepresentation();
         username = null;
         userID = -1;      //may become userID but we have no method to tell for now
+        pingTimer = new Timer();
     }
 
     public ClientView(UI ui){
 //        proxy = new ClientSocketHandler();
+        pingTimer = new Timer();
         board = new BoardRepresentation();
         this.ui = ui;
         username = null;
@@ -185,6 +185,7 @@ public class ClientView implements Observer<ServerEvent> {
     }
 
     public void start() {
+        this.ui = new CLI(this);
         System.out.println("start");
         System.out.println("Username?");
         Scanner scanner = new Scanner(System.in);
@@ -230,6 +231,16 @@ public class ClientView implements Observer<ServerEvent> {
         else {
             proxy.sendEvent(new LoginEvent(this.username));
         }
+
+
+        pingTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("PING");
+                proxy.sendEvent(new Ping());
+            }
+        },0,5000);
+
     }
 
 

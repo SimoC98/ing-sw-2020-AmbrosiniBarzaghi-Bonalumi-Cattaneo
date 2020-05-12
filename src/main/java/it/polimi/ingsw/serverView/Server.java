@@ -1,16 +1,16 @@
 package it.polimi.ingsw.serverView;
 
 import it.polimi.ingsw.controller.Controller;
-import it.polimi.ingsw.events.serverToClient.Disconnect;
-import it.polimi.ingsw.events.serverToClient.InvalidUsernameEvent;
-import it.polimi.ingsw.events.serverToClient.LobbyFullEvent;
-import it.polimi.ingsw.events.serverToClient.LoginRequestEvent;
+import it.polimi.ingsw.events.serverToClient.*;
 import it.polimi.ingsw.model.Match;
 
 import java.net.*;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
+
+import static java.lang.System.exit;
 
 public class Server{
     private int port;
@@ -59,7 +59,7 @@ public class Server{
                    }
                    playerId++;
                    //registerConnection(connection);
-                   connection.startPing();
+                   //connection.startPing();
                }
                else if(isLobbyFull()) {
                    System.out.println("lobby full");
@@ -71,7 +71,7 @@ public class Server{
                    connection.sendEvent(new LoginRequestEvent(playerId));
                    playerId++;
                    //registerConnection(connection);
-                   connection.startPing();
+                   //connection.startPing();
                }
            }
         } catch (Exception e) {
@@ -101,9 +101,11 @@ public class Server{
             playerGameNumber = playerNumber;
             System.out.println("player numbers chosen: " + playerNumber);
         }
-        else if(loggedPlayers.containsKey(username)) {
+        else if(loggedPlayers.values().contains(username)) {
             List<String> loggedUsernames = new ArrayList<>(loggedPlayers.values());
             connection.sendEvent(new InvalidUsernameEvent(loggedUsernames));
+            System.out.print("USERNAME NOT AVAILABLE");
+            return;
         }
 
         loggedPlayers.put(connection,username);
@@ -111,7 +113,7 @@ public class Server{
 
 
         if(loggedPlayers.keySet().size()==playerGameNumber) {
-            System.out.println("GAME START");
+            System.out.println("GAME START\n");
             isGameStarted=true;
 
             List<ServerView> users = new ArrayList<>();
@@ -120,9 +122,7 @@ public class Server{
                 users.add(newUser);
             }
 
-            Collection<String> c = loggedPlayers.values();
-            ArrayList<String> l = new ArrayList<>(c);
-            Match match = new Match(l);
+            Match match = new Match(new ArrayList<>(loggedPlayers.values()));
             Controller controller = new Controller(match,users);
 
             for(ServerView s : users) {
@@ -130,20 +130,33 @@ public class Server{
                 match.addObserver(s);
             }
 
-            //controller.startGame();
+            controller.startGame(new ArrayList<String>());
 
         }
     }
 
     private void printUsers() {
-        System.out.println("\nlogged players: ");
-        for(ServerSocketHandler s : loggedPlayers.keySet()) {
+        System.out.println("\nLOGGED PLAYERS: ");
+        /*for(ServerSocketHandler s : loggedPlayers.keySet()) {
             System.out.println(loggedPlayers.get(s));
-        }
+        }*/
+        loggedPlayers.values().forEach(x -> System.out.println(x));
+        System.out.println("\n");
     }
 
     public boolean isGameStarted() {
         return isGameStarted;
+    }
+
+    protected void disconnectAll(ServerSocketHandler connection) {
+
+        for(ServerSocketHandler s : loggedPlayers.keySet().stream().filter(x -> !x.equals(connection)).collect(Collectors.toList())) {
+            //s.sendEvent(new PlayerDisconnectionEvent(loggedPlayers.get(connection)));
+            //s.close();
+        }
+
+        System.out.println("GAME IS ENDED");
+        exit(0);
     }
 
 

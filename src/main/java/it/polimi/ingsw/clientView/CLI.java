@@ -1,6 +1,7 @@
 package it.polimi.ingsw.clientView;
 
 import it.polimi.ingsw.Pair;
+import it.polimi.ingsw.events.clientToServer.Ping;
 import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Color;
 
@@ -25,7 +26,10 @@ public class CLI extends UI{
     BoardRepresentation board;
     Scanner scanner;
 
+    private Object lock;
+
     public CLI(ClientView clientView) {
+        lock = new Object();
         this.clientView = clientView;
         board = clientView.getBoard();
         scanner = new Scanner(System.in);
@@ -78,10 +82,13 @@ public class CLI extends UI{
 
             }while(playersNumber<2 || playersNumber>3);
             clientView.loginQuestion2(playersNumber, username);
+            clientView.startPing();
             return;
         }
 
         clientView.loginQuestion(username);
+        clientView.startPing();
+
     }
 
     @Override
@@ -153,66 +160,73 @@ public class CLI extends UI{
 
     @Override
     public void selectDivinityAndPlaceWorkers(List<String> divinitiesNames) {
-        String divinity=null;
+        synchronized (lock) {
+            String divinity=null;
 
-        System.out.println("You have to select your divinity. Choose from:");
-        for (int i = 0; i < divinitiesNames.size(); i++)
-            System.out.println("\t" + (i + 1) + ") " + divinitiesNames.get(i));
-        System.out.println("\t" + (divinitiesNames.size() + 1) + ") " + "See divinities descriptions");
+            System.out.println("You have to select your divinity. Choose from:");
+            for (int i = 0; i < divinitiesNames.size(); i++)
+                System.out.println("\t" + (i + 1) + ") " + divinitiesNames.get(i));
+            System.out.println("\t" + (divinitiesNames.size() + 1) + ") " + "See divinities descriptions");
 
 
-        String input;
-        int selection = 0;
-        do {
+            String input;
+            int selection = 0;
             do {
-                System.out.print("\nChoose: ");
-                input = scanner.nextLine();
-                if (input.matches("[0-9]+"))
-                    selection = Integer.parseInt(input);
-            } while (selection <= 0 || selection > divinitiesNames.size() + 1);
+                do {
+                    System.out.print("\nChoose: ");
+                    input = scanner.nextLine();
+                    if (input.matches("[0-9]+"))
+                        selection = Integer.parseInt(input);
+                } while (selection <= 0 || selection > divinitiesNames.size() + 1);
 
-            if (selection == divinitiesNames.size() + 1)
-                printDescriptions();
-            else
-                divinity = divinitiesNames.get(selection - 1);
-        }while(divinity==null);
+                if (selection == divinitiesNames.size() + 1)
+                    printDescriptions();
+                else
+                    divinity = divinitiesNames.get(selection - 1);
+            }while(divinity==null);
 
-        //----------------------------------------------------------------------
+            //----------------------------------------------------------------------
 
-        int x1, y1, x2, y2;
+            int x1, y1, x2, y2;
 
-        System.out.println("You have to choose your workers' initial position.");
-        System.out.println("You must type the coordinate (E.G. A5, D2, E4) in which you want to place you workers, one at a time.");
-        System.out.println("You cannot place workers on occupied tiles.");
+            System.out.println("You have to choose your workers' initial position.");
+            System.out.println("You must type the coordinate (E.G. A5, D2, E4) in which you want to place you workers, one at a time.");
+            System.out.println("You cannot place workers on occupied tiles.");
 
-        System.out.println("+----+----+----+----+----+");
-        System.out.println("| A1 | A2 | A3 | A4 | A5 |");
-        System.out.println("+----+----+----+----+----+");
-        System.out.println("| B1 | B2 | B3 | B4 | B5 |");
-        System.out.println("+----+----+----+----+----+");
-        System.out.println("| C1 | C2 | C3 | C4 | C5 |");
-        System.out.println("+----+----+----+----+----+");
-        System.out.println("| D1 | D2 | D3 | D4 | D5 |");
-        System.out.println("+----+----+----+----+----+");
-        System.out.println("| E1 | E2 | E3 | E4 | E5 |");
-        System.out.println("+----+----+----+----+----+");
+            System.out.println("+----+----+----+----+----+");
+            System.out.println("| A1 | A2 | A3 | A4 | A5 |");
+            System.out.println("+----+----+----+----+----+");
+            System.out.println("| B1 | B2 | B3 | B4 | B5 |");
+            System.out.println("+----+----+----+----+----+");
+            System.out.println("| C1 | C2 | C3 | C4 | C5 |");
+            System.out.println("+----+----+----+----+----+");
+            System.out.println("| D1 | D2 | D3 | D4 | D5 |");
+            System.out.println("+----+----+----+----+----+");
+            System.out.println("| E1 | E2 | E3 | E4 | E5 |");
+            System.out.println("+----+----+----+----+----+");
 
 
-        do{
-            System.out.print("\tChoose a position for first worker: ");
-            input = scanner.nextLine().toUpperCase();
-        }while(!input.matches("[A-E][1-5]"));
-        x1 = (input.charAt(0) - 'A');
-        y1 = (input.charAt(1) - '1');
+            do{
+                System.out.print("\tChoose a position for first worker: ");
+                input = scanner.nextLine().toUpperCase();
+            }while(!input.matches("[A-E][1-5]"));
+            x1 = (input.charAt(0) - 'A');
+            y1 = (input.charAt(1) - '1');
 
-        do{
-            System.out.print("\tChoose a position for second worker: ");
-            input = scanner.nextLine().toUpperCase();
-        }while(!input.matches("[A-E][1-5]"));
-        x2 = (input.charAt(0) - 'A');
-        y2 = (input.charAt(1) - '1');
+            do{
+                System.out.print("\tChoose a position for second worker: ");
+                input = scanner.nextLine().toUpperCase();
+            }while(!input.matches("[A-E][1-5]"));
+            x2 = (input.charAt(0) - 'A');
+            y2 = (input.charAt(1) - '1');
 
-        clientView.divinitySelectionAndWorkerPlacement(divinity, x1, y1, x2, y2);
+            clientView.divinitySelectionAndWorkerPlacement(divinity, x1, y1, x2, y2);
+        }
+
+
+
+
+
     }
 
 //    @Override
@@ -365,59 +379,65 @@ public class CLI extends UI{
     }
 
     public void printBoard(){
-        int [][]map = this.board.getBoard();
-        char yCoordinate = 'A';
+        synchronized (lock) {
+            int [][]map = this.board.getBoard();
+            char yCoordinate = 'A';
 
-        //coordinates line
-        System.out.println("\t" + "    1       2       3       4       5    ");
+            //coordinates line
+            System.out.println("\t" + "    1       2       3       4       5    ");
 
-        for(int i=0; i<board.boardDimension; i++){
-            //first line
-            System.out.println("\t" + "+-------+-------+-------+-------+-------+");
+            for(int i=0; i<board.boardDimension; i++){
+                //first line
+                System.out.println("\t" + "+-------+-------+-------+-------+-------+");
 
-            //second line and board height
-            System.out.print("\t");
-            for(int j=0; j<board.boardDimension; j++) {
-                System.out.print("|");
-                if(map[i][j] == 4 )
-                    System.out.print(ANSI_PURPLE + "D" + ANSI_RESET);
-                else
-                    System.out.print(ANSI_PURPLE + map[i][j] + ANSI_RESET);
-                System.out.print("      ");
-            }
-            System.out.println("|");
-
-            //third line and worker position
-            System.out.print((yCoordinate++) + "\t");
-            for(int j=0; j<board.boardDimension; j++) {
-                System.out.print("|   ");
-                Color worker = board.isThereAWorker(i, j);
-                if(worker == null)
-                    System.out.print(" ");
-                else {
-                    switch (worker) {
-                        case CREAM:
-                            System.out.print(ANSI_YELLOW + "W" + ANSI_RESET);
-                            break;
-
-                        case BLUE:
-                            System.out.print(ANSI_BLUE + "W" + ANSI_RESET);
-                            break;
-
-                        case WHITE:
-                            System.out.print(ANSI_WHITE + "W" + ANSI_RESET);
-                    }
+                //second line and board height
+                System.out.print("\t");
+                for(int j=0; j<board.boardDimension; j++) {
+                    System.out.print("|");
+                    if(map[i][j] == 4 )
+                        System.out.print(ANSI_PURPLE + "D" + ANSI_RESET);
+                    else
+                        System.out.print(ANSI_PURPLE + map[i][j] + ANSI_RESET);
+                    System.out.print("      ");
                 }
-                System.out.print("   ");
+                System.out.println("|");
+
+                //third line and worker position
+                System.out.print((yCoordinate++) + "\t");
+                for(int j=0; j<board.boardDimension; j++) {
+                    System.out.print("|   ");
+                    Color worker = board.isThereAWorker(i, j);
+                    if(worker == null)
+                        System.out.print(" ");
+                    else {
+                        switch (worker) {
+                            case CREAM:
+                                System.out.print(ANSI_YELLOW + "W" + ANSI_RESET);
+                                break;
+
+                            case BLUE:
+                                System.out.print(ANSI_BLUE + "W" + ANSI_RESET);
+                                break;
+
+                            case WHITE:
+                                System.out.print(ANSI_WHITE + "W" + ANSI_RESET);
+                        }
+                    }
+                    System.out.print("   ");
+                }
+                System.out.println("|");
+
+                //fourth line
+                System.out.println("\t" + "|       |       |       |       |       |");
+
             }
-            System.out.println("|");
-
-            //fourth line
-            System.out.println("\t" + "|       |       |       |       |       |");
-
+            //fifth and last line
+            System.out.println("\t" + "+-------+-------+-------+-------+-------+");
         }
-        //fifth and last line
-        System.out.println("\t" + "+-------+-------+-------+-------+-------+");
+
+
+
+
     }
 
     public static void clearScreen() {

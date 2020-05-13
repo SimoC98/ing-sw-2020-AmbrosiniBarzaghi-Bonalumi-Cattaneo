@@ -45,7 +45,7 @@ public class PingManager implements Observer<ClientEvent> {
                 }
                 else ping = false;
             }
-        },10000);
+        },20000);
     }
 
     /*public void startPing() {

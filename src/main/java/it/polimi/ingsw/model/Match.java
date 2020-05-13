@@ -129,8 +129,9 @@ public class Match extends Observable<ServerEvent> {
      * @throws InvalidWorkerSelectionException thrown whether the worker is not in the specified position, the worker does not belong to the current player or such worker has no available moves
      */
     public void selectWorker(int x, int y) throws InvalidWorkerSelectionException{
-        if (board.getTile(x,y).isOccupied() && board.getTile(x, y).getWorker().getPlayer().equals(currentPlayer) && board.getAvailableMoveTiles(board.getTile(x,y).getWorker()).size()>0)
+        if (board.getTile(x,y).isOccupied() && board.getTile(x, y).getWorker().getPlayer().equals(currentPlayer) && board.getAvailableMoveTiles(board.getTile(x,y).getWorker()).size()>0) {
             selectedWorker = board.getTile(x, y).getWorker();
+        }
         else throw new InvalidWorkerSelectionException();
     }
 

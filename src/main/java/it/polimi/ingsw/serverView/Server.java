@@ -117,12 +117,17 @@ public class Server{
             isGameStarted=true;
 
             List<ServerView> users = new ArrayList<>();
+            List<String> players = new ArrayList<>();
+
             for(ServerSocketHandler s : connections) {
                 ServerView newUser = new ServerView(loggedPlayers.get(s), s);
+                players.add(loggedPlayers.get(s));
                 users.add(newUser);
             }
 
-            Match match = new Match(new ArrayList<>(loggedPlayers.values()));
+
+            //Match match = new Match(new ArrayList<>(loggedPlayers.values()));
+            Match match = new Match(players);
             Controller controller = new Controller(match,users);
 
             for(ServerView s : users) {

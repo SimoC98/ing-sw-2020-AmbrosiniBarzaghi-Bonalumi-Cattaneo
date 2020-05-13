@@ -213,7 +213,7 @@ public class Controller implements Observer<ClientEvent> {
                 playersInGame.get(currentPlayerId).startTurn(playersUsernames.get(currentPlayerId));
             }
             else {
-                playersInGame.get(currentPlayerId).chooseDivinity(gameDivinities);
+                playersInGame.get(currentPlayerId).chooseDivinity(new ArrayList<>(gameDivinities));
             }
 
         } catch (WorkerBadPlacementException e) {

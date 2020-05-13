@@ -23,7 +23,7 @@ public class ClientView implements Observer<ServerEvent> {
     private Timer pingTimer;
 
     public ClientView(){
-//        proxy = new ClientSocketHandler();
+//       proxy = new ClientSocketHandler();
         board = new BoardRepresentation();
         username = null;
         userID = -1;      //may become userID but we have no method to tell for now
@@ -244,8 +244,18 @@ public class ClientView implements Observer<ServerEvent> {
 
         this.proxy = proxy;
 
-        new Thread(proxy).run();
+        new Thread(proxy).start();
 
+    }
+
+    protected void startPing() {
+        pingTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                //System.out.println("ping");
+                proxy.sendEvent(new Ping());
+            }
+        },0,5000);
 
     }
 

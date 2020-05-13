@@ -192,10 +192,12 @@ public class ClientView implements Observer<ServerEvent> {
 
     public void manageLoser(String username){
         board.setLoser(username);
+        ui.loser(username);
     }
 
     public void manageWinner(String username){
         board.setWinner(username);
+        ui.winner(username);
     }
 
     public void managePlayerDisconnection(String username) {

@@ -22,7 +22,7 @@ public class App
         String input;
         do {
             input = scanner.nextLine().toLowerCase();
-            if (input.matches("[yn]|(yes)|(no)"))
+            if (input.matches("[mbde]"))
                 System.out.println("Bravo");
             else
                 System.out.println("gne");
@@ -35,7 +35,7 @@ public class App
 //            int y1 = (input.charAt(1) - '1');
 //
 //            System.out.println(x1 + ", " + y1);
-        }while(!input.equals("yes"));
+        }while(!input.equals("d"));
     }
 
 //    public static void main(String[] args) {

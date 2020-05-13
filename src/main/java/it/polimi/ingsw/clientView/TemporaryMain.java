@@ -7,7 +7,7 @@ public class TemporaryMain {
 
         CLI cli = new CLI(view);
 
-        cli.printBoard();
+        cli.updateBoard();
 
 
 

@@ -25,4 +25,7 @@ public abstract class UI {
     public void startTurn() {}
     public void selectWorker() {}
     public void performAction(List<Action> possibleActions) {}
+
+    public void loser(String username) {}
+    public void winner(String username) {}
 }

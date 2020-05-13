@@ -26,7 +26,7 @@ public class CLI extends UI{
     BoardRepresentation board;
     Scanner scanner;
 
-    private Object lock;
+    private final Object lock;
 
     public CLI(ClientView clientView) {
         lock = new Object();
@@ -122,6 +122,7 @@ public class CLI extends UI{
         clientView.playersNumberQuestion(playersNumber);
     }
 
+    //TODO: print once and don't remove div from names list OR re print the list every time
     @Override
     public void selectPlayableDivinities(List<String> divinitiesNames, List<String> divinitiesDescriptions, int playersNumber) {
         clearScreen();
@@ -141,7 +142,7 @@ public class CLI extends UI{
                 System.out.print("Select #" + (playableDivinities.size()+1) + " divinity: ");
                 input = scanner.nextLine();
 
-                //found at https://stackoverflow.com/questions/10575624/java-string-see-if-a-string-contains-only-numbers-and-not-letters
+                //next line found at https://stackoverflow.com/questions/10575624/java-string-see-if-a-string-contains-only-numbers-and-not-letters
                 if(input.matches("[0-9]+"))
                     selection = Integer.parseInt(input);
 
@@ -266,7 +267,7 @@ public class CLI extends UI{
 //        System.out.println("You cannot place workers on occupied tiles.");
 //
 //        System.out.println();
-//        printBoard();
+//        updateBoard();
 //        System.out.println();
 //
 //        String selection;
@@ -281,7 +282,7 @@ public class CLI extends UI{
 ////        player.addWorker(x1,y1);
 //
 //        System.out.println();
-//        printBoard();
+//        updateBoard();
 //        System.out.println();
 //
 //        do{
@@ -300,13 +301,20 @@ public class CLI extends UI{
     }
 
     @Override
+    public void startTurn() {
+        System.out.println("Your turn is started!");
+        updateBoard();
+        selectWorker();
+    }
+
+    @Override
     public void selectWorker() {
         System.out.println("You have to select a worker to do an action with:");
         PlayerRepresentation player = board.getPlayersMap().get(clientView.getUsername());
-        //TODO: convert coordinates of worker from 0,1 to -> A2 ecc...
+
         int i = 0;
         for (Pair<Integer, Integer> worker : player.getWorkers()){
-            System.out.println("\t" + (i+1) + ")\t" + worker.getFirst() + ", " + worker.getSecond());
+            System.out.println("\t" + (i+1) + ")\t" + (char)('A' + worker.getFirst()) + ", " + (char)('1' + worker.getSecond()));
             i++;
         }
 
@@ -334,51 +342,99 @@ public class CLI extends UI{
 
     @Override
     public void performAction(List<Action> possibleActions) {
-        //TODO
+        //print list of possible Actions, send AskActionEvent
+        System.out.println("Now you have to select the action you want your worker to perform.");
+        updateBoard();
+        System.out.println("Here are you available actions:");
+
+        for(Action action : possibleActions) {
+            switch(action) {
+                case MOVE:
+                    System.out.println("\tm) Move worker");
+                    break;
+
+                case BUILD:
+                    System.out.println("\tb) Build a level on a tile (dome if already level 3)");
+                    break;
+
+                case BUILDDOME:
+                    System.out.println("\td) Build a dome at any level on a tile");
+                    break;
+
+                case END:
+                    System.out.println("\te) End your turn without further do");
+            }
+        }
+
+        System.out.println();
+
+        String inputAction;
+        do{
+            System.out.print("Choose: ");
+            inputAction = scanner.nextLine().toLowerCase();
+        }while(!inputAction.matches("[mbde]"));
+
+        Action action;
+        switch(inputAction) {
+            case "m":
+                action = Action.MOVE;
+                break;
+
+            case "b":
+                action = Action.BUILD;
+                break;
+
+            case "d":
+                action = Action.BUILDDOME;
+                break;
+
+            default:
+                action = Action.END;
+            }
+
+        String inputTile;
+        int x=-1, y=-1;
+        if(!inputAction.equals("e")) {
+            do {
+                if (inputAction.equals("m"))
+                    System.out.print("Choose the tile to move to: ");
+                else
+                    System.out.print("Choose the tile to build on: ");
+                inputTile = scanner.nextLine().toUpperCase();
+            } while(!inputTile.matches("[A-E][1-5]"));
+            x = inputTile.charAt(0) - 'A';
+            y = inputTile.charAt(0) - '1';
+        }
+
+        clientView.actionQuestion(action, x, y);
     }
 
     @Override
-    public void startTurn() {
-        System.out.println("Your turn is started!");
-        printBoard();
-        selectWorker();
+    public void loser(String username) {
+        if(clientView.getUsername().equals(username)) {
+            System.out.println("You lost! Fs in the chat");
+            for(int i=0; i<10; i++)
+                System.out.println("F");
+        }else{
+            System.out.println("\n" + username + " has lost!");
+        }
+    }
+
+    @Override
+    public void winner(String username) {
+        if(clientView.getUsername().equals(username)){
+            System.out.println("\n-----------------------------------------");
+            System.out.println("    Congratulation, you won the game!");
+            System.out.println("-----------------------------------------");
+        }else{
+            System.out.println("\n" + username + " won! This means you lost, Fs in the chat");
+            for(int i=0; i<10; i++)
+                System.out.println("F");
+        }
     }
 
     @Override
     public void updateBoard() {
-        printBoard();
-    }
-
-    private void printDescriptions() {
-        Map<String, String> divDescriptions = board.getDivinities();
-        List<String> divNames = new ArrayList<>(divDescriptions.keySet());
-
-        System.out.println("\nHere you can read the descriptions of the divinities use in this match.");
-
-        while(true) {
-            System.out.println("Choose the divinity which you want to read the description:");
-
-            System.out.println("\t0) Quit");
-            for (int i = 0; i < divNames.size(); i++)
-                System.out.println("\t" + (i + 1) + ") " + divNames.get(i));
-
-            int selection = -1;
-            String input;
-            do {
-                System.out.print("Choose: ");
-                input = scanner.nextLine();
-                if(input.matches("[0-9]+"))
-                    selection = Integer.parseInt(input);
-            } while (selection < 0 || selection > divNames.size());
-
-            if (selection == 0)
-                return;
-            else
-                System.out.println("\t" + divDescriptions.get(divNames.get(selection-1)) + "\n");
-        }
-    }
-
-    public void printBoard(){
         synchronized (lock) {
             int [][]map = this.board.getBoard();
             char yCoordinate = 'A';
@@ -434,17 +490,39 @@ public class CLI extends UI{
             //fifth and last line
             System.out.println("\t" + "+-------+-------+-------+-------+-------+");
         }
+    }
 
+    private void printDescriptions() {
+        Map<String, String> divDescriptions = board.getDivinities();
+        List<String> divNames = new ArrayList<>(divDescriptions.keySet());
 
+        System.out.println("\nHere you can read the descriptions of the divinities use in this match.");
 
+        while(true) {
+            System.out.println("Choose the divinity which you want to read the description:");
 
+            System.out.println("\t0) Quit");
+            for (int i = 0; i < divNames.size(); i++)
+                System.out.println("\t" + (i + 1) + ") " + divNames.get(i));
+
+            int selection = -1;
+            String input;
+            do {
+                System.out.print("Choose: ");
+                input = scanner.nextLine();
+                if(input.matches("[0-9]+"))
+                    selection = Integer.parseInt(input);
+            } while (selection < 0 || selection > divNames.size());
+
+            if (selection == 0)
+                return;
+            else
+                System.out.println("\t" + divDescriptions.get(divNames.get(selection-1)) + "\n");
+        }
     }
 
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
-
-
-
 }

@@ -3,6 +3,7 @@ package it.polimi.ingsw.clientView;
 import it.polimi.ingsw.Observable;
 import it.polimi.ingsw.events.clientToServer.ClientEvent;
 import it.polimi.ingsw.events.clientToServer.LoginEvent;
+import it.polimi.ingsw.events.clientToServer.Ping;
 import it.polimi.ingsw.events.serverToClient.Disconnect;
 import it.polimi.ingsw.events.serverToClient.ServerEvent;
 import org.w3c.dom.Document;
@@ -31,6 +32,7 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
         } catch (IOException e) {
             e.printStackTrace();
         }
+        pinger = new PingReceiver(this);
     }
 
 
@@ -50,7 +52,7 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
         this.in = tempin;
         this.out = tempout;
 
-       // pinger = new PingReceiver(this);
+        pinger = new PingReceiver(this);
     }
 
 

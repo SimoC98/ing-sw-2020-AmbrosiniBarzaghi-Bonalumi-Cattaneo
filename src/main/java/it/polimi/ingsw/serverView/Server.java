@@ -42,8 +42,10 @@ public class Server{
                System.out.println("accepted" + socket.getInetAddress());
                ServerSocketHandler connection = new ServerSocketHandler(socket,this);
                executor.submit(connection);
-               registerConnection(connection);
+               //registerConnection(connection);
 
+
+               //ask to the first user connected username and player's number and wait his answer
                if(playerId==0) {
                    connection.sendEvent(new LoginRequestEvent(playerId));
                    int cont=0;
@@ -61,11 +63,11 @@ public class Server{
                    //registerConnection(connection);
                    //connection.startPing();
                }
-               else if(isLobbyFull()) {
+               /*else if(isLobbyFull()) {
                    System.out.println("lobby full");
                    connection.sendEvent(new LobbyFullEvent());
                    connection.close();
-               }
+               }*/
                else {
                    System.out.println("player id" + playerId);
                    connection.sendEvent(new LoginRequestEvent(playerId));
@@ -91,9 +93,13 @@ public class Server{
         printUsers();
     }
 
-    public synchronized boolean isLobbyFull() throws InterruptedException {
-        //Thread.sleep(1000);
-        return (playerGameNumber!=-1 && connections.size()>playerGameNumber);
+    public synchronized boolean isLobbyFull()  {
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return (isGameStarted);
     }
 
     public synchronized void loginUser(int playerNumber, String username, ServerSocketHandler connection) {
@@ -107,8 +113,21 @@ public class Server{
             System.out.print("USERNAME NOT AVAILABLE");
             return;
         }
+        else if(isLobbyFull()) {
+            System.out.println("lobby full");
+            connection.sendEvent(new LobbyFullEvent());
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            connection.close();
+            return;
+        }
 
+        registerConnection(connection);
         loggedPlayers.put(connection,username);
+        connection.startPing();
         printUsers();
 
 

@@ -59,7 +59,7 @@ public class Player {
     }
 
     /**
-     * Assigns a divinity to a player. It is invoked by {@link Match#loadDivinity(String)}
+     * Assigns a divinity to a player. It is invoked by
      * passing the divinity's name.
      */
     public void setDivinity(Divinity newDivinity) {

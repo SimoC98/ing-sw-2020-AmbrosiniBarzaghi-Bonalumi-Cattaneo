@@ -2,6 +2,7 @@ package it.polimi.ingsw.clientView;
 
 import it.polimi.ingsw.Observer;
 
+import it.polimi.ingsw.events.clientToServer.Ping;
 import it.polimi.ingsw.events.serverToClient.ServerEvent;
 
 import java.util.Timer;
@@ -16,10 +17,9 @@ public class PingReceiver implements Observer<ServerEvent> {
     }
 
 
-    /*public void receivePing() {
-        System.out.println("PING");
-        connection.sendEvent(new Pong());
-    }*/
+    public void receivePing() {
+        connection.sendEvent(new Ping());
+    }
 
 
     @Override

@@ -218,7 +218,7 @@ public class Controller implements Observer<ClientEvent> {
 
         } catch (WorkerBadPlacementException e) {
             playersInGame.get(currentPlayerId).showMessage("error");
-            playersInGame.get(currentPlayerId).chooseDivinity(gameDivinities);
+            playersInGame.get(currentPlayerId).chooseDivinity(new ArrayList<>(gameDivinities));
         }
 
     }

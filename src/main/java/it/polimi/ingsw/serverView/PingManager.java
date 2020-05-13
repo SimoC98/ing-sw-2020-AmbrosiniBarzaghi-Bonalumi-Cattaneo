@@ -2,6 +2,7 @@ package it.polimi.ingsw.serverView;
 
 import it.polimi.ingsw.Observer;
 import it.polimi.ingsw.events.clientToServer.ClientEvent;
+import it.polimi.ingsw.events.serverToClient.Pong;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -10,17 +11,21 @@ public class PingManager implements Observer<ClientEvent> {
     private ServerSocketHandler connection;
     private boolean ping;
     private boolean isNew = true;
-    private Timer timer;
+    private Timer pinger;
+    private Timer waitNextPing;
     private TimerTask task;
 
     public PingManager(ServerSocketHandler connection) {
         this.connection = connection;
         connection.addObserver(this);
         ping = true;
-        timer = new Timer();
     }
 
-    public void receivePing() {
+
+    /**
+     * METODO FUNZIONANTE
+     */
+    /*public void receivePing() {
         if(!isNew) {
             timer.cancel();
         }
@@ -46,28 +51,34 @@ public class PingManager implements Observer<ClientEvent> {
                 else ping = false;
             }
         },20000);
+    }*/
+
+
+    public void receivePing() {
+        ping = true;
+
     }
 
-    /*public void startPing() {
-        System.out.println("start timer");
-        timer.schedule(new TimerTask() {
+
+
+    public void startPing() {
+        pinger = new Timer();
+        task = new TimerTask() {
             @Override
             public void run() {
-                /*if(pingCounter==3) {
-                    System.out.println("ping timeout");
-                    timer.cancel();
-                    connection.disconnect();
-                }
+                if(ping==false) connection.disconnect();
                 else {
-                    pingCounter++;
-                    //System.out.println("ping");
-                    connection.sendEvent(new Ping());
-                }*/
-    //connection.sendEvent(new Ping());
+                    ping = false;
+                    connection.sendEvent(new Pong());
+                    System.out.print("ping");
+                }
+            }
+        };
 
-            /*}
-        },0,5000);
-    }*/
+        //8 sec to receive pong
+        pinger.schedule(task,0,5000);
+
+    }
 
 
     /*public void startPing() {
@@ -86,7 +97,7 @@ public class PingManager implements Observer<ClientEvent> {
 
 
     public void stop() {
-        timer.cancel();
+        //timer.cancel();
     }
 
     @Override

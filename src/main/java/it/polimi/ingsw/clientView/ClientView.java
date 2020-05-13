@@ -249,13 +249,13 @@ public class ClientView implements Observer<ServerEvent> {
     }
 
     protected void startPing() {
-        pingTimer.schedule(new TimerTask() {
+        /*pingTimer.schedule(new TimerTask() {
             @Override
             public void run() {
                 //System.out.println("ping");
                 proxy.sendEvent(new Ping());
             }
-        },0,5000);
+        },2000);*/
 
     }
 

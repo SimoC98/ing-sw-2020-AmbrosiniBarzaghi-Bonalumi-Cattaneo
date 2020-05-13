@@ -2,6 +2,7 @@ package it.polimi.ingsw.serverView;
 
 import it.polimi.ingsw.Observable;
 import it.polimi.ingsw.events.clientToServer.LoginEvent;
+import it.polimi.ingsw.events.serverToClient.Pong;
 import it.polimi.ingsw.events.serverToClient.ServerEvent;
 import it.polimi.ingsw.events.clientToServer.ClientEvent;
 
@@ -33,6 +34,7 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
         try {
             while(true) {
                 ClientEvent event = (ClientEvent) in.readObject();
+                if(event instanceof Pong) System.out.print("pong received");
                 if(event instanceof LoginEvent) {
                     LoginEvent presentation = (LoginEvent) event;
                     login(presentation);
@@ -57,8 +59,9 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
 
     public void close() {
         try {
-            in.close();
-            out.close();
+            //in.close();
+            //out.close();
+            Thread.currentThread().interrupt();
             socket.close();
             server.deregisterConnection(this);
         } catch (IOException e) {
@@ -86,6 +89,10 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
                 server.deregisterConnection(this);
             }
         }
+    }
+
+    public void startPing() {
+        sender.startPing();
     }
 
 }

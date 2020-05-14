@@ -22,6 +22,8 @@ public class ClientView implements Observer<ServerEvent> {
     private int userID;
     private Timer pingTimer;
 
+    private Object lock = new Object();
+
     public ClientView(){
 //       proxy = new ClientSocketHandler();
         board = new BoardRepresentation();
@@ -207,7 +209,11 @@ public class ClientView implements Observer<ServerEvent> {
 
     @Override
     public void update(ServerEvent event) {
-        event.handleEvent(this);
+
+        synchronized (lock) {
+            event.handleEvent(this);
+        }
+
     }
 
 

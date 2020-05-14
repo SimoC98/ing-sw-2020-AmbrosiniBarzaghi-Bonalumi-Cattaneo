@@ -44,11 +44,20 @@ public class Controller implements Observer<ClientEvent> {
     public void handleActionValidation(Action action, int x, int y) {
         try {
             model.setAction(action);
-            switch(action.name()) {
-                case "MOVE": handleMove(x,y);
-                case "BUILD": handleBuild(x,y);
-                case "BUILDDOME": handleBuild(x,y);
-                case "END": handleStartNextTurn();
+            switch(action) {
+                case MOVE:  {
+                    handleMove(x,y);
+                    break;
+                }
+                case BUILD:
+                case BUILDDOME: {
+                    handleBuild(x,y);
+                    break;
+                }
+                case END: {
+                    handleStartNextTurn();
+                    break;
+                }
             }
         } catch (InvalidActionException e) {
             playersInGame.get(currentPlayerId).showMessage("error");

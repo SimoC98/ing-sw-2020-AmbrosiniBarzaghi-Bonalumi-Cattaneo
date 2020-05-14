@@ -70,7 +70,7 @@ public class PingManager implements Observer<ClientEvent> {
                 else {
                     ping = false;
                     connection.sendEvent(new Pong());
-                    System.out.print("ping");
+                    //System.out.print("ping");
                 }
             }
         };

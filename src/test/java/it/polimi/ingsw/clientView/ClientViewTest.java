@@ -35,7 +35,7 @@ class ClientViewTest {
 
         cli.updateBoard();
 
-        cv.update(new MoveEvent(myUser, new Tile(1,2), new Tile(1,1)));
+        //cv.update(new MoveEvent(myUser, new Tile(1,2), new Tile(1,1)));
         cv.update(new BuildEvent(myUser, Action.BUILD, new Tile(1,2)));
 
         System.out.println("\n\n\n");

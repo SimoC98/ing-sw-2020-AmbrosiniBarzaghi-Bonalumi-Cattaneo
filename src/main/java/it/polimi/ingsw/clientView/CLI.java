@@ -393,7 +393,7 @@ public class CLI extends UI{
             }
 
         String inputTile;
-        int x=-1, y=-1;
+        int x=-1,y=-1;
         if(!inputAction.equals("e")) {
             do {
                 if (inputAction.equals("m"))
@@ -402,8 +402,8 @@ public class CLI extends UI{
                     System.out.print("Choose the tile to build on: ");
                 inputTile = scanner.nextLine().toUpperCase();
             } while(!inputTile.matches("[A-E][1-5]"));
-            x = inputTile.charAt(0) - 'A';
-            y = inputTile.charAt(0) - '1';
+            x = (inputTile.charAt(0) - 'A');
+            y = (inputTile.charAt(1) - '1');
         }
 
         clientView.actionQuestion(action, x, y);

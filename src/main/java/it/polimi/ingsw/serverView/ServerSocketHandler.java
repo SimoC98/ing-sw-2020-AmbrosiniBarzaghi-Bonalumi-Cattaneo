@@ -10,11 +10,19 @@ import java.io.*;
 import java.net.Socket;
 
 public class ServerSocketHandler extends Observable<ClientEvent> implements Runnable {
+
+    //sync between instances
+    private static final Object lock = new Object();
+
     private Socket socket;
     private Server server;
     private ObjectInputStream in;
     private ObjectOutputStream out;
+
+    //maybe reference is not necessary
     private PingManager sender;
+
+
 
     public ServerSocketHandler(Socket socket, Server server) {
         this.socket = socket;
@@ -52,7 +60,7 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
             out.writeObject(event);
             out.flush();
         } catch (Exception e) {
-            //System.out.println("client disconnected exceptioon");
+            System.out.println("client disconnected exceptioon");
             //disconnect();
         }
     }
@@ -70,14 +78,14 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
     }
 
     private void login(LoginEvent event) {
-        synchronized (server) {
+        synchronized (lock) {
             server.loginUser(event.getPlayerNumber(),event.getUsername(),this);
         }
     }
 
     protected void disconnect() {
         System.out.println("disconnection");
-        synchronized (server) {
+        synchronized (lock) {
             if(server.isGameStarted()) {
                 System.out.println("game already started...");
                 //sender.stop();

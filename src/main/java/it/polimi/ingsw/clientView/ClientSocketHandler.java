@@ -64,20 +64,13 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
             while(true) {
                 ServerEvent event = (ServerEvent) in.readObject();
 
-                if(event != null) {
-                    //notify(event);
-
-                   new Thread(()->{
-                        receiveEvent(event);
-                    }).start();
-                    //notify(event);
-                }
-                else {
-                    System.out.println("null event");
-                }
+                new Thread(()->{
+                    receiveEvent(event);
+                }).start();
+                //notify(event);
             }
         } catch(Exception e) {
-            System.out.print("exception");
+            //System.out.print("exception");
             e.printStackTrace();
 
             //notify(new Disconnect());

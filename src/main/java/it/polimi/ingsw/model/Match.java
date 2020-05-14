@@ -269,7 +269,7 @@ public class Match extends Observable<ServerEvent> {
         Tile t = board.getTile(x,y);
         Tile startTile = selectedWorker.getPositionOnBoard();
         if( t != null && currentPlayer.move(board,selectedWorker,t)){
-            notify(new MoveEvent(currentPlayer.getUsername(),startTile,t));
+            notify(new MoveEvent(startTile.getX(),startTile.getY(),t.getX(),t.getY(),currentPlayer.getUsername()));
         }
         else throw new InvalidMoveException();
     }

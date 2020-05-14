@@ -150,6 +150,9 @@ public class CLI extends UI{
             playableDivinities.add(divinitiesNames.get(selection-1));
             divinitiesNames.remove(selection-1);
             divinitiesDescriptions.remove(selection-1);
+            if (playableDivinities.size() != playersNumber)
+                for(int i=0;i<divinitiesNames.size();i++)
+                    System.out.println(i+1 + ") " + divinitiesNames.get(i) + "\n\t" + divinitiesDescriptions.get(i));
         }
 
         System.out.print("The divinities you have chosen: ");

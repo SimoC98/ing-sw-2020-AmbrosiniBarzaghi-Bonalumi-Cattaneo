@@ -79,7 +79,9 @@ public class Controller implements Observer<ClientEvent> {
     public void handleMove(int x, int y) {
         try {
             model.move(x,y);
-            //Thread.sleep(100);
+
+            //momentaneo --> perchè possibleActionEvent arriva prima a volte??
+            Thread.sleep(100);
 
             int winner = model.checkWinner();
             if(winner>=0) {
@@ -87,9 +89,11 @@ public class Controller implements Observer<ClientEvent> {
                 return;
             }
             else nextActionHandler();
-        } catch (InvalidMoveException e) {
+        } catch (InvalidMoveException e1) {
             playersInGame.get(currentPlayerId).showMessage("error");
             nextActionHandler();
+        } catch (InterruptedException e2) {
+            e2.printStackTrace();
         }
     }
 
@@ -97,14 +101,18 @@ public class Controller implements Observer<ClientEvent> {
         try {
             model.build(x,y);
 
+            Thread.sleep(100);
+
             int winner = model.checkWinner();
             if(winner>=0) {
                 //disconnect all
             }
             else nextActionHandler();
-        } catch (InvalidBuildException e) {
+        } catch (InvalidBuildException e1) {
             playersInGame.get(currentPlayerId).showMessage("error");
             nextActionHandler();
+        } catch (InterruptedException e2) {
+            e2.printStackTrace();
         }
     }
 

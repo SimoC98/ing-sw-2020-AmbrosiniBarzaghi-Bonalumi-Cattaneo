@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.cards;
 
+import it.polimi.ingsw.Pair;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.exceptions.InvalidMoveException;
 import it.polimi.ingsw.model.update.MoveUpdate;
@@ -33,22 +34,23 @@ public class SwapWithOpponent extends MoveOnOpponent {
     public List<MoveUpdate> move(Board board, Worker selectedWorker, Tile selectedTile) {
         if (selectedTile.getWorker() != null) {
             List<MoveUpdate> ret = new ArrayList<>();
-            List<Tile> modifiedTiles = new ArrayList<>();
+            //List<Tile> modifiedTiles = new ArrayList<>();
+            List<Pair<Integer,Integer>> modifiedTiles = new ArrayList<>();
 
             Worker opponentWorker = selectedTile.getWorker();
             Tile myActualTile = selectedWorker.getPositionOnBoard();
 
             //first moveUpdate --> opponentWorker from his tile to selectedWorker tile
-            modifiedTiles.add(selectedTile);
-            modifiedTiles.add(selectedWorker.getPositionOnBoard());
+            modifiedTiles.add(new Pair<>(selectedTile.getX(),selectedTile.getY()));
+            modifiedTiles.add(new Pair<>(selectedWorker.getPositionOnBoard().getX(),selectedWorker.getPositionOnBoard().getY()));
             ret.add(new MoveUpdate(opponentWorker,new ArrayList<>(modifiedTiles)));
 
             modifiedTiles.clear();
             selectedTile.free();
 
             //second moveUpdate --> selectedWorker from his tile to selectedTile
-            modifiedTiles.add(selectedWorker.getPositionOnBoard());
-            modifiedTiles.add(selectedTile);
+            modifiedTiles.add(new Pair<>(selectedWorker.getPositionOnBoard().getX(),selectedWorker.getPositionOnBoard().getY()));
+            modifiedTiles.add(new Pair<>(selectedTile.getX(),selectedTile.getY()));
             try {
                 selectedWorker.move(selectedTile);
             } catch (InvalidMoveException e) {

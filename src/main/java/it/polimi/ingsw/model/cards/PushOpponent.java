@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model.cards;
 
+import it.polimi.ingsw.Pair;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.update.MoveUpdate;
 
@@ -61,14 +62,15 @@ public class PushOpponent extends MoveOnOpponent {
         int dy = selectedTile.getY() - selectedWorker.getPositionOnBoard().getY();
 
         List<MoveUpdate> ret = new ArrayList<>();
-        List<Tile> modifiedTiles = new ArrayList<>();
+        //List<Tile> modifiedTiles = new ArrayList<>();
+        List<Pair<Integer,Integer>> modifiedTiles = new ArrayList<>();
         MoveUpdate update = null;
 
         if(selectedTile.isOccupied()) {
             Tile pushOpponentTile = board.getTile(selectedTile.getX()+dx,selectedTile.getY()+dy);
 
-            modifiedTiles.add(selectedTile);
-            modifiedTiles.add(pushOpponentTile);
+            modifiedTiles.add(new Pair<>(selectedTile.getX(),selectedTile.getY()));
+            modifiedTiles.add(new Pair<>(pushOpponentTile.getX(),pushOpponentTile.getY()));
             update = new MoveUpdate(selectedTile.getWorker(),new ArrayList<>(modifiedTiles));
 
             pushOpponentTile.setWorker(selectedTile.getWorker());

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.Observable;
+import it.polimi.ingsw.Pair;
 import it.polimi.ingsw.events.serverToClient.*;
 import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.model.update.MoveUpdate;
@@ -273,11 +274,10 @@ public class Match extends Observable<ServerEvent> {
             List<MoveUpdate> updates = currentPlayer.getMoveUpdates();
 
             for(int i=0;i<updates.size();i++) {
-                Worker w = updates.get(i).getWorker();
-                Tile from = updates.get(i).getModifiedTiles().get(0);
-                Tile to = updates.get(i).getModifiedTiles().get(1);
+                Pair<Integer,Integer> from = updates.get(i).getModifiedTiles().get(0);
+                Pair<Integer,Integer> to = updates.get(i).getModifiedTiles().get(1);
 
-                notify(new MoveEvent(from.getX(),from.getY(),to.getX(),to.getY(),w.getPlayer().getUsername()));
+                notify(new MoveEvent(from.getFirst(),from.getSecond(),to.getFirst(),to.getSecond(),updates.get(i).getWorker().getPlayer().getUsername()));
             }
 
             //notify(new MoveEvent(startTile.getX(),startTile.getY(),t.getX(),t.getY(),currentPlayer.getUsername()));

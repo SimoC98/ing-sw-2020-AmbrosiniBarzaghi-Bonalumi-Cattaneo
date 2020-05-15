@@ -3,6 +3,7 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.Observable;
 import it.polimi.ingsw.events.serverToClient.*;
 import it.polimi.ingsw.model.exceptions.*;
+import it.polimi.ingsw.model.update.MoveUpdate;
 
 
 import java.util.ArrayList;
@@ -269,7 +270,17 @@ public class Match extends Observable<ServerEvent> {
         Tile t = board.getTile(x,y);
         Tile startTile = selectedWorker.getPositionOnBoard();
         if( t != null && currentPlayer.move(board,selectedWorker,t)){
-            notify(new MoveEvent(startTile.getX(),startTile.getY(),t.getX(),t.getY(),currentPlayer.getUsername()));
+            List<MoveUpdate> updates = currentPlayer.getMoveUpdates();
+
+            for(int i=0;i<updates.size();i++) {
+                Worker w = updates.get(i).getWorker();
+                Tile from = updates.get(i).getModifiedTiles().get(0);
+                Tile to = updates.get(i).getModifiedTiles().get(1);
+
+                notify(new MoveEvent(from.getX(),from.getY(),to.getX(),to.getY(),w.getPlayer().getUsername()));
+            }
+
+            //notify(new MoveEvent(startTile.getX(),startTile.getY(),t.getX(),t.getY(),currentPlayer.getUsername()));
         }
         else throw new InvalidMoveException();
     }

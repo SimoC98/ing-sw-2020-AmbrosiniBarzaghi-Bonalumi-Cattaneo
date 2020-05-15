@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.update.MoveUpdate;
 
 
 import java.util.ArrayList;
@@ -29,11 +30,11 @@ public class SetEffectOnOpponent extends DivinityDecoratorWithEffects {
      * with a class that blocks their ascension
      */
     @Override
-    public void move(Board board,Worker selectedWorker, Tile selectedTile) {
+    public List<MoveUpdate> move(Board board, Worker selectedWorker, Tile selectedTile) {
         if(selectedTile.getLevel()== 1 + selectedWorker.getPositionOnBoard().getLevel()) {
             hasMovedUp = true;
         }
-        super.move(board,selectedWorker, selectedTile);
+        return super.move(board,selectedWorker, selectedTile);
     }
 
 

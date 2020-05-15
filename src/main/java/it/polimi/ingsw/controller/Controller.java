@@ -79,6 +79,7 @@ public class Controller implements Observer<ClientEvent> {
     public void handleMove(int x, int y) {
         try {
             model.move(x,y);
+            //Thread.sleep(100);
 
             int winner = model.checkWinner();
             if(winner>=0) {

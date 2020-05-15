@@ -212,7 +212,6 @@ public class ClientView implements Observer<ServerEvent> {
 
     @Override
     public void update(ServerEvent event) {
-
         synchronized (lock) {
             event.handleEvent(this);
         }

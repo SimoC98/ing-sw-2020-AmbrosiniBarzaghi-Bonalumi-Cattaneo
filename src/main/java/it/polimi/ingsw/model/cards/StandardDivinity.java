@@ -3,7 +3,9 @@ package it.polimi.ingsw.model.cards;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.exceptions.InvalidBuildException;
 import it.polimi.ingsw.model.exceptions.InvalidMoveException;
+import it.polimi.ingsw.model.update.MoveUpdate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -48,12 +50,22 @@ public class StandardDivinity implements Divinity {
      * Throws {@link InvalidMoveException} if the move was not valid
      */
     @Override
-    public void move(Board board,Worker selectedWorker, Tile selectedTile) {
+    public List<MoveUpdate> move(Board board, Worker selectedWorker, Tile selectedTile) {
+        List<MoveUpdate> ret = ret = new ArrayList<>();
+        List<Tile> modifiedTiles = new ArrayList<>();
+
         try {
+            modifiedTiles.add(selectedWorker.getPositionOnBoard());
+            modifiedTiles.add(selectedTile);
+            ret.add(new MoveUpdate(selectedWorker,modifiedTiles));
+
             selectedWorker.move(selectedTile);
+
         } catch (InvalidMoveException e) {
             e.printStackTrace();
         }
+
+        return ret;
     }
 
     /**

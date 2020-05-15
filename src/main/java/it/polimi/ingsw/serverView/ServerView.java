@@ -25,6 +25,9 @@ public class ServerView extends Observable<ClientEvent> implements Observer<Serv
     private String playerName;
     private ServerSocketHandler proxy;
 
+    private final Object lock = new Object();
+
+
     public ServerView(){
         playerName = null;
     }
@@ -99,6 +102,7 @@ public class ServerView extends Observable<ClientEvent> implements Observer<Serv
     @Override
     public void update(ServerEvent event) {
         sendEvent(event);
+
     }
 
 }

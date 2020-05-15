@@ -1,6 +1,10 @@
 package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.update.MoveUpdate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -52,16 +56,33 @@ public class PushOpponent extends MoveOnOpponent {
      * Moves both the current player's worker and the opponent one if the selected tile is occupied by the latter
      */
     @Override
-    public void move(Board board,Worker selectedWorker, Tile selectedTile) {
+    public List<MoveUpdate> move(Board board, Worker selectedWorker, Tile selectedTile) {
         int dx = selectedTile.getX() - selectedWorker.getPositionOnBoard().getX();
         int dy = selectedTile.getY() - selectedWorker.getPositionOnBoard().getY();
 
+        List<MoveUpdate> ret = new ArrayList<>();
+        List<Tile> modifiedTiles = new ArrayList<>();
+        MoveUpdate update = null;
+
         if(selectedTile.isOccupied()) {
             Tile pushOpponentTile = board.getTile(selectedTile.getX()+dx,selectedTile.getY()+dy);
+
+            modifiedTiles.add(selectedTile);
+            modifiedTiles.add(pushOpponentTile);
+            update = new MoveUpdate(selectedTile.getWorker(),new ArrayList<>(modifiedTiles));
+
             pushOpponentTile.setWorker(selectedTile.getWorker());
             selectedTile.getWorker().setPositionOnBoard(pushOpponentTile);
             selectedTile.free();
         }
-        super.move(board,selectedWorker,selectedTile);
+
+
+        ret = super.move(board,selectedWorker,selectedTile);
+
+        if(update!=null) {
+            ret.add(0,update);
+        }
+
+        return ret;
     }
 }

@@ -23,6 +23,8 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
     private Runnable r;
     private PingReceiver pinger;
 
+    private Object lock = new Object();
+
     public ClientSocketHandler(){
         try {
             connectionConfigParser();
@@ -64,9 +66,16 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
             while(true) {
                 ServerEvent event = (ServerEvent) in.readObject();
 
-                new Thread(()->{
+                Thread t = new Thread(()->{
                     receiveEvent(event);
-                }).start();
+                });
+                t.setDaemon(false);
+                t.setPriority(Thread.MAX_PRIORITY);
+                t.start();
+
+                /*new Thread(()->{
+                    receiveEvent(event);
+                }).start();*/
                 //notify(event);
             }
         } catch(Exception e) {

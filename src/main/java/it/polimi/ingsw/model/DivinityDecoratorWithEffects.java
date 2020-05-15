@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.update.MoveUpdate;
+
 import java.util.List;
 
 /**
@@ -28,8 +30,8 @@ public class DivinityDecoratorWithEffects implements Divinity {
 
 
     @Override
-    public void move(Board board, Worker selectedWorker, Tile selectedTile) {
-        divinity.move(board,selectedWorker,selectedTile);
+    public List<MoveUpdate> move(Board board, Worker selectedWorker, Tile selectedTile) {
+        return divinity.move(board,selectedWorker,selectedTile);
     }
 
     @Override

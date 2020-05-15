@@ -282,7 +282,8 @@ public class Match extends Observable<ServerEvent> {
     public void build(int x, int y) throws InvalidBuildException{
         Tile t = board.getTile(x,y);
         if(t != null && currentPlayer.build(board,selectedWorker,t)){
-            //notify view
+            Action action = userAction;
+            notify(new BuildEvent(currentPlayer.getUsername(),action,t.getX(),t.getY()));
         }
         else throw new InvalidBuildException();
     }

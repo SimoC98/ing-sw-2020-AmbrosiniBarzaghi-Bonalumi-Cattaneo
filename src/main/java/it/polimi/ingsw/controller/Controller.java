@@ -55,6 +55,7 @@ public class Controller implements Observer<ClientEvent> {
                     break;
                 }
                 case END: {
+                    //send end turn message
                     handleStartNextTurn();
                     break;
                 }

@@ -13,6 +13,9 @@ import java.util.*;
 
 import static java.lang.System.exit;
 
+
+//TODO: FIX EVENTS --> CANNOT CONTAIN NOT-SERIALIZABLE ATTRIBUTES!!!
+
 public class ClientView implements Observer<ServerEvent> {
 
     private ClientSocketHandler proxy;

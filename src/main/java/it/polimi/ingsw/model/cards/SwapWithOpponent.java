@@ -1,7 +1,10 @@
 package it.polimi.ingsw.model.cards;
 
+import it.polimi.ingsw.Pair;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.exceptions.InvalidMoveException;
+import it.polimi.ingsw.model.update.MoveUpdate;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,11 +31,26 @@ public class SwapWithOpponent extends MoveOnOpponent {
      * saved and the swap takes place. Otherwise it is a simple move
      */
     @Override
-    public void move(Board board,Worker selectedWorker, Tile selectedTile) {
+    public List<MoveUpdate> move(Board board, Worker selectedWorker, Tile selectedTile) {
         if (selectedTile.getWorker() != null) {
+            List<MoveUpdate> ret = new ArrayList<>();
+            //List<Tile> modifiedTiles = new ArrayList<>();
+            List<Pair<Integer,Integer>> modifiedTiles = new ArrayList<>();
+
             Worker opponentWorker = selectedTile.getWorker();
             Tile myActualTile = selectedWorker.getPositionOnBoard();
+
+            //first moveUpdate --> opponentWorker from his tile to selectedWorker tile
+            modifiedTiles.add(new Pair<>(selectedTile.getX(),selectedTile.getY()));
+            modifiedTiles.add(new Pair<>(selectedWorker.getPositionOnBoard().getX(),selectedWorker.getPositionOnBoard().getY()));
+            ret.add(new MoveUpdate(opponentWorker,new ArrayList<>(modifiedTiles)));
+
+            modifiedTiles.clear();
             selectedTile.free();
+
+            //second moveUpdate --> selectedWorker from his tile to selectedTile
+            modifiedTiles.add(new Pair<>(selectedWorker.getPositionOnBoard().getX(),selectedWorker.getPositionOnBoard().getY()));
+            modifiedTiles.add(new Pair<>(selectedTile.getX(),selectedTile.getY()));
             try {
                 selectedWorker.move(selectedTile);
             } catch (InvalidMoveException e) {
@@ -41,8 +59,12 @@ public class SwapWithOpponent extends MoveOnOpponent {
             myActualTile.setWorker(opponentWorker);
             opponentWorker.setPositionOnBoard(myActualTile);
 
+            ret.add(new MoveUpdate(selectedWorker,new ArrayList<>(modifiedTiles)));
+
+            return ret;
+
         }else{
-            super.move(board,selectedWorker, selectedTile);
+            return super.move(board,selectedWorker, selectedTile);
         }
     }
 

@@ -55,6 +55,7 @@ public class Controller implements Observer<ClientEvent> {
                     break;
                 }
                 case END: {
+                    //send end turn message
                     handleStartNextTurn();
                     break;
                 }
@@ -79,15 +80,20 @@ public class Controller implements Observer<ClientEvent> {
         try {
             model.move(x,y);
 
+            //momentaneo --> perchè possibleActionEvent arriva prima a volte??
+            Thread.sleep(100);
+
             int winner = model.checkWinner();
             if(winner>=0) {
                 //disconnect all
                 return;
             }
             else nextActionHandler();
-        } catch (InvalidMoveException e) {
+        } catch (InvalidMoveException e1) {
             playersInGame.get(currentPlayerId).showMessage("error");
             nextActionHandler();
+        } catch (InterruptedException e2) {
+            e2.printStackTrace();
         }
     }
 
@@ -95,14 +101,18 @@ public class Controller implements Observer<ClientEvent> {
         try {
             model.build(x,y);
 
+            Thread.sleep(100);
+
             int winner = model.checkWinner();
             if(winner>=0) {
                 //disconnect all
             }
             else nextActionHandler();
-        } catch (InvalidBuildException e) {
+        } catch (InvalidBuildException e1) {
             playersInGame.get(currentPlayerId).showMessage("error");
             nextActionHandler();
+        } catch (InterruptedException e2) {
+            e2.printStackTrace();
         }
     }
 

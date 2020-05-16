@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.update.MoveUpdate;
 
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class BuildTwice extends DivinityDecoratorWithEffects {
      * build only twice.
      */
     @Override
-    public void build(Board board,Worker selectedWorker, Tile selectedTile) {
+    public void build(Board board, Worker selectedWorker, Tile selectedTile) {
         if(buildCount==0) {
             firstBuildTile = selectedTile;
         }
@@ -44,8 +45,8 @@ public class BuildTwice extends DivinityDecoratorWithEffects {
     }
 
     @Override
-    public void move(Board board,Worker selectedWorker, Tile selectedTile) {
-        super.move(board,selectedWorker, selectedTile);
+    public List<MoveUpdate> move(Board board,Worker selectedWorker, Tile selectedTile) {
+        return super.move(board,selectedWorker, selectedTile);
     }
 
     @Override

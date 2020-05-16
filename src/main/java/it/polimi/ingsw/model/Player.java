@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.model.update.ModelUpdate;
+import it.polimi.ingsw.model.update.MoveUpdate;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +22,8 @@ public class Player {
     private List<Action> possibleActions;
     private List<Worker> workers;
 
+    private List<MoveUpdate> moveUpdates;
+
     /**
      * Constructor of the player, given his username and chosen a {@link Color}.
      * All his other attributes are instantiated and set to {@code null}
@@ -30,6 +35,8 @@ public class Player {
         divinity = null;
         possibleActions = new ArrayList<>();
         isWinner = false;
+
+        moveUpdates = new ArrayList<>();
     }
 
     /**
@@ -95,7 +102,10 @@ public class Player {
     public boolean move(Board board, Worker selectedWorker, Tile selectedTile) {
         if(divinity.legalMove(board,selectedWorker,selectedTile)) {
             possibleActions.clear();
-            divinity.move(board,selectedWorker,selectedTile);
+            moveUpdates.clear();
+
+            moveUpdates = divinity.move(board,selectedWorker,selectedTile);
+
             possibleActions.add(Action.BUILD);
             divinity.updatePossibleActions(possibleActions);
 
@@ -142,8 +152,13 @@ public class Player {
      * and eventual others resulting from a divinity's properties
      */
     public void startOfTurn(){
+        moveUpdates.clear();
         possibleActions.clear();
         possibleActions.add(Action.MOVE);
         divinity.setupDivinity(possibleActions);
+    }
+
+    public List<MoveUpdate> getMoveUpdates() {
+        return moveUpdates;
     }
 }

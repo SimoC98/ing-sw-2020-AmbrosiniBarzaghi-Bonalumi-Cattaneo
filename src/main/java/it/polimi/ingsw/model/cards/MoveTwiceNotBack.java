@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.cards;
 
 
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.update.MoveUpdate;
 
 
 import java.util.List;
@@ -50,8 +51,8 @@ public class MoveTwiceNotBack extends MoveTwice{
     }
 
     @Override
-    public void move(Board board,Worker selectedWorker, Tile selectedTile) {
-        super.move(board,selectedWorker, selectedTile);
+    public List<MoveUpdate> move(Board board, Worker selectedWorker, Tile selectedTile) {
+        return super.move(board,selectedWorker, selectedTile);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.update.MoveUpdate;
 
 import java.util.List;
 
@@ -22,12 +23,12 @@ public class MoveTwice extends DivinityDecoratorWithEffects {
      * Saves the tile the worker was on his first movement and updates the move counter
      */
     @Override
-    public void move(Board board,Worker selectedWorker, Tile selectedTile) {
+    public List<MoveUpdate> move(Board board, Worker selectedWorker, Tile selectedTile) {
         if(moveCount==0) {
             firstMovedTile = selectedWorker.getPositionOnBoard();
         }
         moveCount++;
-        super.move(board,selectedWorker,selectedTile);
+        return super.move(board,selectedWorker,selectedTile);
     }
 
     /**

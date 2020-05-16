@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.cards.StandardDivinity;
+import it.polimi.ingsw.model.update.MoveUpdate;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +17,12 @@ import java.util.List;
  * each divinity is then "decorated" with other special moves and builds deriving from a specific divinity
  */
 public interface Divinity {
-    public void move(Board board, Worker selectedWorker, Tile selectedTile) ;
+
+
+    public List<MoveUpdate> move(Board board, Worker selectedWorker, Tile selectedTile) ;
+
+
+
     public void build(Board board, Worker selectedWorker, Tile selectedTile);
     public boolean legalMove(Board board,Worker selectedWorker, Tile selectedTile);
     public boolean legalBuild(Board board,Worker selectedWorker, Tile selectedTile);

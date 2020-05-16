@@ -68,6 +68,8 @@ class PushOpponentTest {
 
         p.move(board,w, t2);
 
+        assert(p.getMoveUpdates().size()==2);
+
         assertEquals(w.getPositionOnBoard(), t2);
         assertEquals(w2.getPositionOnBoard(), board.getTile(t2.getX(), t2.getY()+1));
         assertFalse(t1.isOccupied());

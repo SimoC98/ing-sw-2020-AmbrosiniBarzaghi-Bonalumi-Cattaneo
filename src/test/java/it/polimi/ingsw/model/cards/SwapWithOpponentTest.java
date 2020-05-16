@@ -44,6 +44,8 @@ class SwapWithOpponentTest {
 
         assertTrue(p.move(board,worker,tile2));
 
+        assert(p.getMoveUpdates().size()==2);
+
         assertEquals(tile2.getWorker(),worker);
         assertEquals(tile1.getWorker(),opponentWorker);
     }

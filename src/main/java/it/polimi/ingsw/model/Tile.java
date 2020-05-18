@@ -23,13 +23,11 @@ public class Tile {
      * It increase a tile's level and places a dome once it reaches level 3, calling {@link Tile#setDome()}
      */
     public void increaseLevel() {
-        if(isDome() || isOccupied) return;
-        else {
-            if(level < 3)
-                level++;
-            else if(level == 3)
-                setDome();
-        }
+        if(level < 3)
+            level++;
+        else if(level == 3)
+            setDome();
+
     }
 
     public int getX() {

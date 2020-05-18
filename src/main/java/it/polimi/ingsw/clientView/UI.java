@@ -28,4 +28,6 @@ public abstract class UI {
 
     public void loser(String username) {}
     public void winner(String username) {}
+
+    public void printPlayersInGame() {}
 }

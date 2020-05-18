@@ -17,7 +17,7 @@ public class DivinitiesSetupEvent implements ServerEvent{
 
     @Override
     public void handleEvent(ClientView clientView) {
-        //TODO
+        clientView.managePlayersDivinities(playersDivinities);
     }
 
     @Override

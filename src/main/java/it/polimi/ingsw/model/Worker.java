@@ -70,10 +70,10 @@ public class Worker {
      * @param t {@link Tile} to build on
      * @throws InvalidBuildException Thrown if the selection is not valid
      */
-    public void build (Tile t) throws InvalidBuildException {
-        if(!legalBuild(t)) {
+    public void build (Tile t)  {
+        /*if(!legalBuild(t)) {
             throw new InvalidBuildException();
-        }
+        }*/
         t.increaseLevel();
     }
 

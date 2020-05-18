@@ -204,6 +204,9 @@ public class Match extends Observable<ServerEvent> {
 
     public int checkWinner() {
         Player winner = findWinner();
+
+        //manca eventuale notifica di vincitore
+
         if(winner==null) return -1;
         else return players.indexOf(winner);
     }

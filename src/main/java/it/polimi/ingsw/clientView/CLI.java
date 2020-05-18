@@ -415,6 +415,7 @@ public class CLI extends UI{
             System.out.println("You lost! Fs in the chat");
             for(int i=0; i<10; i++)
                 System.out.println("F");
+            //clientView.disconnect();
         }else{
             System.out.println("\n" + username + " has lost!");
         }
@@ -431,6 +432,7 @@ public class CLI extends UI{
             for(int i=0; i<10; i++)
                 System.out.println("F");
         }
+        clientView.disconnect();
     }
 
     @Override
@@ -475,8 +477,8 @@ public class CLI extends UI{
                                 System.out.print(ANSI_BLUE + "W" + ANSI_RESET);
                                 break;
 
-                            case WHITE:
-                                System.out.print(ANSI_WHITE + "W" + ANSI_RESET);
+                            case RED:
+                                System.out.print(ANSI_RED+ "W" + ANSI_RESET);
                         }
                     }
                     System.out.print("   ");
@@ -490,6 +492,7 @@ public class CLI extends UI{
             //fifth and last line
             System.out.println("\t" + "+-------+-------+-------+-------+-------+");
         }
+        printPlayersInGame();
     }
 
     private void printDescriptions() {
@@ -524,5 +527,24 @@ public class CLI extends UI{
     public static void clearScreen() {
         System.out.print("\033[H\033[2J");
         System.out.flush();
+    }
+
+    public void printPlayersInGame() {
+        List<PlayerRepresentation> players = board.getPlayersList();
+
+        System.out.print("\nPLAYERS IN GAME: \n");
+        for(PlayerRepresentation p : players) {
+            String color = null;
+            if(p.getColor().equals(Color.RED)) color = ANSI_RED;
+            else if(p.getColor().equals(Color.BLUE)) color = ANSI_BLUE;
+            else if(p.getColor().equals(Color.CREAM)) color = ANSI_YELLOW;
+
+            StringBuilder s = new StringBuilder();
+            s.append(color + p.getUsername());
+            if(p.getDivinity()!=null) s.append(" --> " + p.getDivinity());
+
+            System.out.print(s.toString() + "\n");
+        }
+        System.out.print( ANSI_RESET+ "\n");
     }
 }

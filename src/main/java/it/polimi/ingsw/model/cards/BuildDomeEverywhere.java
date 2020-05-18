@@ -49,4 +49,10 @@ public class BuildDomeEverywhere extends DivinityDecoratorWithEffects {
         hasBuilt = false;
         super.setDivinity(decoratedDivinity);
     }
+
+    @Override
+    public void setupDivinity(List<Action> possibleActions) {
+        hasBuiltDome=false;
+        hasBuilt=false;
+    }
 }

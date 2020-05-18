@@ -76,11 +76,7 @@ public class StandardDivinity implements Divinity {
      */
     @Override
     public void build(Board board,Worker selectedWorker, Tile selectedTile) {
-        try {
-            selectedWorker.build(selectedTile);
-        } catch (InvalidBuildException e) {
-            e.printStackTrace();
-        }
+        selectedWorker.build(selectedTile);
     }
 
     /**

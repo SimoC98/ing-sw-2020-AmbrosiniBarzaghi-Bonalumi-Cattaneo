@@ -1,7 +1,6 @@
 package it.polimi.ingsw.clientView;
 
 import it.polimi.ingsw.Observer;
-import it.polimi.ingsw.Pair;
 import it.polimi.ingsw.events.clientToServer.*;
 import it.polimi.ingsw.events.serverToClient.ServerEvent;
 import it.polimi.ingsw.model.Action;
@@ -135,6 +134,7 @@ public class ClientView implements Observer<ServerEvent> {
         for(int i=0; i<playersNames.size(); i++) {
             board.addPlayer(playersNames.get(i), colors.get(i));
         }
+        ui.printPlayersInGame();
     }
 
     public void setDivinitiesDescriptions(List<String> divinitiesNames, List<String> divinitiesDescriptions) {

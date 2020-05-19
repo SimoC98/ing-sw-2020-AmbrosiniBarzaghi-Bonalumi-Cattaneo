@@ -46,7 +46,15 @@ public class CLI extends UI{
 
     @Override
     public void start() {
-        System.out.println("Welcome to SANTORINI, please login.");
+        System.out.println("Welcome to..." + "\n");
+
+        System.out.println(" .oooooo..o                           .                       o8o               o8o");
+        System.out.println("d8P'    `Y8                         .o8                       `\"'               `\"'");
+        System.out.println("Y88bo.       .oooo.   ooo. .oo.   .o888oo  .ooooo.  oooo d8b oooo  ooo. .oo.   oooo");
+        System.out.println(" `\"Y8888o.  `P  )88b  `888P\"Y88b    888   d88' `88b `888\"\"8P `888  `888P\"Y88b  `888");
+        System.out.println("     `\"Y88b  .oP\"888   888   888    888   888   888  888      888   888   888   888");
+        System.out.println("oo     .d8P d8(  888   888   888    888 . 888   888  888      888   888   888   888");
+        System.out.println("8\"\"88888P'  `Y888\"\"8o o888o o888o   \"888\" `Y8bod8P' d888b    o888o o888o o888o o888o" + "\n\n");
     }
 
 //    @Override
@@ -58,6 +66,7 @@ public class CLI extends UI{
 //        }while(username.length() < 3);
 //        clientView.loginQuestion(username);
 //    }
+    //TODO: this login is temporary
     @Override
     public void login() {
         String username;
@@ -150,9 +159,11 @@ public class CLI extends UI{
             playableDivinities.add(divinitiesNames.get(selection-1));
             divinitiesNames.remove(selection-1);
             divinitiesDescriptions.remove(selection-1);
-            if (playableDivinities.size() != playersNumber)
-                for(int i=0;i<divinitiesNames.size();i++)
-                    System.out.println(i+1 + ") " + divinitiesNames.get(i) + "\n\t" + divinitiesDescriptions.get(i));
+            if (playableDivinities.size() != playersNumber) {
+                System.out.println("\n\n\n\n");
+                for (int i = 0; i < divinitiesNames.size(); i++)
+                    System.out.println(i + 1 + ") " + divinitiesNames.get(i) + "\n\t" + divinitiesDescriptions.get(i));
+            }
         }
 
         System.out.print("The divinities you have chosen: ");
@@ -162,81 +173,11 @@ public class CLI extends UI{
         clientView.playableDivinitiesSelection(playableDivinities);
     }
 
-    @Override
-    public void selectDivinityAndPlaceWorkers(List<String> divinitiesNames) {
-        synchronized (lock) {
-            String divinity=null;
-
-            System.out.println("You have to select your divinity. Choose from:");
-            for (int i = 0; i < divinitiesNames.size(); i++)
-                System.out.println("\t" + (i + 1) + ") " + divinitiesNames.get(i));
-            System.out.println("\t" + (divinitiesNames.size() + 1) + ") " + "See divinities descriptions");
-
-
-            String input;
-            int selection = 0;
-            do {
-                do {
-                    System.out.print("\nChoose: ");
-                    input = scanner.nextLine();
-                    if (input.matches("[0-9]+"))
-                        selection = Integer.parseInt(input);
-                } while (selection <= 0 || selection > divinitiesNames.size() + 1);
-
-                if (selection == divinitiesNames.size() + 1)
-                    printDescriptions();
-                else
-                    divinity = divinitiesNames.get(selection - 1);
-            }while(divinity==null);
-
-            //----------------------------------------------------------------------
-
-            int x1, y1, x2, y2;
-
-            System.out.println("You have to choose your workers' initial position.");
-            System.out.println("You must type the coordinate (E.G. A5, D2, E4) in which you want to place you workers, one at a time.");
-            System.out.println("You cannot place workers on occupied tiles.");
-
-            System.out.println("+----+----+----+----+----+");
-            System.out.println("| A1 | A2 | A3 | A4 | A5 |");
-            System.out.println("+----+----+----+----+----+");
-            System.out.println("| B1 | B2 | B3 | B4 | B5 |");
-            System.out.println("+----+----+----+----+----+");
-            System.out.println("| C1 | C2 | C3 | C4 | C5 |");
-            System.out.println("+----+----+----+----+----+");
-            System.out.println("| D1 | D2 | D3 | D4 | D5 |");
-            System.out.println("+----+----+----+----+----+");
-            System.out.println("| E1 | E2 | E3 | E4 | E5 |");
-            System.out.println("+----+----+----+----+----+");
-
-
-            do{
-                System.out.print("\tChoose a position for first worker: ");
-                input = scanner.nextLine().toUpperCase();
-            }while(!input.matches("[A-E][1-5]"));
-            x1 = (input.charAt(0) - 'A');
-            y1 = (input.charAt(1) - '1');
-
-            do{
-                System.out.print("\tChoose a position for second worker: ");
-                input = scanner.nextLine().toUpperCase();
-            }while(!input.matches("[A-E][1-5]"));
-            x2 = (input.charAt(0) - 'A');
-            y2 = (input.charAt(1) - '1');
-
-            clientView.divinitySelectionAndWorkerPlacement(divinity, x1, y1, x2, y2);
-        }
-
-
-
-
-
-    }
-
 //    @Override
-//    public void selectDivinity(List<String> divinitiesNames) {
-//        clearScreen();
-//        while(true) {
+//    public void selectDivinityAndPlaceWorkers(List<String> divinitiesNames) {
+//        synchronized (lock) {
+//            String divinity=null;
+//
 //            System.out.println("You have to select your divinity. Choose from:");
 //            for (int i = 0; i < divinitiesNames.size(); i++)
 //                System.out.println("\t" + (i + 1) + ") " + divinitiesNames.get(i));
@@ -245,58 +186,136 @@ public class CLI extends UI{
 //            String input;
 //            int selection = 0;
 //            do {
-//                System.out.print("\nChoose: ");
-//                input = scanner.nextLine();
-//                if(input.matches("[0-9]+"))
-//                    selection = Integer.parseInt(input);
-//            } while (selection <=0 || selection > divinitiesNames.size()+1);
+//                do {
+//                    System.out.print("\nChoose: ");
+//                    input = scanner.nextLine();
+//                    if (input.matches("[0-9]+"))
+//                        selection = Integer.parseInt(input);
+//                } while (selection <= 0 || selection > divinitiesNames.size() + 1);
 //
-//            if (selection == divinitiesNames.size() + 1)  {
-//                printDescriptions();
-//            }else{
-//                board.getPlayersMap().get(clientView.getUsername()).setDivinity(divinitiesNames.get(selection-1));    //sets player's divinity
-//                System.out.println(board.getPlayersMap().get(clientView.getUsername()).getDivinity());
-//                return;
-//            }
+//                if (selection == divinitiesNames.size() + 1) {
+//                    printDescriptions();
+//                    System.out.println("\n\n\n");
+//                    for (int i = 0; i < divinitiesNames.size(); i++)
+//                        System.out.println("\t" + (i + 1) + ") " + divinitiesNames.get(i));
+//                    System.out.println("\t" + (divinitiesNames.size() + 1) + ") " + "See divinities descriptions");
+//                }
+//                else
+//                    divinity = divinitiesNames.get(selection - 1);
+//            }while(divinity==null);
+//
+//            //----------------------------------------------------------------------
+//
+//            int x1, y1, x2, y2;
+//
+//            System.out.println("You have to choose your workers' initial position.");
+//            System.out.println("You must type the coordinate (E.G. A5, D2, E4) in which you want to place you workers, one at a time.");
+//            System.out.println("You cannot place workers on occupied tiles.");
+//
+//            System.out.println("+----+----+----+----+----+");
+//            System.out.println("| A1 | A2 | A3 | A4 | A5 |");
+//            System.out.println("+----+----+----+----+----+");
+//            System.out.println("| B1 | B2 | B3 | B4 | B5 |");
+//            System.out.println("+----+----+----+----+----+");
+//            System.out.println("| C1 | C2 | C3 | C4 | C5 |");
+//            System.out.println("+----+----+----+----+----+");
+//            System.out.println("| D1 | D2 | D3 | D4 | D5 |");
+//            System.out.println("+----+----+----+----+----+");
+//            System.out.println("| E1 | E2 | E3 | E4 | E5 |");
+//            System.out.println("+----+----+----+----+----+");
+//
+//
+//            do{
+//                System.out.print("\tChoose a position for first worker: ");
+//                input = scanner.nextLine().toUpperCase();
+//            }while(!input.matches("[A-E][1-5]"));
+//            x1 = (input.charAt(0) - 'A');
+//            y1 = (input.charAt(1) - '1');
+//
+//            do{
+//                System.out.print("\tChoose a position for second worker: ");
+//                input = scanner.nextLine().toUpperCase();
+//            }while(!input.matches("[A-E][1-5]"));
+//            x2 = (input.charAt(0) - 'A');
+//            y2 = (input.charAt(1) - '1');
+//
+//            clientView.divinitySelectionAndWorkerPlacement(divinity, x1, y1, x2, y2);
 //        }
 //    }
-//
-//    @Override
-//    public void placeWorkers() {
-//        int x1, y1, x2, y2;
-//
-//        System.out.println("You have to choose your workers' initial position.");
-//        System.out.println("You must type the coordinate (E.G. A5, D2, E4) in which you want to place you workers, one at a time.");
-//        System.out.println("You cannot place workers on occupied tiles.");
-//
-//        System.out.println();
-//        updateBoard();
-//        System.out.println();
-//
-//        String selection;
-//        do{
-//            System.out.print("\tChoose a position: ");
-//            selection = scanner.nextLine().toUpperCase();
-//        }while(!selection.matches("[A-E][1-5]"));
-//        x1 = (selection.charAt(0) - 'A');
-//        y1 = (selection.charAt(1) - '1');
-//
-////        PlayerRepresentation player = board.getPlayersMap().get(clientView.getUsername());
-////        player.addWorker(x1,y1);
-//
-//        System.out.println();
-//        updateBoard();
-//        System.out.println();
-//
-//        do{
-//            System.out.print("\tChoose: ");
-//            selection = scanner.nextLine().toUpperCase();
-//        }while(!selection.matches("[A-E][1-5]"));
-//        x2 = (selection.charAt(0) - 'A');
-//        y2 = (selection.charAt(1) - '1');
-//
-////        player.addWorker(x2,y2);
-//    }
+
+    @Override
+    public void selectDivinity(List<String> divinitiesNames) {
+        clearScreen();
+
+        String divinity = null;
+
+        System.out.println("You have to select your divinity. Choose from:");
+        for (int i = 0; i < divinitiesNames.size(); i++)
+            System.out.println("\t" + (i + 1) + ") " + divinitiesNames.get(i));
+        System.out.println("\t" + (divinitiesNames.size() + 1) + ") " + "See divinities descriptions");
+
+        String input;
+        int selection = 0;
+        do {
+            do {
+                System.out.print("\nChoose: ");
+                input = scanner.nextLine();
+                if (input.matches("[0-9]+"))
+                    selection = Integer.parseInt(input);
+            } while (selection <= 0 || selection > divinitiesNames.size() + 1);
+
+            if (selection == divinitiesNames.size() + 1) {
+                printDescriptions();
+                System.out.println("\n\n\n");
+                for (int i = 0; i < divinitiesNames.size(); i++)
+                    System.out.println("\t" + (i + 1) + ") " + divinitiesNames.get(i));
+                System.out.println("\t" + (divinitiesNames.size() + 1) + ") " + "See divinities descriptions");
+            }
+            else
+                divinity = divinitiesNames.get(selection - 1);
+        }while(divinity==null);
+
+        clientView.divinitySelection(divinity);
+    }
+
+    @Override
+    public void placeWorkers() {
+        int x1, y1, x2, y2;
+
+        System.out.println("You have to choose your workers' initial position.");
+        System.out.println("You must type the coordinate (E.G. A5, D2, E4) in which you want to place you workers, one at a time.");
+        System.out.println("You cannot place workers on occupied tiles.");
+
+        System.out.println("+----+----+----+----+----+");
+        System.out.println("| A1 | A2 | A3 | A4 | A5 |");
+        System.out.println("+----+----+----+----+----+");
+        System.out.println("| B1 | B2 | B3 | B4 | B5 |");
+        System.out.println("+----+----+----+----+----+");
+        System.out.println("| C1 | C2 | C3 | C4 | C5 |");
+        System.out.println("+----+----+----+----+----+");
+        System.out.println("| D1 | D2 | D3 | D4 | D5 |");
+        System.out.println("+----+----+----+----+----+");
+        System.out.println("| E1 | E2 | E3 | E4 | E5 |");
+        System.out.println("+----+----+----+----+----+");
+
+        String input;
+
+        do{
+            System.out.print("\tChoose a position for first worker: ");
+            input = scanner.nextLine().toUpperCase();
+        }while(!input.matches("[A-E][1-5]"));
+        x1 = (input.charAt(0) - 'A');
+        y1 = (input.charAt(1) - '1');
+
+        do{
+            System.out.print("\tChoose a position for second worker: ");
+            input = scanner.nextLine().toUpperCase();
+        }while(!input.matches("[A-E][1-5]"));
+        x2 = (input.charAt(0) - 'A');
+        y2 = (input.charAt(1) - '1');
+
+        clientView.workerPlacement(x1, y1, x2, y2);
+    }
 
     @Override
     public void textMessage(String msg) {
@@ -366,34 +385,52 @@ public class CLI extends UI{
 
                 case END:
                     System.out.println("\te) End your turn without further do");
+                    break;
             }
         }
+        System.out.println("\tdiv) Read divinities' effects descriptions");
+        System.out.println("\tup) Update board");
 
         System.out.println();
 
         String inputAction;
-        do{
-            System.out.print("Choose: ");
-            inputAction = scanner.nextLine().toLowerCase();
-        }while(!inputAction.matches("[mbde]"));
+        boolean done = false;
+        Action action = Action.MOVE;    //should be overwritten
+        do {
+            do {
+                System.out.print("Choose: ");
+                inputAction = scanner.nextLine().toLowerCase();
+            } while (!inputAction.matches("[mbde]|(div)|(up)"));
 
-        Action action;
-        switch(inputAction) {
-            case "m":
-                action = Action.MOVE;
-                break;
+            switch (inputAction) {
+                case "m":
+                    action = Action.MOVE;
+                    done = true;
+                    break;
 
-            case "b":
-                action = Action.BUILD;
-                break;
+                case "b":
+                    action = Action.BUILD;
+                    done = true;
+                    break;
 
-            case "d":
-                action = Action.BUILDDOME;
-                break;
+                case "d":
+                    action = Action.BUILDDOME;
+                    done = true;
+                    break;
 
-            default:
-                action = Action.END;
+                case "e":
+                    action = Action.END;
+                    done = true;
+                    break;
+
+                case "div":
+                    printDescriptions();
+                    break;
+
+                case "up":
+                    updateBoard();
             }
+        }while(!done);
 
         String inputTile;
         int x=-1,y=-1;
@@ -430,6 +467,16 @@ public class CLI extends UI{
             System.out.println("\n-----------------------------------------");
             System.out.println("    Congratulation, you won the game!");
             System.out.println("-----------------------------------------");
+
+//            System.out.println(" /$$     /$$                                                          /$$");
+//            System.out.println("|  $$   /$$/                                                         | $$");
+//            System.out.println(" \  $$ /$$//$$$$$$  /$$   /$$       /$$  /$$  /$$  /$$$$$$  /$$$$$$$ | $$");
+//            System.out.println("  \  $$$$//$$__  $$| $$  | $$      | $$ | $$ | $$ /$$__  $$| $$__  $$| $$");
+//            System.out.println("   \  $$/| $$  \ $$| $$  | $$      | $$ | $$ | $$| $$  \ $$| $$  \ $$|__/");
+//            System.out.println("    | $$ | $$  | $$| $$  | $$      | $$ | $$ | $$| $$  | $$| $$  | $$");
+//            System.out.println("    | $$ |  $$$$$$/|  $$$$$$/      |  $$$$$/$$$$/|  $$$$$$/| $$  | $$ /$$");
+//            System.out.println("    |__/  \______/  \______/        \_____/\___/  \______/ |__/  |__/|__/\");
+
         }else{
             System.out.println("\n" + username + " won! This means you lost, Fs in the chat");
             for(int i=0; i<10; i++)
@@ -440,26 +487,28 @@ public class CLI extends UI{
 
     @Override
     public void updateBoard() {
+        System.out.println("\n\n\n\n\n\n\n");
+        printPlayersInGame();
         synchronized (lock) {
             int [][]map = this.board.getBoard();
             char yCoordinate = 'A';
 
             //coordinates line
-            System.out.println("\t" + "    1       2       3       4       5    ");
+            System.out.println("\t" + "    1      2      3      4      5");
 
             for(int i=0; i<board.boardDimension; i++){
                 //first line
-                System.out.println("\t" + "+-------+-------+-------+-------+-------+");
+                System.out.println("\t" + "+------+------+------+------+------+");
 
                 //second line and board height
                 System.out.print("\t");
                 for(int j=0; j<board.boardDimension; j++) {
                     System.out.print("|");
                     if(map[i][j] == 4 )
-                        System.out.print(ANSI_PURPLE + "D" + ANSI_RESET);
+                        System.out.print(ANSI_BLUE + "D" + ANSI_RESET);
                     else
                         System.out.print(ANSI_PURPLE + map[i][j] + ANSI_RESET);
-                    System.out.print("      ");
+                    System.out.print("     ");
                 }
                 System.out.println("|");
 
@@ -477,32 +526,31 @@ public class CLI extends UI{
                                 break;
 
                             case BLUE:
-                                System.out.print(ANSI_BLUE + "W" + ANSI_RESET);
+                                System.out.print(ANSI_CYAN + "W" + ANSI_RESET);
                                 break;
 
                             case RED:
                                 System.out.print(ANSI_RED+ "W" + ANSI_RESET);
                         }
                     }
-                    System.out.print("   ");
+                    System.out.print("  ");
                 }
                 System.out.println("|");
 
-                //fourth line
-                System.out.println("\t" + "|       |       |       |       |       |");
+                //fourth line -- NOT USED
+//                System.out.println("\t" + "|       |       |       |       |       |");
 
             }
             //fifth and last line
-            System.out.println("\t" + "+-------+-------+-------+-------+-------+");
+            System.out.println("\t" + "+------+------+------+------+------+");
         }
-        printPlayersInGame();
     }
 
     private void printDescriptions() {
         Map<String, String> divDescriptions = board.getDivinities();
         List<String> divNames = new ArrayList<>(divDescriptions.keySet());
 
-        System.out.println("\nHere you can read the descriptions of the divinities use in this match.");
+        System.out.println("\n\nHere you can read the descriptions of the divinities use in this match.");
 
         while(true) {
             System.out.println("Choose the divinity which you want to read the description:");
@@ -539,7 +587,7 @@ public class CLI extends UI{
         for(PlayerRepresentation p : players) {
             String color = null;
             if(p.getColor().equals(Color.RED)) color = ANSI_RED;
-            else if(p.getColor().equals(Color.BLUE)) color = ANSI_BLUE;
+            else if(p.getColor().equals(Color.BLUE)) color = ANSI_CYAN;
             else if(p.getColor().equals(Color.CREAM)) color = ANSI_YELLOW;
 
             StringBuilder s = new StringBuilder();
@@ -548,6 +596,6 @@ public class CLI extends UI{
 
             System.out.print(s.toString() + "\n");
         }
-        System.out.print( ANSI_RESET+ "\n");
+        System.out.print(ANSI_RESET);
     }
 }

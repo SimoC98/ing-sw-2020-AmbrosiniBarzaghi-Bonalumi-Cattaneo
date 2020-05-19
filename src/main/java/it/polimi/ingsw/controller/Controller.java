@@ -244,7 +244,7 @@ public class Controller implements Observer<ClientEvent> {
 
     }
 
-    public void handleWorkerPlacementInitialization(int x1, int x2, int y1, int y2) {
+    public void handleWorkerPlacementInitialization(int x1, int y1, int x2, int y2) {
         currentPlayerId = model.getCurrentPlayerId();
         boolean endInitialization = false;
 

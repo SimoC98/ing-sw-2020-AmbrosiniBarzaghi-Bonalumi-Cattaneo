@@ -57,7 +57,7 @@ public class Server{
                    if(cont==10) {
                        connection.sendEvent(new Disconnect());
                        connection.close();
-                       cont=0;
+                       playerGameNumber=-1;
                    }
                    else {
                        playerId++;

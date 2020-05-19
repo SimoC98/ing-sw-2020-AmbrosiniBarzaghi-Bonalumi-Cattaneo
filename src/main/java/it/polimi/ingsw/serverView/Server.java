@@ -20,6 +20,8 @@ public class Server{
     private boolean isGameStarted;
     private Map<ServerSocketHandler,String> loggedPlayers;
 
+    int cont = 0;
+
 
 
     public Server(int port){
@@ -48,16 +50,12 @@ public class Server{
                if(playerId==0) {
                    System.out.print("first player");
                    connection.sendEvent(new LoginRequestEvent(playerId));
-                   int cont=0;
-                   while(true) {
-                       Thread.sleep(1000);
-                       cont++;
-                       if(playerGameNumber>0 || cont==10) break;
-                   }
-                   if(cont==10) {
+
+                    int res = waitFirst();
+
+                   if(res==10) {
                        connection.sendEvent(new Disconnect());
                        connection.close();
-                       playerGameNumber=-1;
                    }
                    else {
                        playerId++;
@@ -82,6 +80,24 @@ public class Server{
             e.printStackTrace();
         }
     }
+
+
+    private synchronized int waitFirst() {
+        int cont=0;
+        try {
+            while(true) {
+                Thread.sleep(1000);
+                cont++;
+                if(playerGameNumber>0 || cont==10) break;
+            }
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        return cont;
+
+    }
+
 
     public synchronized void registerConnection(ServerSocketHandler connection) {
         connections.add(connection);

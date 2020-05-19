@@ -210,7 +210,7 @@ public class Match extends Observable<ServerEvent> {
     public int checkWinner() {
         Player winner = findWinner();
 
-        //manca eventuale notifica di vincitore
+        notify(new WinnerEvent(winner.getUsername()));
 
         if(winner==null) return -1;
         else return players.indexOf(winner);
@@ -223,18 +223,19 @@ public class Match extends Observable<ServerEvent> {
      * @return Returns {@code true} if a player lost after eliminating him
      */
     public Boolean checkLoser(){
-        Player loser = currentPlayer;
+        String loser = currentPlayer.getUsername();
         for (Worker w : currentPlayer.getWorkers()) {
             if(board.getAvailableMoveTiles(w).size() > 0) return false;
         }
         board.removePlayerWorkers(currentPlayer);
         startNextTurn();
         players.remove(loser);
-        if (players.size() == 1)
+        if (players.size() == 1) {
             currentPlayer.setWinner();
-            //notify winner
+            notify(new WinnerEvent(currentPlayer.getUsername()));
+        }
         else {
-            //notify loser
+            notify(new LoserEvent(loser));
         }
         return true;
     }

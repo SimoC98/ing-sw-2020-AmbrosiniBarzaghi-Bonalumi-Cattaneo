@@ -75,6 +75,8 @@ public class Controller implements Observer<ClientEvent> {
         }
     }
 
+
+    //TODO: riguardare winner condition
     public void handleMove(int x, int y) {
         try {
             model.move(x,y);
@@ -84,7 +86,7 @@ public class Controller implements Observer<ClientEvent> {
 
             int winner = model.checkWinner();
             if(winner>=0) {
-                //disconnect all
+                disconnectAll();
                 return;
             }
             else nextActionHandler();
@@ -96,6 +98,7 @@ public class Controller implements Observer<ClientEvent> {
         }
     }
 
+    //TODO: riguardare winner condition
     public void handleBuild(int x, int y) {
         try {
             model.build(x,y);
@@ -104,7 +107,8 @@ public class Controller implements Observer<ClientEvent> {
 
             int winner = model.checkWinner();
             if(winner>=0) {
-                //disconnect all
+                disconnectAll();
+                return;
             }
             else nextActionHandler();
         } catch (InvalidBuildException e1) {

@@ -7,15 +7,15 @@ import it.polimi.ingsw.serverView.ServerView;
 
 public class WinnerEvent implements ServerEvent {
 
-    private final Player player;
+    private final String winner;
 
-    public WinnerEvent(Player player){
-        this.player = player;
+    public WinnerEvent(String winner) {
+        this.winner = winner;
     }
 
     @Override
     public void handleEvent(ClientView clientView) {
-        clientView.manageWinner(player.getUsername());
+        clientView.manageWinner(winner);
     }
 
     @Override

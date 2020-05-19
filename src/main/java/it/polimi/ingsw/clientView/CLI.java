@@ -1,12 +1,9 @@
 package it.polimi.ingsw.clientView;
 
 import it.polimi.ingsw.Pair;
-import it.polimi.ingsw.events.clientToServer.Ping;
 import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Color;
 
-import java.lang.reflect.Array;
-import java.sql.SQLOutput;
 import java.util.*;
 
 public class CLI extends UI{
@@ -162,11 +159,11 @@ public class CLI extends UI{
             if (playableDivinities.size() != playersNumber) {
                 System.out.println("\n\n\n\n");
                 for (int i = 0; i < divinitiesNames.size(); i++)
-                    System.out.println(i + 1 + ") " + divinitiesNames.get(i) + "\n\t" + divinitiesDescriptions.get(i));
+                    System.out.println((i+1) + ") " + divinitiesNames.get(i) + "\n\t" + divinitiesDescriptions.get(i));
             }
         }
 
-        System.out.print("The divinities you have chosen: ");
+        System.out.print("\n\nThe divinities you have chosen: ");
         for(String div : playableDivinities)
             System.out.print("\t" + div);
 
@@ -267,6 +264,7 @@ public class CLI extends UI{
             if (selection == divinitiesNames.size() + 1) {
                 printDescriptions();
                 System.out.println("\n\n\n");
+                System.out.println("You have to select your divinity. Choose from:");
                 for (int i = 0; i < divinitiesNames.size(); i++)
                     System.out.println("\t" + (i + 1) + ") " + divinitiesNames.get(i));
                 System.out.println("\t" + (divinitiesNames.size() + 1) + ") " + "See divinities descriptions");
@@ -319,7 +317,7 @@ public class CLI extends UI{
 
     @Override
     public void textMessage(String msg) {
-        System.out.println("Received text message: \"" + msg + "\"");
+        System.out.println("\n\n" +"RECEIVED TEXT MESSAGE: \"" + msg + "\"");
     }
 
     @Override
@@ -367,31 +365,7 @@ public class CLI extends UI{
         //print list of possible Actions, send AskActionEvent
         System.out.println("Now you have to select the action you want your worker to perform.");
         updateBoard();
-        System.out.println("Here are you available actions:");
-
-        for(Action action : possibleActions) {
-            switch(action) {
-                case MOVE:
-                    System.out.println("\tm) Move worker");
-                    break;
-
-                case BUILD:
-                    System.out.println("\tb) Build a level on a tile (dome if already level 3)");
-                    break;
-
-                case BUILDDOME:
-                    System.out.println("\td) Build a dome at any level on a tile");
-                    break;
-
-                case END:
-                    System.out.println("\te) End your turn without further do");
-                    break;
-            }
-        }
-        System.out.println("\tdiv) Read divinities' effects descriptions");
-        System.out.println("\tup) Update board");
-
-        System.out.println();
+        printActions(possibleActions);
 
         String inputAction;
         boolean done = false;
@@ -425,10 +399,13 @@ public class CLI extends UI{
 
                 case "div":
                     printDescriptions();
+                    updateBoard();
+                    printActions(possibleActions);
                     break;
 
                 case "up":
                     updateBoard();
+                    printActions(possibleActions);
             }
         }while(!done);
 
@@ -487,7 +464,7 @@ public class CLI extends UI{
 
     @Override
     public void updateBoard() {
-        System.out.println("\n\n\n\n\n\n\n");
+        System.out.println("\n\n\n");
         printPlayersInGame();
         synchronized (lock) {
             int [][]map = this.board.getBoard();
@@ -504,8 +481,8 @@ public class CLI extends UI{
                 System.out.print("\t");
                 for(int j=0; j<board.boardDimension; j++) {
                     System.out.print("|");
-                    if(map[i][j] == 4 )
-                        System.out.print(ANSI_BLUE + "D" + ANSI_RESET);
+                    if(map[i][j] >= 4 )
+                        System.out.print(ANSI_PURPLE + (map[i][j]-4) + ANSI_RESET);
                     else
                         System.out.print(ANSI_PURPLE + map[i][j] + ANSI_RESET);
                     System.out.print("     ");
@@ -517,9 +494,11 @@ public class CLI extends UI{
                 for(int j=0; j<board.boardDimension; j++) {
                     System.out.print("|   ");
                     Color worker = board.isThereAWorker(i, j);
-                    if(worker == null)
+                    if(map[i][j] >= 4) {
+                        System.out.print(ANSI_BLUE + "D" + ANSI_RESET);
+                    } else if(worker == null) {
                         System.out.print(" ");
-                    else {
+                    } else {
                         switch (worker) {
                             case CREAM:
                                 System.out.print(ANSI_YELLOW + "W" + ANSI_RESET);
@@ -544,6 +523,34 @@ public class CLI extends UI{
             //fifth and last line
             System.out.println("\t" + "+------+------+------+------+------+");
         }
+    }
+
+    private void printActions(List<Action> possibleActions) {
+        System.out.println("Here are you available actions:");
+
+        for(Action action : possibleActions) {
+            switch(action) {
+                case MOVE:
+                    System.out.println("\tm) Move worker");
+                    break;
+
+                case BUILD:
+                    System.out.println("\tb) Build a level on a tile (dome if already level 3)");
+                    break;
+
+                case BUILDDOME:
+                    System.out.println("\td) Build a dome at any level on a tile");
+                    break;
+
+                case END:
+                    System.out.println("\te) End your turn without further do");
+                    break;
+            }
+        }
+        System.out.println("\tdiv) Read divinities' effects descriptions");
+        System.out.println("\tup) Update board");
+
+        System.out.println();
     }
 
     private void printDescriptions() {
@@ -581,6 +588,7 @@ public class CLI extends UI{
     }
 
     public void printPlayersInGame() {
+        System.out.println();
         List<PlayerRepresentation> players = board.getPlayersList();
 
         System.out.print("\nPLAYERS IN GAME: \n");

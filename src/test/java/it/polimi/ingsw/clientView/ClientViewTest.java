@@ -15,6 +15,7 @@ class ClientViewTest {
     public void basicTest() {
         ClientView cv = new ClientView();
         CLI cli = new CLI(cv);
+        cv.setUI(cli);
         BoardRepresentation board = cv.getBoard();
 
         String myUser = "Marco";
@@ -26,7 +27,7 @@ class ClientViewTest {
         board.addWorker(myUser, 1, 2);
         board.addWorker(myUser, 4, 2);
 
-        board.addWorker(user2, 2, 2);
+        board.addWorker(user2, 3, 2);
         board.addWorker(user2, 4, 4);
 
         System.out.println(board.getPlayersMap().get(myUser).getColor());
@@ -37,6 +38,19 @@ class ClientViewTest {
 
         //cv.update(new MoveEvent(myUser, new Tile(1,2), new Tile(1,1)));
         //cv.update(new BuildEvent(myUser, Action.BUILD, new Tile(1,2)));
+        System.out.println("first");
+        cv.update(new BuildEvent(myUser, Action.BUILD, 2, 2));
+        cv.update(new BuildEvent(myUser, Action.BUILD, 2, 2));
+        cv.update(new BuildEvent(myUser, Action.BUILD, 2, 2));
+        cv.update(new BuildEvent(myUser, Action.BUILD, 2, 2));
+
+        System.out.println("second");
+        cv.update(new BuildEvent(myUser, Action.BUILDDOME, 0, 0));
+
+        System.out.println("third");
+        cv.update(new BuildEvent(myUser, Action.BUILD, 4, 0));
+        cv.update(new BuildEvent(myUser, Action.BUILDDOME, 4, 0));
+
 
         System.out.println("\n\n\n");
         cli.updateBoard();

@@ -58,6 +58,9 @@ public class ClientView implements Observer<ServerEvent> {
     public void setUsername(String username) {
         this.username = username;
     }
+    public void setUI(UI ui){
+        this.ui = ui;
+    }
 
     public void setUserID(int userID) {
         this.userID = userID;

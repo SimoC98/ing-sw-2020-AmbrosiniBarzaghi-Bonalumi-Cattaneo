@@ -29,11 +29,6 @@ public class BoardRepresentation {
         players.put(player, new PlayerRepresentation(player, color));
     }
 
-    public void incTile(int x, int y){
-//        if(board[x][y] <= 3)
-            board[x][y]++;
-    }
-
     public void addWorker(String username, int x, int y) {
         players.get(username).addWorker(x, y);
     }
@@ -78,10 +73,10 @@ public class BoardRepresentation {
     }
 
     public void buildTile(int x, int y, Action action){
-        if(action == Action.BUILD)
+        if(action == Action.BUILDDOME || board[x][y]==3)
+            board[x][y] += 4;
+        else //if(action == Action.BUILD)
             board[x][y] += 1;
-        else if(action == Action.BUILDDOME)
-            board[x][y] = 4;
     }
 
     public void setLoser(String username){
@@ -96,11 +91,4 @@ public class BoardRepresentation {
                 player.setWinner();
         }
     }
-
-
-
-
-
-
-    //MANCA UN BOTTO forse
 }

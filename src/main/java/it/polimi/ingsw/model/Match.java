@@ -350,6 +350,8 @@ public class Match extends Observable<ServerEvent> {
     public void workerPlacementInitialization(int x1, int y1, int x2, int y2) throws WorkerBadPlacementException {
         placeWorkers(x1,y1,x2,y2);
 
+        notify(new WorkerPlacementEvent(currentPlayer.getUsername(),x1,y1,x2,y2));
+
         int index = players.indexOf(currentPlayer) + 1;
         if(index==players.size()) startNextTurn();
         else {

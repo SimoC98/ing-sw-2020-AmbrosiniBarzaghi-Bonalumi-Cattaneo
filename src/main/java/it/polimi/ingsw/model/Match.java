@@ -89,6 +89,7 @@ public class Match extends Observable<ServerEvent> {
      * Its aim is to hold a user choice
      * in order to evaluate if it is correct
      * and in that case to execute it
+     * @return
      */
     public static Action getUserAction() {
         return userAction;
@@ -202,6 +203,10 @@ public class Match extends Observable<ServerEvent> {
          return null;
     }
 
+    /**
+     * Returns the index of the winning player, if there is one
+     * @return
+     */
     public int checkWinner() {
         Player winner = findWinner();
 
@@ -235,6 +240,11 @@ public class Match extends Observable<ServerEvent> {
     }
 
     //happens when disconnected
+
+    /**
+     * When a player disconnects, they are considered as losers
+     * @param playerName
+     */
     public void setLoser(String playerName){
         for(Player player : players){
             if(player.getUsername().equals(playerName)){
@@ -266,8 +276,10 @@ public class Match extends Observable<ServerEvent> {
     }
 
     /**
-     *Moves the {@link Match#selectedWorker} of the {@link Match#currentPlayer}
-     *on the corresponding {@link Tile}
+     * Moves the {@link Match#selectedWorker} of the {@link Match#currentPlayer}
+     * on the corresponding {@link Tile}
+     * @param x
+     * @param y
      * @throws InvalidMoveException The player chose an incorrect position
      */
     public void move (int x, int y) throws InvalidMoveException {
@@ -289,8 +301,10 @@ public class Match extends Observable<ServerEvent> {
     }
 
     /**
-     *The {@link Match#currentPlayer} build with the {@link Match#selectedWorker}
-     *on the corresponding {@link Tile}
+     * The {@link Match#currentPlayer} build with the {@link Match#selectedWorker}
+     * on the corresponding {@link Tile}
+     * @param x
+     * @param y
      * @throws InvalidBuildException The player chose an incorrect tile
      */
     public void build(int x, int y) throws InvalidBuildException{
@@ -320,6 +334,11 @@ public class Match extends Observable<ServerEvent> {
     /**
      * Method to be called once per player at the beginning of the match
      * to place his workers and to choose a divinity
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2
+     * @param divName
      */
     public void playerInitialization(int x1, int y1, int x2, int y2, String divName) throws WorkerBadPlacementException, InvalidDivinitySelectionEvent {
         placeWorkers(x1,y1,x2,y2);
@@ -337,6 +356,12 @@ public class Match extends Observable<ServerEvent> {
 
 
     //TODO: create an exception for invalid divinity
+
+    /**
+     * Sets a player's divinity.
+     * @param divName
+     * @throws InvalidDivinitySelectionEvent
+     */
     public void divinityInitialization(String divName) throws InvalidDivinitySelectionEvent {
         loadPlayerDivinity(divName);
 
@@ -347,6 +372,15 @@ public class Match extends Observable<ServerEvent> {
         }
     }
 
+    /**
+     * Positions a player's workers on the board. If the player is the last to choose
+     * the game begins
+     * @param x1
+     * @param y1
+     * @param x2
+     * @param y2
+     * @throws WorkerBadPlacementException
+     */
     public void workerPlacementInitialization(int x1, int y1, int x2, int y2) throws WorkerBadPlacementException {
         placeWorkers(x1,y1,x2,y2);
 

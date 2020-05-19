@@ -26,6 +26,9 @@ public class Board {
     }
 
     /**
+     * Returns a tile given its coordinattes
+     * @param x
+     * @param y
      * @return returns a {@link Tile} given its coordinates
      */
     public Tile getTile(int x, int y){
@@ -35,7 +38,9 @@ public class Board {
     }
 
         /**
-         *Code similar to the one at <a href:"https://stackoverflow.com/questions/2035522/get-adjacent-elements-in-a-two-dimensional-array" target ="_blank"></a>
+         * Code similar to the one at <a href:"https://stackoverflow.com/questions/2035522/get-adjacent-elements-in-a-two-dimensional-array" target ="_blank"></a>
+         * @param t
+         * @return
          */
     public List<Tile> getAdjacentTiles (Tile t){
         ArrayList<Tile> list = new ArrayList<Tile>();
@@ -55,7 +60,8 @@ public class Board {
     }
 
     /**
-     *Removes a {@link Player}'s workers from the board.
+     * Removes a {@link Player}'s workers from the board.
+     * @param player
      */
     public void removePlayerWorkers(Player player){
      for(Worker w : player.getWorkers()){

@@ -65,10 +65,8 @@ public class Worker {
    }
 
     /**
-     * Builds with the worker on a different {@link Tile} if possible.
-     * If it reaches level 3, it builds a dome.
+     * Builds with the worker on a {@link Tile}. If it reaches level 3, it builds a dome.
      * @param t {@link Tile} to build on
-     * @throws InvalidBuildException Thrown if the selection is not valid
      */
     public void build (Tile t)  {
         /*if(!legalBuild(t)) {

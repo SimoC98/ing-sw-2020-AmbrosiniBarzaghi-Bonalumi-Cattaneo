@@ -21,6 +21,9 @@ public class MoveTwice extends DivinityDecoratorWithEffects {
 
     /**
      * Saves the tile the worker was on his first movement and updates the move counter
+     * @param board
+     * @param selectedWorker
+     * @param selectedTile
      */
     @Override
     public List<MoveUpdate> move(Board board, Worker selectedWorker, Tile selectedTile) {
@@ -33,6 +36,9 @@ public class MoveTwice extends DivinityDecoratorWithEffects {
 
     /**
      * The build can only happen upon a worker's change of position
+     * @param board
+     * @param selectedWorker
+     * @param selectedTile
      */
     @Override
     public void build(Board board,Worker selectedWorker, Tile selectedTile) {
@@ -75,6 +81,7 @@ public class MoveTwice extends DivinityDecoratorWithEffects {
 
     /**
      * Initializes the attribute for the correct use of the gods' effects
+     * @param possibleActions
      */
     @Override
     public void setupDivinity(List<Action> possibleActions) {

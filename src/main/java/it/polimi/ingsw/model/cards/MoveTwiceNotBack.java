@@ -24,6 +24,10 @@ public class MoveTwiceNotBack extends MoveTwice{
     }
 
     /**
+     * Checks if a player is moving twice on different tiles
+     * @param board
+     * @param selectedWorker
+     * @param selectedTile
      * @return {@code true} if the move is correct: it is the first one and in accordance to the game rules, or it is the second and on a different tile
      */
     @Override
@@ -38,6 +42,7 @@ public class MoveTwiceNotBack extends MoveTwice{
 
     /**
      * After the first move, the player can build
+     * @param possibleActions
      */
     @Override
     public void updatePossibleActions(List<Action> possibleActions) {

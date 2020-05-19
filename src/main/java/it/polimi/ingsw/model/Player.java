@@ -21,12 +21,13 @@ public class Player {
     private boolean isWinner;
     private List<Action> possibleActions;
     private List<Worker> workers;
-
     private List<MoveUpdate> moveUpdates;
 
     /**
      * Constructor of the player, given his username and chosen a {@link Color}.
      * All his other attributes are instantiated and set to {@code null}
+     * @param username chosen by the user
+     * @param color assigned by the match
      */
     public Player(String username, Color color) {
         this.username = username;
@@ -55,6 +56,7 @@ public class Player {
     }
 
     /**
+     * Flag to check if the player won
      * @return {@code true} if the player is the winner
      */
     public boolean isWinner() {
@@ -68,21 +70,25 @@ public class Player {
     /**
      * Assigns a divinity to a player. It is invoked by
      * passing the divinity's name.
+     * @param newDivinity
      */
     public void setDivinity(Divinity newDivinity) {
         divinity = newDivinity;
     }
+
 
     public Divinity getDivinity() {
         return divinity;
     }
 
     /**
+     * List of player's workers
      * @return Returns an {@code ArrayList} containing the workers
      */
     public List<Worker> getWorkers() { return new ArrayList<>(workers); }
 
     /**
+     * List of actions a player can choose from
      * @return Returns a {@code HashSet} containing the player's next possible actions, i.e. {@link Action#MOVE}, {@link Action#BUILD}, {@link Action#BUILDDOME} and {@link Action#END}
      */
     public ArrayList<Action> getPossibleActions() { return new ArrayList<>(possibleActions); }
@@ -97,6 +103,9 @@ public class Player {
      * is possible, in first place, it clears the list from actions in order
      * to respect the game logic; then it adds the possibility to build as in the
      * basic Santorini's rules and it adds other possible actions deriving from a divinity's effects
+     * @param board
+     * @param selectedWorker
+     * @param selectedTile
      * @return {@code true} whether the move was successful
      */
     public boolean move(Board board, Worker selectedWorker, Tile selectedTile) {
@@ -126,6 +135,9 @@ public class Player {
      * In addition, it manages the next possible actions: if the build
      * is possible, in first place, it clears the list from actions in order
      * to respect the game logic; then it adds other possible actions deriving from a divinity's effects
+     * @param board
+     * @param selectedWorker
+     * @param selectedTile
      * @return {@code true} whether the build was successful
      */
     public boolean build(Board board,Worker selectedWorker, Tile selectedTile) {

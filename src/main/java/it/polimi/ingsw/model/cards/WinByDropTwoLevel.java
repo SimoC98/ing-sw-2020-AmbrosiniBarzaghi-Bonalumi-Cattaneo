@@ -17,6 +17,9 @@ public class WinByDropTwoLevel extends AdditionalWinCondition {
     }
 
     /**
+     * Verifies if the worker will perform a winning move before moving
+     * @param selectedTile
+     * @param selectedWorker
      * @return {@code true} if Pan's winning condition is verified
      */
     @Override
@@ -27,6 +30,10 @@ public class WinByDropTwoLevel extends AdditionalWinCondition {
 
     /**
      * This methods also needs to check that if the worker is dropping by two levels and in that case, it calls {@link Player#setWinner()}
+     * @param board
+     * @param selectedWorker
+     * @param selectedTile
+     * @return
      */
     @Override
     public List<MoveUpdate> move(Board board, Worker selectedWorker, Tile selectedTile) {

@@ -28,6 +28,9 @@ public class BuildBeforeAndAfter extends DivinityDecoratorWithEffects {
 
     /**
      * If the player builds before moving, a flag is set to remember this decision
+     * @param board
+     * @param selectedWorker
+     * @param selectedTile
      */
     @Override
     public void build(Board board,Worker selectedWorker, Tile selectedTile) {
@@ -46,6 +49,9 @@ public class BuildBeforeAndAfter extends DivinityDecoratorWithEffects {
     /**
      * If the build before the movement will lead the worker to be blocked, such build is prevented.
      * This is the reason why an {@code ArrayList} containing the possible moves after the build is created.
+     * @param board
+     * @param selectedWorker
+     * @param selectedTile
      * @return {@code true} if the second build is viable, or the first build will not stall the {@link Worker}
      */
     @Override
@@ -63,6 +69,9 @@ public class BuildBeforeAndAfter extends DivinityDecoratorWithEffects {
     }
 
     /**
+     * @param board
+     * @param selectedWorker
+     * @param selectedTile
      * @return {@code true} when the worker is moving on a valid position before or after building
      */
     @Override

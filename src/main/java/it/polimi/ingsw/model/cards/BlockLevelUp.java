@@ -17,6 +17,9 @@ public class BlockLevelUp extends DivinityDecoratorWithEffects {
     }
 
     /**
+     * @param board
+     * @param selectedWorker
+     * @param selectedTile
      * @return {@code false} if a {@link Worker} is trying to ascend
      */
     @Override

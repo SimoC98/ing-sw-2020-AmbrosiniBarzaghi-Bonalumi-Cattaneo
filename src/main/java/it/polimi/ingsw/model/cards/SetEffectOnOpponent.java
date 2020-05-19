@@ -28,6 +28,10 @@ public class SetEffectOnOpponent extends DivinityDecoratorWithEffects {
     /**
      * If the worker goes to a higher level than their current one, other players' divinities are decorated
      * with a class that blocks their ascension
+     * @param board
+     * @param selectedWorker
+     * @param selectedTile
+     * @return List of tiles to update on the UI representations
      */
     @Override
     public List<MoveUpdate> move(Board board, Worker selectedWorker, Tile selectedTile) {
@@ -41,6 +45,7 @@ public class SetEffectOnOpponent extends DivinityDecoratorWithEffects {
     /**
      * If Athena had moved up during her previous turn, all the affected divinities
      * needs to get rid of the "blocking" layer. Such condition is checked through a flag
+     * @param possibleActions
      */
     @Override
     public void setupDivinity(List<Action> possibleActions) {

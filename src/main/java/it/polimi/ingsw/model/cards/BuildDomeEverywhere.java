@@ -22,6 +22,9 @@ public class BuildDomeEverywhere extends DivinityDecoratorWithEffects {
     /**
      * Modified {@code build} that builds a dome if the player chooses to do so.
      * The choice is done in {@link Match}
+     * @param board
+     * @param selectedWorker
+     * @param selectedTile
      */
     @Override
     public void build(Board board,Worker selectedWorker, Tile selectedTile) {
@@ -35,6 +38,8 @@ public class BuildDomeEverywhere extends DivinityDecoratorWithEffects {
     }
 
     /**
+     * If the player has not built yet, {@link Action#BUILDDOME} is added to their list of possible actions
+     * @param possibleActions initial list of possible actions
      */
     @Override
     public void updatePossibleActions(List<Action> possibleActions) {

@@ -22,8 +22,11 @@ public class BuildTwice extends DivinityDecoratorWithEffects {
     }
 
     /**
-     *The methods follows the call flow of parent classes to
-     * effectively "decorate" such method
+     * The methods follows the call flow of parent classes to
+     * effectively "decorate" this method
+     * @param board
+     * @param selectedWorker
+     * @param selectedTile
      */
     @Override
     public boolean legalBuild(Board board,Worker selectedWorker, Tile selectedTile) {
@@ -34,6 +37,9 @@ public class BuildTwice extends DivinityDecoratorWithEffects {
      * The function saves the {@link Tile} where the {@link Worker}
      * first builds and it increments the building counter in order to
      * build only twice.
+     * @param board
+     * @param selectedWorker
+     * @param selectedTile
      */
     @Override
     public void build(Board board, Worker selectedWorker, Tile selectedTile) {

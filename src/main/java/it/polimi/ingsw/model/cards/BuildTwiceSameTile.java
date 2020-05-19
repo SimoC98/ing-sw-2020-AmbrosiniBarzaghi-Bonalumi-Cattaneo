@@ -52,6 +52,10 @@ public class BuildTwiceSameTile extends BuildTwice {
     }
 
     /**
+     * Checks if the player is building on the twice on the same tile
+     * @param board
+     * @param selectedWorker
+     * @param selectedTile
      * @return {@code true} if the build is correct: it is the first and in accordance to the game rules, or it is the second and on the same tile
      */
     @Override
@@ -69,6 +73,7 @@ public class BuildTwiceSameTile extends BuildTwice {
 
     /**
      * After the first build the player can end his turn
+     * @param possibleActions
      */
     @Override
     public void updatePossibleActions(List<Action> possibleActions) {

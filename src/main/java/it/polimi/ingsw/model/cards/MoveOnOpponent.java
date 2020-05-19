@@ -25,6 +25,9 @@ public class MoveOnOpponent extends DivinityDecoratorWithEffects {
 
     /**
      * Alters the method so that a worker can move on an opponent's worker
+     * @param board
+     * @param selectedWorker
+     * @param selectedTile
      * @return {@code true} if the base move is valid and the worker is trying to  move on an enemy worker
      */
     @Override

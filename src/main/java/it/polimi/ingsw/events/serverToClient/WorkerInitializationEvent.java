@@ -8,7 +8,7 @@ public class WorkerInitializationEvent implements ServerEvent{
 
     @Override
     public void handleEvent(ClientView clientView) {
-        //TODO
+        clientView.manageWorkersPlacementRequest();
     }
 
     @Override

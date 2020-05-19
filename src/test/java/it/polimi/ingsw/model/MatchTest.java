@@ -225,10 +225,14 @@ class MatchTest {
         match.setDivinityMap(XMLParserUtility.getDivinities());
 
         try {
-            match.playerInitialization(0,0,1,1,"Apollo");
+            match.playerInitialization(0,0,1,1, "Apollo");
             match.playerInitialization(2,2,3,3,"Artemis");
             match.playerInitialization(0,2,0,3,"Athena");
-        } catch (WorkerBadPlacementException e) {System.out.println("Error in initializationTest");}
+        } catch (WorkerBadPlacementException e) {
+            System.out.println("Error in initializationTest");
+        } catch (InvalidDivinitySelectionEvent invalidDivinitySelectionEvent) {
+            invalidDivinitySelectionEvent.printStackTrace();
+        }
 
         assertEquals(p1.getWorkers().get(0).getPositionOnBoard(),board.getTile(0,0));
         assertEquals(p1.getWorkers().get(1).getPositionOnBoard(),board.getTile(1,1));

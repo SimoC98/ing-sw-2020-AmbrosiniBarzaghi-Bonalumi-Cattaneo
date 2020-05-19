@@ -3,6 +3,7 @@ package it.polimi.ingsw.clientView;
 import it.polimi.ingsw.Observer;
 import it.polimi.ingsw.events.clientToServer.*;
 import it.polimi.ingsw.events.serverToClient.ServerEvent;
+import it.polimi.ingsw.events.serverToClient.WorkerInitializationEvent;
 import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Color;
 
@@ -76,7 +77,7 @@ public class ClientView implements Observer<ServerEvent> {
         proxy.sendEvent(new LoginEvent(username));
     }
 
-    //TEMP
+    //TODO: This should be temporary
     public void loginQuestion2(int playersNumber, String username) {
         this.username = username;
         proxy.sendEvent(new LoginEvent(playersNumber, username));
@@ -94,6 +95,14 @@ public class ClientView implements Observer<ServerEvent> {
 
     public void divinitySelectionAndWorkerPlacement(String divinity, int x1, int y1, int x2, int y2) {
         proxy.sendEvent(new DivinitySelectionAndWorkersPlacementEvent(divinity, x1, y1, x2, y2));
+    }
+
+    public void divinitySelection(String divinity){
+        proxy.sendEvent(new DivinitySelectionEvent(divinity));
+    }
+
+    public void workerPlacement(int x1, int y1, int x2, int y2) {
+        proxy.sendEvent(new WorkerPlacementSelectionEvent(x1, y1, x2, y2));
     }
 
     public void selectWorkerQuestion(int x, int y){
@@ -147,14 +156,11 @@ public class ClientView implements Observer<ServerEvent> {
     }
 
     public void manageChooseDivinity(List<String> availableDivinities) {
-//        ui.selectDivinity(availableDivinities);
-//        ui.placeWorkers();
-        ui.selectDivinityAndPlaceWorkers(availableDivinities);
+        ui.selectDivinity(availableDivinities);
+    }
 
-//        PlayerRepresentation player = board.getPlayersMap().get(username);
-//        List<Pair<Integer, Integer>> workers = player.getWorkers();
-//
-//        divinitySelectionAndWorkerPlacement(player.getDivinity(), workers.get(0).getFirst(), workers.get(0).getSecond(), workers.get(1).getFirst(), workers.get(1).getSecond());
+    public void manageWorkersPlacementRequest() {
+        ui.placeWorkers();
     }
 
     public void manageWorkersInitialPlacement(String username, int x1, int y1, int x2, int y2) {

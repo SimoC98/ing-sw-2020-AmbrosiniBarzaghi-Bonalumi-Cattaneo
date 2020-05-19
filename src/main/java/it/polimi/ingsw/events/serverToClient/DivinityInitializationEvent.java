@@ -20,6 +20,6 @@ public class DivinityInitializationEvent implements ServerEvent{
 
     @Override
     public void handleEvent(PingReceiver ping) {
-
+        return;
     }
 }

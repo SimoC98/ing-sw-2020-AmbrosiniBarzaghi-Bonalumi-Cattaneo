@@ -10,6 +10,7 @@ import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.serverView.ServerView;
 
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -86,6 +87,7 @@ public class Controller implements Observer<ClientEvent> {
 
             int winner = model.checkWinner();
             if(winner>=0) {
+                System.out.println("vincitore");
                 disconnectAll();
                 return;
             }

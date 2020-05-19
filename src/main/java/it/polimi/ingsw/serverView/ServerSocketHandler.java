@@ -42,7 +42,7 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
         try {
             while(true) {
                 ClientEvent event = (ClientEvent) in.readObject();
-                if(event instanceof Pong) System.out.print("pong received");
+                //if(event instanceof Pong) System.out.print("pong received");
                 if(event instanceof LoginEvent) {
                     LoginEvent presentation = (LoginEvent) event;
                     login(presentation);
@@ -50,7 +50,7 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
                 else notify(event);
             }
         }catch (Exception e) {
-            //
+            //e.printStackTrace();
         }
     }
 

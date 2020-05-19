@@ -210,10 +210,11 @@ public class Match extends Observable<ServerEvent> {
     public int checkWinner() {
         Player winner = findWinner();
 
-        notify(new WinnerEvent(winner.getUsername()));
-
         if(winner==null) return -1;
-        else return players.indexOf(winner);
+        else {
+            notify(new WinnerEvent(winner.getUsername()));
+            return players.indexOf(winner);
+        }
     }
 
     /**
@@ -295,6 +296,7 @@ public class Match extends Observable<ServerEvent> {
 
                 notify(new MoveEvent(from.getFirst(),from.getSecond(),to.getFirst(),to.getSecond(),updates.get(i).getWorker().getPlayer().getUsername()));
             }
+            return;
 
             //notify(new MoveEvent(startTile.getX(),startTile.getY(),t.getX(),t.getY(),currentPlayer.getUsername()));
         }

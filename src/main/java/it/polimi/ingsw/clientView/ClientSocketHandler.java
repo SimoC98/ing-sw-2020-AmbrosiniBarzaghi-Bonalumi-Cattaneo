@@ -80,7 +80,7 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
             }
         } catch(Exception e) {
             //System.out.print("exception");
-            e.printStackTrace();
+            //e.printStackTrace();
 
             //notify(new Disconnect());
         }

@@ -8,7 +8,6 @@ import java.net.*;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.stream.Collectors;
 
 import static java.lang.System.exit;
 
@@ -47,19 +46,22 @@ public class Server{
 
                //ask to the first user connected username and player's number and wait his answer
                if(playerId==0) {
+                   System.out.print("first player");
                    connection.sendEvent(new LoginRequestEvent(playerId));
                    int cont=0;
                    while(true) {
                        Thread.sleep(1000);
                        cont++;
-                       if(playerGameNumber>0 || cont==60) break;
+                       if(playerGameNumber>0 || cont==10) break;
                    }
-                   if(cont==60) {
+                   if(cont==10) {
                        connection.sendEvent(new Disconnect());
                        connection.close();
-                       continue;
+                       cont=0;
                    }
-                   playerId++;
+                   else {
+                       playerId++;
+                   }
                    //registerConnection(connection);
                    //connection.startPing();
                }
@@ -157,6 +159,9 @@ public class Server{
             controller.startGame(new ArrayList<String>());
 
         }
+        /*else {
+            connection.sendEvent(new WaitingRoomEvent());
+        }*/
     }
 
     private void printUsers() {

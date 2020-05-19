@@ -11,7 +11,6 @@ import it.polimi.ingsw.serverView.ServerView;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -207,9 +206,70 @@ public class Controller implements Observer<ClientEvent> {
             for(ServerView s : playersInGame) {
                 s.sendGameSetupInfo(model.getPlayersUsernames(),model.getPlayersColors(),gameDivinities,descriptions);
             }
-            playersInGame.get(0).chooseDivinity(this.gameDivinities);
+            playersInGame.get(0).sendDivinityInitialization(this.gameDivinities);
         }
     }
+
+
+    public void handleDivinityInitialization(String divinity) {
+        boolean endInitialization=false;
+        if(gameDivinities.size()==1) endInitialization=true;
+
+        currentPlayerId = model.getCurrentPlayerId();
+
+        try {
+            model.divinityInitialization(divinity);
+            currentPlayerId = model.getCurrentPlayerId();
+
+            gameDivinities.remove(divinity);
+
+            if(endInitialization) {
+                for(ServerView s : playersInGame) {
+                    //s.startGame(model.getPlayersUsernames(), model.getPlayersColors(), model.getPlayersDivinities(), model.getPlayersDivinitiesDescriptions());
+                    s.sendDivinitiesSetup(model.getPlayersUsernames(),model.getPlayersDivinities());
+                }
+                playersInGame.get(currentPlayerId).sendWorkerInitialization();
+
+            }
+            else {
+                playersInGame.get(currentPlayerId).sendDivinityInitialization(new ArrayList<>(gameDivinities));
+            }
+
+        } catch (Exception e) {
+            //if chosen divinity is not available another request to choose one is sent to the same client
+
+            playersInGame.get(currentPlayerId).showMessage("error");
+            playersInGame.get(currentPlayerId).sendDivinityInitialization(new ArrayList<>(gameDivinities));
+        }
+
+    }
+
+    public void handleWorkerPlacementInitialization(int x1, int x2, int y1, int y2) {
+        currentPlayerId = model.getCurrentPlayerId();
+        boolean endInitialization = false;
+
+        if(currentPlayerId+1==playersInGame.size()) endInitialization = true;
+
+        try {
+            model.workerPlacementInitialization(x1,y1,x2,y2);
+            currentPlayerId = model.getCurrentPlayerId();
+
+            if(endInitialization) {
+                playersInGame.get(currentPlayerId).startTurn(playersUsernames.get(currentPlayerId));
+            }
+            else {
+                playersInGame.get(currentPlayerId).sendWorkerInitialization();
+            }
+
+        } catch (WorkerBadPlacementException e) {
+            playersInGame.get(currentPlayerId).showMessage("error");
+            playersInGame.get(currentPlayerId).sendWorkerInitialization();
+        }
+    }
+
+
+
+
 
     public void gameInitialization(int x1,int y1, int x2, int y2, String chosenDivinity) {
         boolean endInitialization=false;
@@ -232,12 +292,12 @@ public class Controller implements Observer<ClientEvent> {
                 playersInGame.get(currentPlayerId).startTurn(playersUsernames.get(currentPlayerId));
             }
             else {
-                playersInGame.get(currentPlayerId).chooseDivinity(new ArrayList<>(gameDivinities));
+                playersInGame.get(currentPlayerId).sendDivinityInitialization(new ArrayList<>(gameDivinities));
             }
 
         } catch (WorkerBadPlacementException e) {
             playersInGame.get(currentPlayerId).showMessage("error");
-            playersInGame.get(currentPlayerId).chooseDivinity(new ArrayList<>(gameDivinities));
+            playersInGame.get(currentPlayerId).sendDivinityInitialization(new ArrayList<>(gameDivinities));
         }
 
     }

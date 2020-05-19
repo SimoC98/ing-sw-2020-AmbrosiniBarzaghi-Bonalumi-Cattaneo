@@ -333,6 +333,30 @@ public class Match extends Observable<ServerEvent> {
         }
     }
 
+
+
+    //TODO: create an exception for invalid divinity
+    public void divinityInitialization(String divName) {
+        loadPlayerDivinity(divName);
+
+        int index = players.indexOf(currentPlayer) + 1;
+        if(index==players.size()) currentPlayer = players.get(0);
+        else {
+            currentPlayer = players.get(index);
+        }
+    }
+
+    public void workerPlacementInitialization(int x1, int y1, int x2, int y2) throws WorkerBadPlacementException {
+        placeWorkers(x1,y1,x2,y2);
+
+        int index = players.indexOf(currentPlayer) + 1;
+        if(index==players.size()) startNextTurn();
+        else {
+            currentPlayer = players.get(index);
+        }
+    }
+
+
     public List<String> getAllDivinities() {
         return new ArrayList<>(divinities.keySet());
     }

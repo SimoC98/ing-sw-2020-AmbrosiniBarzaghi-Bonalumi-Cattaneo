@@ -70,8 +70,12 @@ public class ServerView extends Observable<ClientEvent> implements Observer<Serv
         sendEvent(new DivinitiesInGameEvent(divinities,descriptions,playerNumber));
     }
 
-    public void chooseDivinity(List<String> divinities) {
-        sendEvent(new PlayableDivinitiesSelectionEvent(divinities));
+    public void sendDivinityInitialization(List<String> divinities) {
+        sendEvent(new DivinityInitializationEvent(divinities));
+    }
+
+    public void sendWorkerInitialization() {
+        sendEvent(new WorkerInitializationEvent());
     }
 
     /*public void startGame(List<String> players, List<Color> colors, List<String> divinities, List<String> divinitiesDescriptions) {

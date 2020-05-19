@@ -5,11 +5,11 @@ import it.polimi.ingsw.clientView.PingReceiver;
 
 import java.util.List;
 
-public class PlayableDivinitiesSelectionEvent implements ServerEvent{
+public class DivinityInitializationEvent implements ServerEvent{
 
     private final List<String> playableDivinities;
 
-    public PlayableDivinitiesSelectionEvent(List<String> playableDivinities) {
+    public DivinityInitializationEvent(List<String> playableDivinities) {
         this.playableDivinities = playableDivinities;
     }
 

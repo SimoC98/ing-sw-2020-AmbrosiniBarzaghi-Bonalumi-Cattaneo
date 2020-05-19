@@ -312,7 +312,8 @@ public class Match extends Observable<ServerEvent> {
         this.divinities = divinities;
     }
 
-    public void loadPlayerDivinity(String divinityName) {
+    public void loadPlayerDivinity(String divinityName) throws InvalidDivinitySelectionEvent {
+        if(!divinities.keySet().contains(divinityName)) throw new InvalidDivinitySelectionEvent();
         currentPlayer.setDivinity(divinities.get(divinityName));
     }
 
@@ -320,7 +321,7 @@ public class Match extends Observable<ServerEvent> {
      * Method to be called once per player at the beginning of the match
      * to place his workers and to choose a divinity
      */
-    public void playerInitialization(int x1, int y1, int x2, int y2, String divName) throws WorkerBadPlacementException {
+    public void playerInitialization(int x1, int y1, int x2, int y2, String divName) throws WorkerBadPlacementException, InvalidDivinitySelectionEvent {
         placeWorkers(x1,y1,x2,y2);
         loadPlayerDivinity(divName);
 
@@ -336,7 +337,7 @@ public class Match extends Observable<ServerEvent> {
 
 
     //TODO: create an exception for invalid divinity
-    public void divinityInitialization(String divName) {
+    public void divinityInitialization(String divName) throws InvalidDivinitySelectionEvent {
         loadPlayerDivinity(divName);
 
         int index = players.indexOf(currentPlayer) + 1;

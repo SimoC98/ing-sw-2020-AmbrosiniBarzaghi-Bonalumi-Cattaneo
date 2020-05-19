@@ -235,7 +235,7 @@ public class Controller implements Observer<ClientEvent> {
                 playersInGame.get(currentPlayerId).sendDivinityInitialization(new ArrayList<>(gameDivinities));
             }
 
-        } catch (Exception e) {
+        } catch (InvalidDivinitySelectionEvent e) {
             //if chosen divinity is not available another request to choose one is sent to the same client
 
             playersInGame.get(currentPlayerId).showMessage("error");
@@ -270,7 +270,7 @@ public class Controller implements Observer<ClientEvent> {
 
 
 
-
+    //OLD
     public void gameInitialization(int x1,int y1, int x2, int y2, String chosenDivinity) {
         boolean endInitialization=false;
         if(gameDivinities.size()==1) endInitialization=true;
@@ -295,7 +295,7 @@ public class Controller implements Observer<ClientEvent> {
                 playersInGame.get(currentPlayerId).sendDivinityInitialization(new ArrayList<>(gameDivinities));
             }
 
-        } catch (WorkerBadPlacementException e) {
+        } catch (WorkerBadPlacementException | InvalidDivinitySelectionEvent e) {
             playersInGame.get(currentPlayerId).showMessage("error");
             playersInGame.get(currentPlayerId).sendDivinityInitialization(new ArrayList<>(gameDivinities));
         }

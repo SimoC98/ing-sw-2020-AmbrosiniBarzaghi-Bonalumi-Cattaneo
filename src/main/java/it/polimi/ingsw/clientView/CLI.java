@@ -6,7 +6,7 @@ import it.polimi.ingsw.model.Color;
 
 import java.util.*;
 
-public class CLI extends UI{
+public class CLI implements UI{
 
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
@@ -27,7 +27,7 @@ public class CLI extends UI{
 
     public CLI(ClientView clientView) {
         lock = new Object();
-        this.clientView = clientView;
+        clientView = clientView;
         board = clientView.getBoard();
         scanner = new Scanner(System.in);
     }
@@ -72,7 +72,7 @@ public class CLI extends UI{
             username = scanner.nextLine();
         }while(username.length() < 3);
 
-        if(clientView.getUserID() == 0)
+       /* if(clientView.getUserID() == 0)
         {
             System.out.println("You're the first logged user, so you have to choose the number of players for this match.");
             System.out.println("You can choose between 2 and 3 players.");
@@ -90,7 +90,7 @@ public class CLI extends UI{
             clientView.loginQuestion2(playersNumber, username);
             clientView.startPing();
             return;
-        }
+        }*/
 
         clientView.loginQuestion(username);
         clientView.startPing();

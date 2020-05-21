@@ -62,12 +62,13 @@ public class PingManager implements Observer<ClientEvent> {
 
 
     public void startPing() {
-        /*pinger = new Timer();
+        pinger = new Timer();
         task = new TimerTask() {
             @Override
             public void run() {
                 if(ping==false) {
                     System.out.println("TIMEEER");
+                    pinger.cancel();
                     connection.disconnect();
                 }
                 else {
@@ -79,7 +80,7 @@ public class PingManager implements Observer<ClientEvent> {
         };
 
         //8 sec to receive pong
-        pinger.schedule(task,0,5000);*/
+        pinger.schedule(task,0,5000);
 
     }
 

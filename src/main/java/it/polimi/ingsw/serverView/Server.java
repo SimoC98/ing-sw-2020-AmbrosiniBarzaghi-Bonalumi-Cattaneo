@@ -11,6 +11,15 @@ import java.util.concurrent.Executors;
 
 import static java.lang.System.exit;
 
+
+/*
+Following tutor Michele Bertoni's tips:
+-server accepts connections without block itself asking to the first the player's number to start the match
+-server start the match as soon as 3 users connects
+-when 2 users are connected, a timer is scheduled ---> after XX seconds the match starts with 2 players
+-if 2 players are in the waiting room and one of them disconnect himself, timer is deleted
+ */
+
 public class Server{
     private int port;
     private ExecutorService executor;
@@ -20,7 +29,7 @@ public class Server{
     private boolean isGameStarted;
     private Map<ServerSocketHandler,String> loggedPlayers;
 
-    int cont = 0;
+    private Timer timer;
 
 
 
@@ -32,6 +41,8 @@ public class Server{
         isGameStarted=false;
         playerId = 0;
         playerGameNumber = -1;
+
+        timer = new Timer();
     }
 
     public void startServer() {
@@ -43,38 +54,10 @@ public class Server{
                System.out.println("accepted" + socket.getInetAddress());
                ServerSocketHandler connection = new ServerSocketHandler(socket,this);
                executor.submit(connection);
-               //registerConnection(connection);
+               System.out.println("player id" + playerId);
+               connection.sendEvent(new LoginRequestEvent(playerId));
+               playerId++;
 
-
-               //ask to the first user connected username and player's number and wait his answer
-               if(playerId==0) {
-                   System.out.print("first player");
-                   connection.sendEvent(new LoginRequestEvent(playerId));
-
-                    int res = waitFirst();
-
-                   if(res==10) {
-                       connection.sendEvent(new Disconnect());
-                       connection.close();
-                   }
-                   else {
-                       playerId++;
-                   }
-                   //registerConnection(connection);
-                   //connection.startPing();
-               }
-               /*else if(isLobbyFull()) {
-                   System.out.println("lobby full");
-                   connection.sendEvent(new LobbyFullEvent());
-                   connection.close();
-               }*/
-               else {
-                   System.out.println("player id" + playerId);
-                   connection.sendEvent(new LoginRequestEvent(playerId));
-                   playerId++;
-                   //registerConnection(connection);
-                   //connection.startPing();
-               }
            }
         } catch (Exception e) {
             e.printStackTrace();
@@ -82,21 +65,6 @@ public class Server{
     }
 
 
-    private synchronized int waitFirst() {
-        int cont=0;
-        try {
-            while(true) {
-                Thread.sleep(1000);
-                cont++;
-                if(playerGameNumber>0 || cont==10) break;
-            }
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-
-        return cont;
-
-    }
 
 
     public synchronized void registerConnection(ServerSocketHandler connection) {
@@ -104,6 +72,10 @@ public class Server{
     }
 
     public synchronized void deregisterConnection(ServerSocketHandler connection) {
+        if(!isGameStarted && loggedPlayers.size()==2) {
+            timer.cancel();
+        }
+
         connections.remove(connection);
         if(loggedPlayers.keySet().contains(connection)) {
             loggedPlayers.remove(connection);
@@ -121,17 +93,7 @@ public class Server{
     }
 
     public synchronized void loginUser(int playerNumber, String username, ServerSocketHandler connection) {
-        if(playerNumber>0) {
-            playerGameNumber = playerNumber;
-            System.out.println("player numbers chosen: " + playerNumber);
-        }
-        else if(loggedPlayers.values().contains(username)) {
-            List<String> loggedUsernames = new ArrayList<>(loggedPlayers.values());
-            connection.sendEvent(new InvalidUsernameEvent(loggedUsernames));
-            System.out.print("USERNAME NOT AVAILABLE");
-            return;
-        }
-        else if(isLobbyFull()) {
+        if(isLobbyFull()) {
             System.out.println("lobby full");
             connection.sendEvent(new LobbyFullEvent());
             try {
@@ -142,6 +104,12 @@ public class Server{
             connection.close();
             return;
         }
+        else if(loggedPlayers.values().contains(username)) {
+            List<String> loggedUsernames = new ArrayList<>(loggedPlayers.values());
+            connection.sendEvent(new InvalidUsernameEvent(loggedUsernames));
+            System.out.print("USERNAME NOT AVAILABLE");
+            return;
+        }
 
         registerConnection(connection);
         loggedPlayers.put(connection,username);
@@ -149,36 +117,54 @@ public class Server{
         printUsers();
 
 
-        if(loggedPlayers.keySet().size()==playerGameNumber) {
-            System.out.println("GAME START\n");
-            isGameStarted=true;
+        if(loggedPlayers.keySet().size()==3) {
+            timer.cancel();
+            startMatch();
+        }
+        else if(loggedPlayers.keySet().size()==2) {
+            timer = new Timer();
+            new Thread(()-> {
+                timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        startMatch();
+                    }
+                },30000);
+            }).start();
 
-            List<ServerView> users = new ArrayList<>();
-            List<String> players = new ArrayList<>();
-
-            for(ServerSocketHandler s : connections) {
-                ServerView newUser = new ServerView(loggedPlayers.get(s), s);
-                players.add(loggedPlayers.get(s));
-                users.add(newUser);
-            }
-
-
-            //Match match = new Match(new ArrayList<>(loggedPlayers.values()));
-            Match match = new Match(players);
-            Controller controller = new Controller(match,users);
-
-            for(ServerView s : users) {
-                s.addObserver(controller);
-                match.addObserver(s);
-            }
-
-            controller.startGame(new ArrayList<String>());
 
         }
         /*else {
             connection.sendEvent(new WaitingRoomEvent());
         }*/
     }
+
+    private void startMatch() {
+        System.out.println("GAME START\n");
+        isGameStarted=true;
+
+        List<ServerView> users = new ArrayList<>();
+        List<String> players = new ArrayList<>();
+
+        for(ServerSocketHandler s : connections) {
+            ServerView newUser = new ServerView(loggedPlayers.get(s), s);
+            players.add(loggedPlayers.get(s));
+            users.add(newUser);
+        }
+
+
+        //Match match = new Match(new ArrayList<>(loggedPlayers.values()));
+        Match match = new Match(players);
+        Controller controller = new Controller(match,users);
+
+        for(ServerView s : users) {
+            s.addObserver(controller);
+            match.addObserver(s);
+        }
+
+        controller.startGame(new ArrayList<String>());
+    }
+
 
     private void printUsers() {
         System.out.println("\nLOGGED PLAYERS: ");

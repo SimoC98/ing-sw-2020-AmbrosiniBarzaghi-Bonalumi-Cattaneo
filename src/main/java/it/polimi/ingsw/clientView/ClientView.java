@@ -6,7 +6,13 @@ import it.polimi.ingsw.events.serverToClient.ServerEvent;
 import it.polimi.ingsw.events.serverToClient.WorkerInitializationEvent;
 import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Color;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.*;
@@ -28,23 +34,30 @@ public class ClientView implements Observer<ServerEvent> {
     private Object lock = new Object();
 
     public ClientView(){
-//       proxy = new ClientSocketHandler();
         board = new BoardRepresentation();
         username = null;
         userID = -1;      //may become userID but we have no method to tell for now
         pingTimer = new Timer();
     }
 
-    public ClientView(UI ui){
-//        proxy = new ClientSocketHandler();
-        pingTimer = new Timer();
-        board = new BoardRepresentation();
-        this.ui = ui;
-        username = null;
-        userID = -1;      //may become userID but we have no method to tell for now
+    //USED JUST FOR TEST
+    //TODO: REMOVE
+//    public ClientView(){
+//        pingTimer = new Timer();
+//        board = new BoardRepresentation();
+//        username = null;
+//        userID = -1;      //may become userID but we have no method to tell for now
+//    }
+
+    public void startProxy(Socket socket) {
+        proxy = new ClientSocketHandler(socket);
+        proxy.addObserver(this);
+        new Thread(proxy).start();
     }
 
-
+    public void startUI() {
+        ui.start();
+    }
 
     public BoardRepresentation getBoard() {
         return board;
@@ -81,10 +94,10 @@ public class ClientView implements Observer<ServerEvent> {
     }
 
     //TODO: This should be temporary
-    public void loginQuestion2(int playersNumber, String username) {
-        this.username = username;
-        proxy.sendEvent(new LoginEvent(playersNumber, username));
-    }
+//    public void loginQuestion2(int playersNumber, String username) {
+//        this.username = username;
+//        proxy.sendEvent(new LoginEvent(playersNumber, username));
+//    }
 
     //IF USERID==0
     public void playersNumberQuestion(int num) {
@@ -244,16 +257,10 @@ public class ClientView implements Observer<ServerEvent> {
     public void start() {
         this.ui = new CLI(this);
         ui.start();
-//        System.out.println("start");
-//        System.out.println("Username?");
-//        Scanner scanner = new Scanner(System.in);
-//        this.username = scanner.nextLine();
 
         Socket socket = null;
-
         try {
-            socket = new Socket("127.0.0.1",4000);
-            System.out.println("connection established");
+            socket = new Socket("127.0.0.1", 4000);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -264,52 +271,39 @@ public class ClientView implements Observer<ServerEvent> {
         this.proxy = proxy;
 
         new Thread(proxy).start();
-
-    }
-
-    protected void startPing() {
-        /*pingTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                //System.out.println("ping");
-                proxy.sendEvent(new Ping());
-            }
-        },2000);*/
-
     }
 
     public void lobbyFull() {
-        System.out.println("Lobby Full");
+        ui.textMessage("The lobby is full, try reconnecting");
         disconnect();
     }
 
     public void disconnect() {
-        //proxy.close();
-        System.out.println("disconnecting");
+//        proxy.close();
+        ui.textMessage("Disconnecting");
         exit(0);
     }
 
-    public void login(int id) {
-        if(id==0) {
-            System.out.println("player number");
-            Scanner scanner = new Scanner(System.in);
-            int playernumber = scanner.nextInt();
-            proxy.sendEvent(new LoginEvent(playernumber,this.username));
-        }
-        else {
-            proxy.sendEvent(new LoginEvent(this.username));
-        }
-
-
-        pingTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-//                System.out.println("PING");
-                proxy.sendEvent(new Ping());
-            }
-        },0,5000);
-
-    }
-
+//    public void login(int id) {
+//        if(id==0) {
+//            System.out.println("player number");
+//            Scanner scanner = new Scanner(System.in);
+//            int playernumber = scanner.nextInt();
+//            proxy.sendEvent(new LoginEvent(playernumber,this.username));
+//        }
+//        else {
+//            proxy.sendEvent(new LoginEvent(this.username));
+//        }
+//
+//
+//        pingTimer.schedule(new TimerTask() {
+//            @Override
+//            public void run() {
+////                System.out.println("PING");
+//                proxy.sendEvent(new Ping());
+//            }
+//        },0,5000);
+//
+//    }
 
 }

@@ -6,9 +6,6 @@ import java.util.List;
 
 public interface UI {
 
-    ClientView clientView = null;
-
-
     //metodi to have
     public void start();
 

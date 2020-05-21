@@ -4,7 +4,10 @@ import it.polimi.ingsw.Pair;
 import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Color;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 
 public class CLI implements UI{
 
@@ -19,7 +22,7 @@ public class CLI implements UI{
     public static final String ANSI_WHITE = "\u001B[37m";
 
 
-    //I'm inheriting a ClientView attribute
+    ClientView clientView;
     BoardRepresentation board;
     Scanner scanner;
 
@@ -27,7 +30,7 @@ public class CLI implements UI{
 
     public CLI(ClientView clientView) {
         lock = new Object();
-        clientView = clientView;
+        this.clientView = clientView;
         board = clientView.getBoard();
         scanner = new Scanner(System.in);
     }
@@ -43,7 +46,7 @@ public class CLI implements UI{
 
     @Override
     public void start() {
-        System.out.println("Welcome to..." + "\n");
+        System.out.println("\n\nWelcome to..." + "\n");
 
         System.out.println(" .oooooo..o                           .                       o8o               o8o");
         System.out.println("d8P'    `Y8                         .o8                       `\"'               `\"'");
@@ -93,7 +96,7 @@ public class CLI implements UI{
         }*/
 
         clientView.loginQuestion(username);
-        clientView.startPing();
+//        clientView.startPing();
 
     }
 
@@ -531,24 +534,24 @@ public class CLI implements UI{
         for(Action action : possibleActions) {
             switch(action) {
                 case MOVE:
-                    System.out.println("\tm) Move worker");
+                    System.out.println("\tm)\t\tMove worker");
                     break;
 
                 case BUILD:
-                    System.out.println("\tb) Build a level on a tile (dome if already level 3)");
+                    System.out.println("\tb)\t\tBuild a level on a tile (dome if already level 3)");
                     break;
 
                 case BUILDDOME:
-                    System.out.println("\td) Build a dome at any level on a tile");
+                    System.out.println("\td)\t\tBuild a dome at any level on a tile");
                     break;
 
                 case END:
-                    System.out.println("\te) End your turn without further do");
+                    System.out.println("\te)\t\tEnd your turn without further do");
                     break;
             }
         }
-        System.out.println("\tdiv) Read divinities' effects descriptions");
-        System.out.println("\tup) Update board");
+        System.out.println("\tdiv)\tRead divinities' effects descriptions");
+        System.out.println("\tup)\t\tUpdate board");
 
         System.out.println();
     }
@@ -601,6 +604,7 @@ public class CLI implements UI{
             StringBuilder s = new StringBuilder();
             s.append(color + p.getUsername());
             if(p.getDivinity()!=null) s.append(" --> " + p.getDivinity());
+            if(p.getUsername().equals(clientView.getUsername())) s.append("\t\tYOU");
 
             System.out.print(s.toString() + "\n");
         }

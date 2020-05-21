@@ -18,8 +18,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
 
+/**
+ * Parser used to setup the divinities
+ */
 public class XMLParserUtility {
 
+    /**
+     * Maps each divinity to their effects
+     */
     private static final HashMap<String, Callable<Divinity>> effectToDivinity = new HashMap<String, Callable<Divinity>>() {
         {
             //0 - Human
@@ -54,6 +60,10 @@ public class XMLParserUtility {
         }
     };
 
+    /**
+     * Map of the divinities
+     * @return Divinities mapped with their name and an instance of their class
+     */
     public static Map<String, Divinity> getDivinities(){
         File xmlFile = new File("resources/divinities.xml");
 

@@ -1,5 +1,10 @@
 package it.polimi.ingsw;
 
+/**
+ * Custom class created to easily send packages through the socket
+ * @param <T>
+ * @param <V>
+ */
 public class Pair<T, V> {
     private T first;
     private V second;

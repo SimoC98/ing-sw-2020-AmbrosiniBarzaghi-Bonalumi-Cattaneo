@@ -29,7 +29,7 @@ public class Board {
      * Returns a tile given its coordinattes
      * @param x
      * @param y
-     * @return returns a {@link Tile} given its coordinates
+     * @return returns a {@link Tile} given its coordinates; if the tile is not valid, it returns null
      */
     public Tile getTile(int x, int y){
         if(x>=0 && y>= 0 && x<5 && y<5)
@@ -78,7 +78,7 @@ public class Board {
      * @return The list is created checking that each of the {@link }'s adjacent tiles are free to move onto; such conditions are verified through the call of {@code legalMove} on {@link Player}
      */
     public List<Tile> getAvailableMoveTiles(Worker selectedWorker){
-        List<Tile> list = new ArrayList<>();
+        List<Tile> list ;
         list = getAdjacentTiles(selectedWorker.getPositionOnBoard());
         List<Tile> ret = new ArrayList<>();
         for(int i=0; i<list.size();i++){

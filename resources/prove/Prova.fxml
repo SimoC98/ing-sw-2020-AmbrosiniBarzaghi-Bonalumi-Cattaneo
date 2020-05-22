@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="739.0" prefWidth="868.0" styleClass="bodybg" stylesheets="@background.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.ProvaController">
+   <children>
+      <Button fx:id="btn" layoutX="164.0" layoutY="386.0" mnemonicParsing="false" onAction="#pressButton" prefHeight="87.0" prefWidth="245.0" text="Button" />
+      <TextField fx:id="textFieldLogin" layoutX="185.0" layoutY="280.0" />
+   </children>
+</Pane>

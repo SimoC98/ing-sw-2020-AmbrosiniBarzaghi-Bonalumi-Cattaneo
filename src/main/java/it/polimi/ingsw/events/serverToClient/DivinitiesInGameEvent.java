@@ -6,6 +6,10 @@ import it.polimi.ingsw.clientView.PingReceiver;
 import java.util.List;
 
 //first event sent
+
+/**
+ * List of all divinities with their description sent to the last player who will choose as many as the number of players
+ */
 public class DivinitiesInGameEvent implements ServerEvent{
 
     private List<String> divinities;

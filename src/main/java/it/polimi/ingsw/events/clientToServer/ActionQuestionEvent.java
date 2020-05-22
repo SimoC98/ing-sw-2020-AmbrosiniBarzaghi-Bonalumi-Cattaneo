@@ -4,6 +4,10 @@ import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.serverView.PingManager;
 
+/**
+ * Sends to the server the action chosen by the client and performed on the selected worker
+ * on the given coordinates
+ */
 public class ActionQuestionEvent implements ClientEvent {
 
     private final Action action;

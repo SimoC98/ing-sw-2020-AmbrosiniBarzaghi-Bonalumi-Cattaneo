@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Informs a client about which divinity each player chose
+ */
 public class DivinitiesSetupEvent implements ServerEvent{
     Map<String,String> playersDivinities;
 

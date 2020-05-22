@@ -3,6 +3,9 @@ package it.polimi.ingsw.events.clientToServer;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.serverView.PingManager;
 
+/**
+ * Selects the worker that will perform the action specified in the other events
+ */
 public class WorkerSelectionQuestionEvent implements ClientEvent {
     private int x;
     private int y;

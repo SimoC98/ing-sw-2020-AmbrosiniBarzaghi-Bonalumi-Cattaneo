@@ -4,6 +4,9 @@ import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.serverView.PingManager;
 
+/**
+ * Event with the coordinates about where to build with the selected worker
+ */
 public class BuildQuestionEvent implements ClientEvent {
     private Action action;
     int x;

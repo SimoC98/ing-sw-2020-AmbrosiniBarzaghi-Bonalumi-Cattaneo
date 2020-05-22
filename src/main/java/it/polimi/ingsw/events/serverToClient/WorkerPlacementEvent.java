@@ -3,6 +3,9 @@ package it.polimi.ingsw.events.serverToClient;
 import it.polimi.ingsw.clientView.ClientView;
 import it.polimi.ingsw.clientView.PingReceiver;
 
+/**
+ * Tells a user where the specified player placed their workers
+ */
 public class WorkerPlacementEvent implements ServerEvent{
     private String username;
     private int x1,y1,x2,y2;

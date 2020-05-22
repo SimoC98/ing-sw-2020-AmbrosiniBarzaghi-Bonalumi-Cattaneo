@@ -5,6 +5,9 @@ import it.polimi.ingsw.clientView.PingReceiver;
 
 import java.util.List;
 
+/**
+ * List of divinities chosen by the last player that each user can choose from
+ */
 public class DivinityInitializationEvent implements ServerEvent{
 
     private final List<String> playableDivinities;

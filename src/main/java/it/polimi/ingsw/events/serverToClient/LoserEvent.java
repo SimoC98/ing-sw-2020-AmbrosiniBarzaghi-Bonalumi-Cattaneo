@@ -5,6 +5,9 @@ import it.polimi.ingsw.clientView.PingReceiver;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.serverView.ServerView;
 
+/**
+ * Event sent to inform a player that they lost
+ */
 public class LoserEvent implements ServerEvent {
 
     private final String loser;

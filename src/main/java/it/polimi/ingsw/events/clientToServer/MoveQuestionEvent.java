@@ -4,6 +4,9 @@ import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.serverView.PingManager;
 
+/**
+ * Events managing where to move with the selected worker
+ */
 public class MoveQuestionEvent implements ClientEvent {
     private Action action;
     private int x;

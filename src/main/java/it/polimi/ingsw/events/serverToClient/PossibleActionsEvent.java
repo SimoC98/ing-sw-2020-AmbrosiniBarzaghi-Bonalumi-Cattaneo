@@ -7,6 +7,9 @@ import it.polimi.ingsw.serverView.ServerView;
 
 import java.util.List;
 
+/**
+ * List containing the actions a user can select: move, build, builddome, end
+ */
 public class PossibleActionsEvent implements ServerEvent {
 
     private final List<Action> possibleActions;

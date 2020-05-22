@@ -34,7 +34,7 @@ public class TemporaryMain {
         ClientView clientView = new ClientView();
         if(ui!=null && ui.equals("gui")) {
             System.out.println("You're going to play with the GUI interface");
-            clientView.setUI(new GUI(clientView));
+            //clientView.setUI(new GUI(clientView));
         } else {
             System.out.println("You're going to play with the CLI interface");
             clientView.setUI(new CLI(clientView));

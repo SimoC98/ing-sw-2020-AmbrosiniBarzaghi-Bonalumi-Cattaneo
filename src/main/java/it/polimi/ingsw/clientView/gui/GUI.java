@@ -4,7 +4,10 @@ import it.polimi.ingsw.clientView.BoardRepresentation;
 import it.polimi.ingsw.clientView.ClientView;
 import it.polimi.ingsw.clientView.UI;
 import it.polimi.ingsw.events.clientToServer.ClientEvent;
+import it.polimi.ingsw.events.serverToClient.LoginRequestEvent;
 import it.polimi.ingsw.model.Action;
+import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,11 +20,15 @@ import java.net.URL;
 import java.util.List;
 import java.util.Scanner;
 
-public class GUI implements UI {
+public class GUI extends Application implements UI {
 
     BoardRepresentation board;
 
+    private static ClientView clientView;
+
     private LoginController loginController;
+
+    private WelcomeController welcomeController;
 
     private Stage primaryStage;
 
@@ -29,33 +36,67 @@ public class GUI implements UI {
 
 
 
-    public GUI(ClientView clientView) {
-        board = clientView.getBoard();
-        clientView = clientView;
-        loginController=null;
+    public GUI() {
     }
 
-    public void startGUI() {
+    public void setClientView(ClientView clientView) {
+        this.clientView = clientView;
+        this.board = clientView.getBoard();
     }
 
+    public static ClientView getClientView() {
+        return clientView;
+    }
 
     //metodi to have
     public void start() {
+        launch();
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        LoginController.setClientView(clientView);
+        WelcomeController.setClientView(clientView);
+
+
+        URL loginUrl = new File("resources/Login.fxml").toURI().toURL();
+        URL welcomeUrl = new File("resources/Welcome.fxml").toURI().toURL();
+
+
+
+        FXMLLoader welcomeLoader = new FXMLLoader(welcomeUrl);
+        Parent welcomePane = welcomeLoader.load();
+        Scene welcomeScene = new Scene(welcomePane, 750, 500);
+
+        FXMLLoader loginLoader = new FXMLLoader(loginUrl);
+        Parent loginPane = loginLoader.load();
+        Scene loginScene = new Scene(loginPane, 750, 500);
+
+        welcomeController = welcomeLoader.getController();
+        loginController = loginLoader.getController();
+
+        welcomeController.setStage(stage);
+
+        loginController.setStage(stage);
+
+        welcomeController.setLoginScene(loginScene);
+
+        stage.setScene(welcomeScene);
+        stage.show();
+
+
 
     }
+
+
     public void login(){
 
-        FXMLLoader loader = null;
+        System.out.println("\nlogin...");
 
-        try {
-            URL url = new File("/home/simone/IdeaProjects/ing-sw-2020-AmbrosiniBarzaghi-Bonalumi-Cattaneo/resources/Login.fxml").toURI().toURL();
-            loader = new FXMLLoader(url);
-            Parent root = loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Platform.runLater(()-> {
+            welcomeController.changeScene();
+        });
 
-        loginController = loader.getController();
 
         /*stage.setTitle("prova");
         stage.setScene(new Scene(root,750,500));
@@ -63,6 +104,8 @@ public class GUI implements UI {
 
 
     }
+
+
     public void failedLogin(List<String> usernames) {}
 
     public void selectPlayersNumber() {}

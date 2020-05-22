@@ -6,6 +6,7 @@ import it.polimi.ingsw.events.serverToClient.ServerEvent;
 import it.polimi.ingsw.events.serverToClient.WorkerInitializationEvent;
 import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Color;
+import javafx.application.Platform;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -29,7 +30,6 @@ public class ClientView implements Observer<ServerEvent> {
     private UI ui;
     private String username;
     private int userID;
-    private Timer pingTimer;
 
     private Object lock = new Object();
 
@@ -37,7 +37,14 @@ public class ClientView implements Observer<ServerEvent> {
         board = new BoardRepresentation();
         username = null;
         userID = -1;      //may become userID but we have no method to tell for now
-        pingTimer = new Timer();
+    }
+
+    public ClientView(UI ui) {
+        board = new BoardRepresentation();
+        username = null;
+        userID = -1;      //may become userID but we have no method to tell for now
+
+        this.ui = ui;
     }
 
     //USED JUST FOR TEST
@@ -140,6 +147,8 @@ public class ClientView implements Observer<ServerEvent> {
     public void manageLogin(int id){
         setUserID(id);  //TEMP
         ui.login();
+
+
     }
 
     public void manageWrongUsername(List<String> usernames) {
@@ -251,12 +260,12 @@ public class ClientView implements Observer<ServerEvent> {
     //temp main and start
     public static void main(String[] args) {
         ClientView c = new ClientView();
-        c.start();
+        //c.start();
     }
 
-    public void start() {
-        this.ui = new CLI(this);
-        ui.start();
+    public void startConnection() {
+        /*this.ui = new CLI(this);
+        ui.start();*/
 
         Socket socket = null;
         try {

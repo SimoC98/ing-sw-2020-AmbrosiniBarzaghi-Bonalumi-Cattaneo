@@ -3,6 +3,9 @@ package it.polimi.ingsw.events.serverToClient;
 import it.polimi.ingsw.clientView.ClientView;
 import it.polimi.ingsw.clientView.PingReceiver;
 
+/**
+ * Event to tell the client to place their workers
+ */
 public class WorkerInitializationEvent implements ServerEvent{
 
 

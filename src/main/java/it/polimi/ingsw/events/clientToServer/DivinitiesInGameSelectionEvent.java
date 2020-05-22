@@ -5,10 +5,12 @@ import it.polimi.ingsw.serverView.PingManager;
 
 import java.util.List;
 
+/**
+ * List of divinities that will be playable, picked by the last player
+ */
 public class DivinitiesInGameSelectionEvent implements ClientEvent {
 
     private List<String> divinities;
-    private List<String> descriptions;
 
     public DivinitiesInGameSelectionEvent(List<String> divinities) {
         this.divinities = divinities;

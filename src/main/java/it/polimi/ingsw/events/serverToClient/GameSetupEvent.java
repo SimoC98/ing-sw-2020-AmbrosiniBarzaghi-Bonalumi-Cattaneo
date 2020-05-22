@@ -6,6 +6,10 @@ import it.polimi.ingsw.model.Color;
 
 import java.util.List;
 
+/**
+ * Event sent at the start of the game to let the client know the information about every player:
+ * the players' username, their color, their divinity and their divinity's description
+ */
 public class GameSetupEvent implements ServerEvent{
     private List<String> players;
     private List<Color> colors;

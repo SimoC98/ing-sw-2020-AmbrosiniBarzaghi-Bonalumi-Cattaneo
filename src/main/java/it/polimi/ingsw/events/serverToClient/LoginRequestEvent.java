@@ -5,6 +5,9 @@ import it.polimi.ingsw.clientView.PingReceiver;
 
 import java.io.Serializable;
 
+/**
+ * Event after which a client sends their username. The server sends them an id to tell them their number
+ */
 public class LoginRequestEvent implements ServerEvent, Serializable {
     private int id;
 

@@ -3,6 +3,9 @@ package it.polimi.ingsw.events.clientToServer;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.serverView.PingManager;
 
+/**
+ * Event that tells the model where to place a player's workers
+ */
 public class WorkerPlacementSelectionEvent implements ClientEvent{
     private final int x1, y1, x2, y2;
 

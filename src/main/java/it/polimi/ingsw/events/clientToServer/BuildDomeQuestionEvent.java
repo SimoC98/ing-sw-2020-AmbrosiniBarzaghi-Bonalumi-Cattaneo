@@ -4,6 +4,9 @@ import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.serverView.PingManager;
 
+/**
+ * Informs the server where the user (playing Atlas), wants to place a dome
+ */
 public class BuildDomeQuestionEvent implements ClientEvent {
     private Action action;
     int x;

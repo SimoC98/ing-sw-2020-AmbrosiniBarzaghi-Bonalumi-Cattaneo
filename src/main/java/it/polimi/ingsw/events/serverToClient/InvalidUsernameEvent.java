@@ -5,6 +5,9 @@ import it.polimi.ingsw.clientView.PingReceiver;
 
 import java.util.List;
 
+/**
+ * Sent if the user picked an already used username
+ */
 public class InvalidUsernameEvent implements ServerEvent {
     private final List<String> usernames;
 

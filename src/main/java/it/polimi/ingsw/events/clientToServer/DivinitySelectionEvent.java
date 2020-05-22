@@ -3,6 +3,9 @@ package it.polimi.ingsw.events.clientToServer;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.serverView.PingManager;
 
+/**
+ * Divinity chosen by the player
+ */
 public class DivinitySelectionEvent implements ClientEvent{
     private final String chosenDivinity;
 

@@ -5,6 +5,9 @@ import it.polimi.ingsw.clientView.PingReceiver;
 import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Tile;
 
+/**
+ * Informs a client that the specified player built with the selected worker on the specified tile
+ */
 public class BuildEvent implements ServerEvent {
 
     private final String player;

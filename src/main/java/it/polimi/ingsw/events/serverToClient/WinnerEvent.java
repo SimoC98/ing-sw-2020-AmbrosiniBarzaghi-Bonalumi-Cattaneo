@@ -5,6 +5,9 @@ import it.polimi.ingsw.clientView.PingReceiver;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.serverView.ServerView;
 
+/**
+ * Informs the player that they are the winner
+ */
 public class WinnerEvent implements ServerEvent {
 
     private final String winner;

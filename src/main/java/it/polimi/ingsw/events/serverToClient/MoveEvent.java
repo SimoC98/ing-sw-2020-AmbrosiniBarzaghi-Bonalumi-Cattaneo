@@ -4,6 +4,9 @@ import it.polimi.ingsw.clientView.ClientView;
 import it.polimi.ingsw.clientView.PingReceiver;
 import it.polimi.ingsw.model.Tile;
 
+/**
+ * Informs a client that the specified player moved with the selected worker on the specified tile
+ */
 public class MoveEvent implements ServerEvent {
 
     //private final Tile from, to;

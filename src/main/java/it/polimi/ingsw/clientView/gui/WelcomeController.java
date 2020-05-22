@@ -36,20 +36,8 @@ public class WelcomeController {
     @FXML
     public void pressButton(ActionEvent event) {
         System.out.println("connection");
-//        clientView.startConnection();
 
         clientView.startConnection();
     }
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
-
-    public void setLoginScene(Scene loginScene) {
-        this.loginScene = loginScene;
-    }
-
-    public void changeScene() {
-        this.stage.setScene(loginScene);
-    }
 }

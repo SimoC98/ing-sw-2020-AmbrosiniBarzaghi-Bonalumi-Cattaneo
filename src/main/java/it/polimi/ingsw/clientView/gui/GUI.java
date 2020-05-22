@@ -22,15 +22,17 @@ import java.util.Scanner;
 
 public class GUI extends Application implements UI {
 
-    BoardRepresentation board;
+    private static BoardRepresentation board;
 
     private static ClientView clientView;
 
     private LoginController loginController;
-
     private WelcomeController welcomeController;
 
     private Stage primaryStage;
+
+    private Parent welcomeRoot;
+    private Parent loginRoot;
 
 
 
@@ -44,7 +46,7 @@ public class GUI extends Application implements UI {
         this.board = clientView.getBoard();
     }
 
-    public static ClientView getClientView() {
+    public ClientView getClientView() {
         return clientView;
     }
 
@@ -53,10 +55,15 @@ public class GUI extends Application implements UI {
         launch();
     }
 
+
     @Override
     public void start(Stage stage) throws Exception {
+        this.primaryStage = stage;
+
         LoginController.setClientView(clientView);
         WelcomeController.setClientView(clientView);
+
+        clientView.setUI(this);
 
 
         URL loginUrl = new File("resources/Login.fxml").toURI().toURL();
@@ -66,26 +73,28 @@ public class GUI extends Application implements UI {
 
         FXMLLoader welcomeLoader = new FXMLLoader(welcomeUrl);
         Parent welcomePane = welcomeLoader.load();
-        Scene welcomeScene = new Scene(welcomePane, 750, 500);
+        //Scene welcomeScene = new Scene(welcomePane, 750, 500);
+        this.welcomeRoot = welcomePane;
+
 
         FXMLLoader loginLoader = new FXMLLoader(loginUrl);
         Parent loginPane = loginLoader.load();
-        Scene loginScene = new Scene(loginPane, 750, 500);
+       // Scene loginScene = new Scene(loginPane, 750, 500);
+        this.loginRoot = loginPane;
+
 
         welcomeController = welcomeLoader.getController();
         loginController = loginLoader.getController();
 
-        welcomeController.setStage(stage);
 
-        loginController.setStage(stage);
+        stage.setScene(new Scene(welcomeRoot,750,500));
 
-        welcomeController.setLoginScene(loginScene);
-
-        stage.setScene(welcomeScene);
         stage.show();
+    }
 
 
-
+    public void setWelcomeController(WelcomeController wc) {
+        this.welcomeController = wc;
     }
 
 
@@ -93,15 +102,9 @@ public class GUI extends Application implements UI {
 
         System.out.println("\nlogin...");
 
-        Platform.runLater(()-> {
-            welcomeController.changeScene();
+        Platform.runLater(()->{
+            primaryStage.getScene().setRoot(loginRoot);
         });
-
-
-        /*stage.setTitle("prova");
-        stage.setScene(new Scene(root,750,500));
-        stage.show();*/
-
 
     }
 

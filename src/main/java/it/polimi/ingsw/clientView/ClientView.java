@@ -246,7 +246,6 @@ public class ClientView implements Observer<ServerEvent> {
         synchronized (lock) {
             event.handleEvent(this);
         }
-
     }
 
 

@@ -66,8 +66,8 @@ public class GUI extends Application implements UI {
         clientView.setUI(this);
 
 
-        URL loginUrl = new File("resources/Login.fxml").toURI().toURL();
-        URL welcomeUrl = new File("resources/Welcome.fxml").toURI().toURL();
+        URL loginUrl = new File("resources/fxml/Login.fxml").toURI().toURL();
+        URL welcomeUrl = new File("resources/fxml/Welcome.fxml").toURI().toURL();
 
 
 
@@ -87,9 +87,15 @@ public class GUI extends Application implements UI {
         loginController = loginLoader.getController();
 
 
-        stage.setScene(new Scene(welcomeRoot,750,500));
+
+        stage.setScene(new Scene(welcomeRoot,1500,1000));
+
+        stage.setFullScreen(true);
+        stage.setMaximized(true);
 
         stage.show();
+
+        clientView.startConnection();
     }
 
 
@@ -103,6 +109,8 @@ public class GUI extends Application implements UI {
         System.out.println("\nlogin...");
 
         Platform.runLater(()->{
+            loginController.prova();
+
             primaryStage.getScene().setRoot(loginRoot);
         });
 

@@ -37,6 +37,10 @@ public class LoginController {
 
     }
 
+    public void prova() {
+        pane.getChildren().add(new Button("PROVAAAA"));
+    }
+
 
 
 

@@ -37,4 +37,6 @@ public interface UI {
     public void winner(String username);
 
     public void printPlayersInGame();
+
+    public void playerDisconnection(String username);
 }

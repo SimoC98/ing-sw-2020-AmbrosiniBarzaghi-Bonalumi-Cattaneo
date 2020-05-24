@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import static java.lang.System.exit;
+
 public class CLI implements UI{
 
     public static final String ANSI_RESET = "\u001B[0m";
@@ -27,6 +29,7 @@ public class CLI implements UI{
     Scanner scanner;
 
     private final Object lock;
+    private boolean boardUpdate = false;
 
     public CLI(ClientView clientView) {
         lock = new Object();
@@ -283,21 +286,25 @@ public class CLI implements UI{
     public void placeWorkers() {
         int x1, y1, x2, y2;
 
-        System.out.println("You have to choose your workers' initial position.");
-        System.out.println("You must type the coordinate (E.G. A5, D2, E4) in which you want to place you workers, one at a time.");
-        System.out.println("You cannot place workers on occupied tiles.");
+        synchronized (lock) {
 
-        System.out.println("+----+----+----+----+----+");
-        System.out.println("| A1 | A2 | A3 | A4 | A5 |");
-        System.out.println("+----+----+----+----+----+");
-        System.out.println("| B1 | B2 | B3 | B4 | B5 |");
-        System.out.println("+----+----+----+----+----+");
-        System.out.println("| C1 | C2 | C3 | C4 | C5 |");
-        System.out.println("+----+----+----+----+----+");
-        System.out.println("| D1 | D2 | D3 | D4 | D5 |");
-        System.out.println("+----+----+----+----+----+");
-        System.out.println("| E1 | E2 | E3 | E4 | E5 |");
-        System.out.println("+----+----+----+----+----+");
+            System.out.println("You have to choose your workers' initial position.");
+            System.out.println("You must type the coordinate (E.G. A5, D2, E4) in which you want to place you workers, one at a time.");
+            System.out.println("You cannot place workers on occupied tiles.");
+
+            System.out.println("+----+----+----+----+----+");
+            System.out.println("| A1 | A2 | A3 | A4 | A5 |");
+            System.out.println("+----+----+----+----+----+");
+            System.out.println("| B1 | B2 | B3 | B4 | B5 |");
+            System.out.println("+----+----+----+----+----+");
+            System.out.println("| C1 | C2 | C3 | C4 | C5 |");
+            System.out.println("+----+----+----+----+----+");
+            System.out.println("| D1 | D2 | D3 | D4 | D5 |");
+            System.out.println("+----+----+----+----+----+");
+            System.out.println("| E1 | E2 | E3 | E4 | E5 |");
+            System.out.println("+----+----+----+----+----+");
+        }
+
 
         String input;
 
@@ -316,6 +323,7 @@ public class CLI implements UI{
         y2 = (input.charAt(1) - '1');
 
         clientView.workerPlacement(x1, y1, x2, y2);
+
     }
 
     @Override
@@ -325,9 +333,17 @@ public class CLI implements UI{
 
     @Override
     public void startTurn() {
-        System.out.println("Your turn is started!");
+
+        synchronized (lock) {
+            System.out.println("Your turn is started!");
+
+        }
+
+
         updateBoard();
         selectWorker();
+
+        boardUpdate = false;
     }
 
     @Override
@@ -365,8 +381,12 @@ public class CLI implements UI{
 
     @Override
     public void performAction(List<Action> possibleActions) {
-        //print list of possible Actions, send AskActionEvent
-        System.out.println("Now you have to select the action you want your worker to perform.");
+
+        synchronized (lock) {
+
+            //print list of possible Actions, send AskActionEvent
+            System.out.println("Now you have to select the action you want your worker to perform.");
+        }
         updateBoard();
         printActions(possibleActions);
 
@@ -427,26 +447,33 @@ public class CLI implements UI{
         }
 
         clientView.actionQuestion(action, x, y);
+
     }
 
     @Override
     public void loser(String username) {
-        if(clientView.getUsername().equals(username)) {
-            System.out.println("You lost! Fs in the chat");
-            for(int i=0; i<10; i++)
-                System.out.println("F");
-            //clientView.disconnect();
-        }else{
-            System.out.println("\n" + username + " has lost!");
+
+        synchronized (lock) {
+            if(clientView.getUsername().equals(username)) {
+                System.out.println("You lost! Fs in the chat");
+                for(int i=0; i<10; i++)
+                    System.out.println("F");
+                //clientView.disconnect();
+            }else{
+                System.out.println("\n" + username + " has lost!");
+            }
         }
+
     }
 
     @Override
     public void winner(String username) {
-        if(clientView.getUsername().equals(username)){
-            System.out.println("\n-----------------------------------------");
-            System.out.println("    Congratulation, you won the game!");
-            System.out.println("-----------------------------------------");
+
+        synchronized (lock) {
+            if(clientView.getUsername().equals(username)){
+                System.out.println("\n-----------------------------------------");
+                System.out.println("    Congratulation, you won the game!");
+                System.out.println("-----------------------------------------");
 
 //            System.out.println(" /$$     /$$                                                          /$$");
 //            System.out.println("|  $$   /$$/                                                         | $$");
@@ -457,19 +484,36 @@ public class CLI implements UI{
 //            System.out.println("    | $$ |  $$$$$$/|  $$$$$$/      |  $$$$$/$$$$/|  $$$$$$/| $$  | $$ /$$");
 //            System.out.println("    |__/  \______/  \______/        \_____/\___/  \______/ |__/  |__/|__/\");
 
-        }else{
-            System.out.println("\n" + username + " won! This means you lost, Fs in the chat");
-            for(int i=0; i<10; i++)
-                System.out.println("F");
+            }else{
+                System.out.println("\n" + username + " won! This means you lost, Fs in the chat");
+                for(int i=0; i<10; i++)
+                    System.out.println("F");
+            }
         }
+
         clientView.disconnect();
     }
 
     @Override
-    public void updateBoard() {
-        System.out.println("\n\n\n");
-        printPlayersInGame();
+    public void playerDisconnection(String username) {
+
         synchronized (lock) {
+            System.out.println("\n\n");
+            System.out.println("User " + username  + " has left... This match will end soon");
+            exit(0);
+        }
+
+
+    }
+
+
+    @Override
+    public void updateBoard() {
+
+        synchronized (lock) {
+
+            System.out.println("\n\n\n");
+            printPlayersInGame();
             int [][]map = this.board.getBoard();
             char yCoordinate = 'A';
 
@@ -525,7 +569,12 @@ public class CLI implements UI{
             }
             //fifth and last line
             System.out.println("\t" + "+------+------+------+------+------+");
+
+
+
         }
+
+
     }
 
     private void printActions(List<Action> possibleActions) {
@@ -610,4 +659,5 @@ public class CLI implements UI{
         }
         System.out.print(ANSI_RESET);
     }
+
 }

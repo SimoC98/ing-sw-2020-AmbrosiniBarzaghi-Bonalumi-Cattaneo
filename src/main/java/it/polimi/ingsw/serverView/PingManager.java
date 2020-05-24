@@ -80,7 +80,7 @@ public class PingManager implements Observer<ClientEvent> {
         };
 
         //8 sec to receive pong
-        pinger.schedule(task,0,5000);
+        pinger.schedule(task,0,2000);
 
     }
 

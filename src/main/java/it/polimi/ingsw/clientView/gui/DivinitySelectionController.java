@@ -10,6 +10,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,15 +39,17 @@ public class DivinitySelectionController {
 
     private List<String> divinities;
     private List<String> descriptions;
+    private int playerNumber;
 
 
 
 
 
-    public void setDivinityOnGrid(List<String> divinities, List<String> descriptions) {
+    public void setDivinityOnGrid(List<String> divinities, List<String> descriptions, int playerNumber) {
 
         this.divinities = new ArrayList<>(divinities);
         this.descriptions = new ArrayList<>(descriptions);
+        this.playerNumber = playerNumber;
 
         int count=0;
 
@@ -52,10 +57,20 @@ public class DivinitySelectionController {
         for(int r=0;r<godGrid.getColumnCount();r++) {
             for(int c=0;c<godGrid.getRowCount();c++) {
 
-                Image godImage = new Image("resources/" + divinities.get(count) + ".png");
-
                 ImageView god = new ImageView();
+
+
+                String path = "resources/graphics/" + divinities.get(count).toLowerCase() + ".png";
+
+
+
+                Image godImage = new Image(path);
+
+
                 god.setImage(godImage);
+
+                god.setFitHeight(102.0);
+                god.setFitWidth(83.0);
 
                 addCell(god,r,c);
 

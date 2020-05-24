@@ -2,6 +2,7 @@ package it.polimi.ingsw.clientView.gui;
 
 import it.polimi.ingsw.clientView.ClientView;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -22,6 +23,9 @@ public class LoginController {
     @FXML
     private AnchorPane pane;
 
+    @FXML
+    private Label waitLabel;
+
     private static ClientView clientView;
 
     private Stage stage;
@@ -35,10 +39,6 @@ public class LoginController {
             handleLogin();
         });
 
-    }
-
-    public void prova() {
-        pane.getChildren().add(new Button("PROVAAAA"));
     }
 
 
@@ -56,7 +56,8 @@ public class LoginController {
     public void handleLogin() {
         btn.setOnMouseClicked(null);
 
-        pane.getChildren().add(new Label("wait game start..."));
+        waitLabel.setText("wait the game start...");
+        waitLabel.setVisible(true);
 
 
 

@@ -28,11 +28,13 @@ public class GUI extends Application implements UI {
 
     private LoginController loginController;
     private WelcomeController welcomeController;
+    private DivinitySelectionController divinitySelectionController;
 
     private Stage primaryStage;
 
     private Parent welcomeRoot;
     private Parent loginRoot;
+    private Parent playableDivinityRoot;
 
 
 
@@ -68,6 +70,7 @@ public class GUI extends Application implements UI {
 
         URL loginUrl = new File("resources/fxml/Login.fxml").toURI().toURL();
         URL welcomeUrl = new File("resources/fxml/Welcome.fxml").toURI().toURL();
+        URL playableDivinitiesUrl = new File("resources/fxml/DivinitySelection.fxml").toURI().toURL();
 
 
 
@@ -83,15 +86,23 @@ public class GUI extends Application implements UI {
         this.loginRoot = loginPane;
 
 
-        welcomeController = welcomeLoader.getController();
-        loginController = loginLoader.getController();
+        FXMLLoader playableDivinitiesLoader = new FXMLLoader(playableDivinitiesUrl);
+        Parent playableDivinitiesPane = playableDivinitiesLoader.load();
+       // Scene loginScene = new Scene(loginPane, 750, 500);
+        this.playableDivinityRoot = playableDivinitiesPane;
+
+
+        this.welcomeController = welcomeLoader.getController();
+        this.loginController = loginLoader.getController();
+        this.divinitySelectionController = playableDivinitiesLoader.getController();
+
 
 
 
         stage.setScene(new Scene(welcomeRoot,1500,1000));
 
-        stage.setFullScreen(true);
-        stage.setMaximized(true);
+        //stage.setFullScreen(true);
+        //stage.setMaximized(true);
 
         stage.show();
 
@@ -109,7 +120,6 @@ public class GUI extends Application implements UI {
         System.out.println("\nlogin...");
 
         Platform.runLater(()->{
-            loginController.prova();
 
             primaryStage.getScene().setRoot(loginRoot);
         });
@@ -120,7 +130,15 @@ public class GUI extends Application implements UI {
     public void failedLogin(List<String> usernames) {}
 
     public void selectPlayersNumber() {}
-    public void selectPlayableDivinities(List<String> divinitiesNames, List<String> divinitiesDescriptions, int playersNumber) {}
+    public void selectPlayableDivinities(List<String> divinitiesNames, List<String> divinitiesDescriptions, int playersNumber) {
+
+        Platform.runLater(()-> {
+            divinitySelectionController.setDivinityOnGrid(divinitiesNames,divinitiesDescriptions,playersNumber);
+
+            primaryStage.getScene().setRoot(playableDivinityRoot);
+        });
+
+    }
 
     public void selectDivinity(List<String> divinitiesNames) {}
     public void placeWorkers() {}
@@ -137,6 +155,11 @@ public class GUI extends Application implements UI {
     public void winner(String username) {}
 
     public void printPlayersInGame() {}
+
+    @Override
+    public void playerDisconnection(String username) {
+
+    }
 
 
 }

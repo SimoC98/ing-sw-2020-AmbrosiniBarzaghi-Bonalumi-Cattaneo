@@ -237,15 +237,18 @@ public class ClientView implements Observer<ServerEvent> {
     }
 
     public void managePlayerDisconnection(String username) {
-        ui.textMessage("Internal error, game crashed, disconnecting...");
-        exit(0);
+        //ui.textMessage("Internal error, game crashed, disconnecting...");
+        //exit(0);
+
+        ui.playerDisconnection(username);
     }
 
     @Override
     public void update(ServerEvent event) {
-        synchronized (lock) {
-            event.handleEvent(this);
-        }
+        /*synchronized (lock) {
+        }*/
+
+        event.handleEvent(this);
     }
 
 

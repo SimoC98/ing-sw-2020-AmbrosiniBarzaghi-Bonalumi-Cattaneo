@@ -8,7 +8,7 @@
     <AnchorPane fx:id="leftPane" minHeight="0.0" minWidth="0.0" prefHeight="681.0" prefWidth="390.0">
          <children>
             <Button fx:id="confirmBtn" layoutX="128.0" layoutY="429.0" mnemonicParsing="false" text="Button" />
-            <TextArea fx:id="descriptionsTxt" layoutX="66.0" layoutY="158.0" prefHeight="200.0" prefWidth="200.0" />
+            <Label fx:id="labelTxt" layoutX="128.0" layoutY="179.0" text="Label" />
          </children></AnchorPane>
     <AnchorPane fx:id="rightPane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>

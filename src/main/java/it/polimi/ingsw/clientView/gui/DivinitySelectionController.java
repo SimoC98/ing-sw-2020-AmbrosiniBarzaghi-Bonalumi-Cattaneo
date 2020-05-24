@@ -3,6 +3,7 @@ package it.polimi.ingsw.clientView.gui;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
@@ -34,7 +35,7 @@ public class DivinitySelectionController {
     private Button confirmBtn;
 
     @FXML
-    private TextArea descriptionsTxt;
+    private Label labelTxt;
 
 
     private List<String> divinities;
@@ -91,7 +92,9 @@ public class DivinitySelectionController {
         godGrid.add(node,x,y);
 
         node.setOnMouseClicked((e)-> {
-            descriptionsTxt.setText(descriptions.get(count));
+             labelTxt.setText(descriptions.get(count));
+             labelTxt.setWrapText(true);
+
         });
 
         //add event listener

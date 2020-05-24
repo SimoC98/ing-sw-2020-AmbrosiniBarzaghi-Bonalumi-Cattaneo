@@ -20,13 +20,7 @@ import java.util.List;
 public class DivinitySelectionController {
 
     @FXML
-    private SplitPane mainPane;
-
-    @FXML
-    private AnchorPane leftPane;
-
-    @FXML
-    private AnchorPane rightPane;
+    private AnchorPane mainPane;
 
     @FXML
     private GridPane godGrid;
@@ -55,8 +49,8 @@ public class DivinitySelectionController {
         int count=0;
 
 
-        for(int r=0;r<godGrid.getColumnCount();r++) {
-            for(int c=0;c<godGrid.getRowCount();c++) {
+        for(int c=0;c<godGrid.getRowCount();c++) {
+            for(int r=0;r<godGrid.getColumnCount();r++) {
 
                 if(count<divinities.size()) {
                     ImageView god = new ImageView();
@@ -74,8 +68,8 @@ public class DivinitySelectionController {
 
                     god.setImage(godImage);
 
-                    god.setFitHeight(102.0);
-                    god.setFitWidth(83.0);
+                    god.setFitHeight(140);
+                    god.setFitWidth(100);
 
                     addCell(god,r,c,count);
 

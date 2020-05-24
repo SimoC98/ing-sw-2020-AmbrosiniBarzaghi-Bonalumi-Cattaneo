@@ -104,7 +104,7 @@ public class GUI extends Application implements UI {
 
 
 
-        stage.setScene(new Scene(welcomeRoot,1500,1000));
+        stage.setScene(new Scene(welcomeRoot,1200,800));
 
         //stage.setFullScreen(true);
         //stage.setMaximized(true);

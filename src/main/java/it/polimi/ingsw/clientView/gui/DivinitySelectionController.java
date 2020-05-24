@@ -57,30 +57,42 @@ public class DivinitySelectionController {
         for(int r=0;r<godGrid.getColumnCount();r++) {
             for(int c=0;c<godGrid.getRowCount();c++) {
 
-                ImageView god = new ImageView();
+                if(count<divinities.size()) {
+                    ImageView god = new ImageView();
 
 
-                String path = "resources/graphics/" + divinities.get(count).toLowerCase() + ".png";
+                    String path = "/graphics/" + divinities.get(count).toLowerCase() + ".png";
 
 
 
-                Image godImage = new Image(path);
 
 
-                god.setImage(godImage);
 
-                god.setFitHeight(102.0);
-                god.setFitWidth(83.0);
+                    Image godImage = new Image("/graphics/" + divinities.get(count).toLowerCase() + ".png");
 
-                addCell(god,r,c);
 
-                count++;
+                    god.setImage(godImage);
+
+                    god.setFitHeight(102.0);
+                    god.setFitWidth(83.0);
+
+                    addCell(god,r,c,count);
+
+                    count++;
+                }
+
             }
         }
+
+
     }
 
-    private void addCell(Node node, int x, int y) {
+    private void addCell(Node node, int x, int y,int count) {
         godGrid.add(node,x,y);
+
+        node.setOnMouseClicked((e)-> {
+            descriptionsTxt.setText(descriptions.get(count));
+        });
 
         //add event listener
     }

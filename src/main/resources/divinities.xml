@@ -1,14 +1,6 @@
 <divinities>
 
     <divinity>
-        <number>0</number>
-        <name>Human</name>
-        <heading>Normal Human Being</heading>
-        <description>Has no additional power or side-effect</description>
-        <effect>none</effect>
-    </divinity>
-
-    <divinity>
         <number>1</number>
         <name>Apollo</name>
         <heading>God of Music</heading>

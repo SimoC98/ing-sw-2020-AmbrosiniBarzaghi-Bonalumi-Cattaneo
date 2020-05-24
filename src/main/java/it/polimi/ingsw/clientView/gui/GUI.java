@@ -68,25 +68,30 @@ public class GUI extends Application implements UI {
         clientView.setUI(this);
 
 
-        URL loginUrl = new File("resources/fxml/Login.fxml").toURI().toURL();
-        URL welcomeUrl = new File("resources/fxml/Welcome.fxml").toURI().toURL();
-        URL playableDivinitiesUrl = new File("resources/fxml/DivinitySelection.fxml").toURI().toURL();
+        //URL loginUrl = new File("resources/fxml/Login.fxml").toURI().toURL();
+       // URL welcomeUrl = new File("resources/fxml/Welcome.fxml").toURI().toURL();
+        //URL playableDivinitiesUrl = new File("resources/fxml/DivinitySelection.fxml").toURI().toURL();
 
 
 
-        FXMLLoader welcomeLoader = new FXMLLoader(welcomeUrl);
+        //FXMLLoader welcomeLoader = new FXMLLoader(welcomeUrl);
+        //Parent welcomePane = welcomeLoader.load();
+        FXMLLoader welcomeLoader = new FXMLLoader(getClass().getResource("/fxml/Welcome.fxml"));
         Parent welcomePane = welcomeLoader.load();
         //Scene welcomeScene = new Scene(welcomePane, 750, 500);
         this.welcomeRoot = welcomePane;
 
 
-        FXMLLoader loginLoader = new FXMLLoader(loginUrl);
+        //FXMLLoader loginLoader = new FXMLLoader(loginUrl);
+        FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));
+       // Parent loginPane = loginLoader.load();
         Parent loginPane = loginLoader.load();
        // Scene loginScene = new Scene(loginPane, 750, 500);
         this.loginRoot = loginPane;
 
 
-        FXMLLoader playableDivinitiesLoader = new FXMLLoader(playableDivinitiesUrl);
+        FXMLLoader playableDivinitiesLoader = new FXMLLoader(getClass().getResource("/fxml/DivinitySelection.fxml"));
+        //Parent playableDivinitiesPane = playableDivinitiesLoader.load();
         Parent playableDivinitiesPane = playableDivinitiesLoader.load();
        // Scene loginScene = new Scene(loginPane, 750, 500);
         this.playableDivinityRoot = playableDivinitiesPane;

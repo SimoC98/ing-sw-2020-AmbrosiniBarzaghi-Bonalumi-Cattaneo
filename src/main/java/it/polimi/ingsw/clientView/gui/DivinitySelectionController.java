@@ -1,6 +1,11 @@
 package it.polimi.ingsw.clientView.gui;
 
+import it.polimi.ingsw.clientView.ClientView;
 import javafx.fxml.FXML;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -10,6 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -19,8 +25,10 @@ import java.util.List;
 
 public class DivinitySelectionController {
 
+    private static ClientView clientView;
+
     @FXML
-    private AnchorPane mainPane;
+    private VBox mainPane;
 
     @FXML
     private GridPane godGrid;
@@ -36,9 +44,23 @@ public class DivinitySelectionController {
     private List<String> descriptions;
     private int playerNumber;
 
+    private List<String> chosenGods = new ArrayList<>();
 
 
+    @FXML
+    public void initialize() {
+        godGrid.setAlignment(Pos.CENTER);
+        godGrid.setHgap(10);
+        godGrid.setVgap(50);
 
+        godGrid.setPadding(new Insets(10,10,10,10));
+
+
+    }
+
+    public static void setClientView(ClientView clientView) {
+        DivinitySelectionController.clientView = clientView;
+    }
 
     public void setDivinityOnGrid(List<String> divinities, List<String> descriptions, int playerNumber) {
 
@@ -56,20 +78,17 @@ public class DivinitySelectionController {
                     ImageView god = new ImageView();
 
 
-                    String path = "/graphics/" + divinities.get(count).toLowerCase() + ".png";
-
-
-
-
-
-
                     Image godImage = new Image("/graphics/" + divinities.get(count).toLowerCase() + ".png");
 
 
                     god.setImage(godImage);
 
-                    god.setFitHeight(140);
+                    god.setFitHeight(156);
                     god.setFitWidth(100);
+
+
+                   // god.setFitHeight(mainPane.getHeight()/20);
+                   // god.setFitWidth(mainPane.getWidth()/20);
 
                     addCell(god,r,c,count);
 
@@ -85,9 +104,30 @@ public class DivinitySelectionController {
     private void addCell(Node node, int x, int y,int count) {
         godGrid.add(node,x,y);
 
-        node.setOnMouseClicked((e)-> {
+        GridPane.setHalignment(node, HPos.CENTER);
+        GridPane.setValignment(node, VPos.CENTER);
+
+        node.setOnMouseClicked((e1)-> {
              labelTxt.setText(descriptions.get(count));
              labelTxt.setWrapText(true);
+
+             confirmBtn.setOnMouseClicked((e2)->{
+
+                 if(chosenGods.contains(divinities.get(count))) {
+                     labelTxt.setText("You can't choose this god 2 times!");
+                 }
+                 else {
+                     chosenGods.add(divinities.get(count));
+                 }
+
+                 if(chosenGods.size()==playerNumber) {
+                     confirmBtn.setOnAction(null);
+
+                     labelTxt.setText("WAIT YOUR TURN...");
+
+                     clientView.playableDivinitiesSelection(chosenGods);
+                 }
+             });
 
         });
 

@@ -14,6 +14,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -64,6 +66,7 @@ public class GUI extends Application implements UI {
 
         LoginController.setClientView(clientView);
         WelcomeController.setClientView(clientView);
+        DivinitySelectionController.setClientView(clientView);
 
         clientView.setUI(this);
 
@@ -102,9 +105,13 @@ public class GUI extends Application implements UI {
         this.divinitySelectionController = playableDivinitiesLoader.getController();
 
 
+        //GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
 
+        stage.setMinHeight(500);
+        stage.setMinWidth(750);
 
-        stage.setScene(new Scene(welcomeRoot,1200,800));
+        stage.setScene(new Scene(welcomeRoot,1100,750));
+
 
         //stage.setFullScreen(true);
         //stage.setMaximized(true);
@@ -145,7 +152,9 @@ public class GUI extends Application implements UI {
 
     }
 
-    public void selectDivinity(List<String> divinitiesNames) {}
+    public void selectDivinity(List<String> divinitiesNames) {
+        System.out.print("\n\nCHOOSE A DIVINITY PLS");
+    }
     public void placeWorkers() {}
 //    public void selectDivinityAndPlaceWorkers(List<String> divinityNames) {}
 

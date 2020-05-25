@@ -9,6 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.w3c.dom.events.MouseEvent;
 
@@ -21,23 +23,19 @@ public class LoginController {
     private Button btn;
 
     @FXML
-    private AnchorPane pane;
+    private HBox hBox;
 
     @FXML
-    private Label waitLabel;
+    private VBox vBox;
+
+    @FXML
+    private Label label;
 
     private static ClientView clientView;
 
-    private Stage stage;
-
-    private Scene nextScene;
 
     @FXML
     public void initialize() {
-        btn.setOnMouseClicked(e -> {
-            System.out.print("click");
-            handleLogin();
-        });
 
     }
 
@@ -56,8 +54,8 @@ public class LoginController {
     public void handleLogin() {
         btn.setOnMouseClicked(null);
 
-        waitLabel.setText("wait the game start...");
-        waitLabel.setVisible(true);
+        label.setText("wait the game start...");
+        label.setVisible(true);
 
 
 

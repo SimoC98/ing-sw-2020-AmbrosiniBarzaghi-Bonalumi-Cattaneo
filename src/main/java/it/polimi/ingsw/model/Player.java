@@ -142,7 +142,7 @@ public class Player {
      */
     public boolean build(Board board,Worker selectedWorker, Tile selectedTile) {
         if(divinity.legalBuild(board,selectedWorker,selectedTile)) {
-            possibleActions = new ArrayList<>();
+            possibleActions.clear();
             divinity.build(board,selectedWorker,selectedTile);
             divinity.updatePossibleActions(possibleActions);
 

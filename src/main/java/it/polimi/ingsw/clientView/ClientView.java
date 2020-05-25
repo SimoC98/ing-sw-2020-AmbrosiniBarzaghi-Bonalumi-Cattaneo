@@ -229,6 +229,7 @@ public class ClientView implements Observer<ServerEvent> {
     public void manageLoser(String username){
         board.setLoser(username);
         ui.loser(username);
+
     }
 
     public void manageWinner(String username){
@@ -244,7 +245,7 @@ public class ClientView implements Observer<ServerEvent> {
     }
 
     @Override
-    public void update(ServerEvent event) {
+    public synchronized void update(ServerEvent event) {
         /*synchronized (lock) {
         }*/
 

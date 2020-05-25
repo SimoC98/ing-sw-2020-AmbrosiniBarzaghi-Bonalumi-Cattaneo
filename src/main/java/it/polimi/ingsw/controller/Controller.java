@@ -140,15 +140,19 @@ public class Controller implements Observer<ClientEvent> {
         boolean isLoser = model.checkLoser();
         if(isLoser) {
             if(playersInGame.size()==2) {
+                System.out.println("\n\ncheck disconnecting all");
                 disconnectAll();
             }
             else {
-                playersInGame.get(currentPlayerId).disconnect();
+               // playersInGame.get(currentPlayerId).disconnect();
+                playersInGame.get(currentPlayerId).stopPing();
+                //String message = "User " + playersUsernames.get(currentPlayerId) + " has been disconnected. You remain in " + playersInGame.size();
                 playersInGame.remove(playersInGame.get(currentPlayerId));
                 playersUsernames.remove(playersUsernames.get(currentPlayerId));
-                String message = "User " + playersUsernames.get(currentPlayerId) + " has been disconnected. You remain in " + playersInGame.size();
-                sendMessageToAll(message);
+                //sendMessageToAll(message);
+                System.out.println("check1");
                 currentPlayerId = model.getCurrentPlayerId();
+                System.out.println("check2");
                 playersInGame.get(currentPlayerId).startTurn(playersUsernames.get(currentPlayerId));
             }
         }

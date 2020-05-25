@@ -11,6 +11,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.effect.Light;
+import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -108,6 +110,14 @@ public class DivinitySelectionController {
         GridPane.setValignment(node, VPos.CENTER);
 
         node.setOnMouseClicked((e1)-> {
+            Light.Distant light = new Light.Distant();
+            light.setAzimuth(-135.0);
+
+// Create lighting effect
+            Lighting lighting = new Lighting();
+            lighting.setLight(light);
+            lighting.setSurfaceScale(4.0);
+
              labelTxt.setText(descriptions.get(count));
              labelTxt.setWrapText(true);
 
@@ -118,12 +128,20 @@ public class DivinitySelectionController {
                  }
                  else {
                      chosenGods.add(divinities.get(count));
+
+                     ImageView img = (ImageView) e1.getTarget();
+                     img.setEffect(lighting);
                  }
 
                  if(chosenGods.size()==playerNumber) {
                      confirmBtn.setOnAction(null);
 
                      labelTxt.setText("WAIT YOUR TURN...");
+
+                     confirmBtn.setVisible(false);
+
+                     String s = "You chose: " + chosenGods.get(0) + " " + chosenGods.get(1) + " " + chosenGods.get(2);
+                     labelTxt.setText(s);
 
                      clientView.playableDivinitiesSelection(chosenGods);
                  }

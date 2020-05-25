@@ -157,6 +157,10 @@ public class ServerView extends Observable<ClientEvent> implements Observer<Serv
         proxy.close();
     }
 
+    public void stopPing() {
+        proxy.stopPing();
+    }
+
     /**
      * Method invoked when there is a notify on the controller
      * @param event

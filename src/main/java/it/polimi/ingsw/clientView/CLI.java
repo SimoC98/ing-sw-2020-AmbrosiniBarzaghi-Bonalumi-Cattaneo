@@ -328,7 +328,11 @@ public class CLI implements UI{
 
     @Override
     public void textMessage(String msg) {
-        System.out.println("\n\n" +"RECEIVED TEXT MESSAGE: \"" + msg + "\"");
+
+        synchronized (lock) {
+            System.out.println("\n\n" +"RECEIVED TEXT MESSAGE: \"" + msg + "\"");
+
+        }
     }
 
     @Override
@@ -463,6 +467,7 @@ public class CLI implements UI{
                 System.out.println("\n" + username + " has lost!");
             }
         }
+        updateBoard();
 
     }
 

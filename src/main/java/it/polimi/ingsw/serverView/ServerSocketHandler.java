@@ -60,7 +60,7 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
                 else notify(event);
             }
         }catch (Exception e) {
-            //e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
@@ -75,6 +75,8 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
         } catch (Exception e) {
             System.out.println("client disconnected exceptioon");
             //disconnect();
+
+            //e.printStackTrace();
         }
     }
 
@@ -86,7 +88,7 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
             socket.close();
             server.unregisterConnection(this);
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 
@@ -118,6 +120,10 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
 
     public void startPing() {
         sender.startPing();
+    }
+
+    public void stopPing() {
+        sender.stop();
     }
 
 }

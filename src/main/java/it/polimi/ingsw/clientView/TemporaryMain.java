@@ -59,7 +59,7 @@ public class TemporaryMain {
     }
 
     private static Socket connectionConfigParser() throws IOException {
-        File xmlFile = new File("resources/connection_config.xml");
+        File xmlFile = new File("/home/simone/IdeaProjects/ing-sw-2020-AmbrosiniBarzaghi-Bonalumi-Cattaneo/src/main/resources/connection_config.xml");
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = null;

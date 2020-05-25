@@ -225,12 +225,13 @@ public class Match extends Observable<ServerEvent> {
      */
     public Boolean checkLoser(){
         String loser = currentPlayer.getUsername();
+        Player loserPlayer = currentPlayer;
         for (Worker w : currentPlayer.getWorkers()) {
             if(board.getAvailableMoveTiles(w).size() > 0) return false;
         }
         board.removePlayerWorkers(currentPlayer);
         startNextTurn();
-        players.remove(loser);
+        players.remove(loserPlayer);
         if (players.size() == 1) {
             currentPlayer.setWinner();
             notify(new WinnerEvent(currentPlayer.getUsername()));

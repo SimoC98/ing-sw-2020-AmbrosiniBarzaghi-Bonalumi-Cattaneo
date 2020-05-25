@@ -81,6 +81,8 @@ public class BoardRepresentation {
 
     public void setLoser(String username){
         players.get(username).setLoser();
+
+        players.remove(username);
     }
 
     public void setWinner(String username){

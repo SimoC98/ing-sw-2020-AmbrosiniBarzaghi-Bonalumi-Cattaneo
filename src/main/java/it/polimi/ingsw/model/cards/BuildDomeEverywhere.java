@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class BuildDomeEverywhere extends DivinityDecoratorWithEffects {
     private boolean hasBuilt;
-    private boolean hasBuiltDome;
+
 
     public BuildDomeEverywhere() { super(); }
 
@@ -29,10 +29,11 @@ public class BuildDomeEverywhere extends DivinityDecoratorWithEffects {
     @Override
     public void build(Board board,Worker selectedWorker, Tile selectedTile) {
         if(Match.getUserAction().equals(Action.BUILDDOME)) {
-            hasBuiltDome=true;
+            hasBuilt=true;
             selectedTile.setDome();
         }
         else {
+            hasBuilt=true;
             super.build(board,selectedWorker,selectedTile);
         }
     }
@@ -43,7 +44,7 @@ public class BuildDomeEverywhere extends DivinityDecoratorWithEffects {
      */
     @Override
     public void updatePossibleActions(List<Action> possibleActions) {
-        if(!hasBuilt && !hasBuiltDome) {
+        if(!hasBuilt) {
             possibleActions.add(Action.BUILDDOME);
         }
         super.updatePossibleActions(possibleActions);
@@ -57,7 +58,7 @@ public class BuildDomeEverywhere extends DivinityDecoratorWithEffects {
 
     @Override
     public void setupDivinity(List<Action> possibleActions) {
-        hasBuiltDome=false;
+
         hasBuilt=false;
     }
 }

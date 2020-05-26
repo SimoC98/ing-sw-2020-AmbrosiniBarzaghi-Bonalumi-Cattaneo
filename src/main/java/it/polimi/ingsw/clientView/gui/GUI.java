@@ -69,6 +69,7 @@ public class GUI extends Application implements UI {
         LoginController.setClientView(clientView);
         WelcomeController.setClientView(clientView);
         DivinitySelectionController.setClientView(clientView);
+        PlayerDivinitySelectionController.setClientView(clientView);
 
         clientView.setUI(this);
 
@@ -173,9 +174,6 @@ public class GUI extends Application implements UI {
 
         Platform.runLater(()-> {
             playerDivinitySelectionController.selectPlayerDivinity(divinitiesNames);
-
-            System.out.println("prova");
-
             primaryStage.getScene().setRoot(playerDivinityRoot);
         });
 

@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerDivinitySelectionController {
@@ -32,6 +33,8 @@ public class PlayerDivinitySelectionController {
     private Button btn;
 
     private List<String> divinities;
+
+    private List<ImageView> godImages = new ArrayList<>();
 
 
 
@@ -64,8 +67,18 @@ public class PlayerDivinitySelectionController {
     private void addDivinityToHbox(Node node, int count) {
 
         hBox.getChildren().add(node);
+        godImages.add((ImageView)node);
 
         node.setOnMouseClicked((e1)-> {
+
+            Light.Distant light = new Light.Distant();
+            light.setAzimuth(-135.0);
+
+// Create lighting effect
+            Lighting lighting = new Lighting();
+            lighting.setLight(light);
+            lighting.setSurfaceScale(4.0);
+
             label.setVisible(true);
             label.setText("ciao");
             String desc = clientView.getBoard().getDivinities().get(divinities.get(count));
@@ -76,10 +89,17 @@ public class PlayerDivinitySelectionController {
 
             btn.setOnMouseClicked((e2) -> {
                 ImageView img = (ImageView) e1.getTarget();
+                img.setEffect(lighting);
+
+                btn.setVisible(false);
+
+                godImages.stream().forEach(i -> i.setOnMouseClicked(null));
+
+                label.setText("you chose " + divinities.get(count) + "... Wait other player's choice!");
+
 
                 clientView.divinitySelection(divinities.get(count));
 
-                label.setText("you chose " + divinities.get(count));
             });
 
 

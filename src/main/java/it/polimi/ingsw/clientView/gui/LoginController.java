@@ -60,6 +60,7 @@ public class LoginController {
     public void handleLogin() {
         btn.setOnMouseClicked(null);
 
+        hBox.setVisible(false);
         waitLabel.setText("wait the game start...");
 
         invalidUsernameLabel.setVisible(false);
@@ -71,6 +72,7 @@ public class LoginController {
 
     public void invalidUsername(List<String> loggedUsers) {
 
+        hBox.setVisible(true);
         waitLabel.setVisible(false);
 
         StringBuilder s = new StringBuilder();

@@ -65,7 +65,7 @@ public class XMLParserUtility {
      * @return Divinities mapped with their name and an instance of their class
      */
     public static Map<String, Divinity> getDivinities(){
-        File xmlFile = new File("/home/simone/IdeaProjects/ing-sw-2020-AmbrosiniBarzaghi-Bonalumi-Cattaneo/src/main/resources/divinities.xml");
+        File xmlFile = new File("src/main/resources/divinities.xml");
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = null;

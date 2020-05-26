@@ -14,6 +14,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.w3c.dom.events.MouseEvent;
 
+import java.util.List;
+
 public class LoginController {
 
     @FXML
@@ -29,7 +31,11 @@ public class LoginController {
     private VBox vBox;
 
     @FXML
-    private Label label;
+    private Label waitLabel;
+
+    @FXML
+    private Label invalidUsernameLabel;
+
 
     private static ClientView clientView;
 
@@ -54,13 +60,31 @@ public class LoginController {
     public void handleLogin() {
         btn.setOnMouseClicked(null);
 
-        label.setText("wait the game start...");
-        label.setVisible(true);
+        waitLabel.setText("wait the game start...");
 
-
+        invalidUsernameLabel.setVisible(false);
+        waitLabel.setVisible(true);
 
 
         clientView.loginQuestion(txt.getText());
+    }
+
+    public void invalidUsername(List<String> loggedUsers) {
+
+        waitLabel.setVisible(false);
+
+        StringBuilder s = new StringBuilder();
+
+        s.append("USERNAME ALREADY TAKEN! PLEASE CHOOSE ANOTHER AVOIDING: \n");
+
+        for(int i=0;i<loggedUsers.size();i++) {
+            s.append("\t-" + loggedUsers.get(i) + "\n");
+        }
+
+        invalidUsernameLabel.setWrapText(true);
+        invalidUsernameLabel.setText(s.toString());
+
+        invalidUsernameLabel.setVisible(true);
     }
 
 

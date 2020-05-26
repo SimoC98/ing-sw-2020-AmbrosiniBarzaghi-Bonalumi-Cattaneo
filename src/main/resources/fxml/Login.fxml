@@ -2,23 +2,31 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<HBox fx:id="hBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="750.0" spacing="40.0" style="-fx-background-color: green;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.clientView.gui.LoginController">
+<VBox fx:id="vBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="751.0" prefWidth="1101.0" style="-fx-background-color: lightblue;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.clientView.gui.LoginController">
    <children>
-      <Label text="USERNAME" />
-      <VBox fx:id="vBox" alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+      <ImageView fitHeight="150.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../graphics/santorini-logo.png" />
+         </image>
+      </ImageView>
+      <HBox fx:id="hBox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+         <VBox.margin>
+            <Insets top="150.0" />
+         </VBox.margin>
          <children>
-            <TextField fx:id="txt">
-               <VBox.margin>
-                  <Insets top="20.0" />
-               </VBox.margin></TextField>
-            <Label fx:id="label" text="Label" underline="true" visible="false">
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin></Label>
-         </children>
-      </VBox>
-      <Button fx:id="btn" mnemonicParsing="false" onAction="#handleLogin" text="LOGIN" />
+            <Label text="USERNAME" />
+            <TextField fx:id="txt" />
+            <Button fx:id="btn" mnemonicParsing="false" onAction="#handleLogin" text="login" underline="true" />
+         </children></HBox>
+      <Label fx:id="waitLabel" text="label" visible="false">
+         <font>
+            <Font name="LMRoman10-BoldItalic" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="invalidUsernameLabel" text="Label" visible="false" />
    </children>
-</HBox>
+</VBox>

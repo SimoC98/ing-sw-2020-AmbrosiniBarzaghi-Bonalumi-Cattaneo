@@ -110,13 +110,13 @@ public class GUI extends Application implements UI {
         stage.setMinHeight(500);
         stage.setMinWidth(750);
 
-        stage.setScene(new Scene(welcomeRoot,1100,750));
+        //stage.setScene(new Scene(welcomeRoot,1100,750));
 
 
         //stage.setFullScreen(true);
         //stage.setMaximized(true);
 
-        stage.show();
+       // stage.show();
 
         clientView.startConnection();
     }
@@ -133,13 +133,19 @@ public class GUI extends Application implements UI {
 
         Platform.runLater(()->{
 
-            primaryStage.getScene().setRoot(loginRoot);
+            //primaryStage.getScene().setRoot(loginRoot);
+            primaryStage.setScene(new Scene(loginRoot,1100,750));
+            primaryStage.show();
         });
 
     }
 
 
-    public void failedLogin(List<String> usernames) {}
+    public void failedLogin(List<String> usernames) {
+        Platform.runLater(()-> {
+            loginController.invalidUsername(usernames);
+        });
+    }
 
     public void selectPlayersNumber() {}
     public void selectPlayableDivinities(List<String> divinitiesNames, List<String> divinitiesDescriptions, int playersNumber) {

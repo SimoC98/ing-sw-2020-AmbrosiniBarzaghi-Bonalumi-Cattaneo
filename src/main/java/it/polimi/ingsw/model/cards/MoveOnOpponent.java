@@ -34,7 +34,7 @@ public class MoveOnOpponent extends DivinityDecoratorWithEffects {
     public boolean legalMove(Board board,Worker selectedWorker, Tile selectedTile) {
        if(selectedTile.isOccupied()) {
            if(!selectedTile.getWorker().getPlayer().equals(selectedWorker.getPlayer())) {
-               return true;
+               if(selectedWorker.getPositionOnBoard().isAdjacent(selectedTile.getX(),selectedTile.getY())) return true;
            }
            else {
                return false;

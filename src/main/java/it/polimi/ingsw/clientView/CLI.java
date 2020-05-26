@@ -322,6 +322,8 @@ public class CLI implements UI{
         x2 = (input.charAt(0) - 'A');
         y2 = (input.charAt(1) - '1');
 
+        System.out.println("\n\n");
+
         clientView.workerPlacement(x1, y1, x2, y2);
 
     }
@@ -380,8 +382,14 @@ public class CLI implements UI{
         }while(!input.matches("y|(yes)"));
 
         Pair<Integer, Integer> selectedWorker = player.getWorkers().get(selection-1);
+
+        System.out.println("\n\n");
+
         clientView.selectWorkerQuestion(selectedWorker.getFirst(), selectedWorker.getSecond());
+
+
     }
+
 
     @Override
     public void performAction(List<Action> possibleActions) {
@@ -389,7 +397,7 @@ public class CLI implements UI{
         synchronized (lock) {
 
             //print list of possible Actions, send AskActionEvent
-            System.out.println("Now you have to select the action you want your worker to perform.");
+            //System.out.println("Now you have to select the action you want your worker to perform.");
         }
         updateBoard();
         printActions(possibleActions);
@@ -449,6 +457,8 @@ public class CLI implements UI{
             x = (inputTile.charAt(0) - 'A');
             y = (inputTile.charAt(1) - '1');
         }
+
+        System.out.println("\n\n");
 
         clientView.actionQuestion(action, x, y);
 
@@ -517,7 +527,7 @@ public class CLI implements UI{
 
         synchronized (lock) {
 
-            System.out.println("\n\n\n");
+            //System.out.println("\n\n\n");
             printPlayersInGame();
             int [][]map = this.board.getBoard();
             char yCoordinate = 'A';

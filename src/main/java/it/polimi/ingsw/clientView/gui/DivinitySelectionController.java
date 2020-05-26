@@ -122,7 +122,10 @@ public class DivinitySelectionController {
              confirmBtn.setOnMouseClicked((e2)->{
 
                  if(chosenGods.contains(divinities.get(count))) {
-                     labelTxt.setText("You can't choose this god 2 times!");
+                     ImageView img = (ImageView) e1.getTarget();
+                     img.setEffect(null);
+                     chosenGods.remove(divinities.get(count));
+                     labelTxt.setText("God deselected ");
                  }
                  else {
                      chosenGods.add(divinities.get(count));

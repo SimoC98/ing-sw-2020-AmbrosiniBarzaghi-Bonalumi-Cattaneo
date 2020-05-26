@@ -31,12 +31,14 @@ public class GUI extends Application implements UI {
     private LoginController loginController;
     private WelcomeController welcomeController;
     private DivinitySelectionController divinitySelectionController;
+    private PlayerDivinitySelectionController playerDivinitySelectionController;
 
     private Stage primaryStage;
 
     private Parent welcomeRoot;
     private Parent loginRoot;
     private Parent playableDivinityRoot;
+    private Parent playerDivinityRoot;
 
 
 
@@ -99,10 +101,18 @@ public class GUI extends Application implements UI {
        // Scene loginScene = new Scene(loginPane, 750, 500);
         this.playableDivinityRoot = playableDivinitiesPane;
 
+        FXMLLoader playerDivinityLoader = new FXMLLoader(getClass().getResource("/fxml/PlayerDivinitySelection.fxml"));
+        //Parent playableDivinitiesPane = playableDivinitiesLoader.load();
+        Parent playerDivinityPane = playerDivinityLoader.load();
+        // Scene loginScene = new Scene(loginPane, 750, 500);
+        this.playerDivinityRoot = playerDivinityPane;
+
+
 
         this.welcomeController = welcomeLoader.getController();
         this.loginController = loginLoader.getController();
         this.divinitySelectionController = playableDivinitiesLoader.getController();
+        this.playerDivinitySelectionController = playerDivinityLoader.getController();
 
 
         //GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
@@ -160,7 +170,17 @@ public class GUI extends Application implements UI {
 
     public void selectDivinity(List<String> divinitiesNames) {
         System.out.print("\n\nCHOOSE A DIVINITY PLS");
+
+        Platform.runLater(()-> {
+            playerDivinitySelectionController.selectPlayerDivinity(divinitiesNames);
+
+            System.out.println("prova");
+
+            primaryStage.getScene().setRoot(playerDivinityRoot);
+        });
+
     }
+
     public void placeWorkers() {}
 //    public void selectDivinityAndPlaceWorkers(List<String> divinityNames) {}
 

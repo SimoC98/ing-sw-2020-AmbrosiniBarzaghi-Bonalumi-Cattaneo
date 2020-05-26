@@ -57,7 +57,6 @@ public class DivinitySelectionController {
 
         godGrid.setPadding(new Insets(10,10,10,10));
 
-
     }
 
     public static void setClientView(ClientView clientView) {
@@ -78,7 +77,6 @@ public class DivinitySelectionController {
 
                 if(count<divinities.size()) {
                     ImageView god = new ImageView();
-
 
                     Image godImage = new Image("/graphics/" + divinities.get(count).toLowerCase() + ".png");
 

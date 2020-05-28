@@ -1,8 +1,11 @@
 package it.polimi.ingsw.model.cards;
 
+import it.polimi.ingsw.Pair;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.update.ModelUpdate;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,14 +30,25 @@ public class BuildDomeEverywhere extends DivinityDecoratorWithEffects {
      * @param selectedTile
      */
     @Override
-    public void build(Board board,Worker selectedWorker, Tile selectedTile) {
+    public List<ModelUpdate> build(Board board, Worker selectedWorker, Tile selectedTile) {
         if(Match.getUserAction().equals(Action.BUILDDOME)) {
             hasBuilt=true;
             selectedTile.setDome();
+
+
+            List<ModelUpdate> ret = new ArrayList<>();
+
+            List<Pair<Integer,Integer>> modifiedTiles = new ArrayList<>();
+            modifiedTiles.add(new Pair<Integer, Integer>(selectedTile.getX(),selectedTile.getY()));
+
+            ModelUpdate update = new ModelUpdate(Action.BUILD,selectedWorker,modifiedTiles);
+            ret.add(update);
+
+            return ret;
         }
         else {
             hasBuilt=true;
-            super.build(board,selectedWorker,selectedTile);
+            return super.build(board,selectedWorker,selectedTile);
         }
     }
 

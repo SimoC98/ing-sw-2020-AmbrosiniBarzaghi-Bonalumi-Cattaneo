@@ -4,6 +4,7 @@ import it.polimi.ingsw.Observable;
 import it.polimi.ingsw.Pair;
 import it.polimi.ingsw.events.serverToClient.*;
 import it.polimi.ingsw.model.exceptions.*;
+import it.polimi.ingsw.model.update.ModelUpdate;
 import it.polimi.ingsw.model.update.MoveUpdate;
 
 
@@ -289,7 +290,7 @@ public class Match extends Observable<ServerEvent> {
         Tile t = board.getTile(x,y);
         Tile startTile = selectedWorker.getPositionOnBoard();
         if( t != null && currentPlayer.move(board,selectedWorker,t)){
-            List<MoveUpdate> updates = currentPlayer.getMoveUpdates();
+            List<ModelUpdate> updates = currentPlayer.getMoveUpdates();
 
             for(int i=0;i<updates.size();i++) {
                 Pair<Integer,Integer> from = updates.get(i).getModifiedTiles().get(0);
@@ -314,8 +315,17 @@ public class Match extends Observable<ServerEvent> {
     public void build(int x, int y) throws InvalidBuildException{
         Tile t = board.getTile(x,y);
         if(t != null && currentPlayer.build(board,selectedWorker,t)){
-            Action action = userAction;
-            notify(new BuildEvent(currentPlayer.getUsername(),action,t.getX(),t.getY()));
+            List<ModelUpdate> updates = currentPlayer.getMoveUpdates();
+
+            for(int i=0;i<updates.size();i++) {
+                Pair<Integer,Integer> builtTile = updates.get(i).getModifiedTiles().get(0);
+
+                notify(new BuildEvent(updates.get(i).getWorker().getPlayer().getUsername(),userAction,builtTile.getFirst(),builtTile.getSecond()));
+            }
+            return;
+
+       //     Action action = userAction;
+         //   notify(new BuildEvent(currentPlayer.getUsername(),action,t.getX(),t.getY()));
         }
         else throw new InvalidBuildException();
     }

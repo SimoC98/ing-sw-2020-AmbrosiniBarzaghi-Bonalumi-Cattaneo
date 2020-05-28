@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.update.ModelUpdate;
 import it.polimi.ingsw.model.update.MoveUpdate;
 
 import java.util.List;
@@ -22,12 +23,12 @@ public class BuildTwiceSameTile extends BuildTwice {
     }
 
     @Override
-    public void build(Board board,Worker selectedWorker, Tile selectedTile) {
-        super.build(board,selectedWorker, selectedTile);
+    public List<ModelUpdate> build(Board board, Worker selectedWorker, Tile selectedTile) {
+        return super.build(board,selectedWorker, selectedTile);
     }
 
     @Override
-    public List<MoveUpdate> move(Board board, Worker selectedWorker, Tile selectedTile) {
+    public List<ModelUpdate> move(Board board, Worker selectedWorker, Tile selectedTile) {
         return super.move(board,selectedWorker, selectedTile);
     }
 

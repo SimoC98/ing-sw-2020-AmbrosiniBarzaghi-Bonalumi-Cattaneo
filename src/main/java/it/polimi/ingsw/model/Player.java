@@ -21,7 +21,8 @@ public class Player {
     private boolean isWinner;
     private List<Action> possibleActions;
     private List<Worker> workers;
-    private List<MoveUpdate> moveUpdates;
+
+    private List<ModelUpdate> updates;
 
     /**
      * Constructor of the player, given his username and chosen a {@link Color}.
@@ -37,7 +38,7 @@ public class Player {
         possibleActions = new ArrayList<>();
         isWinner = false;
 
-        moveUpdates = new ArrayList<>();
+        updates = new ArrayList<>();
     }
 
     /**
@@ -111,9 +112,9 @@ public class Player {
     public boolean move(Board board, Worker selectedWorker, Tile selectedTile) {
         if(divinity.legalMove(board,selectedWorker,selectedTile)) {
             possibleActions.clear();
-            moveUpdates.clear();
+            updates.clear();
 
-            moveUpdates = divinity.move(board,selectedWorker,selectedTile);
+            updates = divinity.move(board,selectedWorker,selectedTile);
 
             possibleActions.add(Action.BUILD);
             divinity.updatePossibleActions(possibleActions);
@@ -143,7 +144,9 @@ public class Player {
     public boolean build(Board board,Worker selectedWorker, Tile selectedTile) {
         if(divinity.legalBuild(board,selectedWorker,selectedTile)) {
             possibleActions.clear();
-            divinity.build(board,selectedWorker,selectedTile);
+            updates.clear();
+
+            updates = divinity.build(board,selectedWorker,selectedTile);
             divinity.updatePossibleActions(possibleActions);
 
             if(possibleActions.contains(Action.BUILD)) {
@@ -164,13 +167,13 @@ public class Player {
      * and eventual others resulting from a divinity's properties
      */
     public void startOfTurn(){
-        moveUpdates.clear();
+        updates.clear();
         possibleActions.clear();
         possibleActions.add(Action.MOVE);
         divinity.setupDivinity(possibleActions);
     }
 
-    public List<MoveUpdate> getMoveUpdates() {
-        return moveUpdates;
+    public List<ModelUpdate> getMoveUpdates() {
+        return updates;
     }
 }

@@ -7,10 +7,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.SplitPane;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
@@ -106,17 +103,20 @@ public class DivinitySelectionController {
         godGrid.add(node,x,y);
         godsImages.add((ImageView)node);
 
+
+
+        Light.Distant light = new Light.Distant();
+        light.setAzimuth(-135.0);
+
+        Lighting lighting = new Lighting();
+        lighting.setLight(light);
+        lighting.setSurfaceScale(4.0);
+
+
         GridPane.setHalignment(node, HPos.CENTER);
         GridPane.setValignment(node, VPos.CENTER);
 
         node.setOnMouseClicked((e1)-> {
-            Light.Distant light = new Light.Distant();
-            light.setAzimuth(-135.0);
-
-// Create lighting effect
-            Lighting lighting = new Lighting();
-            lighting.setLight(light);
-            lighting.setSurfaceScale(4.0);
 
              labelTxt.setText(descriptions.get(count));
              labelTxt.setWrapText(true);

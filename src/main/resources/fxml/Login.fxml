@@ -8,11 +8,44 @@
 
 <VBox fx:id="vBox" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="751.0" prefWidth="1101.0" style="-fx-background-color: lightblue;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.clientView.gui.LoginController">
    <children>
-      <ImageView fitHeight="150.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../graphics/santorini-logo.png" />
-         </image>
-      </ImageView>
+      <HBox alignment="TOP_RIGHT" prefHeight="101.0" prefWidth="1101.0">
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <children>
+            <ImageView fitHeight="202.0" fitWidth="387.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/title_cloud_back_right.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+      <StackPane prefHeight="150.0" prefWidth="200.0">
+         <children>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="300.0">
+               <StackPane.margin>
+                  <Insets left="150.0" />
+               </StackPane.margin>
+               <children>
+                  <ImageView fitHeight="168.0" fitWidth="342.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../graphics/ps_cloud_left.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../graphics/title_FG_cloud2.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </HBox>
+            <ImageView fitHeight="180.0" fitWidth="446.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../graphics/santorini-logo.png" />
+               </image>
+            </ImageView>
+         </children>
+      </StackPane>
       <HBox fx:id="hBox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
          <VBox.margin>
             <Insets top="150.0" />

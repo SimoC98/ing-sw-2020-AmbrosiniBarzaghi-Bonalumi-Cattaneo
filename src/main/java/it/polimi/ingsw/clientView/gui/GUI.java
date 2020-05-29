@@ -145,7 +145,7 @@ public class GUI extends Application implements UI {
         Platform.runLater(()->{
 
             //primaryStage.getScene().setRoot(loginRoot);
-            primaryStage.setScene(new Scene(loginRoot,1100,750));
+            primaryStage.setScene(new Scene(loginRoot,1500,900));
             primaryStage.show();
         });
 
@@ -174,6 +174,9 @@ public class GUI extends Application implements UI {
 
         Platform.runLater(()-> {
             playerDivinitySelectionController.selectPlayerDivinity(divinitiesNames);
+
+            System.out.println("eccomi222222");
+
             primaryStage.getScene().setRoot(playerDivinityRoot);
         });
 

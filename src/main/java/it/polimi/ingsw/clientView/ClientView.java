@@ -168,7 +168,7 @@ public class ClientView implements Observer<ServerEvent> {
         for(int i=0; i<playersNames.size(); i++) {
             board.addPlayer(playersNames.get(i), colors.get(i));
         }
-        ui.printPlayersInGame();
+        //ui.printPlayersInGame();
     }
 
     public void setDivinitiesDescriptions(List<String> divinitiesNames, List<String> divinitiesDescriptions) {
@@ -195,8 +195,10 @@ public class ClientView implements Observer<ServerEvent> {
     }
 
     public void managePlayersDivinities(Map<String, String> divinities) {
-        for(String player : board.getPlayersNames())
+        for(String player : board.getPlayersNames()) {
             board.getPlayersMap().get(player).setDivinity(divinities.get(player));
+        }
+        ui.playersDivinities();
     }
 
     public void manageTextMessage(String msg) {

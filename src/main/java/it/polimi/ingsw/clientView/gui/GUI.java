@@ -174,9 +174,6 @@ public class GUI extends Application implements UI {
 
         Platform.runLater(()-> {
             playerDivinitySelectionController.selectPlayerDivinity(divinitiesNames);
-
-            System.out.println("eccomi222222");
-
             primaryStage.getScene().setRoot(playerDivinityRoot);
         });
 
@@ -195,7 +192,10 @@ public class GUI extends Application implements UI {
     public void loser(String username) {}
     public void winner(String username) {}
 
-    public void printPlayersInGame() {}
+    @Override
+    public void playersDivinities() {
+
+    }
 
     @Override
     public void playerDisconnection(String username) {

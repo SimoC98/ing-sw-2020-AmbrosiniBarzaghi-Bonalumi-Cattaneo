@@ -222,8 +222,8 @@ public class Controller implements Observer<ClientEvent> {
 
 
     public void handleDivinityInitialization(String divinity) {
-        boolean endInitialization=false;
-        if(gameDivinities.size()==1) endInitialization=true;
+        //boolean endInitialization=false;
+        //if(gameDivinities.size()==1) endInitialization=true;
 
         currentPlayerId = model.getCurrentPlayerId();
 
@@ -233,7 +233,11 @@ public class Controller implements Observer<ClientEvent> {
 
             gameDivinities.remove(divinity);
 
-            if(endInitialization) {
+            if(gameDivinities.size()==1) {
+                model.divinityInitialization(gameDivinities.get(0));
+
+                currentPlayerId = model.getCurrentPlayerId();
+
                 for(ServerView s : playersInGame) {
                     //s.startGame(model.getPlayersUsernames(), model.getPlayersColors(), model.getPlayersDivinities(), model.getPlayersDivinitiesDescriptions());
                     s.sendDivinitiesSetup(model.getPlayersUsernames(),model.getPlayersDivinities());

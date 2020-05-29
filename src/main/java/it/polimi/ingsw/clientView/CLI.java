@@ -510,6 +510,11 @@ public class CLI implements UI{
     }
 
     @Override
+    public void playersDivinities() {
+        printPlayersInGame();
+    }
+
+    @Override
     public void playerDisconnection(String username) {
 
         synchronized (lock) {
@@ -525,10 +530,11 @@ public class CLI implements UI{
     @Override
     public void updateBoard() {
 
+        printPlayersInGame();
+
         synchronized (lock) {
 
             //System.out.println("\n\n\n");
-            printPlayersInGame();
             int [][]map = this.board.getBoard();
             char yCoordinate = 'A';
 
@@ -658,21 +664,23 @@ public class CLI implements UI{
         System.out.println();
         List<PlayerRepresentation> players = board.getPlayersList();
 
-        System.out.print("\nPLAYERS IN GAME: \n");
-        for(PlayerRepresentation p : players) {
-            String color = null;
-            if(p.getColor().equals(Color.RED)) color = ANSI_RED;
-            else if(p.getColor().equals(Color.BLUE)) color = ANSI_CYAN;
-            else if(p.getColor().equals(Color.CREAM)) color = ANSI_YELLOW;
+        synchronized (lock) {
+            System.out.print("\nPLAYERS IN GAME: \n");
+            for(PlayerRepresentation p : players) {
+                String color = null;
+                if(p.getColor().equals(Color.RED)) color = ANSI_RED;
+                else if(p.getColor().equals(Color.BLUE)) color = ANSI_CYAN;
+                else if(p.getColor().equals(Color.CREAM)) color = ANSI_YELLOW;
 
-            StringBuilder s = new StringBuilder();
-            s.append(color + p.getUsername());
-            if(p.getDivinity()!=null) s.append(" --> " + p.getDivinity());
-            if(p.getUsername().equals(clientView.getUsername())) s.append("\t\tYOU");
+                StringBuilder s = new StringBuilder();
+                s.append(color + p.getUsername());
+                if(p.getDivinity()!=null) s.append(" --> " + p.getDivinity());
+                if(p.getUsername().equals(clientView.getUsername())) s.append("\t\tYOU");
 
-            System.out.print(s.toString() + "\n");
+                System.out.print(s.toString() + "\n");
+            }
+            System.out.print(ANSI_RESET);
         }
-        System.out.print(ANSI_RESET);
     }
 
 }

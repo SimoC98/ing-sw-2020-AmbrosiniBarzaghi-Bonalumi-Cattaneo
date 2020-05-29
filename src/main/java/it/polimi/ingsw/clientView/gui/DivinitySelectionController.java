@@ -41,6 +41,7 @@ public class DivinitySelectionController {
     @FXML
     private Label labelTxt;
 
+    private List<ImageView> godsImages = new ArrayList<>();
 
     private List<String> divinities;
     private List<String> descriptions;
@@ -103,6 +104,7 @@ public class DivinitySelectionController {
 
     private void addCell(Node node, int x, int y,int count) {
         godGrid.add(node,x,y);
+        godsImages.add((ImageView)node);
 
         GridPane.setHalignment(node, HPos.CENTER);
         GridPane.setValignment(node, VPos.CENTER);
@@ -143,6 +145,8 @@ public class DivinitySelectionController {
 
                      String s = "You chose: " + chosenGods.get(0) + " " + chosenGods.get(1) + " " + chosenGods.get(2);
                      labelTxt.setText(s);
+
+                     godsImages.stream().forEach(i -> i.setOnMouseClicked(null));
 
                      clientView.playableDivinitiesSelection(chosenGods);
                  }

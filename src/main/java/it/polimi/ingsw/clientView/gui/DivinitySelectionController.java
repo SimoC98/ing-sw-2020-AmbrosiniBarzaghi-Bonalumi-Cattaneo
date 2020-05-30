@@ -71,8 +71,8 @@ public class DivinitySelectionController {
         int count=0;
 
 
-        for(int c=0;c<godGrid.getRowCount();c++) {
-            for(int r=0;r<godGrid.getColumnCount();r++) {
+        for(int c=0;c<godGrid.getColumnCount();c++) {
+            for(int r=0;r<godGrid.getRowCount();r++) {
 
                 if(count<divinities.size()) {
                     ImageView god = new ImageView();
@@ -82,14 +82,14 @@ public class DivinitySelectionController {
 
                     god.setImage(godImage);
 
-                    god.setFitHeight(200);
-                    god.setFitWidth(150);
+                    god.setFitHeight(180);
+                    god.setFitWidth(130);
 
 
                    // god.setFitHeight(mainPane.getHeight()/20);
                    // god.setFitWidth(mainPane.getWidth()/20);
 
-                    addCell(god,r,c,count);
+                    addCell(god,c,r,count);
 
                     count++;
                 }

@@ -1,0 +1,9 @@
+.mid{
+    -fx-background-image: url("/graphics/santorini_risorse-grafiche-2_Sprite_bg_panelMid.png");
+    -fx-background-size: 100% 100%;
+}
+
+.up{
+    -fx-background-image: url("/graphics/sideUp.png");
+    -fx-background-size: 100% 100%;
+}

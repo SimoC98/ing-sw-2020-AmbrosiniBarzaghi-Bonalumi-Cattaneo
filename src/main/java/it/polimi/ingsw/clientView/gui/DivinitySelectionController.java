@@ -12,10 +12,7 @@ import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -28,7 +25,13 @@ public class DivinitySelectionController {
     private static ClientView clientView;
 
     @FXML
-    private VBox mainPane;
+    private BorderPane bPane;
+
+    @FXML
+    private VBox vBox;
+
+    @FXML
+    private VBox vBoxGod;
 
     @FXML
     private GridPane godGrid;
@@ -38,6 +41,9 @@ public class DivinitySelectionController {
 
     @FXML
     private Label labelTxt;
+
+    @FXML
+    private ProgressIndicator progressIndicator;
 
     private List<ImageView> godsImages = new ArrayList<>();
 
@@ -101,7 +107,13 @@ public class DivinitySelectionController {
     }
 
     private void addCell(Node node, int x, int y,int count) {
-        godGrid.add(node,x,y);
+        String back = "/graphics/clp_bg.png";
+        ImageView b = new ImageView(new Image(back));
+
+        b.setFitHeight(200);
+        b.setFitWidth(140);
+
+        godGrid.add(new StackPane(b,node),x,y);
 
         GridPane.setHgrow(node, Priority.ALWAYS);
         GridPane.setVgrow(node,Priority.ALWAYS);
@@ -123,7 +135,7 @@ public class DivinitySelectionController {
 
         node.setOnMouseClicked((e1)-> {
 
-             labelTxt.setText(descriptions.get(count));
+             labelTxt.setText(divinities.get(count).toUpperCase() + ": " + descriptions.get(count));
              labelTxt.setWrapText(true);
 
              confirmBtn.setOnMouseClicked((e2)->{
@@ -148,8 +160,26 @@ public class DivinitySelectionController {
 
                      confirmBtn.setVisible(false);
 
-                     String s = "You chose: " + chosenGods.get(0) + " " + chosenGods.get(1) + " " + chosenGods.get(2);
-                     labelTxt.setText(s);
+                     StringBuilder s = new StringBuilder();
+                     s.append("You chose: ");
+                     chosenGods.stream().forEach(z -> s.append(z + " "));
+                     s.append("\n");
+                     s.append("WAIT OTHER PLAYERS...");
+
+                     //progressIndicator.setVisible(true);
+
+                     labelTxt.setText(s.toString());
+
+
+                     //prova
+                     vBoxGod.getChildren().remove(confirmBtn);
+                     ProgressIndicator p = new ProgressIndicator();
+                     p.setMaxSize(50,50);
+
+                     vBoxGod.setSpacing(0);
+
+                     vBoxGod.getChildren().add(p);
+
 
                      godsImages.stream().forEach(i -> i.setOnMouseClicked(null));
 

@@ -3,11 +3,12 @@ package it.polimi.ingsw.events.clientToServer;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.serverView.PingManager;
 
-public class UnexpectedDisconnectionEvent implements ClientEvent {
+//TODO: MAYBE
+public class DisconnectionEvent implements ClientEvent {
 
     private final String playerName;
 
-    public UnexpectedDisconnectionEvent(String playerName) {
+    public DisconnectionEvent(String playerName) {
         this.playerName = playerName;
     }
 

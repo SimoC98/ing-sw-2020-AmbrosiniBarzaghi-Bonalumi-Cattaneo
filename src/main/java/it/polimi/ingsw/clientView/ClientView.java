@@ -116,10 +116,6 @@ public class ClientView implements Observer<ServerEvent> {
         proxy.sendEvent(new DivinitiesInGameSelectionEvent(playableDivinities));
     }
 
-    public void divinitySelectionAndWorkerPlacement(String divinity, int x1, int y1, int x2, int y2) {
-        proxy.sendEvent(new DivinitySelectionAndWorkersPlacementEvent(divinity, x1, y1, x2, y2));
-    }
-
     public void divinitySelection(String divinity){
         proxy.sendEvent(new DivinitySelectionEvent(divinity));
     }

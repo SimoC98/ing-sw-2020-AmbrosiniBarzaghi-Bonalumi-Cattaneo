@@ -58,7 +58,7 @@ public class ServerView extends Observable<ClientEvent> implements Observer<Serv
      * @param username
      */
     public void startTurn(String username){
-        sendEvent(new StartTurnEvent(username));
+        sendEvent(new StartTurnEvent());
     }
 
     /**

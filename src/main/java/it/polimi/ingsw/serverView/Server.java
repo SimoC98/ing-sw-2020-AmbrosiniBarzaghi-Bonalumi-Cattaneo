@@ -61,7 +61,7 @@ public class Server{
                ServerSocketHandler connection = new ServerSocketHandler(socket,this);
                executor.submit(connection);
                System.out.println("player id" + playerId);
-               connection.sendEvent(new LoginRequestEvent(playerId));
+               connection.sendEvent(new WelcomeEvent(playerId));
                playerId++;
 
            }

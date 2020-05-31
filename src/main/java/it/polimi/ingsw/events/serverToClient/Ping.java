@@ -3,21 +3,17 @@ package it.polimi.ingsw.events.serverToClient;
 import it.polimi.ingsw.clientView.ClientView;
 import it.polimi.ingsw.clientView.PingReceiver;
 
-public class SendUserID implements ServerEvent {
-
-    private final int id;
-
-    public SendUserID(int id) {
-        this.id = id;
-    }
-
+/**
+ * Verifies that a client is reachable. Sent after a ping is received from the client
+ */
+public class Ping implements ServerEvent{
     @Override
     public void handleEvent(ClientView clientView) {
-        clientView.setUserID(id);
+        return;
     }
 
     @Override
     public void handleEvent(PingReceiver ping) {
-        return;
+        ping.receivePing();
     }
 }

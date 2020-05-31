@@ -1,12 +1,5 @@
 package it.polimi.ingsw;
 
-import it.polimi.ingsw.XMLparser.XMLParserUtility;
-import it.polimi.ingsw.model.Match;
-import it.polimi.ingsw.model.exceptions.WorkerBadPlacementException;
-import it.polimi.ingsw.serverView.View;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 /**

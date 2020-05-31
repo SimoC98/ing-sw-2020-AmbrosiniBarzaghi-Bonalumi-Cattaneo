@@ -1,0 +1,6 @@
+
+
+    .bodybg{
+        -fx-background-image: url("SantoriniBoard_Squared.png");
+        -fx-background-size: cover;
+    }

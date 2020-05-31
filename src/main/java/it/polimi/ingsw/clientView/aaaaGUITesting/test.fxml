@@ -1,27 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox alignment="CENTER" fillHeight="false" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: lightblue;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.clientView.aaaaGUITesting.GameController">
+<HBox fx:id="hBox" alignment="CENTER" fillHeight="false" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: lightblue;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.clientView.aaaaGUITesting.GameController">
     <children>
-      <VBox fillWidth="false" HBox.hgrow="NEVER" />
+      <VBox fx:id="vBoxLeft" fillWidth="false" HBox.hgrow="ALWAYS">
+         <children>
+            <Button mnemonicParsing="false" onAction="#setActionMove" text="Move" />
+            <Button mnemonicParsing="false" onAction="#setActionBuild" text="Build" />
+            <Button layoutX="10.0" layoutY="35.0" mnemonicParsing="false" onAction="#setActionBuildDome" text="BuildDome" />
+            <Button layoutX="10.0" layoutY="60.0" mnemonicParsing="false" onAction="#setActionSelectWorker" text="Select Worker" />
+         </children></VBox>
 
           <GridPane fx:id="board" alignment="CENTER" prefHeight="700.0" prefWidth="700.0" scaleShape="false" styleClass="bodybg" stylesheets="@background.css">
               <columnConstraints>
-                  <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
-                  <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
-                  <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
-                  <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
-                  <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
+                  <ColumnConstraints hgrow="ALWAYS" minWidth="50.0" />
+                  <ColumnConstraints hgrow="ALWAYS" minWidth="50.0" />
+                  <ColumnConstraints hgrow="ALWAYS" minWidth="50.0" />
+                  <ColumnConstraints hgrow="ALWAYS" minWidth="50.0" />
+                  <ColumnConstraints hgrow="ALWAYS" minWidth="50.0" />
               </columnConstraints>
               <rowConstraints>
-                  <RowConstraints minHeight="10.0" vgrow="ALWAYS" />
-                  <RowConstraints minHeight="10.0" vgrow="ALWAYS" />
-                  <RowConstraints minHeight="10.0" vgrow="ALWAYS" />
-                  <RowConstraints minHeight="10.0" vgrow="ALWAYS" />
-                  <RowConstraints minHeight="10.0" vgrow="ALWAYS" />
+                  <RowConstraints minHeight="50.0" vgrow="ALWAYS" />
+                  <RowConstraints minHeight="50.0" vgrow="ALWAYS" />
+                  <RowConstraints minHeight="50.0" vgrow="ALWAYS" />
+                  <RowConstraints minHeight="50.0" vgrow="ALWAYS" />
+                  <RowConstraints minHeight="50.0" vgrow="ALWAYS" />
               </rowConstraints>
           </GridPane>
-      <VBox fillWidth="false" HBox.hgrow="NEVER" />
+      <VBox fx:id="vBoxRight" fillWidth="false" HBox.hgrow="ALWAYS" />
    </children>
 </HBox>

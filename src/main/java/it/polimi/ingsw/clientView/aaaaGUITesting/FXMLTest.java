@@ -1,8 +1,6 @@
 package it.polimi.ingsw.clientView.aaaaGUITesting;
 
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -23,10 +21,12 @@ public class FXMLTest extends Application {
         Parent testPane = testLoader.load();
         this.gameController = testLoader.getController();
 
-        Scene game = new Scene(testPane, 1500,750);
+        Scene game = new Scene(testPane, 1500,700);
 
         stage.setScene(game);
-        stage.setResizable(false);
+        stage.setResizable(true);
+        stage.minHeightProperty().setValue(400);
+        stage.minWidthProperty().bind(stage.minHeightProperty().multiply(2));
 
         stage.show();
 
@@ -36,11 +36,11 @@ public class FXMLTest extends Application {
 //        double windowBorder = stage.getHeight() - game.getHeight();
 
         //read scene width
-        game.widthProperty().addListener(new ChangeListener<Number>() {
-            @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
-                stage.setHeight((newSceneWidth.doubleValue() / 2) + (stage.getHeight() - game.getHeight())); //stageHeight - sceneHeight means tha height of the window top bar
-            }
-        });
+//        game.widthProperty().addListener(new ChangeListener<Number>() {
+//            @Override public void changed(ObservableValue<? extends Number> observableValue, Number oldSceneWidth, Number newSceneWidth) {
+//                stage.setHeight((newSceneWidth.doubleValue() / 2) + (stage.getHeight() - game.getHeight())); //stageHeight - sceneHeight means tha height of the window top bar
+//            }
+//        });
 
     }
 }

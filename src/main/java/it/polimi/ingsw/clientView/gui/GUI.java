@@ -197,5 +197,13 @@ public class GUI extends Application implements UI {
 
     }
 
+    @Override
+    public void inLobby() {
+        Platform.runLater(()->{
+            loginController.inLobby();
+        });
+
+    }
+
 
 }

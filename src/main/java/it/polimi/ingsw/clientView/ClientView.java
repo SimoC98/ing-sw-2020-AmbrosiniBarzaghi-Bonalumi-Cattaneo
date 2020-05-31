@@ -246,6 +246,12 @@ public class ClientView implements Observer<ServerEvent> {
         ui.playerDisconnection(username);
     }
 
+    public void manageInLobby() {
+        ui.inLobby();
+    }
+
+
+
     @Override
     public void update(ServerEvent event) {
         /*synchronized (lock) {

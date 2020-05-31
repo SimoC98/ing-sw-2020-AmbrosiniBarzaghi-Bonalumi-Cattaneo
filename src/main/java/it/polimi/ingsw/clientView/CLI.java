@@ -526,6 +526,11 @@ public class CLI implements UI{
 
     }
 
+    @Override
+    public void inLobby() {
+        System.out.println("\nWAIT THE GAME START...\n\n");
+    }
+
 
     @Override
     public void updateBoard() {

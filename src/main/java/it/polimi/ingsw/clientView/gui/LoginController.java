@@ -7,10 +7,12 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import org.w3c.dom.events.MouseEvent;
 
@@ -28,14 +30,16 @@ public class LoginController {
     private HBox hBox;
 
     @FXML
+    private VBox root;
+
+   @FXML
     private VBox vBox;
 
     @FXML
-    private Label waitLabel;
+    private Label label;
 
     @FXML
-    private Label invalidUsernameLabel;
-
+    private ProgressIndicator progress;
 
     private static ClientView clientView;
 
@@ -66,10 +70,10 @@ public class LoginController {
         btn.setOnMouseClicked(null);
 
         hBox.setVisible(false);
-        waitLabel.setText("wait the game start...");
+        //waitLabel.setText("wait the game start...");
 
-        invalidUsernameLabel.setVisible(false);
-        waitLabel.setVisible(true);
+        //invalidUsernameLabel.setVisible(false);
+        //waitLabel.setVisible(true);
 
 
         clientView.loginQuestion(txt.getText());
@@ -78,7 +82,7 @@ public class LoginController {
     public void invalidUsername(List<String> loggedUsers) {
 
         hBox.setVisible(true);
-        waitLabel.setVisible(false);
+        //waitLabel.setVisible(false);
 
         StringBuilder s = new StringBuilder();
 
@@ -88,10 +92,18 @@ public class LoginController {
             s.append("\t-" + loggedUsers.get(i) + "\n");
         }
 
-        invalidUsernameLabel.setWrapText(true);
-        invalidUsernameLabel.setText(s.toString());
+        label.setWrapText(true);
+        label.setText(s.toString());
 
-        invalidUsernameLabel.setVisible(true);
+        label.setVisible(true);
+    }
+
+    public void inLobby() {
+       label.setText("WAIT THE GAME START...");
+       label.setFont(new Font(18));
+
+       label.setVisible(true);
+       progress.setVisible(true);
     }
 
 

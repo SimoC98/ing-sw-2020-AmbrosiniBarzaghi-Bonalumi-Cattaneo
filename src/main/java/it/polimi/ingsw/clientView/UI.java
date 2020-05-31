@@ -39,4 +39,6 @@ public interface UI {
     public void playersDivinities();
 
     public void playerDisconnection(String username);
+
+    public void inLobby();
 }

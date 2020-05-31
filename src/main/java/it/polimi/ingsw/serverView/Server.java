@@ -128,6 +128,9 @@ public class Server{
         }
 
         registerConnection(connection);
+
+        connection.sendEvent(new InLobbyEvent());
+
         loggedPlayers.put(connection,username);
         connection.startPing();
         printUsers();

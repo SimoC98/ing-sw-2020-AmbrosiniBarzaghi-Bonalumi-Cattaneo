@@ -13,7 +13,6 @@ public class PlayerDisconnectionEvent implements ServerEvent{
         this.username = username;
     }
 
-
     @Override
     public void handleEvent(ClientView clientView) {
         clientView.managePlayerDisconnection(username);

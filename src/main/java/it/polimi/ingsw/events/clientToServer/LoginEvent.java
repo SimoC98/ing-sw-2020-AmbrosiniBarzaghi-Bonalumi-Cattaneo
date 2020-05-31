@@ -4,20 +4,10 @@ import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.serverView.PingManager;
 
 public class LoginEvent implements ClientEvent{
-    private int playerNumber=-1;
-    private String username;
+    private final String username;
 
     public LoginEvent(String username) {
         this.username = username;
-    }
-
-    public LoginEvent(int playerNumber, String username) {
-        this.playerNumber = playerNumber;
-        this.username = username;
-    }
-
-    public int getPlayerNumber() {
-        return playerNumber;
     }
 
     public String getUsername() {
@@ -25,9 +15,7 @@ public class LoginEvent implements ClientEvent{
     }
 
     @Override
-    public void handleEvent(Controller controller) {
-        //TODO
-    }
+    public void handleEvent(Controller controller) {    }
 
     @Override
     public void handleEvent(PingManager pingSender) {

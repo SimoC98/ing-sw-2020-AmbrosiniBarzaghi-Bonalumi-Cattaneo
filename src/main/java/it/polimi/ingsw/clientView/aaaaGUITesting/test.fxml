@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane style="-fx-background-color: lightblue;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <GridPane fx:id="board" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="200" minWidth="400.0" prefHeight="400.0" prefWidth="800.0" style="-fx-background-color: lightblue;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+          <columnConstraints>
+              <ColumnConstraints percentWidth="25" />
+              <ColumnConstraints percentWidth="50.0" />
+              <ColumnConstraints percentWidth="25" />
+              <ColumnConstraints hgrow="ALWAYS" />
+          </columnConstraints>
+          <rowConstraints>
+              <RowConstraints vgrow="ALWAYS" />
+          </rowConstraints>
+          <children>
+              <StackPane minWidth="200.0" styleClass="bodybg" stylesheets="@background.css" GridPane.columnIndex="1">
+                  <children>
+      
+                      <GridPane>
+                          <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                          <children>
+                              <StackPane>
+                           <children>
+                              <Button mnemonicParsing="false" text="Button" />
+                           </children>
+                        </StackPane>
+                              <StackPane GridPane.columnIndex="1" />
+                              <StackPane GridPane.columnIndex="2" />
+                              <StackPane GridPane.columnIndex="3" />
+                              <StackPane GridPane.columnIndex="4" />
+                              <StackPane layoutX="10.0" layoutY="90.0" GridPane.rowIndex="1" />
+                              <StackPane layoutX="10.0" layoutY="10.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <StackPane GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                              <StackPane layoutX="90.0" layoutY="90.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                              <StackPane layoutX="170.0" layoutY="90.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                              <StackPane layoutX="250.0" layoutY="90.0" GridPane.rowIndex="2" />
+                              <StackPane layoutX="330.0" layoutY="90.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <StackPane layoutX="330.0" layoutY="10.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                  <children>
+                                      <Label text="Santorini" />
+                                  </children>
+                              </StackPane>
+                              <StackPane layoutX="10.0" layoutY="90.0" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                              <StackPane layoutX="90.0" layoutY="90.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                              <StackPane layoutX="170.0" layoutY="90.0" GridPane.rowIndex="3" />
+                              <StackPane layoutX="250.0" layoutY="90.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <StackPane layoutX="330.0" layoutY="90.0" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                              <StackPane layoutX="10.0" layoutY="170.0" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+                              <StackPane layoutX="90.0" layoutY="170.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                              <StackPane layoutX="10.0" layoutY="250.0" GridPane.rowIndex="4" />
+                              <StackPane layoutX="90.0" layoutY="250.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <StackPane layoutX="170.0" layoutY="250.0" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+                              <StackPane layoutX="250.0" layoutY="250.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                              <StackPane layoutX="330.0" layoutY="250.0" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+                          </children>
+                      </GridPane>
+                  </children>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+              </StackPane>
+      
+          </children>
+      </GridPane>
+   </children>
+</AnchorPane>

@@ -8,10 +8,10 @@ import java.io.Serializable;
 /**
  * Event after which a client sends their username. The server sends them an id to tell them their number
  */
-public class LoginRequestEvent implements ServerEvent, Serializable {
+public class WelcomeEvent implements ServerEvent {
     private int id;
 
-    public LoginRequestEvent(int id) {
+    public WelcomeEvent(int id) {
         this.id = id;
     }
 

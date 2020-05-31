@@ -2,7 +2,7 @@ package it.polimi.ingsw.serverView;
 
 import it.polimi.ingsw.Observer;
 import it.polimi.ingsw.events.clientToServer.ClientEvent;
-import it.polimi.ingsw.events.serverToClient.Pong;
+import it.polimi.ingsw.events.serverToClient.Ping;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -73,7 +73,7 @@ public class PingManager implements Observer<ClientEvent> {
                 }
                 else {
                     ping = false;
-                    connection.sendEvent(new Pong());
+                    connection.sendEvent(new Ping());
                     //System.out.print("ping");
                 }
             }

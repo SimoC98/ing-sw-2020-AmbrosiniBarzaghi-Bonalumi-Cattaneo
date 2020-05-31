@@ -4,7 +4,6 @@ import it.polimi.ingsw.clientView.BoardRepresentation;
 import it.polimi.ingsw.clientView.ClientView;
 import it.polimi.ingsw.clientView.UI;
 import it.polimi.ingsw.events.clientToServer.ClientEvent;
-import it.polimi.ingsw.events.serverToClient.LoginRequestEvent;
 import it.polimi.ingsw.model.Action;
 import javafx.application.Application;
 import javafx.application.Platform;

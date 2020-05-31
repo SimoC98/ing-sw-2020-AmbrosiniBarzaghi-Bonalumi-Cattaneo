@@ -1,5 +1,6 @@
 package it.polimi.ingsw.clientView;
 
+import it.polimi.ingsw.ErrorsType;
 import it.polimi.ingsw.Observer;
 import it.polimi.ingsw.events.clientToServer.*;
 import it.polimi.ingsw.events.serverToClient.ServerEvent;
@@ -151,9 +152,6 @@ public class ClientView implements Observer<ServerEvent> {
         ui.failedLogin(usernames);
     }
 
-    public void managePlayersNumber() {
-        ui.selectPlayersNumber();
-    }
 
     public void managePlayableDivinitiesSelection(List<String> divinitiesNames, List<String> divinitiesDescriptions, int playersNumber) {
         ui.selectPlayableDivinities(divinitiesNames, divinitiesDescriptions, playersNumber);
@@ -246,6 +244,22 @@ public class ClientView implements Observer<ServerEvent> {
         ui.inLobby();
     }
 
+    public void manageEndTurnEvent() {
+        ui.endTurn();
+    }
+
+    public void manageInvalidMove(List<Action> possibleActions) {
+        ui.invalidMove(possibleActions);
+
+    }
+
+    public void manageInvalidBuild(List<Action> possibleActions) {
+        ui.invalidBuild(possibleActions);
+    }
+
+    public void manageInvalidWorkerPlacement() {
+        ui.invalidWorkerPlacement();
+    }
 
 
     @Override

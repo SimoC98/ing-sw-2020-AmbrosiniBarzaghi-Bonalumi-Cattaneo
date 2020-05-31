@@ -204,5 +204,25 @@ public class GUI extends Application implements UI {
 
     }
 
+    @Override
+    public void endTurn() {
+
+    }
+
+    @Override
+    public void invalidMove(List<Action> possibleActions) {
+
+    }
+
+    @Override
+    public void invalidBuild(List<Action> possibleActions) {
+
+    }
+
+    @Override
+    public void invalidWorkerPlacement() {
+
+    }
+
 
 }

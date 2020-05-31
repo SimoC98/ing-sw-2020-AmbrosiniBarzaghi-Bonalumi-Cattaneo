@@ -55,8 +55,8 @@ public class PlayerDivinitySelectionController {
 
             god.setImage(godImage);
 
-            god.setFitHeight(156);
-            god.setFitWidth(100);
+            god.setFitHeight(200);
+            god.setFitWidth(150);
 
             addDivinityToHbox(god,i);
 

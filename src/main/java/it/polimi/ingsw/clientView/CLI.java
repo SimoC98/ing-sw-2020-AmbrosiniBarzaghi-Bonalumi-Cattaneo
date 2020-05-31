@@ -531,6 +531,29 @@ public class CLI implements UI{
         System.out.println("\nWAIT THE GAME START...\n\n");
     }
 
+    @Override
+    public void endTurn() {
+        System.out.println("\nYour turn is ended!\n");
+    }
+
+    @Override
+    public void invalidMove(List<Action> possibleActions) {
+        System.out.println("\n\nERROR! YOU CAN'T MOVE HERE!");
+        performAction(possibleActions);
+    }
+
+    @Override
+    public void invalidBuild(List<Action> possibleActions) {
+        System.out.println("\n\nERROR! YOU CAN'T BUILD HERE!");
+        performAction(possibleActions);
+    }
+
+    @Override
+    public void invalidWorkerPlacement() {
+        System.out.println("\n\nERROR! INVALID WORKER PLACEMENT!");
+        placeWorkers();
+    }
+
 
     @Override
     public void updateBoard() {

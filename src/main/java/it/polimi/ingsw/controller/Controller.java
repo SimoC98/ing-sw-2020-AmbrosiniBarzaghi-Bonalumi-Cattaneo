@@ -55,7 +55,7 @@ public class Controller implements Observer<ClientEvent> {
                     break;
                 }
                 case END: {
-                    //send end turn message
+                    playersInGame.get(currentPlayerId).endTurn();
                     handleStartNextTurn();
                     break;
                 }
@@ -93,8 +93,9 @@ public class Controller implements Observer<ClientEvent> {
             }
             else nextActionHandler();
         } catch (InvalidMoveException e1) {
-            playersInGame.get(currentPlayerId).showMessage("error");
-            nextActionHandler();
+            //playersInGame.get(currentPlayerId).showMessage("error");
+            //nextActionHandler();
+            playersInGame.get(currentPlayerId).invalidMove(model.getCurrentPlayer().getPossibleActions());
         } catch (InterruptedException e2) {
             e2.printStackTrace();
         }
@@ -114,8 +115,9 @@ public class Controller implements Observer<ClientEvent> {
             }
             else nextActionHandler();
         } catch (InvalidBuildException e1) {
-            playersInGame.get(currentPlayerId).showMessage("error");
-            nextActionHandler();
+            //playersInGame.get(currentPlayerId).showMessage("error");
+            //nextActionHandler();
+            playersInGame.get(currentPlayerId).invalidBuild(model.getCurrentPlayer().getPossibleActions());
         } catch (InterruptedException e2) {
             e2.printStackTrace();
         }
@@ -125,7 +127,8 @@ public class Controller implements Observer<ClientEvent> {
        List<Action> possibleActions =  model.getCurrentPlayer().getPossibleActions();
 
         if(possibleActions.size()==0) {
-            playersInGame.get(currentPlayerId).showMessage("your turn is ended");
+            //playersInGame.get(currentPlayerId).showMessage("your turn is ended");
+            playersInGame.get(currentPlayerId).endTurn();
             handleStartNextTurn();
         }
         else {
@@ -165,31 +168,11 @@ public class Controller implements Observer<ClientEvent> {
         }
     }
 
-    //probably not necessary
-    /*public void disconnectPlayer(String playerName) {
-        for(ServerView s : playersInGame) {
-            if(!s.getUsername().equals(playerName)) s.playerDisconnection(playerName);
-            s.disconnect();
-        }
-        //model.setLoser(playerName);
-    }*/
 
     public void handleUnexpectedDisconnection(String playerName) {
         model.setLoser(playerName);
     }
 
-    public void sendMessageToAll(String message) {
-        for(ServerView s : playersInGame) {
-            s.showMessage(message);
-        }
-    }
-
-    //probably not necessary
-    /*public void endGame(int winner) {
-        String winnerUsername = model.getPlayers().get(winner).getUsername();
-        //view.endGame(winnerUsername);
-        exit(0);
-    }*/
 
     public void startGame(List<String> gameDivinities) {
         List<String> allDivinities = model.getAllDivinities();
@@ -276,8 +259,9 @@ public class Controller implements Observer<ClientEvent> {
             }
 
         } catch (WorkerBadPlacementException e) {
-            playersInGame.get(currentPlayerId).showMessage("error");
-            playersInGame.get(currentPlayerId).sendWorkerInitialization();
+            //playersInGame.get(currentPlayerId).showMessage("error");
+            //playersInGame.get(currentPlayerId).sendWorkerInitialization();
+            playersInGame.get(currentPlayerId).invalidWorkerPlacement();
         }
     }
 

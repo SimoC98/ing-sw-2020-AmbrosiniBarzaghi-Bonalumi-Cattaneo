@@ -141,6 +141,25 @@ public class ServerView extends Observable<ClientEvent> implements Observer<Serv
         sendEvent(new DivinitiesSetupEvent(playersDivinities));
     }
 
+
+    public void endTurn() {
+        proxy.sendEvent(new EndTurnEvent());
+    }
+
+    public void invalidMove(List<Action> possileActions) {
+        sendEvent(new InvalidMoveEvent(possileActions));
+    }
+
+    public void invalidBuild(List<Action> possileActions) {
+        sendEvent(new InvalidBuildEvent(possileActions));
+    }
+
+    public void invalidWorkerPlacement() {
+        sendEvent(new InvalidWorkerPlacement());
+    }
+
+
+
     /**
      * Sends the specified event to the client
      * @param event

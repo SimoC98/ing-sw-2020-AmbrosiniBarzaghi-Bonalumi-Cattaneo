@@ -41,4 +41,12 @@ public interface UI {
     public void playerDisconnection(String username);
 
     public void inLobby();
+
+    public void endTurn();
+
+    public void invalidMove(List<Action> possibleActions);
+
+    public void invalidBuild(List<Action> possibleActions);
+
+    public void invalidWorkerPlacement();
 }

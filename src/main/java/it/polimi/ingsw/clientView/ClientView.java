@@ -278,11 +278,11 @@ public class ClientView implements Observer<ServerEvent> {
 
 
 
-    //temp main and start
-    public static void main(String[] args) {
-        ClientView c = new ClientView();
-        //c.start();
-    }
+//    //temp main and start
+//    public static void main(String[] args) {
+//        ClientView c = new ClientView();
+//        //c.start();
+//    }
 
     public void startConnection() {
         /*this.ui = new CLI(this);

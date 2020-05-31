@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.cards.StandardDivinity;
+import it.polimi.ingsw.model.update.ModelUpdate;
 import it.polimi.ingsw.model.update.MoveUpdate;
 
 import java.util.HashMap;
@@ -19,11 +20,11 @@ import java.util.List;
 public interface Divinity {
 
 
-    public List<MoveUpdate> move(Board board, Worker selectedWorker, Tile selectedTile) ;
+    public List<ModelUpdate> move(Board board, Worker selectedWorker, Tile selectedTile) ;
 
 
 
-    public void build(Board board, Worker selectedWorker, Tile selectedTile);
+    public List<ModelUpdate> build(Board board, Worker selectedWorker, Tile selectedTile);
     public boolean legalMove(Board board,Worker selectedWorker, Tile selectedTile);
     public boolean legalBuild(Board board,Worker selectedWorker, Tile selectedTile);
     public Divinity getDivinity();

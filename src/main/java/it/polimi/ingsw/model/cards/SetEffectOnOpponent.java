@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.update.ModelUpdate;
 import it.polimi.ingsw.model.update.MoveUpdate;
 
 
@@ -34,7 +35,7 @@ public class SetEffectOnOpponent extends DivinityDecoratorWithEffects {
      * @return List of tiles to update on the UI representations
      */
     @Override
-    public List<MoveUpdate> move(Board board, Worker selectedWorker, Tile selectedTile) {
+    public List<ModelUpdate> move(Board board, Worker selectedWorker, Tile selectedTile) {
         if(selectedTile.getLevel()== 1 + selectedWorker.getPositionOnBoard().getLevel()) {
             hasMovedUp = true;
         }

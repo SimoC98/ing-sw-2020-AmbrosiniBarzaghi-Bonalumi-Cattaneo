@@ -4,6 +4,7 @@ import it.polimi.ingsw.Pair;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.exceptions.InvalidBuildException;
 import it.polimi.ingsw.model.exceptions.InvalidMoveException;
+import it.polimi.ingsw.model.update.ModelUpdate;
 import it.polimi.ingsw.model.update.MoveUpdate;
 
 import java.util.ArrayList;
@@ -58,15 +59,15 @@ public class StandardDivinity implements Divinity {
      * @return List of tiles to update on the UI representations. {@link MoveUpdate}
      */
     @Override
-    public List<MoveUpdate> move(Board board, Worker selectedWorker, Tile selectedTile) {
-        List<MoveUpdate> ret = ret = new ArrayList<>();
+    public List<ModelUpdate> move(Board board, Worker selectedWorker, Tile selectedTile) {
+        List<ModelUpdate> ret = new ArrayList<>();
         //List<Tile> modifiedTiles = new ArrayList<>();
         List<Pair<Integer,Integer>> modifiedTiles = new ArrayList<>();
 
         try {
             modifiedTiles.add(new Pair<>(selectedWorker.getPositionOnBoard().getX(),selectedWorker.getPositionOnBoard().getY()));
             modifiedTiles.add(new Pair<>(selectedTile.getX(),selectedTile.getY()));
-            ret.add(new MoveUpdate(selectedWorker,modifiedTiles));
+            ret.add(new ModelUpdate(Action.MOVE,selectedWorker,modifiedTiles));
 
             selectedWorker.move(selectedTile);
 
@@ -84,8 +85,18 @@ public class StandardDivinity implements Divinity {
      * @param selectedTile
      */
     @Override
-    public void build(Board board,Worker selectedWorker, Tile selectedTile) {
+    public List<ModelUpdate> build(Board board, Worker selectedWorker, Tile selectedTile) {
+        List<ModelUpdate> ret = new ArrayList<>();
+
+        List<Pair<Integer,Integer>> modifiedTiles = new ArrayList<>();
+        modifiedTiles.add(new Pair<Integer, Integer>(selectedTile.getX(),selectedTile.getY()));
+
+        ModelUpdate update = new ModelUpdate(Action.BUILD,selectedWorker,modifiedTiles);
+        ret.add(update);
+
         selectedWorker.build(selectedTile);
+
+        return ret;
     }
 
     /**

@@ -62,6 +62,8 @@ public class PlayerDivinitySelectionController {
 
         }
 
+        System.out.println("eccomi");
+
     }
 
     private void addDivinityToHbox(Node node, int count) {

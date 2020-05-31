@@ -2,6 +2,7 @@ package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.Pair;
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.update.ModelUpdate;
 import it.polimi.ingsw.model.update.MoveUpdate;
 
 import java.util.ArrayList;
@@ -64,21 +65,21 @@ public class PushOpponent extends MoveOnOpponent {
      * @return List of tiles to update on the UI representations
      */
     @Override
-    public List<MoveUpdate> move(Board board, Worker selectedWorker, Tile selectedTile) {
+    public List<ModelUpdate> move(Board board, Worker selectedWorker, Tile selectedTile) {
         int dx = selectedTile.getX() - selectedWorker.getPositionOnBoard().getX();
         int dy = selectedTile.getY() - selectedWorker.getPositionOnBoard().getY();
 
-        List<MoveUpdate> ret = new ArrayList<>();
+        List<ModelUpdate> ret = new ArrayList<>();
         //List<Tile> modifiedTiles = new ArrayList<>();
         List<Pair<Integer,Integer>> modifiedTiles = new ArrayList<>();
-        MoveUpdate update = null;
+        ModelUpdate update = null;
 
         if(selectedTile.isOccupied()) {
             Tile pushOpponentTile = board.getTile(selectedTile.getX()+dx,selectedTile.getY()+dy);
 
             modifiedTiles.add(new Pair<>(selectedTile.getX(),selectedTile.getY()));
             modifiedTiles.add(new Pair<>(pushOpponentTile.getX(),pushOpponentTile.getY()));
-            update = new MoveUpdate(selectedTile.getWorker(),new ArrayList<>(modifiedTiles));
+            update = new ModelUpdate(Action.MOVE,selectedTile.getWorker(),new ArrayList<>(modifiedTiles));
 
             pushOpponentTile.setWorker(selectedTile.getWorker());
             selectedTile.getWorker().setPositionOnBoard(pushOpponentTile);

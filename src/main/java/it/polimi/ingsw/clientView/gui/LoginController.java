@@ -42,6 +42,11 @@ public class LoginController {
 
     @FXML
     public void initialize() {
+       // String image = "/graphics/title_sky.png";
+
+        /*vBox.setStyle("-fx-background-image: url('" + image + "'); " +
+                "-fx-background-position: center center; " +
+                "-fx-background-repeat: stretch;");*/
 
     }
 

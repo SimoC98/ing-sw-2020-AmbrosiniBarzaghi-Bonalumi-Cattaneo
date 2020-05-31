@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.update.ModelUpdate;
 import it.polimi.ingsw.model.update.MoveUpdate;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class MoveOnOpponent extends DivinityDecoratorWithEffects {
     }
 
     @Override
-    public List<MoveUpdate> move(Board board, Worker selectedWorker, Tile selectedTile) {
+    public List<ModelUpdate> move(Board board, Worker selectedWorker, Tile selectedTile) {
         return super.move(board,selectedWorker, selectedTile);
     }
 
@@ -34,7 +35,7 @@ public class MoveOnOpponent extends DivinityDecoratorWithEffects {
     public boolean legalMove(Board board,Worker selectedWorker, Tile selectedTile) {
        if(selectedTile.isOccupied()) {
            if(!selectedTile.getWorker().getPlayer().equals(selectedWorker.getPlayer())) {
-               if(selectedWorker.getPositionOnBoard().isAdjacent(selectedTile.getX(),selectedTile.getY())) return true;
+               if(selectedWorker.getPositionOnBoard().isAdjacent(selectedTile.getX(),selectedTile.getY()) && selectedWorker.getPositionOnBoard().getLevel()-selectedTile.getLevel()>=-1) return true;
            }
            else {
                return false;

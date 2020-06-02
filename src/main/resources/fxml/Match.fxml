@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<HBox fx:id="hBox" alignment="CENTER" fillHeight="false" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: lightblue;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.clientView.gui.MatchController">
+    <children>
+        <VBox fx:id="vBoxLeft" fillWidth="false" maxWidth="-Infinity" prefHeight="15.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+
+        <GridPane fx:id="board" alignment="CENTER" prefHeight="700.0" prefWidth="700.0" scaleShape="false" styleClass="bodybg" stylesheets="@../css/gameBack.css">
+            <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS" minWidth="50.0" />
+                <ColumnConstraints hgrow="ALWAYS" minWidth="50.0" />
+                <ColumnConstraints hgrow="ALWAYS" minWidth="50.0" />
+                <ColumnConstraints hgrow="ALWAYS" minWidth="50.0" />
+                <ColumnConstraints hgrow="ALWAYS" minWidth="50.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="50.0" vgrow="ALWAYS" />
+                <RowConstraints minHeight="50.0" vgrow="ALWAYS" />
+                <RowConstraints minHeight="50.0" vgrow="ALWAYS" />
+                <RowConstraints minHeight="50.0" vgrow="ALWAYS" />
+                <RowConstraints minHeight="50.0" vgrow="ALWAYS" />
+            </rowConstraints>
+        </GridPane>
+        <VBox fx:id="vBoxRight" fillWidth="false" HBox.hgrow="ALWAYS" />
+    </children>
+</HBox>

@@ -24,6 +24,7 @@ public class GUI extends Application implements UI {
     private WelcomeController welcomeController;
     private DivinitySelectionController divinitySelectionController;
     private PlayerDivinitySelectionController playerDivinitySelectionController;
+    private MatchController matchController;
 
     private Stage primaryStage;
 
@@ -31,6 +32,7 @@ public class GUI extends Application implements UI {
     private Parent loginRoot;
     private Parent playableDivinityRoot;
     private Parent playerDivinityRoot;
+    private Parent matchRoot;
 
 
 
@@ -58,7 +60,7 @@ public class GUI extends Application implements UI {
     public void start(Stage stage) throws Exception {
         this.primaryStage = stage;
 
-       primaryStage.setMinHeight(800);
+        primaryStage.setMinHeight(800);
         primaryStage.setMinWidth(1200);
 
         primaryStage.setTitle("SANTORINI");
@@ -68,6 +70,7 @@ public class GUI extends Application implements UI {
         WelcomeController.setClientView(clientView);
         DivinitySelectionController.setClientView(clientView);
         PlayerDivinitySelectionController.setClientView(clientView);
+        MatchController.setClientView(clientView);
 
         clientView.setUI(this);
 
@@ -97,12 +100,19 @@ public class GUI extends Application implements UI {
         // Scene loginScene = new Scene(loginPane, 750, 500);
         this.playerDivinityRoot = playerDivinityPane;
 
+        FXMLLoader matchLoader = new FXMLLoader(getClass().getResource("/fxml/Match.fxml"));
+        //Parent playableDivinitiesPane = playableDivinitiesLoader.load();
+        Parent matchPane = matchLoader.load();
+        // Scene loginScene = new Scene(loginPane, 750, 500);
+        this.matchRoot = matchPane;
+
 
 
         this.welcomeController = welcomeLoader.getController();
         this.loginController = loginLoader.getController();
         this.divinitySelectionController = playableDivinitiesLoader.getController();
         this.playerDivinitySelectionController = playerDivinityLoader.getController();
+        this.matchController = matchLoader.getController();
 
 
         //GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
@@ -181,7 +191,11 @@ public class GUI extends Application implements UI {
 
     @Override
     public void playersDivinities() {
+        Platform.runLater(()->{
+            matchController.setPlayers();
 
+            primaryStage.getScene().setRoot(matchRoot);
+        });
     }
 
     @Override

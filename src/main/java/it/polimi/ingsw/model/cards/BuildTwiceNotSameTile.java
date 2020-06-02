@@ -84,11 +84,8 @@ public class BuildTwiceNotSameTile extends BuildTwice {
             }
         }*/
 
-        if(getBuildCount()==1) {
-            possibleActions.add(Action.BUILD);
-            possibleActions.add(Action.END);
-        }
-        super.updatePossibleActions(possibleActions);
+        if(getBuildCount()!=1) return;
+        else super.updatePossibleActions(possibleActions);
     }
 
     @Override

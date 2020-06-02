@@ -28,6 +28,7 @@ class MatchTest {
         players.add("giacomo");
         players.add("franco");
         match = new Match(players);
+        match.setStartPlayer("paolo");
         board = match.getBoard();
         p1 = match.getPlayers().get(0);
         p2 = match.getPlayers().get(1);

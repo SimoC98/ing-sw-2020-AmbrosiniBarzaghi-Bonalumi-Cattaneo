@@ -23,6 +23,7 @@ class MoveOnOpponentTest {
         players.add("Jackie");
         players.add("Rose");
         match = new Match(players);
+        match.setStartPlayer("Jackie");
         board = match.getBoard();
         div = new MoveOnOpponent(new StandardDivinity());
         match.getPlayers().get(0).setDivinity(div);

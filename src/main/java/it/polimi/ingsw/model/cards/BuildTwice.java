@@ -84,6 +84,9 @@ public class BuildTwice extends DivinityDecoratorWithEffects {
 
     @Override
     public void updatePossibleActions(List<Action> possibleActions) {
+        possibleActions.add(Action.BUILD);
+        possibleActions.add(Action.END);
+
         super.updatePossibleActions(possibleActions);
     }
 }

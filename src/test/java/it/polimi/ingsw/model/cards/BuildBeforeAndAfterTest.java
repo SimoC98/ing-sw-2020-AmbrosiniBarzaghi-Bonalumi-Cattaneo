@@ -21,6 +21,7 @@ class BuildBeforeAndAfterTest {
         List<String> players = new ArrayList<>();
         players.add("paolo");
         match = new Match(players);
+        match.setStartPlayer("paolo");
         board = match.getBoard();
         div = new BuildBeforeAndAfter(new StandardDivinity());
         match.getPlayers().get(0).setDivinity(div);

@@ -52,7 +52,7 @@ public class MoveTwiceNotBack extends MoveTwice{
             if(l.size()>0) possibleActions.add(Action.MOVE);
         }*/
 
-        if(getMoveCount()==1 && !hasBuilt()) possibleActions.add(Action.MOVE);
+        if(getMoveCount()>1 || hasBuilt()) return;
         super.updatePossibleActions(possibleActions);
     }
 

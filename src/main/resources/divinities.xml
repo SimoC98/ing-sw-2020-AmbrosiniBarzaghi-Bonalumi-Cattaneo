@@ -72,4 +72,28 @@
         <effect>CanBuildBeforeMove</effect>
     </divinity>
 
+    <divinity>
+        <number>11</number>
+        <name>Zeus</name>
+        <heading>God Of The Sky</heading>
+        <description>Your Build: Your worker may build a block under itself.</description>
+        <effect>CanBuildUnderItself</effect>
+    </divinity>
+
+    <divinity>
+        <number>12</number>
+        <name>Triton</name>
+        <heading>God Of The Waves</heading>
+        <description>Your Move: Each time your worker moves into a perimeter space, it may immediately move again.</description>
+        <effect>CanMoveAgainIfOnPerimeter</effect>
+    </divinity>
+
+    <divinity>
+        <number>13</number>
+        <name>Hestia</name>
+        <heading>Goddes Of Heart And Home</heading>
+        <description>yourBuild: Your worker may build one additional time, but this cannot be on a perimeter space.</description>
+        <effect>CanBuildTwiceNotOnPerimeter</effect>
+    </divinity>
+
 </divinities>

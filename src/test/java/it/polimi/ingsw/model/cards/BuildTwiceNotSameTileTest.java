@@ -25,6 +25,8 @@ class BuildTwiceNotSameTileTest {
         players.add("francesco");
         match = new Match(players);
         board = match.getBoard();
+
+        match.setStartPlayer("paolo");
         div = new BuildTwiceNotSameTile(new StandardDivinity());
         match.getPlayers().get(0).setDivinity(div);
         match.placeWorkers(1,1,4,4);

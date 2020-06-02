@@ -24,6 +24,7 @@ class WinByDropTwoLevelTest {
         players.add("paolo");
         players.add("francesco");
         match = new Match(players);
+        match.setStartPlayer("paolo");
         board = match.getBoard();
         div = new WinByDropTwoLevel(new StandardDivinity());
         match.getPlayers().get(0).setDivinity(div);

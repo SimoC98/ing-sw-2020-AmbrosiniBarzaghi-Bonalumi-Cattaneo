@@ -25,6 +25,7 @@ class SwapWithOpponentTest {
         players.add("Paolo");
         players.add("Felix");
         match = new Match(players);
+        match.setStartPlayer("Paolo");
         board = match.getBoard();
         div = new SwapWithOpponent(new StandardDivinity());
         match.getPlayers().get(0).setDivinity(div);

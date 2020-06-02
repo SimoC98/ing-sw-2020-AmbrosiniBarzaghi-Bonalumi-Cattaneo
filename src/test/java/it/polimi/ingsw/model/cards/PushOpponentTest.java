@@ -23,6 +23,7 @@ class PushOpponentTest {
         players.add("Mike");
         players.add("Oscar");
         match = new Match(players);
+        match.setStartPlayer("Mike");
         board = match.getBoard();
         div = new PushOpponent(new StandardDivinity());
         match.getPlayers().get(0).setDivinity(div);

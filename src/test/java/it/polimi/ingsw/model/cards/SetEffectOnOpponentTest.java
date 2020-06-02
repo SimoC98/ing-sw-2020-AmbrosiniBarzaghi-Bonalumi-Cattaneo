@@ -24,6 +24,7 @@ class SetEffectOnOpponentTest {
         users.add("Hello");
         users.add("World");
         match = new Match(users);
+        match.setStartPlayer("Hello");
         board = match.getBoard();
         div1 = new SetEffectOnOpponent(new StandardDivinity());
         match.getPlayers().get(0).setDivinity(div1);

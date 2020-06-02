@@ -1,6 +1,16 @@
 
 
-    .bodybg{
+    .board{
         -fx-background-image: url("pics/SantoriniBoard_Squared.png");
+        -fx-background-size: cover;
+    }
+
+    .main{
+        -fx-background-image: url("pics/SantoriniBoard.png");
+        -fx-background-size: cover;
+    }
+
+    .island{
+        -fx-background-image: url("pics/SantoriniBoard_Island.png");
         -fx-background-size: cover;
     }

@@ -1,18 +1,29 @@
 package it.polimi.ingsw.clientView.aaaaGUITesting;
 
-import it.polimi.ingsw.model.Action;
+import it.polimi.ingsw.Pair;
+import javafx.beans.binding.DoubleBinding;
+import javafx.beans.binding.DoubleExpression;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.sql.SQLOutput;
 
 public class GameController {
+
+    @FXML
+    private StackPane leftStack;
+    @FXML
+    private Label graphicAction;
+    @FXML
+    private Label graphicSelectedWorker;
 
     @FXML
     private GridPane board;
@@ -26,11 +37,12 @@ public class GameController {
     private int [][]boardInt = new int[5][5];
     private final int LVL1=0, LVL2=1, LVL3=2, DOME=3, WORKER=4, SHADOW=5;
     private String actualAction;
+    private Pair<Integer, Integer> selectedWorker;
 
     @FXML
     public void initialize() {
         createBoard();
-        board.prefHeightProperty().bind(hBox.heightProperty().subtract(25));
+        board.prefHeightProperty().bind(hBox.heightProperty().subtract(50));
         board.prefWidthProperty().bind(board.heightProperty());
         hBox.setMinHeight(200);
         hBox.setMinWidth(400);
@@ -40,28 +52,33 @@ public class GameController {
 //        for(int i=0; i<5; i++)
 //            toggleSelectable(i,i);
         actualAction = "build";
+
+        selectedWorker = null;
     }
 
     public void createBoard() {
+
+        DoubleBinding tileHeight = board.heightProperty().divide(board.getRowCount()).subtract(12);
+
         for(int i=0; i<board.getColumnCount(); i++) {
             for(int j=0; j<board.getRowCount(); j++) {
                 StackPane s = new StackPane();
-                s.prefHeightProperty().bind(board.heightProperty().divide(board.getRowCount()).subtract(10));
+                s.prefHeightProperty().bind(tileHeight);
                 s.prefWidthProperty().bind(s.heightProperty());
 
                 for(int k=0; k<3; k++) {
                     ImageView lvl = new ImageView();
-                    lvl.fitHeightProperty().bind(board.heightProperty().divide(board.getRowCount()).subtract(10).multiply(1-(0.175*k)));
+                    lvl.fitHeightProperty().bind(tileHeight.multiply(1-(0.175*k)));
                     lvl.fitWidthProperty().bind(lvl.fitHeightProperty());
                     s.getChildren().add(lvl);
                 }
                 ImageView dome = new ImageView();
-                dome.fitHeightProperty().bind(board.heightProperty().divide(board.getRowCount()).subtract(10).multiply(0.5));
+                dome.fitHeightProperty().bind(tileHeight.multiply(0.5));
                 dome.fitWidthProperty().bind(dome.fitHeightProperty());
                 s.getChildren().add(dome);
 
                 ImageView worker = new ImageView();
-                worker.fitHeightProperty().bind(board.heightProperty().divide(board.getRowCount()).subtract(10).multiply(0.95));
+                worker.fitHeightProperty().bind(tileHeight.multiply(0.95));
                 worker.fitWidthProperty().bind(worker.fitHeightProperty());
                 s.getChildren().add(worker);
 
@@ -109,7 +126,26 @@ public class GameController {
     }
 
     public void move(StackPane s) {
-        //TODO
+        if(selectedWorker == null)
+            return;
+
+        int x = selectedWorker.getFirst();
+        int y = selectedWorker.getSecond();
+        System.out.println(x + " " + y);
+
+        StackPane workerS = (StackPane) board.getChildren().get(x * board.getRowCount() + y);
+
+        ImageView workerOld = (ImageView) workerS.getChildren().get(WORKER);
+        Image workerImg = workerOld.getImage();
+        if(workerImg == null)
+            System.out.println("awwww, shit");
+        workerOld.setImage(null);
+
+        ImageView workerNew = (ImageView) s.getChildren().get(WORKER);
+        workerNew.setImage(workerImg);
+
+        selectedWorker = new Pair(GridPane.getRowIndex(s), GridPane.getColumnIndex(s));
+        graphicSelectedWorker.setText("?-?");
     }
 
     public void build(StackPane s) {
@@ -167,10 +203,15 @@ public class GameController {
     }
 
     public void selectWorker(StackPane s) {
-        ImageView v = (ImageView) s.getChildren().get(WORKER);
-        if(v.getImage() != null)
-            System.out.println("Worker Selected");
+        int x = GridPane.getRowIndex(s);
+        int y = GridPane.getColumnIndex(s);
 
+        ImageView worker = (ImageView) s.getChildren().get(WORKER);
+        if(worker.getImage() != null) {
+            System.out.println("Worker Selected: " + x + "-" + y);
+            selectedWorker = new Pair(x, y);
+            graphicSelectedWorker.setText(x + "-" + y);
+        }
     }
 
     public void placeWorkers(int x1, int y1, int x2, int y2) {
@@ -190,6 +231,14 @@ public class GameController {
         }
     }
 
+
+    public void setSelectable(int x, int y, boolean val) {
+        StackPane s = (StackPane) board.getChildren().get(board.getRowCount()*x + y);
+        StackPane shadow = (StackPane) s.getChildren().get(SHADOW);
+
+        shadow.setVisible(val);
+    }
+
     public void toggleSelectable(int x, int y) {
         StackPane s = (StackPane) board.getChildren().get(board.getRowCount()*x + y);
         StackPane shadow = (StackPane) s.getChildren().get(SHADOW);
@@ -201,30 +250,41 @@ public class GameController {
     }
 
     public void setActionMove(){
+        focusWorkers(false);
         System.out.println("Now you MOVE");
+        graphicAction.setText("MOVE");
         actualAction = "move";
     }
 
     public void setActionBuild(){
+        focusWorkers(false);
         System.out.println("Now you BUILD");
+        graphicAction.setText("BUILD");
         actualAction = "build";
     }
 
     public void setActionBuildDome(){
+        focusWorkers(false);
         System.out.println("Now you BUILDDOME");
+        graphicAction.setText("BUILDDOME");
         actualAction = "builddome";
     }
 
     public void setActionSelectWorker(){
+        focusWorkers(true);
+        System.out.println("Now SELECTWORKER");
+        graphicAction.setText("SELECTWORKER");
+        actualAction = "selectworker";
+    }
+
+    public void focusWorkers(boolean value) {
         StackPane x;
         ImageView v;
         for(int i=0; i<25; i++) {
             x = (StackPane) board.getChildren().get(i);
             v = (ImageView) x.getChildren().get(WORKER);
             if(v.getImage() != null)
-                toggleSelectable(i/5, i%5);
+                setSelectable(i/5, i%5, value);
         }
-        System.out.println("Now SELECTWORKER");
-        actualAction = "selectworker";
     }
 }

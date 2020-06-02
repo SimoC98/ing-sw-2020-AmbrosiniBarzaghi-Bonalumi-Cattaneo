@@ -16,6 +16,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.SQLOutput;
 
+import static java.lang.Thread.sleep;
+
 public class GameController {
 
     @FXML
@@ -44,6 +46,7 @@ public class GameController {
         createBoard();
         board.prefHeightProperty().bind(hBox.heightProperty().subtract(50));
         board.prefWidthProperty().bind(board.heightProperty());
+        board.setMinHeight(300);
         hBox.setMinHeight(200);
         hBox.setMinWidth(400);
 
@@ -129,22 +132,27 @@ public class GameController {
         if(selectedWorker == null)
             return;
 
+        System.out.println(GridPane.getRowIndex(s) + "_" + GridPane.getColumnIndex(s));
+
         int x = selectedWorker.getFirst();
         int y = selectedWorker.getSecond();
-        System.out.println(x + " " + y);
+        if(x == GridPane.getRowIndex(s) && y == GridPane.getColumnIndex(s))
+            return;
 
-        StackPane workerS = (StackPane) board.getChildren().get(x * board.getRowCount() + y);
+        StackPane workerS = (StackPane) board.getChildren().get((board.getRowCount()*y) + x);
 
         ImageView workerOld = (ImageView) workerS.getChildren().get(WORKER);
         Image workerImg = workerOld.getImage();
-        if(workerImg == null)
+        if(workerImg == null) {
             System.out.println("awwww, shit");
+            return;
+        }
         workerOld.setImage(null);
 
         ImageView workerNew = (ImageView) s.getChildren().get(WORKER);
         workerNew.setImage(workerImg);
 
-        selectedWorker = new Pair(GridPane.getRowIndex(s), GridPane.getColumnIndex(s));
+        selectedWorker = null;
         graphicSelectedWorker.setText("?-?");
     }
 
@@ -216,10 +224,10 @@ public class GameController {
 
     public void placeWorkers(int x1, int y1, int x2, int y2) {
 
-        StackPane s1 = (StackPane) board.getChildren().get(board.getRowCount()*x1 + y1);
+        StackPane s1 = (StackPane) board.getChildren().get(board.getRowCount()*y1 + x1);
         ImageView w1 = (ImageView) s1.getChildren().get(WORKER);
 
-        StackPane s2 = (StackPane) board.getChildren().get(board.getRowCount()*x2 + y2);
+        StackPane s2 = (StackPane) board.getChildren().get(board.getRowCount()*y2 + x2);
         ImageView w2 = (ImageView) s2.getChildren().get(WORKER);
 
         try {
@@ -233,14 +241,14 @@ public class GameController {
 
 
     public void setSelectable(int x, int y, boolean val) {
-        StackPane s = (StackPane) board.getChildren().get(board.getRowCount()*x + y);
+        StackPane s = (StackPane) board.getChildren().get(board.getRowCount()*y + x);
         StackPane shadow = (StackPane) s.getChildren().get(SHADOW);
 
         shadow.setVisible(val);
     }
 
     public void toggleSelectable(int x, int y) {
-        StackPane s = (StackPane) board.getChildren().get(board.getRowCount()*x + y);
+        StackPane s = (StackPane) board.getChildren().get(board.getRowCount()*y + x);
         StackPane shadow = (StackPane) s.getChildren().get(SHADOW);
 
         if(shadow.isVisible())
@@ -281,10 +289,12 @@ public class GameController {
         StackPane x;
         ImageView v;
         for(int i=0; i<25; i++) {
+            Label l = new Label(i%5 + "-" + i/5);
             x = (StackPane) board.getChildren().get(i);
+            x.getChildren().add(l);
             v = (ImageView) x.getChildren().get(WORKER);
             if(v.getImage() != null)
-                setSelectable(i/5, i%5, value);
+                setSelectable(i%5, i/5, value);
         }
     }
 }

@@ -11,14 +11,21 @@ import java.util.List;
 public class DivinitiesInGameSelectionEvent implements ClientEvent {
 
     private List<String> divinities;
+    private String startPlayer;
+
 
     public DivinitiesInGameSelectionEvent(List<String> divinities) {
         this.divinities = divinities;
     }
 
+    public DivinitiesInGameSelectionEvent(List<String> divinities, String startPlayer) {
+        this.divinities = divinities;
+        this.startPlayer = startPlayer;
+    }
+
     @Override
     public void handleEvent(Controller controller) {
-        controller.startGame(divinities);
+        controller.startGame(divinities,startPlayer);
     }
 
     @Override

@@ -184,7 +184,7 @@ public class Server{
             match.addObserver(s);
         }
 
-        controller.startGame(new ArrayList<String>());
+        controller.startGame(new ArrayList<String>(),null);
     }
 
 

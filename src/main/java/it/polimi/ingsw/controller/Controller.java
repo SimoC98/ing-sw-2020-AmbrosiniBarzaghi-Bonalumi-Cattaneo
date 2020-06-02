@@ -26,6 +26,8 @@ public class Controller implements Observer<ClientEvent> {
     private List<String> playersUsernames;
     private int currentPlayerId;
 
+    private int startPlayer=-1;
+
     private List<String> gameDivinities;
 
     public Controller(Match model, List<ServerView> playersInGame) {
@@ -174,20 +176,26 @@ public class Controller implements Observer<ClientEvent> {
     }
 
 
-    public void startGame(List<String> gameDivinities) {
+    public void startGame(List<String> gameDivinities, String startPlayer) {
         List<String> allDivinities = model.getAllDivinities();
         List<String> allDivinitiesDescription = model.getAllDivinitiesDescriptions();
         if(gameDivinities.size()==0) {
             Map<String, Divinity> divinityMap =  XMLParserUtility.getDivinities();
             model.setDivinityMap(divinityMap);
-            playersInGame.get(playersInGame.size()-1).chooseDivinitiesInGame(model.getAllDivinities(),model.getAllDivinitiesDescriptions(),playersInGame.size());
+            playersInGame.get(playersInGame.size()-1).chooseDivinitiesInGame(model.getAllDivinities(),model.getAllDivinitiesDescriptions(),playersInGame.size(),model.getPlayersUsernames());
         }
         else {
-            this.gameDivinities = gameDivinities;
             List<String> descriptions = new ArrayList<>();
             for(int i=0; i<gameDivinities.size();i++) {
                 descriptions.add(allDivinitiesDescription.get(allDivinities.indexOf(gameDivinities.get(i))));
             }
+            for(ServerView s : playersInGame) {
+                s.sendGameSetupInfo(model.getPlayersUsernames(),model.getPlayersColors(),gameDivinities,descriptions);
+            }
+
+            this.startPlayer = playersUsernames.indexOf(startPlayer);
+            this.gameDivinities = gameDivinities;
+            model.setStartPlayer(startPlayer);
 
             /*
             * send to every player:
@@ -196,10 +204,7 @@ public class Controller implements Observer<ClientEvent> {
             * -divinities in game (random order)
             * -divinities descriptions
             * */
-            for(ServerView s : playersInGame) {
-                s.sendGameSetupInfo(model.getPlayersUsernames(),model.getPlayersColors(),gameDivinities,descriptions);
-            }
-            playersInGame.get(0).sendDivinityInitialization(this.gameDivinities);
+            playersInGame.get(this.startPlayer).sendDivinityInitialization(this.gameDivinities);
         }
     }
 
@@ -243,15 +248,14 @@ public class Controller implements Observer<ClientEvent> {
 
     public void handleWorkerPlacementInitialization(int x1, int y1, int x2, int y2) {
         currentPlayerId = model.getCurrentPlayerId();
-        boolean endInitialization = false;
 
-        if(currentPlayerId+1==playersInGame.size()) endInitialization = true;
+        //if(currentPlayerId+1==playersInGame.size()) endInitialization = true;
 
         try {
             model.workerPlacementInitialization(x1,y1,x2,y2);
             currentPlayerId = model.getCurrentPlayerId();
 
-            if(endInitialization) {
+            if(model.getCurrentPlayerId() == this.startPlayer) {
                 playersInGame.get(currentPlayerId).startTurn(playersUsernames.get(currentPlayerId));
             }
             else {

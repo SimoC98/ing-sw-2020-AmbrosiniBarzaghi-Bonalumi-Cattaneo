@@ -15,16 +15,18 @@ public class DivinitiesInGameEvent implements ServerEvent{
     private List<String> divinities;
     private List<String> description;
     private int playersNumber;
+    private List<String> players;
 
-    public DivinitiesInGameEvent(List<String> divinities, List<String> description, int playersNumber) {
+    public DivinitiesInGameEvent(List<String> divinities, List<String> description, int playersNumber, List<String> players) {
         this.divinities = divinities;
         this.description = description;
         this.playersNumber = playersNumber;
+        this.players = players;
     }
 
     @Override
     public void handleEvent(ClientView clientView) {
-        clientView.managePlayableDivinitiesSelection(divinities, description, playersNumber);
+        clientView.managePlayableDivinitiesSelection(divinities, description, playersNumber,players);
     }
 
     @Override

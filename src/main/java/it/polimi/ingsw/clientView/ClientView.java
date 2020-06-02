@@ -113,8 +113,8 @@ public class ClientView implements Observer<ServerEvent> {
     }
 
     //IF USERID==PLAYERSNUMBER
-    public void playableDivinitiesSelection(List<String> playableDivinities) {
-        proxy.sendEvent(new DivinitiesInGameSelectionEvent(playableDivinities));
+    public void playableDivinitiesSelection(List<String> playableDivinities,String start) {
+        proxy.sendEvent(new DivinitiesInGameSelectionEvent(playableDivinities,start));
     }
 
     public void divinitySelection(String divinity){
@@ -153,8 +153,8 @@ public class ClientView implements Observer<ServerEvent> {
     }
 
 
-    public void managePlayableDivinitiesSelection(List<String> divinitiesNames, List<String> divinitiesDescriptions, int playersNumber) {
-        ui.selectPlayableDivinities(divinitiesNames, divinitiesDescriptions, playersNumber);
+    public void managePlayableDivinitiesSelection(List<String> divinitiesNames, List<String> divinitiesDescriptions, int playersNumber, List<String> players) {
+        ui.selectPlayableDivinities(divinitiesNames, divinitiesDescriptions, playersNumber,players);
     }
 
     public void playersSetup(List<String> playersNames, List<Color> colors) {

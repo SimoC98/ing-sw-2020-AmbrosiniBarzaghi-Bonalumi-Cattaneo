@@ -93,9 +93,10 @@ public class ServerView extends Observable<ClientEvent> implements Observer<Serv
      * @param divinities list of all divinities from model
      * @param descriptions descriptions of divinities
      * @param playerNumber
+     * @param playersUsernames
      */
-    public void chooseDivinitiesInGame(List<String> divinities, List<String> descriptions, int playerNumber) {
-        sendEvent(new DivinitiesInGameEvent(divinities,descriptions,playerNumber));
+    public void chooseDivinitiesInGame(List<String> divinities, List<String> descriptions, int playerNumber, List<String> playersUsernames) {
+        sendEvent(new DivinitiesInGameEvent(divinities,descriptions,playerNumber,playersUsernames));
     }
 
     /**

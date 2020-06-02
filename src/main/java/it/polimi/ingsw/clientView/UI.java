@@ -15,7 +15,7 @@ public interface UI {
 
     public void selectPlayersNumber();
 
-    public void selectPlayableDivinities(List<String> divinitiesNames, List<String> divinitiesDescriptions, int playersNumber);
+    public void selectPlayableDivinities(List<String> divinitiesNames, List<String> divinitiesDescriptions, int playersNumber, List<String> players);
 
     public void selectDivinity(List<String> divinitiesNames);
 

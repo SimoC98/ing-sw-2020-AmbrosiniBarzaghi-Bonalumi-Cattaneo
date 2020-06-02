@@ -31,6 +31,8 @@ public class Match extends Observable<ServerEvent> {
     private Worker selectedWorker;
     private Map<String,Divinity> divinities;
 
+    private int startPlayer;
+
     /**
      * Constructor used to support other classes
      *  and to simplify testing
@@ -61,7 +63,16 @@ public class Match extends Observable<ServerEvent> {
             Player newPlayer = new Player(users.get(i),colors[i]);
             players.add(newPlayer);
         }
-        currentPlayer = players.get(0);
+        currentPlayer = null;
+    }
+
+    public void setStartPlayer(String startPlayer) {
+        for(Player p : players) {
+            if(p.getUsername().equals(startPlayer)) {
+                this.currentPlayer=p;
+                this.startPlayer = players.indexOf(p);
+            }
+        }
     }
 
 
@@ -401,10 +412,10 @@ public class Match extends Observable<ServerEvent> {
         notify(new WorkerPlacementEvent(currentPlayer.getUsername(),x1,y1,x2,y2));
 
         int index = players.indexOf(currentPlayer) + 1;
-        if(index==players.size()) startNextTurn();
-        else {
-            currentPlayer = players.get(index);
-        }
+        if(index==players.size()) index=0;
+
+        if(index==this.startPlayer) startNextTurn();
+        else currentPlayer=players.get(index);
     }
 
 

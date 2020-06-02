@@ -3,23 +3,16 @@ package it.polimi.ingsw.clientView.gui;
 import it.polimi.ingsw.clientView.BoardRepresentation;
 import it.polimi.ingsw.clientView.ClientView;
 import it.polimi.ingsw.clientView.UI;
-import it.polimi.ingsw.events.clientToServer.ClientEvent;
 import it.polimi.ingsw.model.Action;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
 import java.util.List;
-import java.util.Scanner;
 
 public class GUI extends Application implements UI {
 
@@ -153,10 +146,10 @@ public class GUI extends Application implements UI {
     }
 
     public void selectPlayersNumber() {}
-    public void selectPlayableDivinities(List<String> divinitiesNames, List<String> divinitiesDescriptions, int playersNumber) {
+    public void selectPlayableDivinities(List<String> divinitiesNames, List<String> divinitiesDescriptions, int playersNumber, List<String> players) {
 
         Platform.runLater(()-> {
-            divinitySelectionController.setDivinityOnGrid(divinitiesNames,divinitiesDescriptions,playersNumber);
+            divinitySelectionController.setDivinityOnGrid(divinitiesNames,divinitiesDescriptions,playersNumber,players);
 
             primaryStage.getScene().setRoot(playableDivinityRoot);
         });

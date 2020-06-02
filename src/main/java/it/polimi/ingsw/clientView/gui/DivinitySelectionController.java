@@ -49,6 +49,7 @@ public class DivinitySelectionController {
 
     private List<String> divinities;
     private List<String> descriptions;
+    private List<String> players;
     private int playerNumber;
 
     private List<String> chosenGods = new ArrayList<>();
@@ -68,8 +69,9 @@ public class DivinitySelectionController {
         DivinitySelectionController.clientView = clientView;
     }
 
-    public void setDivinityOnGrid(List<String> divinities, List<String> descriptions, int playerNumber) {
+    public void setDivinityOnGrid(List<String> divinities, List<String> descriptions, int playerNumber,List<String> players) {
 
+        this.players = players;
         this.divinities = new ArrayList<>(divinities);
         this.descriptions = new ArrayList<>(descriptions);
         this.playerNumber = playerNumber;
@@ -183,7 +185,7 @@ public class DivinitySelectionController {
 
                      godsImages.stream().forEach(i -> i.setOnMouseClicked(null));
 
-                     clientView.playableDivinitiesSelection(chosenGods);
+                     clientView.playableDivinitiesSelection(chosenGods,players.get(0));
                  }
              });
 

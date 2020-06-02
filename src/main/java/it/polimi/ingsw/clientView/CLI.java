@@ -4,6 +4,7 @@ import it.polimi.ingsw.Pair;
 import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Color;
 
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -136,7 +137,7 @@ public class CLI implements UI{
 
     //TODO: print once and don't remove div from names list OR re print the list every time
     @Override
-    public void selectPlayableDivinities(List<String> divinitiesNames, List<String> divinitiesDescriptions, int playersNumber) {
+    public void selectPlayableDivinities(List<String> divinitiesNames, List<String> divinitiesDescriptions, int playersNumber, List<String> players) {
         clearScreen();
         System.out.println("You're the last user logged in, so you must choose the divinities among which players will choose theirs.");
         System.out.println("You must choose exactly " + playersNumber + " cards.");
@@ -173,7 +174,19 @@ public class CLI implements UI{
         for(String div : playableDivinities)
             System.out.print("\t" + div);
 
-        clientView.playableDivinitiesSelection(playableDivinities);
+        System.out.println("\n\n");
+        for(int i=0;i<players.size();i++) {
+            System.out.println("(" + i + ")" + players.get(i));
+        }
+
+        int start = -1;
+        do{
+            System.out.println("Now choose the starter player: ");
+            String in = scanner.nextLine();
+            if(in.matches("[0-9]")) start = Integer.parseInt(in);
+        } while(start<0||start>players.size());
+
+        clientView.playableDivinitiesSelection(playableDivinities,players.get(start));
     }
 
 //    @Override

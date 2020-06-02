@@ -567,8 +567,23 @@ public class CLI implements UI{
         placeWorkers();
     }
 
+    @Override
+    public void moveUpdate(String player, int xFrom, int yFrom, int xTo, int yTo) {
+        updateBoard();
+    }
 
     @Override
+    public void buildUpdate(String player, int x, int y) {
+        updateBoard();
+    }
+
+    @Override
+    public void workerPlacementUpdate(String player, int x1, int y1, int x2, int y2) {
+        updateBoard();
+    }
+
+
+
     public void updateBoard() {
 
         printPlayersInGame();

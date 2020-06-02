@@ -185,7 +185,8 @@ public class ClientView implements Observer<ServerEvent> {
     public void manageWorkersInitialPlacement(String username, int x1, int y1, int x2, int y2) {
         board.getPlayersMap().get(username).addWorker(x1,y1);
         board.getPlayersMap().get(username).addWorker(x2,y2);
-        ui.updateBoard();
+
+        ui.workerPlacementUpdate(username,x1,y1,x2,y2);
     }
 
     public void managePlayersDivinities(Map<String, String> divinities) {
@@ -213,19 +214,18 @@ public class ClientView implements Observer<ServerEvent> {
 
     public void manageMove(String username, int fromX, int fromY, int toX, int toY){
         board.moveWorker(username, fromX, fromY, toX, toY);
-        ui.updateBoard();
+        ui.moveUpdate(username,fromX,fromY,toX,toY);
     }
 
     //NB actually idc who built
     public void manageBuild(String playerName, int x, int y, Action action){
         board.buildTile(x, y, action);
-        ui.updateBoard();
+        ui.buildUpdate(playerName,x,y);
     }
 
     public void manageLoser(String username){
         board.setLoser(username);
         ui.loser(username);
-
     }
 
     public void manageWinner(String username){

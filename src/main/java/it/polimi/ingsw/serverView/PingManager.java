@@ -22,37 +22,6 @@ public class PingManager implements Observer<ClientEvent> {
     }
 
 
-    /**
-     * METODO FUNZIONANTE
-     */
-    /*public void receivePing() {
-        if(!isNew) {
-            timer.cancel();
-        }
-        else isNew = false;
-
-        ping = true;
-        //System.out.println("PING");
-
-        Timer waitPing = new Timer();
-        waitPing.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                try {
-                    Thread.sleep(100);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                if(!ping) {
-                    System.out.println("Timer --> disconnection");
-                    waitPing.cancel();
-                    connection.disconnect();
-                }
-                else ping = false;
-            }
-        },20000);
-    }*/
-
 
     public void receivePing() {
         ping = true;
@@ -62,7 +31,7 @@ public class PingManager implements Observer<ClientEvent> {
 
 
     public void startPing() {
-        /*pinger = new Timer();
+        pinger = new Timer();
         task = new TimerTask() {
             @Override
             public void run() {
@@ -79,25 +48,11 @@ public class PingManager implements Observer<ClientEvent> {
             }
         };
 
-        //8 sec to receive pong
-        pinger.schedule(task,0,2000);*/
+        //2 sec to receive pong
+        pinger.schedule(task,0,2000);
 
     }
 
-
-    /*public void startPing() {
-        timer = new Timer();
-        task = new TimerTask() {
-            @Override
-            public void run() {
-                timer.cancel();
-                System.out.println("timer");
-                connection.disconnect();
-            }
-        };
-        connection.sendEvent(new Ping());
-        timer.schedule(task,5000);
-    }*/
 
 
     public void stop() {

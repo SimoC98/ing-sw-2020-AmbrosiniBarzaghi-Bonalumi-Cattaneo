@@ -22,7 +22,7 @@ public interface UI {
     public void placeWorkers();
 //    public void selectDivinityAndPlaceWorkers(List<String> divinityNames) {}
 
-    public void updateBoard();
+    //public void updateBoard();
 
     public void textMessage(String msg);
 
@@ -44,9 +44,21 @@ public interface UI {
 
     public void endTurn();
 
+    //errors
     public void invalidMove(List<Action> possibleActions);
 
     public void invalidBuild(List<Action> possibleActions);
 
     public void invalidWorkerPlacement();
+
+    //updates from model
+    public void moveUpdate(String player,int xFrom,int yFrom,int xTo,int yTo);
+
+    public void buildUpdate(String player, int x, int y);
+
+    public void workerPlacementUpdate(String player,int x1,int y1,int x2,int y2);
+
+
+
+
 }

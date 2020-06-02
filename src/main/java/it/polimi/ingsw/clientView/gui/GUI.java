@@ -231,5 +231,20 @@ public class GUI extends Application implements UI {
 
     }
 
+    @Override
+    public void moveUpdate(String player, int xFrom, int yFrom, int xTo, int yTo) {
+
+    }
+
+    @Override
+    public void buildUpdate(String player, int x, int y) {
+
+    }
+
+    @Override
+    public void workerPlacementUpdate(String player, int x1, int y1, int x2, int y2) {
+
+    }
+
 
 }

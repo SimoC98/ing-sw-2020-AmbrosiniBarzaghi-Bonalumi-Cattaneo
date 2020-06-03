@@ -159,6 +159,10 @@ public class ServerView extends Observable<ClientEvent> implements Observer<Serv
         sendEvent(new InvalidWorkerPlacement());
     }
 
+    public void invalidWorkerSelection() {
+        sendEvent(new InvalidWorkerSelection());
+    }
+
 
 
     /**

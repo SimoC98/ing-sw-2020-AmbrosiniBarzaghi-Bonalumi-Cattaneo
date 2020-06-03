@@ -51,6 +51,8 @@ public interface UI {
 
     public void invalidWorkerPlacement();
 
+    public void invalidWorkerSelection();
+
     //updates from model
     public void moveUpdate(String player,int xFrom,int yFrom,int xTo,int yTo);
 

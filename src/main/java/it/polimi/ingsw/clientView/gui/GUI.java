@@ -232,6 +232,11 @@ public class GUI extends Application implements UI {
     }
 
     @Override
+    public void invalidWorkerSelection() {
+
+    }
+
+    @Override
     public void moveUpdate(String player, int xFrom, int yFrom, int xTo, int yTo) {
 
     }

@@ -73,8 +73,9 @@ public class Controller implements Observer<ClientEvent> {
             model.selectWorker(x,y);
             nextActionHandler();
         } catch (InvalidWorkerSelectionException e) {
-            playersInGame.get(currentPlayerId).showMessage("error");
-            playersInGame.get(currentPlayerId).selectWorker();
+            //playersInGame.get(currentPlayerId).showMessage("error");
+            //playersInGame.get(currentPlayerId).selectWorker();
+            playersInGame.get(currentPlayerId).invalidWorkerSelection();
         }
     }
 

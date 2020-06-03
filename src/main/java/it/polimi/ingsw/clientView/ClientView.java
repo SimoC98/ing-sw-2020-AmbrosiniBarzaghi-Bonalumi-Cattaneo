@@ -261,6 +261,10 @@ public class ClientView implements Observer<ServerEvent> {
         ui.invalidWorkerPlacement();
     }
 
+    public void manageInvalidWorkerSelection() {
+        ui.invalidWorkerSelection();
+    }
+
 
     @Override
     public void update(ServerEvent event) {

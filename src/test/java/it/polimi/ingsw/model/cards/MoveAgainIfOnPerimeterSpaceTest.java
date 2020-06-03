@@ -47,7 +47,8 @@ class MoveAgainIfOnPerimeterSpaceTest {
         assert(p1.getPossibleActions().contains(Action.MOVE));
         assert(p1.getPossibleActions().contains(Action.BUILD));
 
-        assert(p1.move(board,w,tile3));assert(p1.getPossibleActions().size()==2);
+        assert(p1.move(board,w,tile3));
+        assert(p1.getPossibleActions().size()==2);
         assert(p1.getPossibleActions().contains(Action.MOVE));
         assert(p1.getPossibleActions().contains(Action.BUILD));
 

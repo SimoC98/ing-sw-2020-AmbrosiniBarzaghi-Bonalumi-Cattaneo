@@ -568,6 +568,13 @@ public class CLI implements UI{
     }
 
     @Override
+    public void invalidWorkerSelection() {
+        System.out.println("\n\nERROR! INVALID WORKER SELECTION!");
+        selectWorker();
+
+    }
+
+    @Override
     public void moveUpdate(String player, int xFrom, int yFrom, int xTo, int yTo) {
         updateBoard();
     }

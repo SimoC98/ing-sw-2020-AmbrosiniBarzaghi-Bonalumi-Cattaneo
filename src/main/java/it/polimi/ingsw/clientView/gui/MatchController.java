@@ -135,6 +135,11 @@ public class MatchController {
 
     }
 
+    /*
+    methods that manage click on tiles --> invocation of methods on clientView
+    commented methods can be useful to modify the board after model state changes
+     */
+
     public void placeWorkerOnClickedTile(StackPane s) {
         int x = GridPane.getRowIndex(s);
         int y = GridPane.getColumnIndex(s);
@@ -241,6 +246,10 @@ public class MatchController {
         clientView.actionQuestion(Action.BUILDDOME,x,y);
     }
 
+    /*
+
+     */
+
     public void selectWorker(StackPane s) {
         ImageView v = (ImageView) s.getChildren().get(WORKER);
         if(v.getImage() != null)
@@ -280,6 +289,10 @@ public class MatchController {
             shadow.setVisible(true);
     }
 
+    /*
+    methods that ask user to do something and change actualAction --> invoked by gui
+     */
+
     public void setActionMove(){
         System.out.println("Now you MOVE");
         actualAction = "move";
@@ -316,6 +329,8 @@ public class MatchController {
     }
 
 
+
+
     public void setPlayers() {
         List<String> players = clientView.getBoard().getPlayersNames();
         List<String> divinities = new ArrayList<>();
@@ -344,6 +359,10 @@ public class MatchController {
         }
     }
 
+    /*
+    return the tile in (x,y) position
+    from StackOverflow: https://stackoverflow.com/questions/20655024/javafx-gridpane-retrieve-specific-cell-content
+     */
     public Node getBoardCell(int x, int y) {
         for (Node node : board.getChildren()) {
             if (GridPane.getColumnIndex(node) == y && GridPane.getRowIndex(node) == x) {

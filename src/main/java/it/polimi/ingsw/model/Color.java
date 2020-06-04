@@ -2,7 +2,7 @@ package it.polimi.ingsw.model;
 
 public enum Color {
 
-    RED,
+    WHITE,
     BLUE,
     CREAM
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <HBox fx:id="hBox" alignment="CENTER" fillHeight="false" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: lightblue;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.clientView.gui.MatchController">
@@ -22,6 +23,9 @@
                 <RowConstraints minHeight="50.0" vgrow="ALWAYS" />
             </rowConstraints>
         </GridPane>
-        <VBox fx:id="vBoxRight" fillWidth="false" HBox.hgrow="ALWAYS" />
+        <VBox fx:id="vBoxRight" fillWidth="false" HBox.hgrow="ALWAYS">
+         <children>
+            <Label fx:id="userInteractionLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Label" visible="false" VBox.vgrow="ALWAYS" />
+         </children></VBox>
     </children>
 </HBox>

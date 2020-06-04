@@ -639,7 +639,7 @@ public class CLI implements UI{
                                 System.out.print(ANSI_CYAN + "W" + ANSI_RESET);
                                 break;
 
-                            case RED:
+                            case WHITE:
                                 System.out.print(ANSI_RED+ "W" + ANSI_RESET);
                         }
                     }
@@ -731,7 +731,7 @@ public class CLI implements UI{
             System.out.print("\nPLAYERS IN GAME: \n");
             for(PlayerRepresentation p : players) {
                 String color = null;
-                if(p.getColor().equals(Color.RED)) color = ANSI_RED;
+                if(p.getColor().equals(Color.WHITE)) color = ANSI_RED;
                 else if(p.getColor().equals(Color.BLUE)) color = ANSI_CYAN;
                 else if(p.getColor().equals(Color.CREAM)) color = ANSI_YELLOW;
 

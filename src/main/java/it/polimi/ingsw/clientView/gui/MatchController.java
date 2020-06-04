@@ -1,13 +1,19 @@
 package it.polimi.ingsw.clientView.gui;
 
+import it.polimi.ingsw.Pair;
 import it.polimi.ingsw.clientView.ClientView;
+import it.polimi.ingsw.model.Action;
+
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+
+
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -27,10 +33,14 @@ public class MatchController {
     private VBox vBoxLeft;
     @FXML
     private VBox vBoxRight;
+    @FXML
+    private Label userInteractionLabel;
 
     private int [][]boardInt = new int[5][5];
     private final int LVL1=0, LVL2=1, LVL3=2, DOME=3, WORKER=4, SHADOW=5;
     private String actualAction;
+
+    private List<Pair<Integer,Integer>> workerPlacement = new ArrayList<>();
 
     @FXML
     public void initialize() {
@@ -41,10 +51,10 @@ public class MatchController {
         hBox.setMinWidth(400);
 
         //Testing
-        placeWorkers(2,2,3,4);
+        //placeWorkers(2,2,3,4);
 //        for(int i=0; i<5; i++)
 //            toggleSelectable(i,i);
-        actualAction = "build";
+        //actualAction = "build";
 
         vBoxLeft.setSpacing(40);
         vBoxLeft.setAlignment(Pos.CENTER);
@@ -99,15 +109,15 @@ public class MatchController {
 
         switch(actualAction) {
             case "move":
-                move(s);
+                moveOnClickedTile(s);
                 break;
 
             case "build":
-                build(s);
+                buildOnClickedTile(s);
                 break;
 
             case "builddome":
-                buildDome(s);
+                buildDomeOnClickedTile(s);
                 break;
 
             case "end":
@@ -117,15 +127,45 @@ public class MatchController {
             case "selectworker":
                 selectWorker(s);
                 break;
+            case "placeworkers":
+                placeWorkerOnClickedTile(s);
+                break;
+            default: break;
         }
 
     }
 
-    public void move(StackPane s) {
-        //TODO
+    public void placeWorkerOnClickedTile(StackPane s) {
+        int x = GridPane.getRowIndex(s);
+        int y = GridPane.getColumnIndex(s);
+
+        System.out.println(x + "-" + y);
+
+        workerPlacement.add(new Pair<>(x,y));
+
+        s.getChildren().get(SHADOW).setVisible(true);
+
+        if(workerPlacement.size()==2) {
+            System.out.println("workers placed in: " + workerPlacement.get(0).getFirst() + "-" + workerPlacement.get(0).getSecond() + "and " + workerPlacement.get(1).getFirst() + "-" + workerPlacement.get(1).getSecond());
+            actualAction = "default";
+            clientView.workerPlacement(workerPlacement.get(0).getFirst(),workerPlacement.get(0).getSecond(),workerPlacement.get(1).getFirst(),workerPlacement.get(1).getSecond());
+        }
+
     }
 
-    public void build(StackPane s) {
+    public void moveOnClickedTile(StackPane s) {
+        int x = GridPane.getRowIndex(s);
+        int y = GridPane.getColumnIndex(s);
+
+        System.out.println(x + "-" + y);
+
+        actualAction = "default";
+
+        clientView.actionQuestion(Action.MOVE,x,y);
+
+    }
+
+    /*public void build(StackPane s) {
         int x = GridPane.getRowIndex(s);
         int y = GridPane.getColumnIndex(s);
 
@@ -157,7 +197,7 @@ public class MatchController {
                     break;
 
                 case 4:
-                    buildDome(s);
+                    //buildDome(s);
                     break;
 
                 default:
@@ -166,9 +206,20 @@ public class MatchController {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }*/
+
+    public void buildOnClickedTile(StackPane s) {
+        int x = GridPane.getRowIndex(s);
+        int y = GridPane.getColumnIndex(s);
+
+        System.out.println(x + "-" + y);
+
+        actualAction = "default";
+
+        clientView.actionQuestion(Action.BUILD,x,y);
     }
 
-    public void buildDome(StackPane s) {
+    /*public void buildDome(StackPane s) {
         Image image = null;
         try {
             image = new Image(new FileInputStream("src/main/java/it/polimi/ingsw/clientView/aaaaGUITesting/pics/dome.png"));
@@ -177,31 +228,47 @@ public class MatchController {
         }
         ImageView imageView = (ImageView) s.getChildren().get(DOME);
         imageView.setImage(image);
+    }*/
+
+    public void buildDomeOnClickedTile(StackPane s) {
+        int x = GridPane.getRowIndex(s);
+        int y = GridPane.getColumnIndex(s);
+
+        System.out.println(x + "-" + y);
+
+        actualAction = "default";
+
+        clientView.actionQuestion(Action.BUILDDOME,x,y);
     }
 
     public void selectWorker(StackPane s) {
         ImageView v = (ImageView) s.getChildren().get(WORKER);
         if(v.getImage() != null)
             System.out.println("Worker Selected");
-
     }
 
-    public void placeWorkers(int x1, int y1, int x2, int y2) {
+    public void placeWorkers(String username, int x1, int y1, int x2, int y2) {
 
-        StackPane s1 = (StackPane) board.getChildren().get(board.getRowCount()*x1 + y1);
+        StackPane s1 = (StackPane) getBoardCell(x1,y1);
+        s1.getChildren().get(SHADOW).setVisible(false);
         ImageView w1 = (ImageView) s1.getChildren().get(WORKER);
 
-        StackPane s2 = (StackPane) board.getChildren().get(board.getRowCount()*x2 + y2);
+        StackPane s2 = (StackPane) getBoardCell(x2,y2);
+        s2.getChildren().get(SHADOW).setVisible(false);
         ImageView w2 = (ImageView) s2.getChildren().get(WORKER);
 
+        String color = clientView.getBoard().getPlayersMap().get(username).getColor().toString().toLowerCase();
+
         try {
-            Image image = new Image(new FileInputStream("src/main/java/it/polimi/ingsw/clientView/aaaaGUITesting/pics/MaleBuilder_Blue.png"));
+            Image image = new Image(new FileInputStream("src/main/resources/graphics/" + color + ".png"));
             w1.setImage(image);
             w2.setImage(image);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
     }
+
 
     public void toggleSelectable(int x, int y) {
         StackPane s = (StackPane) board.getChildren().get(board.getRowCount()*x + y);
@@ -241,6 +308,14 @@ public class MatchController {
         actualAction = "selectworker";
     }
 
+    public void setActionPlaceWorkers() {
+        System.out.println("Now you PLACEWORKERS");
+        userInteractionLabel.setText("CLICK ON TILE WHERE YOU WANT TO PLACE WORKERS");
+        userInteractionLabel.setVisible(true);
+        actualAction = "placeworkers";
+    }
+
+
     public void setPlayers() {
         List<String> players = clientView.getBoard().getPlayersNames();
         List<String> divinities = new ArrayList<>();
@@ -267,12 +342,15 @@ public class MatchController {
 
             vBoxLeft.getChildren().add(box);
         }
+    }
 
-
-
-
-
-
+    public Node getBoardCell(int x, int y) {
+        for (Node node : board.getChildren()) {
+            if (GridPane.getColumnIndex(node) == y && GridPane.getRowIndex(node) == x) {
+                return node;
+            }
+        }
+        return null;
     }
 
 }

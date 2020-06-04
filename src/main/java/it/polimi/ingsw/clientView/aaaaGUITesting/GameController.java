@@ -170,19 +170,19 @@ public class GameController {
         try {
             switch(boardInt[x][y]) {
                 case 1:
-                    image = new Image(new FileInputStream("src\\main\\java\\it\\polimi\\ingsw\\clientView\\aaaaGUITesting\\pics\\lvl1.png"));
+                    image = new Image(new FileInputStream("src/main/java/it/polimi/ingsw/clientView/aaaaGUITesting/pics/lvl1.png"));
                     imageView = (ImageView) s.getChildren().get(LVL1);
                     imageView.setImage(image);
                     break;
 
                 case 2:
-                    image = new Image(new FileInputStream("src\\main\\java\\it\\polimi\\ingsw\\clientView\\aaaaGUITesting\\pics\\lvl2bis.png"));
+                    image = new Image(new FileInputStream("src/main/java/it/polimi/ingsw/clientView/aaaaGUITesting/pics/lvl2bis.png"));
                     imageView = (ImageView) s.getChildren().get(LVL2);
                     imageView.setImage(image);
                     break;
 
                 case 3:
-                    image = new Image(new FileInputStream("src\\main\\java\\it\\polimi\\ingsw\\clientView\\aaaaGUITesting\\pics\\lvl3.png"));
+                    image = new Image(new FileInputStream("src/main/java/it/polimi/ingsw/clientView/aaaaGUITesting/pics/lvl3.png"));
                     imageView = (ImageView) s.getChildren().get(LVL3);
                     imageView.setImage(image);
                     break;
@@ -202,7 +202,7 @@ public class GameController {
     public void buildDome(StackPane s) {
         Image image = null;
         try {
-            image = new Image(new FileInputStream("src\\main\\java\\it\\polimi\\ingsw\\clientView\\aaaaGUITesting\\pics\\dome.png"));
+            image = new Image(new FileInputStream("src/main/java/it/polimi/ingsw/clientView/aaaaGUITesting/pics/dome.png"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -231,7 +231,7 @@ public class GameController {
         ImageView w2 = (ImageView) s2.getChildren().get(WORKER);
 
         try {
-            Image image = new Image(new FileInputStream("src\\main\\java\\it\\polimi\\ingsw\\clientView\\aaaaGUITesting\\pics\\MaleBuilder_Blue.png"));
+            Image image = new Image(new FileInputStream("src/main/java/it/polimi/ingsw/clientView/aaaaGUITesting/pics/MaleBuilder_Blue.png"));
             w1.setImage(image);
             w2.setImage(image);
         } catch (FileNotFoundException e) {

@@ -142,7 +142,7 @@ public class GUI extends Application implements UI {
         Platform.runLater(()->{
 
             //primaryStage.getScene().setRoot(loginRoot);
-            primaryStage.setScene(new Scene(loginRoot,1500,900));
+            primaryStage.setScene(new Scene(loginRoot,1500,1000));
             primaryStage.show();
         });
 
@@ -176,7 +176,13 @@ public class GUI extends Application implements UI {
 
     }
 
-    public void placeWorkers() {}
+    public void placeWorkers() {
+        System.out.println("place your workers...");
+
+        Platform.runLater(() -> {
+            matchController.setActionPlaceWorkers();
+        });
+    }
 //    public void selectDivinityAndPlaceWorkers(List<String> divinityNames) {}
 
     public void updateBoard() {}
@@ -248,6 +254,11 @@ public class GUI extends Application implements UI {
 
     @Override
     public void workerPlacementUpdate(String player, int x1, int y1, int x2, int y2) {
+        System.out.println("placing workers...");
+
+        Platform.runLater(() -> {
+            matchController.placeWorkers(player,x1,y1,x2,y2);
+        });
 
     }
 

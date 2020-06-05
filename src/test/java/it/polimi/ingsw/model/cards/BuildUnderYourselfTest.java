@@ -11,11 +11,11 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class BuildUnderItselfTest {
+class BuildUnderYourselfTest {
 
     private Match match;
     private Board board;
-    private BuildUnderItself div;
+    private BuildUnderYourself div;
 
     @BeforeEach
     void setUp() throws WorkerBadPlacementException, InvalidWorkerSelectionException {
@@ -24,7 +24,7 @@ class BuildUnderItselfTest {
         match = new Match(players);
         match.setStartPlayer("paolo");
         board = match.getBoard();
-        div = new BuildUnderItself(new StandardDivinity());
+        div = new BuildUnderYourself(new StandardDivinity());
         match.getPlayers().get(0).setDivinity(div);
         match.placeWorkers(1,1,4,4);
         match.selectWorker(1,1);

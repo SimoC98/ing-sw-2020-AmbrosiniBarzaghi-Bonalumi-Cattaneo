@@ -91,9 +91,16 @@
     <divinity>
         <number>13</number>
         <name>Hestia</name>
-        <heading>Goddes Of Heart And Home</heading>
-        <description>yourBuild: Your worker may build one additional time, but this cannot be on a perimeter space.</description>
+        <heading>Goddess Of Heart And Home</heading>
+        <description>Your Build: Your worker may build one additional time, but this cannot be on a perimeter space.</description>
         <effect>CanBuildTwiceNotOnPerimeter</effect>
     </divinity>
 
+    <divinity>
+        <number>14</number>
+        <name>Hera</name>
+        <heading>Goddess Of Marriage</heading>
+        <description>Opponent's Turn: An opponent cannot win by moving into a perimeter space.</description>
+        <effect>CanBuildTwiceNotOnPerimeter</effect>
+    </divinity>
 </divinities>

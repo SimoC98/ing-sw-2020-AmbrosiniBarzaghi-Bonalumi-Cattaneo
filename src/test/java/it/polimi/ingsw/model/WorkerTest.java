@@ -75,29 +75,29 @@ class WorkerTest {
         assertThrows(InvalidMoveException.class,()->w.move(tileTest2));
     }
 
-    @Test
-    public void winCondition() {
-        Tile tileTest1 = board.getTile(3,3);
-        tileTest1.increaseLevel();
-        tileTest1.increaseLevel();
-
-        w.setPositionOnBoard(tileTest1);
-        tileTest1.setWorker(w);
-
-        Tile tileTest2 = board.getTile(4,4);
-        tileTest2.increaseLevel();
-        tileTest2.increaseLevel();
-        tileTest2.increaseLevel();
-
-        try {
-            w.move(tileTest2);
-        } catch (InvalidMoveException e) {
-            e.printStackTrace();
-        }
-
-        assert(w.getPlayer().isWinner());
-
-    }
+//    @Test
+//    public void winCondition() {
+//        Tile tileTest1 = board.getTile(3,3);
+//        tileTest1.increaseLevel();
+//        tileTest1.increaseLevel();
+//
+//        w.setPositionOnBoard(tileTest1);
+//        tileTest1.setWorker(w);
+//
+//        Tile tileTest2 = board.getTile(4,4);
+//        tileTest2.increaseLevel();
+//        tileTest2.increaseLevel();
+//        tileTest2.increaseLevel();
+//
+//        try {
+//            w.move(tileTest2);
+//        } catch (InvalidMoveException e) {
+//            e.printStackTrace();
+//        }
+//
+//        assert(w.getPlayer().isWinner());
+//
+//    }
 
     @Test
     public void NotWinIfAlreadyLevel3() {

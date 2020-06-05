@@ -45,9 +45,9 @@ public class Worker {
             throw new InvalidMoveException();
         }
 
-        if(isWinner(t)) {
-            player.setWinner();
-        }
+//        if(isWinner(t)) {
+//            player.setWinner();
+//        }
         positionOnBoard.free();
 
         t.setWorker(this);
@@ -110,12 +110,12 @@ public class Worker {
      * @param t {@link Tile} the worker is going to move onto
      * @return {@code true} if the basic winning condition is verified: the player must move up from level 2 to level 3
      */
-    public boolean isWinner(Tile t) {
-        if(positionOnBoard.getLevel()==2 && t.getLevel()==3) {
-            return true;
-        }
-        else return false;
-    }
+//    public boolean isWinner(Tile t) {
+//        if(positionOnBoard.getLevel()==2 && t.getLevel()==3) {
+//            return true;
+//        }
+//        else return false;
+//    }
 
 
 }

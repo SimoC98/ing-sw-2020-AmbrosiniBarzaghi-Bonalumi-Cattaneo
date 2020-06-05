@@ -59,7 +59,7 @@ public class XMLParserUtility {
             put("CanBuildBeforeMove", BuildBeforeAndAfter::new);
 
             //11 - Zeus
-            put("CanBuildUnderItself", BuildUnderItself::new);
+            put("CanBuildUnderItself", BuildUnderYourself::new);
 
             //12 - Triton
             put("CanMoveAgainIfOnPerimeter",MoveAgainIfOnPerimeterSpace::new);

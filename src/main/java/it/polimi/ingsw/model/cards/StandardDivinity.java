@@ -69,6 +69,9 @@ public class StandardDivinity implements Divinity {
             modifiedTiles.add(new Pair<>(selectedTile.getX(),selectedTile.getY()));
             ret.add(new ModelUpdate(Action.MOVE,selectedWorker,modifiedTiles));
 
+            if(selectedWorker.getPositionOnBoard().getLevel() == 2 && selectedTile.getLevel() == 3) {
+                selectedWorker.getPlayer().setWinner();
+            }
             selectedWorker.move(selectedTile);
 
         } catch (InvalidMoveException e) {

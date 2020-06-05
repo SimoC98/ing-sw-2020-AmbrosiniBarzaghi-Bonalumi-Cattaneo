@@ -101,6 +101,7 @@
         <name>Hera</name>
         <heading>Goddess Of Marriage</heading>
         <description>Opponent's Turn: An opponent cannot win by moving into a perimeter space.</description>
-        <effect>CanBuildTwiceNotOnPerimeter</effect>
+        <effect>OpponentCannotWinOnPerimeter</effect>
     </divinity>
+
 </divinities>

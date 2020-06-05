@@ -66,6 +66,9 @@ public class XMLParserUtility {
 
             //13 - Hestia
             put("CanBuildTwiceNotOnPerimeter",BuildTwiceNotOnPerimeter::new);
+
+            //14 - Hera
+            put("OpponentCannotWinOnPerimeter",CannotWinOnPerimeter::new);
         }
     };
 

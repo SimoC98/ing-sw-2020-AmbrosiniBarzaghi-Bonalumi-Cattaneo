@@ -13,6 +13,9 @@ import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -39,8 +42,12 @@ public class DivinitySelectionController {
     @FXML
     private GridPane godGrid;
 
+    @FXML
+    private VBox endVBox;
+
+    @FXML
     private Label labelTxt;
-    private Button confirmBtn;
+
 
 
     @FXML
@@ -55,6 +62,8 @@ public class DivinitySelectionController {
 
     private List<String> chosenGods = new ArrayList<>();
     private List<Node> chosenGodsNode = new ArrayList<>();
+
+    private boolean end = false;
 
 
     @FXML
@@ -92,8 +101,8 @@ public class DivinitySelectionController {
 
                     god.setImage(godImage);
 
-                    god.setFitHeight(170);
-                    god.setFitWidth(120);
+                    god.setFitHeight(220);
+                    god.setFitWidth(150);
 
 
                    // god.setFitHeight(mainPane.getHeight()/20);
@@ -147,20 +156,31 @@ public class DivinitySelectionController {
 
         node.setOnMouseClicked((e1)-> {
 
+            //if already chosen return without show desc
+            if(end) return;
+
             ImageView god = new ImageView();
             Image godImg = new Image("/graphics/" + divinities.get(count).toLowerCase() + ".png");
             god.setImage(godImg);
-            god.setFitHeight(300);
-            god.setFitWidth(230);
+            god.setFitHeight(350);
+            god.setFitWidth(250);
+            god.isPreserveRatio();
 
+            //add image of divinity selected to the desc panel
             godDescription.getChildren().add(god);
+
             Label desc = new Label();
-            desc.setText(descriptions.get(count));
-            desc.setWrapText(true);
-            desc.setMaxWidth(250);
 
-            godDescription.getChildren().add(desc);
+            Text text1=new Text(descriptions.get(count));
+            text1.setStyle("-fx-font-style: italic");
+            text1.setFont(new Font(18));
+            text1.setWrappingWidth(250);
+            text1.setTextAlignment(TextAlignment.CENTER);
 
+            //add god effect to the desc panel
+            godDescription.getChildren().add(text1);
+
+            //creations of buttons
             HBox buttons = new HBox();
             godDescription.getChildren().add(buttons);
             buttons.setAlignment(Pos.CENTER);
@@ -173,6 +193,7 @@ public class DivinitySelectionController {
             });
             buttons.getChildren().add(close);
 
+            //if this god was already selected --> add deselect button
             if(chosenGodsNode.contains(node)) {
                 Button deselect = new Button("deselect");
                 deselect.setOnMouseClicked((e)->{
@@ -184,6 +205,7 @@ public class DivinitySelectionController {
                 });
                 buttons.getChildren().add(deselect);
             }
+            //else --> add select button
             else{
                 Button select = new Button("select");
                 select.setOnMouseClicked((e)->{
@@ -192,6 +214,22 @@ public class DivinitySelectionController {
                     godDescription.getChildren().clear();
                     godDescription.setVisible(false);
                     node.setEffect(lighting);
+
+                    if(chosenGods.size()==playerNumber) {
+                        StringBuilder s = new StringBuilder();
+                        s.append("You chose: ");
+                        chosenGods.stream().forEach(z -> s.append(z + " "));
+                        s.append("\n");
+                        s.append("WAIT OTHER PLAYERS...");
+                        labelTxt.setText(s.toString());
+                        labelTxt.setFont(new Font(18));
+
+                        endVBox.setVisible(true);
+
+                        end = true;
+
+                        clientView.playableDivinitiesSelection(chosenGods,players.get(0));
+                    }
 
 
                 });
@@ -205,7 +243,7 @@ public class DivinitySelectionController {
 
 
 
-             labelTxt.setText(divinities.get(count).toUpperCase() + ": " + descriptions.get(count));
+             /*labelTxt.setText(divinities.get(count).toUpperCase() + ": " + descriptions.get(count));
              labelTxt.setWrapText(true);
 
              confirmBtn.setOnMouseClicked((e2)->{
@@ -257,7 +295,7 @@ public class DivinitySelectionController {
 
                      clientView.playableDivinitiesSelection(chosenGods,players.get(0));
                  }
-             });
+             });*/
 
         });
 

@@ -14,3 +14,9 @@
         -fx-background-image: url("pics/SantoriniBoard_Island.png");
         -fx-background-size: cover;
     }
+
+    .scroll{
+        -fx-background-image: url("pics/scroll.png");
+        -fx-background-size: contain;
+        -fx-background-repeat: no-repeat;
+    }

@@ -1,11 +1,14 @@
 package it.polimi.ingsw.clientView.aaaaGUITesting;
 
 import it.polimi.ingsw.Pair;
+import it.polimi.ingsw.model.Action;
 import javafx.beans.binding.DoubleBinding;
 import javafx.beans.binding.DoubleExpression;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,18 +18,24 @@ import javafx.scene.paint.Color;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.sql.SQLOutput;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static java.lang.Thread.sleep;
 
 public class GameController {
 
     @FXML
-    private StackPane leftStack;
+    private VBox possibleActionsBox;
+    @FXML
+    private StackPane leftStack, rightStack;
     @FXML
     private Label graphicAction;
     @FXML
     private Label graphicSelectedWorker;
-
+    @FXML
+    private Label message;
     @FXML
     private GridPane board;
     @FXML
@@ -57,6 +66,9 @@ public class GameController {
         actualAction = "build";
 
         selectedWorker = null;
+
+        leftStack.prefHeightProperty().bind(board.heightProperty());
+        rightStack.prefHeightProperty().bind(board.heightProperty());
     }
 
     public void createBoard() {
@@ -237,6 +249,38 @@ public class GameController {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public void handlePossibleActions(List<Action> possibleActions) {
+        message.setText("Choose the action\nto perform: ");
+
+        List<Button> actionButtons = new ArrayList<>();
+        for(Action action : possibleActions) {
+            System.out.println(action.toString());
+
+            Button actionBtn = new Button(action.toString());
+            actionBtn.setOnMouseClicked((event) -> {
+                actualAction = action.toString().toLowerCase();
+                graphicAction.setText(action.toString());
+                emptyPossibleActions();
+                if(action != Action.END)
+                    message.setText("Choose tile to\n" + action.toString());
+                else
+                    message.setText("Your turn is over");
+            });
+            actionButtons.add(actionBtn);
+        }
+
+        possibleActionsBox.getChildren().addAll(actionButtons);
+    }
+
+    private void emptyPossibleActions() {
+        possibleActionsBox.getChildren().clear();
+    }
+
+    //TEST - REMOVEME
+    public void testPossibleActions() {
+        handlePossibleActions(Arrays.asList(Action.MOVE, Action.BUILD, Action.BUILDDOME, Action.MOVE));
     }
 
 

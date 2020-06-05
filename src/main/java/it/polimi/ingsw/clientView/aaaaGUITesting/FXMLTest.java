@@ -21,7 +21,7 @@ public class FXMLTest extends Application {
         Parent testPane = testLoader.load();
         this.gameController = testLoader.getController();
 
-        Scene game = new Scene(testPane, 1000,500);
+        Scene game = new Scene(testPane, 1000,400);
 
         stage.setScene(game);
         stage.setResizable(true);

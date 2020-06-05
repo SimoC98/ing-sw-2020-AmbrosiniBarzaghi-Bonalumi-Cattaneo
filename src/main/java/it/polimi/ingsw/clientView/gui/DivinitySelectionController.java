@@ -34,13 +34,14 @@ public class DivinitySelectionController {
     private VBox vBoxGod;
 
     @FXML
+    private VBox godDescription;
+
+    @FXML
     private GridPane godGrid;
 
-    @FXML
+    private Label labelTxt;
     private Button confirmBtn;
 
-    @FXML
-    private Label labelTxt;
 
     @FXML
     private ProgressIndicator progressIndicator;
@@ -145,6 +146,64 @@ public class DivinitySelectionController {
         });
 
         node.setOnMouseClicked((e1)-> {
+
+            ImageView god = new ImageView();
+            Image godImg = new Image("/graphics/" + divinities.get(count).toLowerCase() + ".png");
+            god.setImage(godImg);
+            god.setFitHeight(300);
+            god.setFitWidth(230);
+
+            godDescription.getChildren().add(god);
+            Label desc = new Label();
+            desc.setText(descriptions.get(count));
+            desc.setWrapText(true);
+            desc.setMaxWidth(250);
+
+            godDescription.getChildren().add(desc);
+
+            HBox buttons = new HBox();
+            godDescription.getChildren().add(buttons);
+            buttons.setAlignment(Pos.CENTER);
+            buttons.setSpacing(20);
+
+            Button close = new Button("close");
+            close.setOnMouseClicked((e)->{
+                godDescription.getChildren().clear();
+                godDescription.setVisible(false);
+            });
+            buttons.getChildren().add(close);
+
+            if(chosenGodsNode.contains(node)) {
+                Button deselect = new Button("deselect");
+                deselect.setOnMouseClicked((e)->{
+                    chosenGods.remove(divinities.get(count));
+                    chosenGodsNode.remove(node);
+                    godDescription.getChildren().clear();
+                    godDescription.setVisible(false);
+                    node.setEffect(null);
+                });
+                buttons.getChildren().add(deselect);
+            }
+            else{
+                Button select = new Button("select");
+                select.setOnMouseClicked((e)->{
+                    chosenGods.add(divinities.get(count));
+                    chosenGodsNode.add(node);
+                    godDescription.getChildren().clear();
+                    godDescription.setVisible(false);
+                    node.setEffect(lighting);
+
+
+                });
+                buttons.getChildren().add(select);
+            }
+
+
+            //godDescription.getChildren().add(close);
+
+            godDescription.setVisible(true);
+
+
 
              labelTxt.setText(divinities.get(count).toUpperCase() + ": " + descriptions.get(count));
              labelTxt.setWrapText(true);

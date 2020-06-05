@@ -53,6 +53,7 @@ public class DivinitySelectionController {
     private int playerNumber;
 
     private List<String> chosenGods = new ArrayList<>();
+    private List<Node> chosenGodsNode = new ArrayList<>();
 
 
     @FXML
@@ -135,6 +136,14 @@ public class DivinitySelectionController {
         GridPane.setHalignment(node, HPos.CENTER);
         GridPane.setValignment(node, VPos.CENTER);
 
+        node.setOnMouseEntered((e)->{
+            node.setEffect(lighting);
+        });
+
+        node.setOnMouseExited((e)->{
+            if(!chosenGodsNode.contains(node)) node.setEffect(null);
+        });
+
         node.setOnMouseClicked((e1)-> {
 
              labelTxt.setText(divinities.get(count).toUpperCase() + ": " + descriptions.get(count));
@@ -146,10 +155,12 @@ public class DivinitySelectionController {
                      ImageView img = (ImageView) e1.getTarget();
                      img.setEffect(null);
                      chosenGods.remove(divinities.get(count));
+                     chosenGodsNode.remove(node);
                      labelTxt.setText("God deselected ");
                  }
                  else {
                      chosenGods.add(divinities.get(count));
+                     chosenGodsNode.add(node);
 
                      ImageView img = (ImageView) e1.getTarget();
                      img.setEffect(lighting);

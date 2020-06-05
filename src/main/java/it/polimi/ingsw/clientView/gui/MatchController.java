@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,6 +21,7 @@ import javafx.scene.shape.Rectangle;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -143,6 +146,7 @@ public class MatchController {
     public void placeWorkerOnClickedTile(StackPane s) {
         int x = GridPane.getRowIndex(s);
         int y = GridPane.getColumnIndex(s);
+
 
         System.out.println(x + "-" + y);
 
@@ -326,6 +330,7 @@ public class MatchController {
         userInteractionLabel.setText("CLICK ON TILE WHERE YOU WANT TO PLACE WORKERS");
         userInteractionLabel.setVisible(true);
         actualAction = "placeworkers";
+
     }
 
 

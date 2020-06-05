@@ -30,6 +30,7 @@ public interface Divinity {
     public Divinity getDivinity();
     public void updatePossibleActions(List<Action> possibleActions);
     public void setupDivinity(List<Action> possibleActions);
+    public boolean isWinner(Worker selectedWorker, Tile selectedTile);
 
     public boolean hasSetEffectOnOpponentWorkers();
     public void setEffectOnOpponentWorkers(Player opponentPlayer);

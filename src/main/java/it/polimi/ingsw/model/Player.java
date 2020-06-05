@@ -111,6 +111,8 @@ public class Player {
      */
     public boolean move(Board board, Worker selectedWorker, Tile selectedTile) {
         if(divinity.legalMove(board,selectedWorker,selectedTile)) {
+            if (divinity.isWinner(selectedWorker,selectedTile)) //TODO: is this the correct position?
+                setWinner();
             possibleActions.clear();
             updates.clear();
 

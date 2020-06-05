@@ -46,6 +46,10 @@ public class DivinityDecoratorWithEffects implements Divinity {
     }
 
     @Override
+    public boolean isWinner(Worker selectedWorker, Tile selectedTile){
+        return divinity.isWinner(selectedWorker,selectedTile);
+    }
+    @Override
     public boolean legalBuild(Board board,Worker selectedWorker, Tile selectedTile) {
         return divinity.legalBuild(board,selectedWorker,selectedTile);
     }

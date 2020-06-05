@@ -69,9 +69,6 @@ public class StandardDivinity implements Divinity {
             modifiedTiles.add(new Pair<>(selectedTile.getX(),selectedTile.getY()));
             ret.add(new ModelUpdate(Action.MOVE,selectedWorker,modifiedTiles));
 
-            if(selectedWorker.getPositionOnBoard().getLevel() == 2 && selectedTile.getLevel() == 3) {
-                selectedWorker.getPlayer().setWinner();
-            }
             selectedWorker.move(selectedTile);
 
         } catch (InvalidMoveException e) {
@@ -100,6 +97,17 @@ public class StandardDivinity implements Divinity {
         selectedWorker.build(selectedTile);
 
         return ret;
+    }
+
+    /**
+     * Checks if the player is performing a winning move with the currenteffects
+     * @param selectedWorker
+     * @param selectedTile
+     * @return
+     */
+    @Override
+    public boolean isWinner(Worker selectedWorker, Tile selectedTile){
+        return selectedWorker.isWinner(selectedTile);
     }
 
     /**

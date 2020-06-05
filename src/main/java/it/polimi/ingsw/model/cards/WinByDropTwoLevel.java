@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Pan's player can also win if his worker drops by two level
  */
-public class WinByDropTwoLevel extends AdditionalWinCondition {
+public class WinByDropTwoLevel extends DivinityDecoratorWithEffects {
 
     public WinByDropTwoLevel() { super(); }
 
@@ -24,44 +24,12 @@ public class WinByDropTwoLevel extends AdditionalWinCondition {
      * @return {@code true} if Pan's winning condition is verified
      */
     @Override
-    protected boolean isWinner(Worker selectedWorker, Tile selectedTile) {
+    public boolean isWinner(Worker selectedWorker, Tile selectedTile) {
         int levelDifference = selectedWorker.getPositionOnBoard().getLevel() - selectedTile.getLevel();
-        return levelDifference >= 2;
-    }
-
-    /**
-     * This methods also needs to check that if the worker is dropping by two levels and in that case, it calls {@link Player#setWinner()}
-     * @param board
-     * @param selectedWorker
-     * @param selectedTile
-     * @return
-     */
-    @Override
-    public List<ModelUpdate> move(Board board, Worker selectedWorker, Tile selectedTile) {
-        if(isWinner(selectedWorker, selectedTile)) {
-            selectedWorker.getPlayer().setWinner();
-        }
-        return super.move(board,selectedWorker, selectedTile);
-    }
-
-    @Override
-    public List<ModelUpdate> build(Board board, Worker selectedWorker, Tile selectedTile) {
-        return super.build(board,selectedWorker, selectedTile);
-    }
-
-    @Override
-    public boolean legalMove(Board board,Worker selectedWorker, Tile selectedTile) {
-        return super.legalMove(board,selectedWorker, selectedTile);
-    }
-
-    @Override
-    public boolean legalBuild(Board board,Worker selectedWorker, Tile selectedTile) {
-        return super.legalBuild(board,selectedWorker, selectedTile);
-    }
-
-    @Override
-    public Divinity getDivinity() {
-        return super.getDivinity();
+            if (levelDifference>=2)
+                return true;
+            else
+                return super.isWinner(selectedWorker, selectedTile);
     }
 
 }

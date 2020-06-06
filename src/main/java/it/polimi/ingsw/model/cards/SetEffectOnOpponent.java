@@ -14,7 +14,6 @@ import java.util.List;
  */
 public class SetEffectOnOpponent extends DivinityDecoratorWithEffects {
     private boolean hasMovedUp;
-    private String playerUsername;
 
     public SetEffectOnOpponent() {
         super();
@@ -56,6 +55,7 @@ public class SetEffectOnOpponent extends DivinityDecoratorWithEffects {
     public boolean hasSetEffectOnOpponentWorkers() {
         if(hasMovedUp) return true;
         else return super.hasSetEffectOnOpponentWorkers();
+
     }
 
     @Override

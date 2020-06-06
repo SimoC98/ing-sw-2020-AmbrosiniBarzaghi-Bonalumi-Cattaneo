@@ -33,6 +33,8 @@ public class Match extends Observable<ServerEvent> {
 
     private int startPlayer;
 
+    private int turnId = 0;
+
     /**
      * Constructor used to support other classes
      *  and to simplify testing
@@ -113,9 +115,11 @@ public class Match extends Observable<ServerEvent> {
      * to initialize the next player's one
      */
     public void startNextTurn(){
-        for(Player p : players) {
-            if(!p.equals(currentPlayer)) {
-                if(p.getDivinity().hasSetEffectOnOpponentWorkers()) currentPlayer.setDivinity(p.getDivinity().getDivinity());
+        if(turnId>0) {
+            for(Player p : players) {
+                if(!p.equals(currentPlayer)) {
+                    if(p.getDivinity().hasSetEffectOnOpponentWorkers()) currentPlayer.setDivinity(currentPlayer.getDivinity().getDivinity());
+                }
             }
         }
 
@@ -133,6 +137,7 @@ public class Match extends Observable<ServerEvent> {
             }
         }
 
+        turnId++;
         currentPlayer.startOfTurn();
     }
 
@@ -414,7 +419,9 @@ public class Match extends Observable<ServerEvent> {
         int index = players.indexOf(currentPlayer) + 1;
         if(index==players.size()) index=0;
 
-        if(index==this.startPlayer) startNextTurn();
+        if(index==this.startPlayer) {
+            startNextTurn();
+        }
         else currentPlayer=players.get(index);
     }
 

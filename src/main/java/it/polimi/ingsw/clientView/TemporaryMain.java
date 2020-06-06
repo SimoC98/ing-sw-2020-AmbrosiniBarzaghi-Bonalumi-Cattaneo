@@ -1,6 +1,5 @@
 package it.polimi.ingsw.clientView;
 
-import it.polimi.ingsw.clientView.gui.GUI;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 

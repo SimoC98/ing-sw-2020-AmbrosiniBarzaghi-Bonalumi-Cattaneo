@@ -31,7 +31,7 @@ public class PingManager implements Observer<ClientEvent> {
 
 
     public void startPing() {
-        pinger = new Timer();
+        /*pinger = new Timer();
         task = new TimerTask() {
             @Override
             public void run() {
@@ -49,7 +49,7 @@ public class PingManager implements Observer<ClientEvent> {
         };
 
         //2 sec to receive pong
-        pinger.schedule(task,0,2000);
+        pinger.schedule(task,0,2000);*/
 
     }
 

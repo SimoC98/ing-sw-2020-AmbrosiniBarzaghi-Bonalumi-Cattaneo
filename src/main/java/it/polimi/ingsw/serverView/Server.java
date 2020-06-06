@@ -148,7 +148,7 @@ public class Server{
                     public void run() {
                         startMatch();
                     }
-                },30000);
+                },5000);
             }).start();
 
 

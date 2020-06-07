@@ -2,7 +2,7 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.XMLparser.XMLParserUtility;
 import it.polimi.ingsw.model.cards.MoveTwiceNotBack;
-import it.polimi.ingsw.model.cards.SetEffectOnOpponent;
+import it.polimi.ingsw.model.cards.OpponentCannotMoveUp;
 import it.polimi.ingsw.model.cards.StandardDivinity;
 import it.polimi.ingsw.model.cards.SwapWithOpponent;
 import it.polimi.ingsw.model.exceptions.*;
@@ -244,7 +244,7 @@ class MatchTest {
 
         assertEquals(p1.getDivinity().getClass(),SwapWithOpponent.class);
         assertEquals(p2.getDivinity().getClass(), MoveTwiceNotBack.class);
-        assertEquals(p3.getDivinity().getClass(), SetEffectOnOpponent.class);
+        assertEquals(p3.getDivinity().getClass(), OpponentCannotMoveUp.class);
 
         assertEquals(match.getCurrentPlayer(),p1);
     }

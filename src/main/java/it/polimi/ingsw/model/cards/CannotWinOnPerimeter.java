@@ -5,7 +5,7 @@ import it.polimi.ingsw.model.*;
 /**
  * Hera prevent the other players from winning if they move onto a perimetral tile
  */
-public class CannotWinOnPerimeter extends DivinityDecoratorWithEffects{
+public class CannotWinOnPerimeter extends SetEffectOnOpponent{
 
     public CannotWinOnPerimeter() {
         super();
@@ -17,7 +17,8 @@ public class CannotWinOnPerimeter extends DivinityDecoratorWithEffects{
 
     @Override
     public boolean hasSetEffectOnOpponentWorkers() {
-         return true;
+        super.setEffect = true;
+         return super.hasSetEffectOnOpponentWorkers();
     }
 
     /**

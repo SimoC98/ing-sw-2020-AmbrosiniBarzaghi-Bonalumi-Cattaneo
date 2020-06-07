@@ -49,7 +49,7 @@
                   <Insets top="20.0" />
                </StackPane.margin>
             </VBox>
-            <VBox fx:id="godDescription" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="520.0" spacing="10.0" styleClass="mid" stylesheets="@../css/divinitySelectionBack.css" visible="false" StackPane.alignment="CENTER" />
+            <VBox fx:id="godDescription" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="730.0" prefWidth="550.0" spacing="10.0" styleClass="mid" stylesheets="@../css/divinitySelectionBack.css" visible="false" StackPane.alignment="CENTER" />
          </children>
       </StackPane>
    </center>

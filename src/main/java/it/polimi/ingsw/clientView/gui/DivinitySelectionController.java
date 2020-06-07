@@ -123,8 +123,8 @@ public class DivinitySelectionController {
         String back = "/graphics/clp_bg.png";
         ImageView b = new ImageView(new Image(back));
 
-        b.setFitHeight(200);
-        b.setFitWidth(140);
+        b.setFitHeight(240);
+        b.setFitWidth(160);
 
         godGrid.add(new StackPane(b,node),x,y);
 
@@ -166,8 +166,13 @@ public class DivinitySelectionController {
             god.setFitWidth(250);
             god.isPreserveRatio();
 
+            String clip = "/graphics/clp_bg.png";
+            ImageView c = new ImageView(new Image(back));
+            c.setFitHeight(390);
+            c.setFitWidth(280);
+
             //add image of divinity selected to the desc panel
-            godDescription.getChildren().add(god);
+            godDescription.getChildren().add(new StackPane(c,god));
 
             Label desc = new Label();
 
@@ -187,6 +192,8 @@ public class DivinitySelectionController {
             buttons.setSpacing(20);
 
             Button close = new Button("close");
+            close.setPrefHeight(40);
+            close.setPrefWidth(100);
             close.setOnMouseClicked((e)->{
                 godDescription.getChildren().clear();
                 godDescription.setVisible(false);
@@ -196,6 +203,8 @@ public class DivinitySelectionController {
             //if this god was already selected --> add deselect button
             if(chosenGodsNode.contains(node)) {
                 Button deselect = new Button("deselect");
+                deselect.setPrefHeight(40);
+                deselect.setPrefWidth(100);
                 deselect.setOnMouseClicked((e)->{
                     chosenGods.remove(divinities.get(count));
                     chosenGodsNode.remove(node);
@@ -208,6 +217,8 @@ public class DivinitySelectionController {
             //else --> add select button
             else{
                 Button select = new Button("select");
+                select.setPrefHeight(40);
+                select.setPrefWidth(100);
                 select.setOnMouseClicked((e)->{
                     chosenGods.add(divinities.get(count));
                     chosenGodsNode.add(node);

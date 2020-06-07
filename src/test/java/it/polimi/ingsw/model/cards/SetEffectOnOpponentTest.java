@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.model.exceptions.InvalidMoveException;
 import it.polimi.ingsw.model.exceptions.InvalidWorkerSelectionException;
 import it.polimi.ingsw.model.exceptions.WorkerBadPlacementException;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +15,7 @@ class SetEffectOnOpponentTest {
 
     private Match match;
     private Board board;
-    private SetEffectOnOpponent div1;
+    private OpponentCannotMoveUp div1;
 
     @BeforeEach
     void setUp() throws WorkerBadPlacementException, InvalidWorkerSelectionException {
@@ -26,7 +25,7 @@ class SetEffectOnOpponentTest {
         match = new Match(users);
         match.setStartPlayer("Hello");
         board = match.getBoard();
-        div1 = new SetEffectOnOpponent(new StandardDivinity());
+        div1 = new OpponentCannotMoveUp(new StandardDivinity());
         match.getPlayers().get(0).setDivinity(div1);
         match.placeWorkers(0,0,1,1);
         match.selectWorker(0,0);

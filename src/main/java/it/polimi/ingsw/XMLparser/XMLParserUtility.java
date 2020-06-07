@@ -38,7 +38,7 @@ public class XMLParserUtility {
             put("CanMoveTwiceNotBack", MoveTwiceNotBack::new);
 
             //3 - Athena
-            put("OpponentCantGoUp", SetEffectOnOpponent::new);
+            put("OpponentCantGoUp", OpponentCannotMoveUp::new);
 
             //4 - Atlas
             put("CanBuildDomeEverywhere", BuildDomeEverywhere::new);

@@ -13,7 +13,6 @@ public interface UI {
 
     public void failedLogin(List<String> usernames);
 
-    public void selectPlayersNumber();
 
     public void selectPlayableDivinities(List<String> divinitiesNames, List<String> divinitiesDescriptions, int playersNumber, List<String> players);
 
@@ -41,6 +40,8 @@ public interface UI {
     public void playerDisconnection(String username);
 
     public void inLobby();
+
+    public void lobbyFull();
 
     public void endTurn();
 

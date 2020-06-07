@@ -10,6 +10,7 @@ import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.util.ArrayList;
@@ -36,6 +37,8 @@ public class PlayerDivinitySelectionController {
 
     private List<ImageView> godImages = new ArrayList<>();
 
+    private String chosenGod = null;
+
 
 
     public static void setClientView(ClientView clientView) {
@@ -50,13 +53,10 @@ public class PlayerDivinitySelectionController {
         for(int i=0;i<divinities.size();i++) {
 
             ImageView god = new ImageView();
-
             Image godImage = new Image("/graphics/" + divinities.get(i).toLowerCase() + ".png");
-
             god.setImage(godImage);
-
-            god.setFitHeight(200);
-            god.setFitWidth(150);
+            god.setFitHeight(350);
+            god.setFitWidth(240);
 
             addDivinityToHbox(god,i);
 
@@ -67,20 +67,31 @@ public class PlayerDivinitySelectionController {
     }
 
     private void addDivinityToHbox(Node node, int count) {
+        //light effect
+        Light.Distant light = new Light.Distant();
+        light.setAzimuth(-135.0);
+        Lighting lighting = new Lighting();
+        lighting.setLight(light);
+        lighting.setSurfaceScale(4.0);
 
-        hBox.getChildren().add(node);
+        //background of cards
+        String back = "/graphics/clp_bg.png";
+        ImageView b = new ImageView(new Image(back));
+        b.setFitHeight(370);
+        b.setFitWidth(260);
+
+        hBox.getChildren().add(new StackPane(b,node));
         godImages.add((ImageView)node);
 
+        node.setOnMouseEntered((e)->{
+            node.setEffect(lighting);
+        });
+
+        node.setOnMouseExited((e)->{
+            if(chosenGod==null || !chosenGod.equals(divinities.get(count))) node.setEffect(null);
+        });
+
         node.setOnMouseClicked((e1)-> {
-
-            Light.Distant light = new Light.Distant();
-            light.setAzimuth(-135.0);
-
-// Create lighting effect
-            Lighting lighting = new Lighting();
-            lighting.setLight(light);
-            lighting.setSurfaceScale(4.0);
-
             label.setVisible(true);
             label.setText("ciao");
             String desc = clientView.getBoard().getDivinities().get(divinities.get(count));
@@ -93,11 +104,13 @@ public class PlayerDivinitySelectionController {
                 ImageView img = (ImageView) e1.getTarget();
                 img.setEffect(lighting);
 
+                chosenGod = divinities.get(count);
+
                 btn.setVisible(false);
 
                 godImages.stream().forEach(i -> i.setOnMouseClicked(null));
 
-                label.setText("you chose " + divinities.get(count) + "... Wait other player's choice!");
+                label.setText("you chose " + chosenGod + "... Wait other player's choice!");
 
 
                 clientView.divinitySelection(divinities.get(count));

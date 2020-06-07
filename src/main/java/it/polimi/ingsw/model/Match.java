@@ -133,7 +133,7 @@ public class Match extends Observable<ServerEvent> {
 
         for(Player p : players) {
             if(!p.equals(currentPlayer)) {
-                if(p.getDivinity().hasSetEffectOnOpponentWorkers()) p.getDivinity().setEffectOnOpponentWorkers(currentPlayer);
+                if(p.getDivinity().hasSetEffectOnOpponentWorkers() && !p.isLoser()) p.getDivinity().setEffectOnOpponentWorkers(currentPlayer);
             }
         }
 
@@ -247,7 +247,9 @@ public class Match extends Observable<ServerEvent> {
             if(board.getAvailableMoveTiles(w).size() > 0) return false;
         }
         board.removePlayerWorkers(currentPlayer);
+        currentPlayer.setLoser();
         startNextTurn();
+
         players.remove(loserPlayer);
         if (players.size() == 1) {
             currentPlayer.setWinner();

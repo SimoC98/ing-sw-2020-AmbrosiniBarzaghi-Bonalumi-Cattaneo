@@ -30,16 +30,13 @@ public class LoginController {
     private HBox hBox;
 
     @FXML
-    private VBox root;
+    private HBox messages;
 
-   @FXML
-    private VBox vBox;
+    @FXML
+    private VBox root;
 
     @FXML
     private Label label;
-
-    @FXML
-    private ProgressIndicator progress;
 
     private static ClientView clientView;
 
@@ -67,16 +64,35 @@ public class LoginController {
 
 
     public void handleLogin() {
-        btn.setOnMouseClicked(null);
 
-        hBox.setVisible(false);
-        //waitLabel.setText("wait the game start...");
+        String username = txt.getText();
 
-        //invalidUsernameLabel.setVisible(false);
-        //waitLabel.setVisible(true);
+       if(username.length()<3) {
+           label.setText("INVALID USERNAME! Username must have at least 3 characters");
+           label.setVisible(true);
+       }
+       else if(username.length()>15) {
+           label.setText("INVALID USERNAME! Username must have at most 15 characters");
+           label.setVisible(true);
+       }
+       else if(username.contains(" ")) {
+           label.setText("INVALID USERNAME! Username can't contain blank spaces");
+           label.setVisible(true);
+       }
+       else {
+           btn.setOnMouseClicked(null);
+
+           hBox.setVisible(false);
+           label.setVisible(false);
+           //waitLabel.setText("wait the game start...");
+
+           //invalidUsernameLabel.setVisible(false);
+           //waitLabel.setVisible(true);
 
 
-        clientView.loginQuestion(txt.getText());
+           clientView.loginQuestion(txt.getText());
+       }
+
     }
 
     public void invalidUsername(List<String> loggedUsers) {
@@ -99,17 +115,24 @@ public class LoginController {
     }
 
     public void inLobby() {
-       label.setText("WAIT THE GAME START...");
-       label.setFont(new Font(18));
+        messages.getChildren().clear();
 
-       label.setVisible(true);
-       progress.setVisible(true);
+        Label inLobbyMessage = new Label("WAIT THE GAME START...");
+        inLobbyMessage.setFont(new Font(18));
+
+        messages.getChildren().add(inLobbyMessage);
+
+        ProgressIndicator progress = new ProgressIndicator();
+        progress.setMaxSize(50,50);
+
+        messages.getChildren().add(progress);
+
+        messages.setSpacing(10);
+       //progress.setVisible(true);
     }
 
-
-
-
-
-
+    public void lobbyFull() {
+        //TODO
+    }
 
 }

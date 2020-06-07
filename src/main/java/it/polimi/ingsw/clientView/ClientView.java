@@ -308,13 +308,13 @@ public class ClientView implements Observer<ServerEvent> {
     }
 
     public void lobbyFull() {
-        ui.textMessage("The lobby is full, try reconnecting");
-        disconnect();
+        ui.lobbyFull();
     }
 
     public void disconnect() {
 //        proxy.close();
-        ui.textMessage("Disconnecting");
+        //ui.textMessage("Disconnecting");
+        //todo: close socket
         exit(0);
     }
 

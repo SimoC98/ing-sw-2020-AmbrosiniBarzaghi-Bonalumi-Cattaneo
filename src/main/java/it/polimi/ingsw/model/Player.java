@@ -19,6 +19,7 @@ public class Player {
     private Color color;
     private Divinity divinity;
     private boolean isWinner;
+    private boolean isLoser;
     private List<Action> possibleActions;
     private List<Worker> workers;
 
@@ -37,6 +38,7 @@ public class Player {
         divinity = null;
         possibleActions = new ArrayList<>();
         isWinner = false;
+        isLoser = false;
 
         updates = new ArrayList<>();
     }
@@ -62,6 +64,14 @@ public class Player {
      */
     public boolean isWinner() {
         return isWinner;
+    }
+
+    public boolean isLoser() {
+        return isLoser;
+    }
+
+    public void setLoser() {
+        this.isLoser = true;
     }
 
     public String getUsername() {

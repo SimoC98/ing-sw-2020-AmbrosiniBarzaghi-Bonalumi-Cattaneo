@@ -118,7 +118,6 @@ public class CLI implements UI{
         clientView.loginQuestion(username);
     }
 
-    @Override
     public void selectPlayersNumber() {
         System.out.println("You're the first logged user, so you have to choose the number of players for this match.");
         System.out.println("You can choose between 2 and 3 players.");
@@ -542,6 +541,13 @@ public class CLI implements UI{
     @Override
     public void inLobby() {
         System.out.println("\nWAIT THE GAME START...\n\n");
+    }
+
+    @Override
+    public void lobbyFull() {
+        System.out.println("The lobby is full, you can't join this match!");
+        System.out.println("\ndisconnecting...");
+        clientView.disconnect();
     }
 
     @Override

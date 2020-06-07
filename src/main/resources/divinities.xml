@@ -112,4 +112,12 @@
         <effect>PlayerWinWith5CompleteBuildings</effect>
     </divinity>
 
+    <divinity>
+        <number>16</number>
+        <name>Hypnus</name>
+        <heading>God Of Sleep</heading>
+        <description>Start of opponent's turn: If one of your opponent's Workers is higher than all of their others, it cannot move.</description>
+        <effect>OpponentCannotSelectIfHigher</effect>
+    </divinity>
+
 </divinities>

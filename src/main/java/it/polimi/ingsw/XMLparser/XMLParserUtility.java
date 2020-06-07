@@ -72,6 +72,10 @@ public class XMLParserUtility {
 
             //15 - Chronus
             put("PlayerWinWith5CompleteBuildings",PlayerWinWith5CompleteBuildings::new);
+
+            //16 - Hypnus
+
+            put("OpponentCannotSelectIfHigher",CannotSelectIfHigher::new);
         }
     };
 

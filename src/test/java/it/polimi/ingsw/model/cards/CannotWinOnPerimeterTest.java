@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.model.exceptions.InvalidMoveException;
 import it.polimi.ingsw.model.exceptions.InvalidWorkerSelectionException;
 import it.polimi.ingsw.model.exceptions.WorkerBadPlacementException;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,7 +43,6 @@ class CannotWinOnPerimeterTest {
         Tile t1 = board.getTile(0,1);
         Tile t2 = board.getTile(3,0);
         Tile t3 = board.getTile(4,0);
-        Tile t4 = board.getTile(3,1);
 
         p1.move(board,w1,t1);
         p1.build(board,w1,board.getTile(0,0));
@@ -55,9 +53,6 @@ class CannotWinOnPerimeterTest {
         t3.increaseLevel();
         t3.increaseLevel();
         t3.increaseLevel();
-        t4.increaseLevel();
-        t4.increaseLevel();
-        t4.increaseLevel();
         p2.addWorker(t2);
 
         p2.move(board,p2.getWorkers().get(0),t3);
@@ -72,7 +67,6 @@ class CannotWinOnPerimeterTest {
         Player p2 = match.getPlayers().get(1);
         Tile t1 = board.getTile(0,1);
         Tile t2 = board.getTile(3,0);
-        Tile t3 = board.getTile(4,0);
         Tile t4 = board.getTile(3,1);
 
         p1.move(board,w1,t1);
@@ -81,9 +75,6 @@ class CannotWinOnPerimeterTest {
 
         t2.increaseLevel();
         t2.increaseLevel();
-        t3.increaseLevel();
-        t3.increaseLevel();
-        t3.increaseLevel();
         t4.increaseLevel();
         t4.increaseLevel();
         t4.increaseLevel();

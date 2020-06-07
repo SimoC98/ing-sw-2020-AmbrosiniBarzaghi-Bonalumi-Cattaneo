@@ -1,12 +1,6 @@
 package it.polimi.ingsw.model.cards;
 
-import it.polimi.ingsw.Pair;
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.model.exceptions.InvalidMoveException;
-import it.polimi.ingsw.model.update.ModelUpdate;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**

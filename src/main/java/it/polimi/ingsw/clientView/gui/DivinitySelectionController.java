@@ -207,7 +207,15 @@ public class DivinitySelectionController {
             close.setBackground(closeBack);*/
 
             close.getStyleClass().add("coral");
-            
+            close.getStylesheets().add("/css/btn.css");
+
+            close.setOnMouseEntered((e)->{
+                close.setEffect(lighting);
+            });
+
+            close.setOnMouseExited((e)->{
+                close.setEffect(null);
+            });
 
             close.setOnMouseClicked((e)->{
                 godDescription.getChildren().clear();
@@ -221,6 +229,18 @@ public class DivinitySelectionController {
                 Button deselect = new Button("deselect");
                 deselect.setPrefHeight(40);
                 deselect.setPrefWidth(100);
+
+                deselect.setOnMouseEntered((e)->{
+                    deselect.setEffect(lighting);
+                });
+
+                deselect.setOnMouseExited((e)->{
+                    deselect.setEffect(null);
+                });
+
+                deselect.getStyleClass().add("blue");
+                deselect.getStylesheets().add("/css/btn.css");
+
                 deselect.setOnMouseClicked((e)->{
                     chosenGods.remove(divinities.get(count));
                     chosenGodsNode.remove(node);
@@ -236,6 +256,18 @@ public class DivinitySelectionController {
                 Button select = new Button("select");
                 select.setPrefHeight(40);
                 select.setPrefWidth(100);
+
+                select.setOnMouseEntered((e)->{
+                    select.setEffect(lighting);
+                });
+
+                select.setOnMouseExited((e)->{
+                    select.setEffect(null);
+                });
+
+                select.getStyleClass().add("blue");
+                select.getStylesheets().add("/css/btn.css");
+
                 select.setOnMouseClicked((e)->{
                     chosenGods.add(divinities.get(count));
                     chosenGodsNode.add(node);

@@ -104,4 +104,12 @@
         <effect>OpponentCannotWinOnPerimeter</effect>
     </divinity>
 
+    <divinity>
+        <number>15</number>
+        <name>Chronus</name>
+        <heading>God Of Time</heading>
+        <description>Win Condition: You also win when there are at least five complete towers on the board.</description>
+        <effect>PlayerWinWith5CompleteBuildings</effect>
+    </divinity>
+
 </divinities>

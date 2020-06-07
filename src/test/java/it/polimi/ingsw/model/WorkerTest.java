@@ -30,11 +30,7 @@ class WorkerTest {
         w.setPositionOnBoard(tileTest1);
         Tile tileTest2 = new Tile(4,3);
 
-        try {
-            w.move(tileTest2);
-        } catch (InvalidMoveException e) {
-            e.printStackTrace();
-        }
+         w.move(tileTest2);
 
         assertNotEquals(tileTest1,w.getPositionOnBoard());
         assertFalse(tileTest1.isOccupied());
@@ -48,7 +44,8 @@ class WorkerTest {
         Tile t = board.getTile(3,2);
         t.setWorker(new Worker());
 
-        assertThrows(InvalidMoveException.class,()->w.move(t));
+        //assertThrows(InvalidMoveException.class,()->w.move(t));
+        assertFalse(w.legalMove(t));
         assertNotEquals(t.getWorker(),w);
     }
 
@@ -60,7 +57,8 @@ class WorkerTest {
         Tile tileTest2 = board.getTile(2,3);
         tileTest2.setDome();
 
-        assertThrows(InvalidMoveException.class,()->w.move(tileTest2));
+        assertFalse(w.legalMove(tileTest2));
+        //assertThrows(InvalidMoveException.class,()->w.move(tileTest2));
     }
 
     @Test
@@ -72,7 +70,8 @@ class WorkerTest {
         tileTest2.increaseLevel();
         tileTest2.increaseLevel();
 
-        assertThrows(InvalidMoveException.class,()->w.move(tileTest2));
+        assertFalse(w.legalMove(tileTest2));
+        //assertThrows(InvalidMoveException.class,()->w.move(tileTest2));
     }
 
 //    @Test
@@ -115,11 +114,7 @@ class WorkerTest {
         tileTest2.increaseLevel();
         tileTest2.increaseLevel();
 
-        try {
-            w.move(tileTest2);
-        } catch (InvalidMoveException e) {
-            e.printStackTrace();
-        }
+        w.move(tileTest2);
 
         assertFalse(w.getPlayer().isWinner());
 

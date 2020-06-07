@@ -69,6 +69,9 @@ public class XMLParserUtility {
 
             //14 - Hera
             put("OpponentCannotWinOnPerimeter",CannotWinOnPerimeter::new);
+
+            //15 - Chronus
+            put("PlayerWinWith5CompleteBuildings",PlayerWinWith5CompleteBuildings::new);
         }
     };
 

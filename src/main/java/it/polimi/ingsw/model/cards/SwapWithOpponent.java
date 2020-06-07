@@ -56,11 +56,7 @@ public class SwapWithOpponent extends MoveOnOpponent {
             //second moveUpdate --> selectedWorker from his tile to selectedTile
             modifiedTiles.add(new Pair<>(selectedWorker.getPositionOnBoard().getX(),selectedWorker.getPositionOnBoard().getY()));
             modifiedTiles.add(new Pair<>(selectedTile.getX(),selectedTile.getY()));
-            try {
-                selectedWorker.move(selectedTile);
-            } catch (InvalidMoveException e) {
-                e.printStackTrace();
-            }
+            selectedWorker.move(selectedTile);
             myActualTile.setWorker(opponentWorker);
             opponentWorker.setPositionOnBoard(myActualTile);
 

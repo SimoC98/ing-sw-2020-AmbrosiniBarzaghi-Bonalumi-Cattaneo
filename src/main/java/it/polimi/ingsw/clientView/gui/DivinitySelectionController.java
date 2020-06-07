@@ -63,7 +63,7 @@ public class DivinitySelectionController {
     private List<String> chosenGods = new ArrayList<>();
     private List<Node> chosenGodsNode = new ArrayList<>();
 
-    private boolean end = false;
+    private boolean nodeListenersOff = false;
 
 
     @FXML
@@ -156,8 +156,12 @@ public class DivinitySelectionController {
 
         node.setOnMouseClicked((e1)-> {
 
+
+
             //if already chosen return without show desc
-            if(end) return;
+            if(nodeListenersOff) return;
+
+            nodeListenersOff = true;
 
             ImageView god = new ImageView();
             Image godImg = new Image("/graphics/" + divinities.get(count).toLowerCase() + ".png");
@@ -197,6 +201,7 @@ public class DivinitySelectionController {
             close.setOnMouseClicked((e)->{
                 godDescription.getChildren().clear();
                 godDescription.setVisible(false);
+                nodeListenersOff=false;
             });
             buttons.getChildren().add(close);
 
@@ -211,6 +216,7 @@ public class DivinitySelectionController {
                     godDescription.getChildren().clear();
                     godDescription.setVisible(false);
                     node.setEffect(null);
+                    nodeListenersOff=false;
                 });
                 buttons.getChildren().add(deselect);
             }
@@ -225,6 +231,7 @@ public class DivinitySelectionController {
                     godDescription.getChildren().clear();
                     godDescription.setVisible(false);
                     node.setEffect(lighting);
+                    nodeListenersOff=false;
 
                     if(chosenGods.size()==playerNumber) {
                         StringBuilder s = new StringBuilder();
@@ -237,7 +244,7 @@ public class DivinitySelectionController {
 
                         endVBox.setVisible(true);
 
-                        end = true;
+                        nodeListenersOff = true;
 
                         clientView.playableDivinitiesSelection(chosenGods,players.get(0));
                     }

@@ -11,7 +11,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class SetEffectOnOpponentTest {
+class OpponentCannotMoveUpTest {
 
     private Match match;
     private Board board;

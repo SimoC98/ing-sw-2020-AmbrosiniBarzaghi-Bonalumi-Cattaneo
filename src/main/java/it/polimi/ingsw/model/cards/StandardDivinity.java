@@ -64,16 +64,11 @@ public class StandardDivinity implements Divinity {
         //List<Tile> modifiedTiles = new ArrayList<>();
         List<Pair<Integer,Integer>> modifiedTiles = new ArrayList<>();
 
-        try {
-            modifiedTiles.add(new Pair<>(selectedWorker.getPositionOnBoard().getX(),selectedWorker.getPositionOnBoard().getY()));
-            modifiedTiles.add(new Pair<>(selectedTile.getX(),selectedTile.getY()));
-            ret.add(new ModelUpdate(Action.MOVE,selectedWorker,modifiedTiles));
+        modifiedTiles.add(new Pair<>(selectedWorker.getPositionOnBoard().getX(),selectedWorker.getPositionOnBoard().getY()));
+        modifiedTiles.add(new Pair<>(selectedTile.getX(),selectedTile.getY()));
+        ret.add(new ModelUpdate(Action.MOVE,selectedWorker,modifiedTiles));
 
-            selectedWorker.move(selectedTile);
-
-        } catch (InvalidMoveException e) {
-            e.printStackTrace();
-        }
+        selectedWorker.move(selectedTile);
 
         return ret;
     }

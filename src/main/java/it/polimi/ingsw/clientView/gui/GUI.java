@@ -4,7 +4,6 @@ import it.polimi.ingsw.clientView.BoardRepresentation;
 import it.polimi.ingsw.clientView.ClientView;
 import it.polimi.ingsw.clientView.UI;
 import it.polimi.ingsw.model.Action;
-import it.polimi.ingsw.model.Player;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +21,7 @@ public class GUI extends Application implements UI {
     private static ClientView clientView;
 
     private LoginController loginController;
-    //private WelcomeController welcomeController;
+    private WelcomeController welcomeController;
     private DivinitySelectionController divinitySelectionController;
     private PlayerDivinitySelectionController playerDivinitySelectionController;
     private MatchController matchController;
@@ -77,39 +76,63 @@ public class GUI extends Application implements UI {
 
 
 
-        /*FXMLLoader welcomeLoader = new FXMLLoader(getClass().getResource("/fxml/Welcome.fxml"));
+        FXMLLoader welcomeLoader = new FXMLLoader(getClass().getResource("/fxml/Welcome.fxml"));
         Parent welcomePane = welcomeLoader.load();
-        this.welcomeRoot = welcomePane;*/
+        //Scene welcomeScene = new Scene(welcomePane, 750, 500);
+        this.welcomeRoot = welcomePane;
 
 
+        //FXMLLoader loginLoader = new FXMLLoader(loginUrl);
         FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));
         Parent loginPane = loginLoader.load();
+       // Scene loginScene = new Scene(loginPane, 750, 500);
         this.loginRoot = loginPane;
 
 
         FXMLLoader playableDivinitiesLoader = new FXMLLoader(getClass().getResource("/fxml/DivinitySelection.fxml"));
         Parent playableDivinitiesPane = playableDivinitiesLoader.load();
+       // Scene loginScene = new Scene(loginPane, 750, 500);
         this.playableDivinityRoot = playableDivinitiesPane;
 
         FXMLLoader playerDivinityLoader = new FXMLLoader(getClass().getResource("/fxml/PlayerDivinitySelection.fxml"));
+        //Parent playableDivinitiesPane = playableDivinitiesLoader.load();
         Parent playerDivinityPane = playerDivinityLoader.load();
+        // Scene loginScene = new Scene(loginPane, 750, 500);
         this.playerDivinityRoot = playerDivinityPane;
 
         FXMLLoader matchLoader = new FXMLLoader(getClass().getResource("/fxml/Match.fxml"));
+        //Parent playableDivinitiesPane = playableDivinitiesLoader.load();
         Parent matchPane = matchLoader.load();
+        // Scene loginScene = new Scene(loginPane, 750, 500);
         this.matchRoot = matchPane;
 
 
 
-        //this.welcomeController = welcomeLoader.getController();
+        this.welcomeController = welcomeLoader.getController();
         this.loginController = loginLoader.getController();
         this.divinitySelectionController = playableDivinitiesLoader.getController();
         this.playerDivinitySelectionController = playerDivinityLoader.getController();
         this.matchController = matchLoader.getController();
 
+
+        //GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+
+
+        //stage.setScene(new Scene(welcomeRoot,1100,750));
+
+
+        //stage.setFullScreen(true);
+        //stage.setMaximized(true);
+
+       // stage.show();
+
         clientView.startConnection();
     }
 
+
+    public void setWelcomeController(WelcomeController wc) {
+        this.welcomeController = wc;
+    }
 
 
     public void login(){
@@ -117,6 +140,8 @@ public class GUI extends Application implements UI {
         System.out.println("\nlogin...");
 
         Platform.runLater(()->{
+
+            //primaryStage.getScene().setRoot(loginRoot);
             primaryStage.setScene(new Scene(loginRoot,1500,1000));
             primaryStage.show();
         });
@@ -158,11 +183,17 @@ public class GUI extends Application implements UI {
             matchController.setActionPlaceWorkers();
         });
     }
+//    public void selectDivinityAndPlaceWorkers(List<String> divinityNames) {}
 
+    public void updateBoard() {}
     public void textMessage(String msg) {}
 
     public void startTurn() {}
-    public void selectWorker() {}
+    public void selectWorker() {
+        Platform.runLater(()->{
+            matchController.setActionSelectWorker();
+        });
+    }
     public void performAction(List<Action> possibleActions) {}
 
     public void loser(String username) {}
@@ -192,9 +223,7 @@ public class GUI extends Application implements UI {
 
     @Override
     public void lobbyFull() {
-        Platform.runLater(() -> {
-            loginController.lobbyFull();
-        });
+
     }
 
     @Override

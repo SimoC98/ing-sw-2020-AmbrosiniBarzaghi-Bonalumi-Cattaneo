@@ -9,6 +9,7 @@ import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -19,6 +20,9 @@ public class PlayerDivinitySelectionController {
 
     private static ClientView clientView;
 
+
+    @FXML
+    private BorderPane bPane;
 
     @FXML
     private HBox hBox;
@@ -36,7 +40,10 @@ public class PlayerDivinitySelectionController {
 
     private List<ImageView> godImages = new ArrayList<>();
 
+    @FXML
+    public void initialize() {
 
+    }
 
     public static void setClientView(ClientView clientView) {
         PlayerDivinitySelectionController.clientView = clientView;

@@ -188,7 +188,7 @@ public class GameController {
                     break;
 
                 case 2:
-                    image = new Image(new FileInputStream("src/main/java/it/polimi/ingsw/clientView/aaaaGUITesting/pics/lvl2bis.png"));
+                    image = new Image(new FileInputStream("src/main/java/it/polimi/ingsw/clientView/aaaaGUITesting/pics/lvl2.png"));
                     imageView = (ImageView) s.getChildren().get(LVL2);
                     imageView.setImage(image);
                     break;

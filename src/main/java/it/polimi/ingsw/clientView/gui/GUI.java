@@ -4,6 +4,7 @@ import it.polimi.ingsw.clientView.BoardRepresentation;
 import it.polimi.ingsw.clientView.ClientView;
 import it.polimi.ingsw.clientView.UI;
 import it.polimi.ingsw.model.Action;
+import it.polimi.ingsw.model.Match;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -60,8 +61,8 @@ public class GUI extends Application implements UI {
     public void start(Stage stage) throws Exception {
         this.primaryStage = stage;
 
-        primaryStage.setMinHeight(800);
-        primaryStage.setMinWidth(1200);
+        primaryStage.setMinHeight(400);
+        primaryStage.setMinWidth(600);
 
         primaryStage.setTitle("SANTORINI");
 
@@ -142,7 +143,7 @@ public class GUI extends Application implements UI {
         Platform.runLater(()->{
 
             //primaryStage.getScene().setRoot(loginRoot);
-            primaryStage.setScene(new Scene(loginRoot,1500,1000));
+            primaryStage.setScene(new Scene(loginRoot,900,600));
             primaryStage.show();
         });
 
@@ -186,11 +187,17 @@ public class GUI extends Application implements UI {
 //    public void selectDivinityAndPlaceWorkers(List<String> divinityNames) {}
 
     public void updateBoard() {}
-    public void textMessage(String msg) {}
+    public void textMessage(String msg) {
+        //matchController.textMessage(msg);
+    }
 
     public void startTurn() {}
-    public void selectWorker() {}
-    public void performAction(List<Action> possibleActions) {}
+    public void selectWorker() {
+        matchController.setActionSelectWorker();
+    }
+    public void performAction(List<Action> possibleActions) {
+        matchController.handlePossibleActions(possibleActions);
+    }
 
     public void loser(String username) {}
     public void winner(String username) {}
@@ -244,12 +251,12 @@ public class GUI extends Application implements UI {
 
     @Override
     public void moveUpdate(String player, int xFrom, int yFrom, int xTo, int yTo) {
-
+        matchController.moveUpdate(player, xFrom, yFrom, xTo, yTo);
     }
 
     @Override
     public void buildUpdate(String player, int x, int y) {
-
+        matchController.buildUpdate(player, x, y);
     }
 
     @Override

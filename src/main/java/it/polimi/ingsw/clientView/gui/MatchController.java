@@ -1,6 +1,7 @@
 package it.polimi.ingsw.clientView.gui;
 
 import it.polimi.ingsw.Pair;
+import it.polimi.ingsw.clientView.BoardRepresentation;
 import it.polimi.ingsw.clientView.ClientView;
 import it.polimi.ingsw.model.Action;
 
@@ -9,6 +10,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -23,11 +25,17 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class MatchController {
     private static ClientView clientView;
 
+    @FXML
+    private Label message;
+    @FXML
+    private VBox possibleActionsBox;
     @FXML
     private GridPane board;
     @FXML
@@ -39,16 +47,21 @@ public class MatchController {
     @FXML
     private Label userInteractionLabel;
 
-    private int [][]boardInt = new int[5][5];
     private final int LVL1=0, LVL2=1, LVL3=2, DOME=3, WORKER=4, SHADOW=5;
     private String actualAction;
+    private Map<String, Image> workerColors;
+    private List<Image> tileLevel;
+    boolean isInitialized = false;
 
     private List<Pair<Integer,Integer>> workerPlacement = new ArrayList<>();
+
+    public MatchController() {
+    }
 
     @FXML
     public void initialize() {
         createBoard();
-        board.prefHeightProperty().bind(hBox.heightProperty().subtract(25));
+        board.prefHeightProperty().bind(hBox.heightProperty().subtract(50));
         board.prefWidthProperty().bind(board.heightProperty());
         hBox.setMinHeight(200);
         hBox.setMinWidth(400);
@@ -62,6 +75,18 @@ public class MatchController {
         vBoxLeft.setSpacing(40);
         vBoxLeft.setAlignment(Pos.CENTER);
 
+        workerColors = Map.of(
+                "blue" , new Image("/graphics/blue.png"),
+                "cream", new Image("/graphics/cream.png"),
+                "white", new Image("/graphics/white.png"));
+
+        tileLevel = Arrays.asList(
+                new Image("/graphics/lvl1.png"),
+                new Image("/graphics/lvl2.png"),
+                new Image("/graphics/lvl3.png"),
+                new Image("/graphics/dome.png"));
+
+        isInitialized = true;
     }
 
     public static void setClientView(ClientView clientView) {
@@ -159,7 +184,6 @@ public class MatchController {
             actualAction = "default";
             clientView.workerPlacement(workerPlacement.get(0).getFirst(),workerPlacement.get(0).getSecond(),workerPlacement.get(1).getFirst(),workerPlacement.get(1).getSecond());
         }
-
     }
 
     public void moveOnClickedTile(StackPane s) {
@@ -171,51 +195,7 @@ public class MatchController {
         actualAction = "default";
 
         clientView.actionQuestion(Action.MOVE,x,y);
-
     }
-
-    /*public void build(StackPane s) {
-        int x = GridPane.getRowIndex(s);
-        int y = GridPane.getColumnIndex(s);
-
-        System.out.println(x + "-" + y);
-        boardInt[x][y] ++;
-        System.out.println(boardInt[x][y]);
-
-
-        Image image;
-        ImageView imageView;
-        try {
-            switch(boardInt[x][y]) {
-                case 1:
-                    image = new Image(new FileInputStream("src/main/java/it/polimi/ingsw/clientView/aaaaGUITesting/pics/lvl1.png"));
-                    imageView = (ImageView) s.getChildren().get(LVL1);
-                    imageView.setImage(image);
-                    break;
-
-                case 2:
-                    image = new Image(new FileInputStream("src/main/java/it/polimi/ingsw/clientView/aaaaGUITesting/pics/lvl2.png"));
-                    imageView = (ImageView) s.getChildren().get(LVL2);
-                    imageView.setImage(image);
-                    break;
-
-                case 3:
-                    image = new Image(new FileInputStream("src/main/java/it/polimi/ingsw/clientView/aaaaGUITesting/pics/lvl3.png"));
-                    imageView = (ImageView) s.getChildren().get(LVL3);
-                    imageView.setImage(image);
-                    break;
-
-                case 4:
-                    //buildDome(s);
-                    break;
-
-                default:
-                    System.out.println("boh");
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }*/
 
     public void buildOnClickedTile(StackPane s) {
         int x = GridPane.getRowIndex(s);
@@ -228,17 +208,6 @@ public class MatchController {
         clientView.actionQuestion(Action.BUILD,x,y);
     }
 
-    /*public void buildDome(StackPane s) {
-        Image image = null;
-        try {
-            image = new Image(new FileInputStream("src/main/java/it/polimi/ingsw/clientView/aaaaGUITesting/pics/dome.png"));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        ImageView imageView = (ImageView) s.getChildren().get(DOME);
-        imageView.setImage(image);
-    }*/
-
     public void buildDomeOnClickedTile(StackPane s) {
         int x = GridPane.getRowIndex(s);
         int y = GridPane.getColumnIndex(s);
@@ -249,6 +218,33 @@ public class MatchController {
 
         clientView.actionQuestion(Action.BUILDDOME,x,y);
     }
+
+    public void handlePossibleActions(List<Action> possibleActions) {
+        message.setText("Choose the action\nto perform: ");
+
+        List<Button> actionButtons = new ArrayList<>();
+        for(Action action : possibleActions) {
+            System.out.println(action.toString());
+
+            Button actionBtn = new Button(action.toString());
+            actionBtn.setOnMouseClicked((event) -> {
+                actualAction = action.toString().toLowerCase();
+                emptyPossibleActions();
+                if(action != Action.END)
+                    message.setText("Choose tile to\n" + action.toString());
+                else
+                    message.setText("Your turn is over");
+            });
+            actionButtons.add(actionBtn);
+        }
+
+        possibleActionsBox.getChildren().addAll(actionButtons);
+    }
+
+    private void emptyPossibleActions() {
+        possibleActionsBox.getChildren().clear();
+    }
+
 
     /*
 
@@ -272,58 +268,65 @@ public class MatchController {
 
         String color = clientView.getBoard().getPlayersMap().get(username).getColor().toString().toLowerCase();
 
-        try {
-            Image image = new Image(new FileInputStream("src/main/resources/graphics/" + color + ".png"));
-            w1.setImage(image);
-            w2.setImage(image);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        Image image = workerColors.get(color);
+        w1.setImage(image);
+        w2.setImage(image);
+    }
+
+    public void moveUpdate(String player, int x1, int y1, int x2, int y2) {
+        userInteractionLabel.setText(player + " has moved from " + x1+"-"+y1 + " to " + x2+"-"+y2);
+
+        StackPane stackPaneFrom = (StackPane) board.getChildren().get(y1*board.getRowCount() + x1);   //TODO: check if x and y must be inverted
+        StackPane stackPaneTo = (StackPane) board.getChildren().get(y2*board.getRowCount() + x2);   //TODO: check if x and y must be inverted
+
+        ImageView workerFrom = (ImageView) stackPaneFrom.getChildren().get(WORKER);
+        Image workerImg = workerFrom.getImage();
+        if(workerImg == null) {
+            System.out.println("Huston we have a problem, a move arrived from an empty tile");
+            return;
         }
+        workerFrom.setImage(null);
 
+        ImageView workerTo = (ImageView) stackPaneTo.getChildren().get(WORKER);
+        workerTo.setImage(workerImg);
     }
 
+    public void buildUpdate(String player, int x, int y) {
+        userInteractionLabel.setText(player + " has built on tile " + x+"-"+y);
+        System.out.println(x + "-" + y);
+        StackPane s = (StackPane) board.getChildren().get(y*board.getRowCount() + x);   //TODO: check if x and y must be inverted
 
-    public void toggleSelectable(int x, int y) {
-        StackPane s = (StackPane) board.getChildren().get(board.getRowCount()*x + y);
-        StackPane shadow = (StackPane) s.getChildren().get(SHADOW);
+        ImageView imageView;
 
-        if(shadow.isVisible())
-            shadow.setVisible(false);
-        else
-            shadow.setVisible(true);
+        switch(clientView.getBoard().getBoard()[x][y]) {
+            case 1:
+                imageView = (ImageView) s.getChildren().get(LVL1);
+                imageView.setImage(tileLevel.get(LVL1));
+                break;
+            case 2:
+                imageView = (ImageView) s.getChildren().get(LVL2);
+                imageView.setImage(tileLevel.get(LVL2));
+                break;
+            case 3:
+                imageView = (ImageView) s.getChildren().get(LVL3);
+                imageView.setImage(tileLevel.get(LVL3));
+                break;
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+                imageView = (ImageView) s.getChildren().get(DOME);
+                imageView.setImage(tileLevel.get(DOME));
+                break;
+            default:
+                System.out.println("boh");
+        }
     }
+
 
     /*
     methods that ask user to do something and change actualAction --> invoked by gui
      */
-
-    public void setActionMove(){
-        System.out.println("Now you MOVE");
-        actualAction = "move";
-    }
-
-    public void setActionBuild(){
-        System.out.println("Now you BUILD");
-        actualAction = "build";
-    }
-
-    public void setActionBuildDome(){
-        System.out.println("Now you BUILDDOME");
-        actualAction = "builddome";
-    }
-
-    public void setActionSelectWorker(){
-        StackPane x;
-        ImageView v;
-        for(int i=0; i<25; i++) {
-            x = (StackPane) board.getChildren().get(i);
-            v = (ImageView) x.getChildren().get(WORKER);
-            if(v.getImage() != null)
-                toggleSelectable(i/5, i%5);
-        }
-        System.out.println("Now SELECTWORKER");
-        actualAction = "selectworker";
-    }
 
     public void setActionPlaceWorkers() {
         System.out.println("Now you PLACEWORKERS");
@@ -331,6 +334,14 @@ public class MatchController {
         userInteractionLabel.setVisible(true);
         actualAction = "placeworkers";
 
+    }
+
+    public void setActionSelectWorker() {
+        System.out.println("Now you SELECTWORKER");
+        userInteractionLabel.setText("CLICK THE WORKER YOU WANT TO PLAY WITH");
+        userInteractionLabel.setVisible(true);
+        actualAction = "selectworker";
+        focusWorkers(true);
     }
 
 
@@ -364,6 +375,27 @@ public class MatchController {
         }
     }
 
+    public void setSelectable(int x, int y, boolean val) {
+        StackPane s = (StackPane) board.getChildren().get(board.getRowCount()*y + x);
+        StackPane shadow = (StackPane) s.getChildren().get(SHADOW);
+
+        shadow.setVisible(val);
+    }
+
+    public void focusWorkers(boolean value) {
+        String color = clientView.getBoard().getPlayersMap().get(clientView.getUsername()).getColor().toString().toLowerCase();
+        StackPane x;
+        ImageView v;
+        for(int i=0; i<25; i++) {
+            Label l = new Label(i%5 + "-" + i/5);
+            x = (StackPane) board.getChildren().get(i);
+            x.getChildren().add(l);
+            v = (ImageView) x.getChildren().get(WORKER);
+            if(v.getImage().equals(workerColors.get(color)))
+                setSelectable(i%5, i/5, value);
+        }
+    }
+
     /*
     return the tile in (x,y) position
     from StackOverflow: https://stackoverflow.com/questions/20655024/javafx-gridpane-retrieve-specific-cell-content
@@ -377,4 +409,8 @@ public class MatchController {
         return null;
     }
 
+//    public void textMessage(String msg) {
+//        if(isInitialized)
+//            userInteractionLabel.setText("system message: \n" + msg);
+//    }
 }

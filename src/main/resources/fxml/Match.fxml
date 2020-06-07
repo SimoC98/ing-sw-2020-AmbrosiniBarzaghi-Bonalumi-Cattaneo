@@ -3,29 +3,43 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<HBox fx:id="hBox" alignment="CENTER" fillHeight="false" prefHeight="750.0" prefWidth="1000.0" style="-fx-background-color: lightblue;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.clientView.gui.MatchController">
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+<HBox fx:id="hBox" alignment="CENTER" fillHeight="false" style="-fx-background-color: lightblue;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.clientView.gui.MatchController">
     <children>
         <VBox fx:id="vBoxLeft" fillWidth="false" maxWidth="-Infinity" prefHeight="15.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
 
-        <GridPane fx:id="board" alignment="CENTER" prefHeight="700.0" prefWidth="700.0" scaleShape="false" styleClass="bodybg" stylesheets="@../css/gameBack.css">
+        <GridPane fx:id="board" alignment="CENTER" minHeight="200.0" minWidth="200.0" scaleShape="false" styleClass="bodybg" stylesheets="@../css/gameBack.css">
             <columnConstraints>
-                <ColumnConstraints hgrow="ALWAYS" minWidth="50.0" />
-                <ColumnConstraints hgrow="ALWAYS" minWidth="50.0" />
-                <ColumnConstraints hgrow="ALWAYS" minWidth="50.0" />
-                <ColumnConstraints hgrow="ALWAYS" minWidth="50.0" />
-                <ColumnConstraints hgrow="ALWAYS" minWidth="50.0" />
+                <ColumnConstraints hgrow="ALWAYS"  />
+                <ColumnConstraints hgrow="ALWAYS"  />
+                <ColumnConstraints hgrow="ALWAYS"  />
+                <ColumnConstraints hgrow="ALWAYS"  />
+                <ColumnConstraints hgrow="ALWAYS"  />
             </columnConstraints>
             <rowConstraints>
-                <RowConstraints minHeight="50.0" vgrow="ALWAYS" />
-                <RowConstraints minHeight="50.0" vgrow="ALWAYS" />
-                <RowConstraints minHeight="50.0" vgrow="ALWAYS" />
-                <RowConstraints minHeight="50.0" vgrow="ALWAYS" />
-                <RowConstraints minHeight="50.0" vgrow="ALWAYS" />
+                <RowConstraints vgrow="ALWAYS" />
+                <RowConstraints vgrow="ALWAYS" />
+                <RowConstraints vgrow="ALWAYS" />
+                <RowConstraints vgrow="ALWAYS" />
+                <RowConstraints vgrow="ALWAYS" />
             </rowConstraints>
         </GridPane>
-        <VBox fx:id="vBoxRight" fillWidth="false" HBox.hgrow="ALWAYS">
-         <children>
-            <Label fx:id="userInteractionLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Label" visible="false" VBox.vgrow="ALWAYS" />
-         </children></VBox>
+        <StackPane fx:id="rightStack" centerShape="false">
+            <children>
+                <Label fx:id="message" textAlignment="CENTER">
+                    <font>
+                        <Font name="Felix Titling" size="18.0" />
+                    </font>
+                    <StackPane.margin>
+                        <Insets />
+                    </StackPane.margin>
+                </Label>
+                <VBox fx:id="possibleActionsBox" alignment="BOTTOM_CENTER" fillWidth="false" />
+            </children>
+            <HBox.margin>
+                <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+            </HBox.margin>
+        </StackPane>
     </children>
 </HBox>

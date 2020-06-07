@@ -200,14 +200,14 @@ public class DivinitySelectionController {
             close.setPrefWidth(100);
 
             //Image coralButton = new Image("/home/simone/IdeaProjects/ing-sw-2020-AmbrosiniBarzaghi-Bonalumi-Cattaneo/src/main/resources/graphics/btn_coral.png");
-            String path = "/graphics/btn_coral.png";
-            Image coralButton = new Image(path);
-            ImageView coralButtonImg = new ImageView();
-            coralButtonImg.setImage(coralButton);
-            coralButtonImg.setFitHeight(40);
-            coralButtonImg.setFitWidth(100);
+            /*String path = "/graphics/btn_coral.png";
+            BackgroundImage coralButton = new BackgroundImage(new Image(path),BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,new BackgroundSize(close.getWidth(),close.getHeight(),true,true,true,false));
+            Background closeBack = new Background(coralButton);
 
-            close.setGraphic(coralButtonImg);
+            close.setBackground(closeBack);*/
+
+            close.getStyleClass().add("coral");
+            
 
             close.setOnMouseClicked((e)->{
                 godDescription.getChildren().clear();

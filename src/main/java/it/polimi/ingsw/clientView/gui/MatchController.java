@@ -298,7 +298,8 @@ public class MatchController {
 
         //List<ImageView> l = workersForColor.get(color);
 
-        if(workerFrom.getImage().equals(workerColors.get(color))) workerFrom.setImage(null);
+        //if(workerFrom.getImage().equals(workerColors.get(color))) workerFrom.setImage(null);
+        if(clientView.getBoard().isThereAWorker(x1,y1)==null) workerFrom.setImage(null);
 
 
 

@@ -188,13 +188,25 @@ public class GUI extends Application implements UI {
     public void updateBoard() {}
     public void textMessage(String msg) {}
 
-    public void startTurn() {}
+    public void startTurn() {
+        System.out.println("select worker...");
+
+        Platform.runLater(() -> {
+            matchController.setActionSelectWorker();
+        });
+    }
     public void selectWorker() {
+        System.out.println("select worker...");
+
         Platform.runLater(()->{
             matchController.setActionSelectWorker();
         });
     }
-    public void performAction(List<Action> possibleActions) {}
+    public void performAction(List<Action> possibleActions) {
+        Platform.runLater(() -> {
+            matchController.handlePossibleActions(possibleActions);
+        });
+    }
 
     public void loser(String username) {}
     public void winner(String username) {}
@@ -223,6 +235,9 @@ public class GUI extends Application implements UI {
 
     @Override
     public void lobbyFull() {
+        Platform.runLater(() -> {
+            loginController.lobbyFull();
+        });
 
     }
 
@@ -253,11 +268,18 @@ public class GUI extends Application implements UI {
 
     @Override
     public void moveUpdate(String player, int xFrom, int yFrom, int xTo, int yTo) {
+        Platform.runLater(() -> {
+            matchController.moveUpdate(player,xFrom,yFrom,xTo,yTo);
+        });
 
     }
 
     @Override
     public void buildUpdate(String player, int x, int y) {
+
+        Platform.runLater(() -> {
+            matchController.buildUpdate(player,x,y);
+        });
 
     }
 

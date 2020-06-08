@@ -24,10 +24,7 @@ import javafx.scene.shape.Rectangle;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MatchController {
     private static ClientView clientView;
@@ -44,8 +41,6 @@ public class MatchController {
     private VBox vBoxLeft;
     @FXML
     private VBox vBoxRight;
-    @FXML
-    private Label userInteractionLabel;
 
     private final int LVL1=0, LVL2=1, LVL3=2, DOME=3, WORKER=4, SHADOW=5;
     private String actualAction;
@@ -54,6 +49,8 @@ public class MatchController {
     boolean isInitialized = false;
 
     private List<Pair<Integer,Integer>> workerPlacement = new ArrayList<>();
+
+
 
     public MatchController() {
     }
@@ -252,8 +249,16 @@ public class MatchController {
 
     public void selectWorker(StackPane s) {
         ImageView v = (ImageView) s.getChildren().get(WORKER);
-        if(v.getImage() != null)
+
+        int x = GridPane.getRowIndex(s);
+        int y = GridPane.getColumnIndex(s);
+
+        if(v.getImage() != null){
             System.out.println("Worker Selected");
+            clientView.selectWorkerQuestion(x,y);
+
+        }
+
     }
 
     public void placeWorkers(String username, int x1, int y1, int x2, int y2) {
@@ -268,31 +273,44 @@ public class MatchController {
 
         String color = clientView.getBoard().getPlayersMap().get(username).getColor().toString().toLowerCase();
 
+
         Image image = workerColors.get(color);
         w1.setImage(image);
         w2.setImage(image);
     }
 
     public void moveUpdate(String player, int x1, int y1, int x2, int y2) {
-        userInteractionLabel.setText(player + " has moved from " + x1+"-"+y1 + " to " + x2+"-"+y2);
+        System.out.println("update move");
+
+        String color = clientView.getBoard().getPlayersMap().get(player).getColor().toString().toLowerCase();
+
+        message.setText(player + " has moved from " + x1+"-"+y1 + " to " + x2+"-"+y2);
 
         StackPane stackPaneFrom = (StackPane) board.getChildren().get(y1*board.getRowCount() + x1);   //TODO: check if x and y must be inverted
         StackPane stackPaneTo = (StackPane) board.getChildren().get(y2*board.getRowCount() + x2);   //TODO: check if x and y must be inverted
 
         ImageView workerFrom = (ImageView) stackPaneFrom.getChildren().get(WORKER);
-        Image workerImg = workerFrom.getImage();
+        Image workerImg = workerColors.get(color);
         if(workerImg == null) {
             System.out.println("Huston we have a problem, a move arrived from an empty tile");
             return;
         }
-        workerFrom.setImage(null);
+
+        //List<ImageView> l = workersForColor.get(color);
+
+        if(workerFrom.getImage().equals(workerColors.get(color))) workerFrom.setImage(null);
+
+
+
+        //workerFrom.setImage(null);
 
         ImageView workerTo = (ImageView) stackPaneTo.getChildren().get(WORKER);
+        workerTo.setImage(null);
         workerTo.setImage(workerImg);
     }
 
     public void buildUpdate(String player, int x, int y) {
-        userInteractionLabel.setText(player + " has built on tile " + x+"-"+y);
+        message.setText(player + " has built on tile " + x+"-"+y);
         System.out.println(x + "-" + y);
         StackPane s = (StackPane) board.getChildren().get(y*board.getRowCount() + x);   //TODO: check if x and y must be inverted
 
@@ -379,7 +397,7 @@ public class MatchController {
         StackPane s = (StackPane) board.getChildren().get(board.getRowCount()*y + x);
         StackPane shadow = (StackPane) s.getChildren().get(SHADOW);
 
-        shadow.setVisible(val);
+        //shadow.setVisible(val);
     }
 
     public void focusWorkers(boolean value) {
@@ -391,7 +409,7 @@ public class MatchController {
             x = (StackPane) board.getChildren().get(i);
             x.getChildren().add(l);
             v = (ImageView) x.getChildren().get(WORKER);
-            if(v.getImage().equals(workerColors.get(color)))
+            if(v.getImage()!=null && v.getImage().equals(workerColors.get(color)))
                 setSelectable(i%5, i/5, value);
         }
     }

@@ -32,6 +32,9 @@ public class ClientView implements Observer<ServerEvent> {
     private String username;
     private int userID;
 
+    private String ip;
+    private int port;
+
     private Object lock = new Object();
 
     public ClientView(){
@@ -48,6 +51,20 @@ public class ClientView implements Observer<ServerEvent> {
         this.ui = ui;
     }
 
+    public ClientView(String ip, int port, UI ui) {
+        board = new BoardRepresentation();
+        this.ip = ip;
+        this.port = port;
+        this.ui = ui;
+    }
+
+    public ClientView(String ip, int port) {
+        board = new BoardRepresentation();
+
+        this.ip = ip;
+        this.port = port;
+    }
+
     //USED JUST FOR TEST
     //TODO: REMOVE
 //    public ClientView(){
@@ -61,6 +78,10 @@ public class ClientView implements Observer<ServerEvent> {
         proxy = new ClientSocketHandler(socket);
         proxy.addObserver(this);
         new Thread(proxy).start();
+    }
+
+    public UI getUi() {
+        return this.ui;
     }
 
     public void startUI() {
@@ -293,8 +314,15 @@ public class ClientView implements Observer<ServerEvent> {
         ui.start();*/
 
         Socket socket = null;
+
         try {
-            socket = new Socket("127.0.0.1", 4000);
+            if(ip!=null && port>=0) {
+                System.out.println("User socket configuration found");
+                socket = new Socket(ip, port);
+            }else {
+                System.out.println("Default ip and port taken from file");
+                socket = connectionConfigParser();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -312,10 +340,7 @@ public class ClientView implements Observer<ServerEvent> {
     }
 
     public void disconnect() {
-//        proxy.close();
-        //ui.textMessage("Disconnecting");
-        //todo: close socket
-        exit(0);
+        proxy.close();
     }
 
 //    public void login(int id) {
@@ -339,5 +364,32 @@ public class ClientView implements Observer<ServerEvent> {
 //        },0,5000);
 //
 //    }
+
+
+    private static Socket connectionConfigParser() throws IOException {
+        File xmlFile = new File("src/main/resources/connection_config.xml");
+
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = null;
+        try {
+            builder = factory.newDocumentBuilder();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        }
+        Document doc = null;
+        try {
+            if (builder != null) {
+                doc = builder.parse(xmlFile);
+            }
+        } catch (SAXException | IOException e) {
+            e.printStackTrace();
+        }
+
+        String hostname = doc.getDocumentElement().getElementsByTagName("hostname").item(0).getTextContent();
+        int port = Integer.parseInt(doc.getDocumentElement().getElementsByTagName("port").item(0).getTextContent());
+        System.out.println("Config red: " + hostname + " " + port);
+
+        return new Socket(hostname, port);
+    }
 
 }

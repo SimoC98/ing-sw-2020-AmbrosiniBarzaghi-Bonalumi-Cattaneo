@@ -172,8 +172,14 @@ public class Controller implements Observer<ClientEvent> {
     }
 
 
-    public void handleUnexpectedDisconnection(String playerName) {
+    /*public void handleUnexpectedDisconnection(String playerName) {
         model.setLoser(playerName);
+    }*/
+
+    //handle disconnection of client by ui (es button "exit" in gui)
+    public void handleDisconnection(String player) {
+        playersInGame.stream().forEach(x -> x.playerDisconnection(player));
+        disconnectAll();
     }
 
 

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1500.0" spacing="50.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <StackPane alignment="CENTER_LEFT" prefHeight="745.0" prefWidth="1500.0">
+         <children>
+            <VBox alignment="CENTER" minHeight="0.0" minWidth="0.0" prefHeight="478.0" prefWidth="700.0" StackPane.alignment="CENTER">
+               <StackPane.margin>
+                  <Insets bottom="100.0" left="500.0" right="500.0" top="150.0" />
+               </StackPane.margin>
+            </VBox>
+         </children>
+      </StackPane>
+      <Label text="Label">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+   </children>
+</VBox>

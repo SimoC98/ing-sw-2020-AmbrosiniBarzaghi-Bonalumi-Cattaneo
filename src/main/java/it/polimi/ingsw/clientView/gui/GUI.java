@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 
+import java.io.IOException;
 import java.util.List;
 
 public class GUI extends Application implements UI {
@@ -25,6 +26,7 @@ public class GUI extends Application implements UI {
     private DivinitySelectionController divinitySelectionController;
     private PlayerDivinitySelectionController playerDivinitySelectionController;
     private MatchController matchController;
+    private DisconnectionController disconnectionController;
 
     private Stage primaryStage;
 
@@ -33,6 +35,7 @@ public class GUI extends Application implements UI {
     private Parent playableDivinityRoot;
     private Parent playerDivinityRoot;
     private Parent matchRoot;
+    private Parent disconnectionRoot;
 
 
 
@@ -71,6 +74,7 @@ public class GUI extends Application implements UI {
         DivinitySelectionController.setClientView(clientView);
         PlayerDivinitySelectionController.setClientView(clientView);
         MatchController.setClientView(clientView);
+        DisconnectionController.setClientView(clientView);
 
         clientView.setUI(this);
 
@@ -106,6 +110,12 @@ public class GUI extends Application implements UI {
         // Scene loginScene = new Scene(loginPane, 750, 500);
         this.matchRoot = matchPane;
 
+        FXMLLoader disconnectionLoader = new FXMLLoader(getClass().getResource("/fxml/Disconnection.fxml"));
+        //Parent playableDivinitiesPane = playableDivinitiesLoader.load();
+        Parent disconnectionPane = disconnectionLoader.load();
+        // Scene loginScene = new Scene(loginPane, 750, 500);
+        this.disconnectionRoot = disconnectionPane;
+
 
 
         this.welcomeController = welcomeLoader.getController();
@@ -113,6 +123,7 @@ public class GUI extends Application implements UI {
         this.divinitySelectionController = playableDivinitiesLoader.getController();
         this.playerDivinitySelectionController = playerDivinityLoader.getController();
         this.matchController = matchLoader.getController();
+        this.disconnectionController = disconnectionLoader.getController();
 
 
         //GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
@@ -137,25 +148,33 @@ public class GUI extends Application implements UI {
 
     public void login(){
 
+
         System.out.println("\nlogin...");
 
-        Platform.runLater(()->{
+        if(clientView.getUsername()!=null) clientView.loginQuestion(clientView.getUsername());
+        else {
+            Platform.runLater(()->{
 
-            //primaryStage.getScene().setRoot(loginRoot);
-            primaryStage.setScene(new Scene(loginRoot,1500,1000));
-            primaryStage.show();
-        });
+                //primaryStage.getScene().setRoot(loginRoot);
+                primaryStage.setScene(new Scene(loginRoot,1500,1000));
+                primaryStage.show();
+            });
+        }
+
 
     }
 
 
     public void failedLogin(List<String> usernames) {
         Platform.runLater(()-> {
+            primaryStage.getScene().setRoot(loginRoot);
             loginController.invalidUsername(usernames);
         });
     }
 
     public void selectPlayersNumber() {}
+
+
     public void selectPlayableDivinities(List<String> divinitiesNames, List<String> divinitiesDescriptions, int playersNumber, List<String> players) {
 
         Platform.runLater(()-> {
@@ -222,12 +241,20 @@ public class GUI extends Application implements UI {
 
     @Override
     public void playerDisconnection(String username) {
+        clientView.disconnect();
+
+        Platform.runLater(() -> {
+            primaryStage.getScene().setRoot(disconnectionRoot);
+
+            disconnectionController.disconnect(username);
+        });
 
     }
 
     @Override
     public void inLobby() {
         Platform.runLater(()->{
+            primaryStage.getScene().setRoot(loginRoot);
             loginController.inLobby();
         });
 
@@ -236,6 +263,7 @@ public class GUI extends Application implements UI {
     @Override
     public void lobbyFull() {
         Platform.runLater(() -> {
+            primaryStage.getScene().setRoot(loginRoot);
             loginController.lobbyFull();
         });
 

@@ -17,23 +17,9 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
     Socket socket;
     private ObjectInputStream in;
     private ObjectOutputStream out;
-//    private Runnable r;
     private PingReceiver pinger;
 
     private Object lock = new Object();
-
-//    public ClientSocketHandler(){
-//        try {
-//            connectionConfigParser();
-//            in = new ObjectInputStream(socket.getInputStream());
-//            out = new ObjectOutputStream(socket.getOutputStream());
-//            PingReceiver ping = new PingReceiver(this);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        pinger = new PingReceiver(this);
-//    }
-
 
     public ClientSocketHandler(Socket socket) {
         this.socket = socket;
@@ -69,16 +55,8 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
                 t.setDaemon(false);
                 t.setPriority(Thread.MAX_PRIORITY);
                 t.start();
-
-                /*new Thread(()->{
-                    receiveEvent(event);
-                }).start();*/
-                //notify(event);
             }
         } catch(Exception e) {
-            //System.out.print("exception");
-            //e.printStackTrace();
-
             //notify(new Disconnect());
         }
 
@@ -96,7 +74,8 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
            socket.close();
         }
         catch(Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            e.getMessage();
         }
     }
 

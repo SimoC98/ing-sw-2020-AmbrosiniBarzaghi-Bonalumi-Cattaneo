@@ -87,6 +87,10 @@ public class Server{
             loggedPlayers.remove(connection);
         }
         printUsers();
+
+        if(isGameStarted && loggedPlayers.size()==0) {
+            isGameStarted=false;
+        }
     }
 
     public synchronized boolean isLobbyFull()  {
@@ -207,17 +211,25 @@ public class Server{
      */
     protected void disconnectAll(ServerSocketHandler connection){
 
-        for(ServerSocketHandler s : connections) {
-            s.sendEvent(new PlayerDisconnectionEvent(loggedPlayers.get(connection)));
+        for(int i=0;i<connections.size();i++) {
+            ServerSocketHandler s = connections.get(i);
+            if(!s.equals(connection)) {
+                s.sendEvent(new PlayerDisconnectionEvent(loggedPlayers.get(connection)));
+                s.stopPing();
+                s.close();
+            }
         }
 
-        System.out.println("GAME IS ENDED");
-        try {
+        System.out.println("this match is ended...\n\n\n");
+        /*try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }
-        exit(0);
+        }*/
+        //exit(0);
+        connections.clear();
+        loggedPlayers.clear();
+        isGameStarted=false;
     }
 
 

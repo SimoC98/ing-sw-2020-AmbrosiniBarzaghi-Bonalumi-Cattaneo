@@ -29,14 +29,22 @@ public class CLI implements UI{
     BoardRepresentation board;
     Scanner scanner;
 
-    private final Object lock;
+    private final Object lock = new Object();
     private boolean boardUpdate = false;
 
     public CLI(ClientView clientView) {
-        lock = new Object();
         this.clientView = clientView;
         board = clientView.getBoard();
         scanner = new Scanner(System.in);
+    }
+
+    public CLI() {
+        scanner = new Scanner(System.in);
+    }
+
+    public void setClientView(ClientView clientView) {
+        this.clientView = clientView;
+        this.board = clientView.getBoard();
     }
 
     /*
@@ -59,6 +67,8 @@ public class CLI implements UI{
         System.out.println("     `\"Y88b  .oP\"888   888   888    888   888   888  888      888   888   888   888");
         System.out.println("oo     .d8P d8(  888   888   888    888 . 888   888  888      888   888   888   888");
         System.out.println("8\"\"88888P'  `Y888\"\"8o o888o o888o   \"888\" `Y8bod8P' d888b    o888o o888o o888o o888o" + "\n\n");
+
+        clientView.startConnection();
     }
 
 //    @Override
@@ -532,6 +542,8 @@ public class CLI implements UI{
         synchronized (lock) {
             System.out.println("\n\n");
             System.out.println("User " + username  + " has left... This match will end soon");
+            clientView.disconnect();
+
             exit(0);
         }
 

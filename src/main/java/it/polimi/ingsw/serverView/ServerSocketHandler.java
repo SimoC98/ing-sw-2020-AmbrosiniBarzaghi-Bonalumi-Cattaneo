@@ -39,7 +39,8 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
             in = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
             out = new ObjectOutputStream(socket.getOutputStream());
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            e.getMessage();
         }
     }
 
@@ -60,7 +61,17 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
                 else notify(event);
             }
         }catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            e.getMessage();
+
+            try {
+                socket.close();
+                in.close();
+                out.close();
+                System.out.println("socket closed --> client disc");
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
         }
     }
 
@@ -73,9 +84,8 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
             out.writeObject(event);
             out.flush();
         } catch (Exception e) {
-            System.out.println("client disconnected exceptioon");
+            e.getMessage();
             //disconnect();
-
             //e.printStackTrace();
         }
     }
@@ -84,11 +94,17 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
         try {
             //in.close();
             //out.close();
-            Thread.currentThread().interrupt();
+            //Thread.currentThread().interrupt();
+            in.close();
+            out.close();
             socket.close();
             server.unregisterConnection(this);
+            stopPing();
+
+            System.out.println("socket closed!!");
         } catch (IOException e) {
             //e.printStackTrace();
+            e.getMessage();
         }
     }
 
@@ -106,12 +122,12 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
         System.out.println("disconnection");
         synchronized (lock) {
             if(server.isGameStarted()) {
-                System.out.println("game already started...");
+                //System.out.println("game already started...");
                 //sender.stop();
                 server.disconnectAll(this);
             }
             else {
-                System.out.println("game not already started...");
+                //System.out.println("game not already started...");
                 //sender.stop();
                 server.unregisterConnection(this);
             }

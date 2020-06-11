@@ -18,6 +18,8 @@ import org.w3c.dom.events.MouseEvent;
 
 import java.util.List;
 
+import static java.lang.System.exit;
+
 public class LoginController {
 
     @FXML
@@ -35,23 +37,12 @@ public class LoginController {
     @FXML
     private VBox root;
 
-    @FXML
-    private Label label;
-
     private static ClientView clientView;
 
 
     @FXML
     public void initialize() {
-       // String image = "/graphics/title_sky.png";
-
-        /*vBox.setStyle("-fx-background-image: url('" + image + "'); " +
-                "-fx-background-position: center center; " +
-                "-fx-background-repeat: stretch;");*/
-
     }
-
-
 
 
     public static void setClientView(ClientView clientView) {
@@ -67,6 +58,11 @@ public class LoginController {
 
         String username = txt.getText();
 
+        Label label = new Label();
+        label.setVisible(false);
+        messages.getChildren().clear();
+        messages.getChildren().add(label);
+
        if(username.length()<3) {
            label.setText("INVALID USERNAME! Username must have at least 3 characters");
            label.setVisible(true);
@@ -80,14 +76,10 @@ public class LoginController {
            label.setVisible(true);
        }
        else {
-           btn.setOnMouseClicked(null);
+           //btn.setOnMouseClicked(null);
 
            hBox.setVisible(false);
            label.setVisible(false);
-           //waitLabel.setText("wait the game start...");
-
-           //invalidUsernameLabel.setVisible(false);
-           //waitLabel.setVisible(true);
 
 
            clientView.loginQuestion(txt.getText());
@@ -98,7 +90,6 @@ public class LoginController {
     public void invalidUsername(List<String> loggedUsers) {
 
         hBox.setVisible(true);
-        //waitLabel.setVisible(false);
 
         StringBuilder s = new StringBuilder();
 
@@ -108,10 +99,8 @@ public class LoginController {
             s.append("\t-" + loggedUsers.get(i) + "\n");
         }
 
-        label.setWrapText(true);
-        label.setText(s.toString());
-
-        label.setVisible(true);
+        messages.getChildren().clear();
+        messages.getChildren().add(new Label(s.toString()));
     }
 
     public void inLobby() {
@@ -128,11 +117,12 @@ public class LoginController {
         messages.getChildren().add(progress);
 
         messages.setSpacing(10);
-       //progress.setVisible(true);
     }
 
     public void lobbyFull() {
-        //TODO
+        messages.getChildren().clear();
+        messages.getChildren().add(new Label("LOBBY IS FULL! YOU CAN'T JOIN THIS MATCH!"));
+
     }
 
 }

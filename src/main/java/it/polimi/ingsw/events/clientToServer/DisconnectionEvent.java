@@ -14,7 +14,7 @@ public class DisconnectionEvent implements ClientEvent {
 
     @Override
     public void handleEvent(Controller controller) {
-        controller.handleUnexpectedDisconnection(playerName);
+        controller.handleDisconnection(playerName);
     }
 
     @Override

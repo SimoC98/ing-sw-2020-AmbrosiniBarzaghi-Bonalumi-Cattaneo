@@ -1,27 +1,31 @@
 package it.polimi.ingsw.clientView.aaaaGUITesting;
 
+import it.polimi.ingsw.clientView.gui.EndGameController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.net.URL;
-
 
 public class FXMLTest extends Application {
 
    private GameController gameController;
 
+   private EndGameController endGameController;
+
     @Override
     public void start(Stage stage) throws Exception {
-        URL testFXML = new File("src/main/java/it/polimi/ingsw/clientView/aaaaGUITesting/test.fxml").toURI().toURL();
+        /*URL testFXML = new File("/fxml/EndGameWinner.fxml").toURI().toURL();
         FXMLLoader testLoader = new FXMLLoader(testFXML);
         Parent testPane = testLoader.load();
-        this.gameController = testLoader.getController();
+        this.gameController = testLoader.getController();*/
 
-        Scene game = new Scene(testPane, 1000,400);
+        FXMLLoader endLoader = new FXMLLoader(getClass().getResource("/fxml/EndGameWinner.fxml"));
+        Parent endPane = endLoader.load();
+        this.endGameController = endLoader.getController();
+
+        Scene game = new Scene(endPane, 1500,1000);
 
         stage.setScene(game);
         stage.setResizable(true);

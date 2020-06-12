@@ -26,7 +26,7 @@ public class GUI extends Application implements UI {
     private PlayerDivinitySelectionController playerDivinitySelectionController;
     private MatchController matchController;
     private DisconnectionController disconnectionController;
-    private EndGameController endGameController;
+    private EndGameController endGameWinnerController;
 
 
     private Stage primaryStage;
@@ -37,7 +37,7 @@ public class GUI extends Application implements UI {
     private Parent playerDivinityRoot;
     private Parent matchRoot;
     private Parent disconnectionRoot;
-    private Parent endGameRoot;
+    private Parent endGameWinnerRoot;
 
 
 
@@ -116,9 +116,9 @@ public class GUI extends Application implements UI {
         Parent disconnectionPane = disconnectionLoader.load();
         this.disconnectionRoot = disconnectionPane;
 
-        FXMLLoader endLoader = new FXMLLoader(getClass().getResource("/fxml/EndGame.fxml"));
-        Parent endPane = endLoader.load();
-        this.endGameRoot = endPane;
+        FXMLLoader endLoader = new FXMLLoader(getClass().getResource("/fxml/EndGameWinner.fxml"));
+        Parent endWinnerPane = endLoader.load();
+        this.endGameWinnerRoot = endWinnerPane;
 
 
 
@@ -130,14 +130,9 @@ public class GUI extends Application implements UI {
         this.playerDivinitySelectionController = playerDivinityLoader.getController();
         this.matchController = matchLoader.getController();
         this.disconnectionController = disconnectionLoader.getController();
-        this.endGameController = endLoader.getController();
+        this.endGameWinnerController = endLoader.getController();
 
         clientView.startConnection();
-    }
-
-
-    public void setWelcomeController(WelcomeController wc) {
-        this.welcomeController = wc;
     }
 
 
@@ -164,8 +159,6 @@ public class GUI extends Application implements UI {
             loginController.invalidUsername(usernames);
         });
     }
-
-    public void selectPlayersNumber() {}
 
 
     public void selectPlayableDivinities(List<String> divinitiesNames, List<String> divinitiesDescriptions, int playersNumber, List<String> players) {
@@ -230,7 +223,7 @@ public class GUI extends Application implements UI {
     public void winner(String username) {
 
         Platform.runLater(() -> {
-            primaryStage.getScene().setRoot(endGameRoot);
+            primaryStage.getScene().setRoot(endGameWinnerRoot);
         });
 
 

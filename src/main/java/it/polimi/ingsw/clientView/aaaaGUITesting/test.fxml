@@ -59,6 +59,11 @@
                         <Font name="Felix Titling" size="18.0" />
                      </font>
                   </Button>
+                  <Button alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="150.0" mnemonicParsing="false" onAction="#displayAlert" text="alert" textAlignment="CENTER">
+                     <font>
+                        <Font name="Felix Titling" size="18.0" />
+                     </font>
+                  </Button>
                </children>
             </VBox>
          </children>

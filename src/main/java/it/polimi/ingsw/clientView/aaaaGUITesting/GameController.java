@@ -8,8 +8,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -21,6 +20,7 @@ import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static java.lang.Thread.sleep;
 
@@ -115,6 +115,8 @@ public class GameController {
     public void action(StackPane s) {
 
         //TODO: add worker selection
+        if(possibleActionsBox != null)
+            emptyPossibleActions();
 
         switch(actualAction) {
             case "move":
@@ -188,7 +190,7 @@ public class GameController {
                     break;
 
                 case 2:
-                    image = new Image(new FileInputStream("src/main/java/it/polimi/ingsw/clientView/aaaaGUITesting/pics/lvl2.png"));
+                    image = new Image(new FileInputStream("src/main/java/it/polimi/ingsw/clientView/aaaaGUITesting/pics/lvl2bis.png"));
                     imageView = (ImageView) s.getChildren().get(LVL2);
                     imageView.setImage(image);
                     break;
@@ -251,6 +253,25 @@ public class GameController {
         }
     }
 
+    public void endTurn() {
+        Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+        a.setTitle("End Turn?");
+        a.setHeaderText("Are you sure you want to end your turn?");
+        a.setContentText("Press \"End Turn\" to confirm.");
+
+        ButtonType endTurn = new ButtonType("End Turn");
+        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        a.getButtonTypes().clear();
+        a.getButtonTypes().addAll(endTurn,buttonTypeCancel);
+
+        Optional<ButtonType> result = a.showAndWait();
+        if (result.get() == endTurn){
+            message.setText("Your turn is over");
+            emptyPossibleActions();
+        }
+    }
+
     public void handlePossibleActions(List<Action> possibleActions) {
         message.setText("Choose the action\nto perform: ");
 
@@ -262,11 +283,11 @@ public class GameController {
             actionBtn.setOnMouseClicked((event) -> {
                 actualAction = action.toString().toLowerCase();
                 graphicAction.setText(action.toString());
-                emptyPossibleActions();
+//                emptyPossibleActions();
                 if(action != Action.END)
                     message.setText("Choose tile to\n" + action.toString());
                 else
-                    message.setText("Your turn is over");
+                    endTurn();
             });
             actionButtons.add(actionBtn);
         }
@@ -280,7 +301,7 @@ public class GameController {
 
     //TEST - REMOVEME
     public void testPossibleActions() {
-        handlePossibleActions(Arrays.asList(Action.MOVE, Action.BUILD, Action.BUILDDOME, Action.MOVE));
+        handlePossibleActions(Arrays.asList(Action.MOVE, Action.BUILD, Action.BUILDDOME, Action.MOVE, Action.END));
     }
 
 
@@ -327,6 +348,14 @@ public class GameController {
         System.out.println("Now SELECTWORKER");
         graphicAction.setText("SELECTWORKER");
         actualAction = "selectworker";
+    }
+
+    public void displayAlert() {
+        String str = "ciao bro";
+        Alert a = new Alert(Alert.AlertType.ERROR, str);
+        a.setTitle("ERROR");
+        a.setHeaderText("Yooooooo braaah");
+        a.show();
     }
 
     public void focusWorkers(boolean value) {

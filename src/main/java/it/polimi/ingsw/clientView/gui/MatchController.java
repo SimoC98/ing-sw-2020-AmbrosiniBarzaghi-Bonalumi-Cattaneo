@@ -8,8 +8,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -123,7 +122,6 @@ public class MatchController {
     public void action(StackPane s) {
 
         //TODO: add worker selection
-
         switch(actualAction) {
             case "move":
                 moveOnClickedTile(s);
@@ -183,6 +181,7 @@ public class MatchController {
 
         actualAction = "default";
 
+        emptyPossibleActions();
         clientView.actionQuestion(Action.MOVE,x,y);
     }
 
@@ -194,6 +193,7 @@ public class MatchController {
 
         actualAction = "default";
 
+        emptyPossibleActions();
         clientView.actionQuestion(Action.BUILD,x,y);
     }
 
@@ -205,6 +205,7 @@ public class MatchController {
 
         actualAction = "default";
 
+        emptyPossibleActions();
         clientView.actionQuestion(Action.BUILDDOME,x,y);
     }
 
@@ -218,11 +219,11 @@ public class MatchController {
             Button actionBtn = new Button(action.toString());
             actionBtn.setOnMouseClicked((event) -> {
                 actualAction = action.toString().toLowerCase();
-                emptyPossibleActions();
+//                emptyPossibleActions();
                 if(action != Action.END)
                     message.setText("Choose tile to\n" + action.toString());
                 else
-                    message.setText("Your turn is over");
+                    endTurnConfirmation();
             });
             actionButtons.add(actionBtn);
         }
@@ -364,6 +365,25 @@ public class MatchController {
         focusWorkers(true);
     }
 
+    public void endTurnConfirmation() {
+        Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+        a.setTitle("End Turn?");
+        a.setHeaderText("Are you sure you want to end your turn?");
+        a.setContentText("Press \"End Turn\" to confirm.");
+
+        ButtonType endTurn = new ButtonType("End Turn");
+        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        a.getButtonTypes().clear();
+        a.getButtonTypes().addAll(endTurn,buttonTypeCancel);
+
+        Optional<ButtonType> result = a.showAndWait();
+        if (result.get() == endTurn){
+            message.setText("Your turn is over");
+            emptyPossibleActions();
+            clientView.actionQuestion(Action.END, -1, -1);
+        }
+    }
 
 
 
@@ -433,4 +453,11 @@ public class MatchController {
 //        if(isInitialized)
 //            userInteractionLabel.setText("system message: \n" + msg);
 //    }
+
+    public void textMessage(String title, String header, String msg) {
+        Alert a = new Alert(Alert.AlertType.INFORMATION, msg);
+        a.setTitle(title);
+        a.setHeaderText(header);
+        a.show();
+    }
 }

@@ -150,7 +150,11 @@ public class GUI extends Application implements UI {
         });
     }
 
-    public void textMessage(String msg) {}
+    public void textMessage(String msg) {
+        Platform.runLater(() -> {
+            matchController.textMessage("SERVER MESSAGE", "You received this message from the server", msg);
+        });
+    }
 
     public void startTurn() {
         System.out.println("select worker...");
@@ -256,7 +260,10 @@ public class GUI extends Application implements UI {
 
     @Override
     public void invalidWorkerPlacement() {
-
+        Platform.runLater(() -> {
+            matchController.textMessage("ERROR", "Something went wrong with worker placement", "Please, repeat the action!");
+            matchController.setActionPlaceWorkers();
+        });
     }
 
     @Override

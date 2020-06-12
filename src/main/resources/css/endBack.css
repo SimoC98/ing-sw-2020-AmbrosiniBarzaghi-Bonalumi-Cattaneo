@@ -1,4 +1,4 @@
-.bodybg{
-    -fx-background-image: url("/graphics/SantoriniBoard_Squared.png");
+.panel{
+    -fx-background-image: url("/graphics/endGame/endgame_victorywin.png");
     -fx-background-size: cover;
 }

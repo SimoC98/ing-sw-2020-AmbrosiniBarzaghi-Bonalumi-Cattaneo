@@ -3,14 +3,17 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1500.0" spacing="50.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1500.0" spacing="50.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.clientView.gui.EndGameController">
    <children>
       <StackPane alignment="CENTER_LEFT" prefHeight="745.0" prefWidth="1500.0" VBox.vgrow="ALWAYS">
          <children>
-            <VBox alignment="CENTER" minHeight="0.0" minWidth="0.0" prefHeight="576.0" prefWidth="398.0" styleClass="pan" StackPane.alignment="CENTER">
+            <VBox alignment="BOTTOM_RIGHT" minHeight="0.0" minWidth="0.0" prefHeight="576.0" prefWidth="398.0" styleClass="panel" stylesheets="@../css/endBack.css" StackPane.alignment="CENTER">
                <StackPane.margin>
                   <Insets bottom="200.0" left="400.0" right="400.0" top="300.0" />
                </StackPane.margin>
+               <children>
+                  <VBox prefHeight="301.0" prefWidth="700.0" />
+               </children>
             </VBox>
          </children>
       </StackPane>

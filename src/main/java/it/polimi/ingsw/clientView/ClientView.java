@@ -40,9 +40,9 @@ public class ClientView implements Observer<ServerEvent> {
         userID = -1;      //may become userID but we have no method to tell for now
 
 
-    }
+    }*/
 
-    public ClientView(UI ui, String ip, int port) {
+    public ClientView(UI ui,String ip,int port) {
         this.ip = ip;
         this.port = port;
         board = new BoardRepresentation();
@@ -52,7 +52,7 @@ public class ClientView implements Observer<ServerEvent> {
         this.ui = ui;
 
 
-    }*/
+    }
 
     public ClientView(String ip, int port, UI ui) {
         board = new BoardRepresentation();

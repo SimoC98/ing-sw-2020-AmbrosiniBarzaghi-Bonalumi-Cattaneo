@@ -9,9 +9,9 @@ class ClientViewTest {
 
     @Test
     public void basicTest() {
-        ClientView cv = new ClientView(ip, port);
-        CLI cli = new CLI(cv);
-        cv.setUI(cli);
+        CLI cli = new CLI();
+        ClientView cv = new ClientView(cli,null,-1);
+        cli.setClientView(cv);
         BoardRepresentation board = cv.getBoard();
 
         String myUser = "Marco";

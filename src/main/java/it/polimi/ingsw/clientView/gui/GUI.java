@@ -26,6 +26,8 @@ public class GUI extends Application implements UI {
     private PlayerDivinitySelectionController playerDivinitySelectionController;
     private MatchController matchController;
     private DisconnectionController disconnectionController;
+    private EndGameController endGameController;
+
 
     private Stage primaryStage;
 
@@ -35,6 +37,7 @@ public class GUI extends Application implements UI {
     private Parent playerDivinityRoot;
     private Parent matchRoot;
     private Parent disconnectionRoot;
+    private Parent endGameRoot;
 
 
 
@@ -110,10 +113,14 @@ public class GUI extends Application implements UI {
         this.matchRoot = matchPane;
 
         FXMLLoader disconnectionLoader = new FXMLLoader(getClass().getResource("/fxml/Disconnection.fxml"));
-        //Parent playableDivinitiesPane = playableDivinitiesLoader.load();
         Parent disconnectionPane = disconnectionLoader.load();
-        // Scene loginScene = new Scene(loginPane, 750, 500);
         this.disconnectionRoot = disconnectionPane;
+
+        FXMLLoader endLoader = new FXMLLoader(getClass().getResource("/fxml/EndGame.fxml"));
+        Parent endPane = endLoader.load();
+        this.endGameRoot = endPane;
+
+
 
 
 
@@ -123,6 +130,7 @@ public class GUI extends Application implements UI {
         this.playerDivinitySelectionController = playerDivinityLoader.getController();
         this.matchController = matchLoader.getController();
         this.disconnectionController = disconnectionLoader.getController();
+        this.endGameController = endLoader.getController();
 
         clientView.startConnection();
     }
@@ -220,6 +228,12 @@ public class GUI extends Application implements UI {
     }
 
     public void winner(String username) {
+
+        Platform.runLater(() -> {
+            primaryStage.getScene().setRoot(endGameRoot);
+        });
+
+
         /*
         TODO: end game scene loaded; buttons to exit or start a new match
          */

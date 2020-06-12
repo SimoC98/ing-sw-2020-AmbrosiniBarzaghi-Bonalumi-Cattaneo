@@ -6,7 +6,7 @@ public class GuiEseguibile {
 
     public static void main(String[] args) {
         GUI gui = new GUI();
-        ClientView clientView = new ClientView(gui, ip);
+        ClientView clientView = new ClientView(gui,null,-1);
 
         gui.setClientView(clientView);
 

@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.update.ModelUpdate;
-import it.polimi.ingsw.model.update.MoveUpdate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -185,7 +184,11 @@ public class Player {
         divinity.setupDivinity(possibleActions);
     }
 
-    public List<ModelUpdate> getMoveUpdates() {
+    /**
+     * List of Tiles that are to send to other players to inform them of changes on the board
+     * @return List of {@link ModelUpdate}
+     */
+    public List<ModelUpdate> getModelUpdates() {
         return updates;
     }
 }

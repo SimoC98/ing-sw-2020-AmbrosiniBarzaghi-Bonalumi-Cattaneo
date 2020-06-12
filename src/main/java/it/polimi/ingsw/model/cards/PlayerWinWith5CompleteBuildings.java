@@ -5,6 +5,12 @@ import it.polimi.ingsw.model.update.ModelUpdate;
 
 import java.util.List;
 
+/**
+ * Chrono wins if someone in the game completes the fifth tower (level 3 plus dome).
+ * The class sets a flag when there are already 4 complete towers, so that at the beginning of the turn the other divinities
+ * are wrapped in a decoration that sets Chrono as the winner if they build the last dome. For further reference see {@link Match#startNextTurn()},
+ * {@link CannotWinOnPerimeter} and {@link CannotSelectIfHigher}.
+ */
 public class PlayerWinWith5CompleteBuildings extends SetEffectOnOpponent{
     private Player winnerPlayer=null;
     private Board board=null;
@@ -16,6 +22,11 @@ public class PlayerWinWith5CompleteBuildings extends SetEffectOnOpponent{
         super(divinity);
     }
 
+    /**
+     * Returns the number of towers, tiles with level 3 and isDome set to true.
+     * @param b
+     * @return
+     */
     private int checkCompleteTowersNumber(Board b) {
         int count=0;
 
@@ -27,6 +38,10 @@ public class PlayerWinWith5CompleteBuildings extends SetEffectOnOpponent{
         return count;
     }
 
+    /**
+     * Sets the effect on opponents only when there are already 4 towers
+     * @return
+     */
     @Override
     public boolean hasSetEffectOnOpponentWorkers() {
         if(checkCompleteTowersNumber(board)==4) super.setEffect=true;

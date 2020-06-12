@@ -5,7 +5,6 @@ import it.polimi.ingsw.Pair;
 import it.polimi.ingsw.events.serverToClient.*;
 import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.model.update.ModelUpdate;
-import it.polimi.ingsw.model.update.MoveUpdate;
 
 
 import java.util.ArrayList;
@@ -21,7 +20,8 @@ import java.util.Map;
  * and to follow its evolution.
  * <p>
  * The basic idea is to track an user decisions
- * and to communicate to other players the changes.
+ * and to communicate to other players the changes sending information through
+ * {@link ModelUpdate}.
  */
 public class Match extends Observable<ServerEvent> {
     private ArrayList<Player> players;
@@ -293,6 +293,11 @@ public class Match extends Observable<ServerEvent> {
     }
 
 
+    /**
+     * The specified action is the one chosen by the player
+     * and which will occur next.
+     * @param action
+     */
     public void setUserAction(Action action) {
         userAction = action;
     }
@@ -308,7 +313,7 @@ public class Match extends Observable<ServerEvent> {
         Tile t = board.getTile(x,y);
         Tile startTile = selectedWorker.getPositionOnBoard();
         if( t != null && currentPlayer.move(board,selectedWorker,t)){
-            List<ModelUpdate> updates = currentPlayer.getMoveUpdates();
+            List<ModelUpdate> updates = currentPlayer.getModelUpdates();
 
             for(int i=0;i<updates.size();i++) {
                 Pair<Integer,Integer> from = updates.get(i).getModifiedTiles().get(0);
@@ -333,7 +338,7 @@ public class Match extends Observable<ServerEvent> {
     public void build(int x, int y) throws InvalidBuildException{
         Tile t = board.getTile(x,y);
         if(t != null && currentPlayer.build(board,selectedWorker,t)){
-            List<ModelUpdate> updates = currentPlayer.getMoveUpdates();
+            List<ModelUpdate> updates = currentPlayer.getModelUpdates();
 
             for(int i=0;i<updates.size();i++) {
                 Pair<Integer,Integer> builtTile = updates.get(i).getModifiedTiles().get(0);
@@ -349,9 +354,9 @@ public class Match extends Observable<ServerEvent> {
     }
 
     /**
-     * Called at the beginning of a match to load the player's
-     * selected divinity from an xml file
-     * @param divinities Divinity name as {@code String}
+     * Called at the beginning of a match to keep track of all the available divinities
+     * selected divinity from an xml file and putting their name in a map.
+     * @param divinities Divinity's name as {@code String}
      * @return Returns {@code true} if the operation was successful
      */
     public void setDivinityMap(Map<String,Divinity> divinities) {

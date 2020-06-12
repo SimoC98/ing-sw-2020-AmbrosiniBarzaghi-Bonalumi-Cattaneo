@@ -4,6 +4,10 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.model.exceptions.InvalidBuildException;
 import it.polimi.ingsw.model.exceptions.InvalidMoveException;
 
+/**
+ * The worker is the the mean through which a player can perform changes on the model.
+ * It contains a reference to its owner and the tile it's occupying.
+ */
 public class Worker {
     private Tile positionOnBoard;
     private final Player player;

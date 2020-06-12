@@ -2,7 +2,6 @@ package it.polimi.ingsw.model.cards;
 
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.update.ModelUpdate;
-import it.polimi.ingsw.model.update.MoveUpdate;
 
 
 import java.util.List;

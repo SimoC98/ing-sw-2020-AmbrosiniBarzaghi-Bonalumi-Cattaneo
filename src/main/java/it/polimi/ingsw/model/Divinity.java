@@ -2,9 +2,7 @@ package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.model.cards.StandardDivinity;
 import it.polimi.ingsw.model.update.ModelUpdate;
-import it.polimi.ingsw.model.update.MoveUpdate;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**

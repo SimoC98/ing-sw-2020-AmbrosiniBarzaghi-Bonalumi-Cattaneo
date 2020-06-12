@@ -92,9 +92,6 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
 
     public void close() {
         try {
-            //in.close();
-            //out.close();
-            //Thread.currentThread().interrupt();
             in.close();
             out.close();
             socket.close();

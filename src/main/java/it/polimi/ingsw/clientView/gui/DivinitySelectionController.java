@@ -74,6 +74,17 @@ public class DivinitySelectionController {
 
         godGrid.setPadding(new Insets(10,10,10,10));
 
+        endVBox.setVisible(false);
+    }
+
+    public DivinitySelectionController() {
+        /*this.divinities = new ArrayList<>();
+        this.descriptions = new ArrayList<>();
+        this.players = new ArrayList<>();
+        chosenGods = new ArrayList<>();
+        chosenGodsNode = new ArrayList<>();
+
+        nodeListenersOff = false;*/
     }
 
     public static void setClientView(ClientView clientView) {

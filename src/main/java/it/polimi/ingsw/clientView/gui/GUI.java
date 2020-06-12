@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 
+import java.io.IOException;
 import java.util.List;
 
 public class GUI extends Application implements UI {
@@ -26,7 +27,8 @@ public class GUI extends Application implements UI {
     private PlayerDivinitySelectionController playerDivinitySelectionController;
     private MatchController matchController;
     private DisconnectionController disconnectionController;
-    private EndGameController endGameWinnerController;
+    private EndGameWinnerController endGameWinnerController;
+    private EndGameLoserController endGameLoserController;
 
 
     private Stage primaryStage;
@@ -38,6 +40,7 @@ public class GUI extends Application implements UI {
     private Parent matchRoot;
     private Parent disconnectionRoot;
     private Parent endGameWinnerRoot;
+    private Parent endGameLoserRoot;
 
 
 
@@ -77,61 +80,13 @@ public class GUI extends Application implements UI {
         PlayerDivinitySelectionController.setClientView(clientView);
         MatchController.setClientView(clientView);
         DisconnectionController.setClientView(clientView);
-        EndGameController.setClientView(clientView);
+        EndGameWinnerController.setClientView(clientView);
+        EndGameLoserController.setClientView(clientView);
 
         clientView.setUI(this);
 
 
-
-        FXMLLoader welcomeLoader = new FXMLLoader(getClass().getResource("/fxml/Welcome.fxml"));
-        Parent welcomePane = welcomeLoader.load();
-        //Scene welcomeScene = new Scene(welcomePane, 750, 500);
-        this.welcomeRoot = welcomePane;
-
-
-        //FXMLLoader loginLoader = new FXMLLoader(loginUrl);
-        FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));
-        Parent loginPane = loginLoader.load();
-       // Scene loginScene = new Scene(loginPane, 750, 500);
-        this.loginRoot = loginPane;
-
-
-        FXMLLoader playableDivinitiesLoader = new FXMLLoader(getClass().getResource("/fxml/DivinitySelection.fxml"));
-        Parent playableDivinitiesPane = playableDivinitiesLoader.load();
-       // Scene loginScene = new Scene(loginPane, 750, 500);
-        this.playableDivinityRoot = playableDivinitiesPane;
-
-        FXMLLoader playerDivinityLoader = new FXMLLoader(getClass().getResource("/fxml/PlayerDivinitySelection.fxml"));
-        //Parent playableDivinitiesPane = playableDivinitiesLoader.load();
-        Parent playerDivinityPane = playerDivinityLoader.load();
-        // Scene loginScene = new Scene(loginPane, 750, 500);
-        this.playerDivinityRoot = playerDivinityPane;
-
-        FXMLLoader matchLoader = new FXMLLoader(getClass().getResource("/fxml/Match.fxml"));
-        //Parent playableDivinitiesPane = playableDivinitiesLoader.load();
-        Parent matchPane = matchLoader.load();
-        // Scene loginScene = new Scene(loginPane, 750, 500);
-        this.matchRoot = matchPane;
-
-        FXMLLoader disconnectionLoader = new FXMLLoader(getClass().getResource("/fxml/Disconnection.fxml"));
-        Parent disconnectionPane = disconnectionLoader.load();
-        this.disconnectionRoot = disconnectionPane;
-
-        FXMLLoader endLoader = new FXMLLoader(getClass().getResource("/fxml/EndGameWinner.fxml"));
-        Parent endWinnerPane = endLoader.load();
-        this.endGameWinnerRoot = endWinnerPane;
-
-
-
-
-
-        this.welcomeController = welcomeLoader.getController();
-        this.loginController = loginLoader.getController();
-        this.divinitySelectionController = playableDivinitiesLoader.getController();
-        this.playerDivinitySelectionController = playerDivinityLoader.getController();
-        this.matchController = matchLoader.getController();
-        this.disconnectionController = disconnectionLoader.getController();
-        this.endGameWinnerController = endLoader.getController();
+       loadGUI();
 
         clientView.startConnection();
     }
@@ -142,13 +97,18 @@ public class GUI extends Application implements UI {
 
         System.out.println("\nlogin...");
 
-        if(clientView.getUsername()!=null) clientView.loginQuestion(clientView.getUsername());
+       /* if(clientView.getUsername()!=null) clientView.loginQuestion(clientView.getUsername());
         else {
             Platform.runLater(()->{
                 primaryStage.setScene(new Scene(loginRoot,1500,1000));
                 primaryStage.show();
             });
-        }
+        }*/
+
+        Platform.runLater(()->{
+            primaryStage.setScene(new Scene(loginRoot,1500,1000));
+            primaryStage.show();
+        });
 
 
     }
@@ -225,14 +185,17 @@ public class GUI extends Application implements UI {
 
         System.out.println("winner event");
 
-        Platform.runLater(() -> {
-            primaryStage.getScene().setRoot(endGameWinnerRoot);
-        });
+        if(username.equals(clientView.getUsername())) {
+            Platform.runLater(() -> {
+                primaryStage.getScene().setRoot(endGameWinnerRoot);
+            });
+        }
+        else {
+            Platform.runLater(() -> {
+                primaryStage.getScene().setRoot(endGameLoserRoot);
+            });
+        }
 
-
-        /*
-        TODO: end game scene loaded; buttons to exit or start a new match
-         */
     }
 
     @Override
@@ -326,6 +289,63 @@ public class GUI extends Application implements UI {
         Platform.runLater(() -> {
             matchController.placeWorkers(player,x1,y1,x2,y2);
         });
+
+    }
+
+
+    protected void loadGUI() throws IOException {
+        FXMLLoader welcomeLoader = new FXMLLoader(getClass().getResource("/fxml/Welcome.fxml"));
+        Parent welcomePane = welcomeLoader.load();
+        this.welcomeRoot = welcomePane;
+
+        FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));
+        Parent loginPane = loginLoader.load();
+        this.loginRoot = loginPane;
+
+
+        FXMLLoader playableDivinitiesLoader = new FXMLLoader(getClass().getResource("/fxml/DivinitySelection.fxml"));
+        Parent playableDivinitiesPane = playableDivinitiesLoader.load();
+        // Scene loginScene = new Scene(loginPane, 750, 500);
+        this.playableDivinityRoot = playableDivinitiesPane;
+
+        FXMLLoader playerDivinityLoader = new FXMLLoader(getClass().getResource("/fxml/PlayerDivinitySelection.fxml"));
+        //Parent playableDivinitiesPane = playableDivinitiesLoader.load();
+        Parent playerDivinityPane = playerDivinityLoader.load();
+        // Scene loginScene = new Scene(loginPane, 750, 500);
+        this.playerDivinityRoot = playerDivinityPane;
+
+        FXMLLoader matchLoader = new FXMLLoader(getClass().getResource("/fxml/Match.fxml"));
+        //Parent playableDivinitiesPane = playableDivinitiesLoader.load();
+        Parent matchPane = matchLoader.load();
+        // Scene loginScene = new Scene(loginPane, 750, 500);
+        this.matchRoot = matchPane;
+
+        FXMLLoader disconnectionLoader = new FXMLLoader(getClass().getResource("/fxml/Disconnection.fxml"));
+        Parent disconnectionPane = disconnectionLoader.load();
+        this.disconnectionRoot = disconnectionPane;
+
+        FXMLLoader endWinnerLoader = new FXMLLoader(getClass().getResource("/fxml/EndGameWinner.fxml"));
+        Parent endWinnerPane = endWinnerLoader.load();
+        this.endGameWinnerRoot = endWinnerPane;
+
+        FXMLLoader endLoserLoader = new FXMLLoader(getClass().getResource("/fxml/EndGameLoser.fxml"));
+        Parent endLoserPane = endLoserLoader.load();
+        this.endGameLoserRoot = endLoserPane;
+
+
+
+
+
+        this.welcomeController = welcomeLoader.getController();
+        this.loginController = loginLoader.getController();
+        this.divinitySelectionController = playableDivinitiesLoader.getController();
+        this.playerDivinitySelectionController = playerDivinityLoader.getController();
+        this.matchController = matchLoader.getController();
+        this.disconnectionController = disconnectionLoader.getController();
+        this.endGameWinnerController = endWinnerLoader.getController();
+        this.endGameLoserController = endLoserLoader.getController();
+
+
 
     }
 

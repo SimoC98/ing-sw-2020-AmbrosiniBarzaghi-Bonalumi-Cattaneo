@@ -7,6 +7,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 import static java.lang.System.exit;
 
 public class DisconnectionController {
@@ -41,6 +43,12 @@ public class DisconnectionController {
         });
 
         connect.setOnMouseClicked((e) -> {
+            try {
+                GUI gui = (GUI) clientView.getUi();
+                gui.loadGUI();
+            } catch (IOException ioException) {
+                //ioException.printStackTrace();
+            }
             clientView.startConnection();
         });
     }

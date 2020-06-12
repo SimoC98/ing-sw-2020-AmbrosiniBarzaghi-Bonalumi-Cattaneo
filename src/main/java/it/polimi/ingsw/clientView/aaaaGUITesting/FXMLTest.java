@@ -1,6 +1,6 @@
 package it.polimi.ingsw.clientView.aaaaGUITesting;
 
-import it.polimi.ingsw.clientView.gui.EndGameController;
+import it.polimi.ingsw.clientView.gui.EndGameWinnerController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,7 +12,7 @@ public class FXMLTest extends Application {
 
    private GameController gameController;
 
-   private EndGameController endGameController;
+   private EndGameWinnerController endGameController;
 
     @Override
     public void start(Stage stage) throws Exception {

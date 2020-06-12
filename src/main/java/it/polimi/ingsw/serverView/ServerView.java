@@ -177,7 +177,7 @@ public class ServerView extends Observable<ClientEvent> implements Observer<Serv
      * {@link PlayerDisconnectionEvent}
      */
     public void disconnect() {
-        sendEvent(new PlayerDisconnectionEvent(playerName));
+        //sendEvent(new PlayerDisconnectionEvent(playerName));
         proxy.close();
     }
 

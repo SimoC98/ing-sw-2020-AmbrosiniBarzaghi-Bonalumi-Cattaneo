@@ -1,5 +1,10 @@
-.panel{
+.winner{
     -fx-background-image: url("/graphics/endGame/endgame_victorywin.png");
+    -fx-background-size: 100% 100%;
+}
+
+.loser{
+    -fx-background-image: url("/graphics/endGame/endgame_windowdefeat.png");
     -fx-background-size: 100% 100%;
 }
 

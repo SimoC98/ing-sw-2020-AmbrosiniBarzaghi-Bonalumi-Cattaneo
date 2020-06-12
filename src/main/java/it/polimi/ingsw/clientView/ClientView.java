@@ -261,6 +261,8 @@ public class ClientView implements Observer<ServerEvent> {
         //ui.textMessage("Internal error, game crashed, disconnecting...");
         //exit(0);
 
+        System.out.println("player disconnection");
+
         ui.playerDisconnection(username);
     }
 

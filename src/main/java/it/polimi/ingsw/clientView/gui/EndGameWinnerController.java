@@ -9,12 +9,9 @@ import javafx.scene.layout.VBox;
 
 import static java.lang.System.exit;
 
-public class EndGameController {
+public class EndGameWinnerController {
 
     private static ClientView clientView;
-
-    @FXML
-    private VBox panel;
 
     @FXML
     private Button exit;
@@ -67,6 +64,6 @@ public class EndGameController {
 
 
     public static void setClientView(ClientView clientView) {
-        EndGameController.clientView = clientView;
+        EndGameWinnerController.clientView = clientView;
     }
 }

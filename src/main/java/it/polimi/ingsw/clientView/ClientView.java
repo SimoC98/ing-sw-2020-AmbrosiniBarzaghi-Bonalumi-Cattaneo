@@ -1,13 +1,10 @@
 package it.polimi.ingsw.clientView;
 
-import it.polimi.ingsw.ErrorsType;
 import it.polimi.ingsw.Observer;
 import it.polimi.ingsw.events.clientToServer.*;
 import it.polimi.ingsw.events.serverToClient.ServerEvent;
-import it.polimi.ingsw.events.serverToClient.WorkerInitializationEvent;
 import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Color;
-import javafx.application.Platform;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -19,10 +16,6 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.*;
 
-import static java.lang.System.exit;
-
-
-//TODO: FIX EVENTS --> CANNOT CONTAIN NOT-SERIALIZABLE ATTRIBUTES!!!
 
 public class ClientView implements Observer<ServerEvent> {
 
@@ -30,23 +23,44 @@ public class ClientView implements Observer<ServerEvent> {
     private BoardRepresentation board;
     private UI ui;
     private String username;
+    private Color color;
+
     private int userID;
+
+     private final String ip;
+     private final int port;
 
     private Object lock = new Object();
 
-    public ClientView(){
+    /*public ClientView(String ip, int port){
+        this.ip = ip;
+        this.port = port;
         board = new BoardRepresentation();
         username = null;
         userID = -1;      //may become userID but we have no method to tell for now
-    }
 
-    public ClientView(UI ui) {
+
+    }*/
+
+    public ClientView(UI ui,String ip,int port) {
+        this.ip = ip;
+        this.port = port;
         board = new BoardRepresentation();
         username = null;
         userID = -1;      //may become userID but we have no method to tell for now
 
         this.ui = ui;
+
+
     }
+
+    public ClientView(String ip, int port, UI ui) {
+        board = new BoardRepresentation();
+        this.ip = ip;
+        this.port = port;
+        this.ui = ui;
+    }
+
 
     //USED JUST FOR TEST
     //TODO: REMOVE
@@ -63,6 +77,10 @@ public class ClientView implements Observer<ServerEvent> {
         new Thread(proxy).start();
     }
 
+    public UI getUi() {
+        return this.ui;
+    }
+
     public void startUI() {
         ui.start();
     }
@@ -73,6 +91,10 @@ public class ClientView implements Observer<ServerEvent> {
 
     public String getUsername() {
         return username;
+    }
+
+    public Color getColor() {
+        return this.color;
     }
 
     //USED JUST FOR TEST
@@ -162,6 +184,8 @@ public class ClientView implements Observer<ServerEvent> {
         for(int i=0; i<playersNames.size(); i++) {
             board.addPlayer(playersNames.get(i), colors.get(i));
         }
+        int thisPlayer = playersNames.indexOf(this.username);
+        this.color = colors.get(thisPlayer);
         //ui.printPlayersInGame();
     }
 
@@ -248,21 +272,20 @@ public class ClientView implements Observer<ServerEvent> {
         ui.endTurn();
     }
 
-    public void manageInvalidMove(List<Action> possibleActions) {
-        ui.invalidMove(possibleActions);
-
+    public void manageInvalidMove(List<Action> possibleActions, int wrongX, int wrongY) {
+        ui.invalidMove(possibleActions,wrongX,wrongY );
     }
 
-    public void manageInvalidBuild(List<Action> possibleActions) {
-        ui.invalidBuild(possibleActions);
+    public void manageInvalidBuild(List<Action> possibleActions,int wrongX,int wrongY) {
+        ui.invalidBuild(possibleActions, wrongX, wrongY);
     }
 
     public void manageInvalidWorkerPlacement() {
         ui.invalidWorkerPlacement();
     }
 
-    public void manageInvalidWorkerSelection() {
-        ui.invalidWorkerSelection();
+    public void manageInvalidWorkerSelection(int wrongX, int wrongY) {
+        ui.invalidWorkerSelection(wrongX, wrongY);
     }
 
 
@@ -293,8 +316,15 @@ public class ClientView implements Observer<ServerEvent> {
         ui.start();*/
 
         Socket socket = null;
+
         try {
-            socket = new Socket("127.0.0.1", 4000);
+            if(ip!=null && port>=0) {
+                System.out.println("User socket configuration found");
+                socket = new Socket(ip, port);
+            }else {
+                System.out.println("Default ip and port taken from file");
+                socket = connectionConfigParser();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -312,10 +342,7 @@ public class ClientView implements Observer<ServerEvent> {
     }
 
     public void disconnect() {
-//        proxy.close();
-        //ui.textMessage("Disconnecting");
-        //todo: close socket
-        exit(0);
+        proxy.close();
     }
 
 //    public void login(int id) {
@@ -339,5 +366,32 @@ public class ClientView implements Observer<ServerEvent> {
 //        },0,5000);
 //
 //    }
+
+
+    private static Socket connectionConfigParser() throws IOException {
+        File xmlFile = new File("src/main/resources/connection_config.xml");
+
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder builder = null;
+        try {
+            builder = factory.newDocumentBuilder();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        }
+        Document doc = null;
+        try {
+            if (builder != null) {
+                doc = builder.parse(xmlFile);
+            }
+        } catch (SAXException | IOException e) {
+            e.printStackTrace();
+        }
+
+        String hostname = doc.getDocumentElement().getElementsByTagName("hostname").item(0).getTextContent();
+        int port = Integer.parseInt(doc.getDocumentElement().getElementsByTagName("port").item(0).getTextContent());
+        System.out.println("Config red: " + hostname + " " + port);
+
+        return new Socket(hostname, port);
+    }
 
 }

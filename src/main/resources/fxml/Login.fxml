@@ -64,12 +64,6 @@
                      </children>
                   </HBox>
                   <HBox fx:id="messages" alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Label fx:id="label" prefHeight="84.0" prefWidth="603.0" text="Label" visible="false" HBox.hgrow="ALWAYS">
-                           <HBox.margin>
-                              <Insets left="170.0" />
-                           </HBox.margin></Label>
-                     </children>
                      <VBox.margin>
                         <Insets left="100.0" />
                      </VBox.margin>

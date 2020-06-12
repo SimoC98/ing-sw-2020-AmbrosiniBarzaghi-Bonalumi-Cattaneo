@@ -25,6 +25,9 @@ public class GUI extends Application implements UI {
     private DivinitySelectionController divinitySelectionController;
     private PlayerDivinitySelectionController playerDivinitySelectionController;
     private MatchController matchController;
+    private DisconnectionController disconnectionController;
+    private EndGameController endGameController;
+
 
     private Stage primaryStage;
 
@@ -33,6 +36,8 @@ public class GUI extends Application implements UI {
     private Parent playableDivinityRoot;
     private Parent playerDivinityRoot;
     private Parent matchRoot;
+    private Parent disconnectionRoot;
+    private Parent endGameRoot;
 
 
 
@@ -71,6 +76,7 @@ public class GUI extends Application implements UI {
         DivinitySelectionController.setClientView(clientView);
         PlayerDivinitySelectionController.setClientView(clientView);
         MatchController.setClientView(clientView);
+        DisconnectionController.setClientView(clientView);
 
         clientView.setUI(this);
 
@@ -106,6 +112,16 @@ public class GUI extends Application implements UI {
         // Scene loginScene = new Scene(loginPane, 750, 500);
         this.matchRoot = matchPane;
 
+        FXMLLoader disconnectionLoader = new FXMLLoader(getClass().getResource("/fxml/Disconnection.fxml"));
+        Parent disconnectionPane = disconnectionLoader.load();
+        this.disconnectionRoot = disconnectionPane;
+
+        FXMLLoader endLoader = new FXMLLoader(getClass().getResource("/fxml/EndGame.fxml"));
+        Parent endPane = endLoader.load();
+        this.endGameRoot = endPane;
+
+
+
 
 
         this.welcomeController = welcomeLoader.getController();
@@ -113,18 +129,8 @@ public class GUI extends Application implements UI {
         this.divinitySelectionController = playableDivinitiesLoader.getController();
         this.playerDivinitySelectionController = playerDivinityLoader.getController();
         this.matchController = matchLoader.getController();
-
-
-        //GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-
-
-        //stage.setScene(new Scene(welcomeRoot,1100,750));
-
-
-        //stage.setFullScreen(true);
-        //stage.setMaximized(true);
-
-       // stage.show();
+        this.disconnectionController = disconnectionLoader.getController();
+        this.endGameController = endLoader.getController();
 
         clientView.startConnection();
     }
@@ -137,25 +143,31 @@ public class GUI extends Application implements UI {
 
     public void login(){
 
+
         System.out.println("\nlogin...");
 
-        Platform.runLater(()->{
+        if(clientView.getUsername()!=null) clientView.loginQuestion(clientView.getUsername());
+        else {
+            Platform.runLater(()->{
+                primaryStage.setScene(new Scene(loginRoot,1500,1000));
+                primaryStage.show();
+            });
+        }
 
-            //primaryStage.getScene().setRoot(loginRoot);
-            primaryStage.setScene(new Scene(loginRoot,1500,1000));
-            primaryStage.show();
-        });
 
     }
 
 
     public void failedLogin(List<String> usernames) {
         Platform.runLater(()-> {
+            primaryStage.getScene().setRoot(loginRoot);
             loginController.invalidUsername(usernames);
         });
     }
 
     public void selectPlayersNumber() {}
+
+
     public void selectPlayableDivinities(List<String> divinitiesNames, List<String> divinitiesDescriptions, int playersNumber, List<String> players) {
 
         Platform.runLater(()-> {
@@ -183,9 +195,7 @@ public class GUI extends Application implements UI {
             matchController.setActionPlaceWorkers();
         });
     }
-//    public void selectDivinityAndPlaceWorkers(List<String> divinityNames) {}
 
-    public void updateBoard() {}
     public void textMessage(String msg) {}
 
     public void startTurn() {
@@ -195,6 +205,7 @@ public class GUI extends Application implements UI {
             matchController.setActionSelectWorker();
         });
     }
+
     public void selectWorker() {
         System.out.println("select worker...");
 
@@ -202,14 +213,31 @@ public class GUI extends Application implements UI {
             matchController.setActionSelectWorker();
         });
     }
+
     public void performAction(List<Action> possibleActions) {
         Platform.runLater(() -> {
             matchController.handlePossibleActions(possibleActions);
         });
     }
 
-    public void loser(String username) {}
-    public void winner(String username) {}
+    public void loser(String username) {
+        /*
+        TODO: loser --> on the right side communication that has lost; keep receiving notifications and board updates
+              not loser --> communication of loser (alert?)
+         */
+    }
+
+    public void winner(String username) {
+
+        Platform.runLater(() -> {
+            primaryStage.getScene().setRoot(endGameRoot);
+        });
+
+
+        /*
+        TODO: end game scene loaded; buttons to exit or start a new match
+         */
+    }
 
     @Override
     public void playersDivinities() {
@@ -222,12 +250,20 @@ public class GUI extends Application implements UI {
 
     @Override
     public void playerDisconnection(String username) {
+        clientView.disconnect();
+
+        Platform.runLater(() -> {
+            primaryStage.getScene().setRoot(disconnectionRoot);
+
+            disconnectionController.disconnect(username);
+        });
 
     }
 
     @Override
     public void inLobby() {
         Platform.runLater(()->{
+            primaryStage.getScene().setRoot(loginRoot);
             loginController.inLobby();
         });
 
@@ -236,6 +272,7 @@ public class GUI extends Application implements UI {
     @Override
     public void lobbyFull() {
         Platform.runLater(() -> {
+            primaryStage.getScene().setRoot(loginRoot);
             loginController.lobbyFull();
         });
 
@@ -247,12 +284,12 @@ public class GUI extends Application implements UI {
     }
 
     @Override
-    public void invalidMove(List<Action> possibleActions) {
+    public void invalidMove(List<Action> possibleActions, int wrongX, int wrongY) {
 
     }
 
     @Override
-    public void invalidBuild(List<Action> possibleActions) {
+    public void invalidBuild(List<Action> possibleActions, int wrongX, int wrongY) {
 
     }
 
@@ -262,7 +299,8 @@ public class GUI extends Application implements UI {
     }
 
     @Override
-    public void invalidWorkerSelection() {
+    public void invalidWorkerSelection(int wrongX, int wrongY) {
+        System.out.println("errore selezione worker");
 
     }
 

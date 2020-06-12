@@ -1,5 +1,6 @@
 package it.polimi.ingsw.clientView;
 
+import it.polimi.ingsw.clientView.gui.GUI;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -29,18 +30,9 @@ public class TemporaryMain {
                 port = Integer.parseInt(arg);
         }
 
-        //ui init
-        ClientView clientView = new ClientView();
-        if(ui!=null && ui.equals("gui")) {
-            System.out.println("You're going to play with the GUI interface");
-            //clientView.setUI(new GUI(clientView));
-        } else {
-            System.out.println("You're going to play with the CLI interface");
-            clientView.setUI(new CLI(clientView));
-        }
 
         //net init
-        try {
+        /*try {
             if(ip!=null && port>=0) {
                 System.out.println("User socket configuration found");
                 socket = new Socket(ip, port);
@@ -50,11 +42,43 @@ public class TemporaryMain {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }*/
+
+        //ui init
+        ClientView clientView = null;
+        if(ui!=null && ui.equals("gui")) {
+            System.out.println("You're going to play with the GUI interface");
+            //clientView.setUI(new CLI(clientView));
+            GUI gui = new GUI();
+            clientView = new ClientView(ip,port,gui);
+            gui.setClientView(clientView);
+            clientView.setUI(gui);
+            new Thread(()->{
+                gui.start();
+            }).start();
+
+
+            //clientView.setUI(new GUI(clientView));
+        } else {
+            System.out.println("You're going to play with the CLI interface");
+            CLI cli = new CLI();
+            clientView = new ClientView(ip,port,cli);
+            cli.setClientView(clientView);
+            cli.start();
+            /*GUI gui = new GUI();
+            clientView = new ClientView(ip,port,gui);
+            gui.setClientView(clientView);
+            clientView.setUI(gui);
+            new Thread(()->{
+                gui.start();
+            }).start();*/
         }
+
+
 
         //start
         clientView.startUI();
-        clientView.startProxy(socket);
+        //clientView.startProxy(socket);
     }
 
     private static Socket connectionConfigParser() throws IOException {

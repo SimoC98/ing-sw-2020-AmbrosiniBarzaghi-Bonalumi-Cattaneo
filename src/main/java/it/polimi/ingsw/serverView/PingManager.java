@@ -36,7 +36,7 @@ public class PingManager implements Observer<ClientEvent> {
             @Override
             public void run() {
                 if(ping==false) {
-                    System.out.println("TIMEEER");
+                    //System.out.println("TIMEEER");
                     pinger.cancel();
                     connection.disconnect();
                 }

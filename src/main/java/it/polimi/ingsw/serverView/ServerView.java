@@ -147,20 +147,20 @@ public class ServerView extends Observable<ClientEvent> implements Observer<Serv
         proxy.sendEvent(new EndTurnEvent());
     }
 
-    public void invalidMove(List<Action> possileActions) {
-        sendEvent(new InvalidMoveEvent(possileActions));
+    public void invalidMove(List<Action> possileActions, int wrongX, int wrongY) {
+        sendEvent(new InvalidMoveEvent(possileActions,wrongX,wrongY));
     }
 
-    public void invalidBuild(List<Action> possileActions) {
-        sendEvent(new InvalidBuildEvent(possileActions));
+    public void invalidBuild(List<Action> possileActions, int x, int y) {
+        sendEvent(new InvalidBuildEvent(possileActions,x,y));
     }
 
     public void invalidWorkerPlacement() {
         sendEvent(new InvalidWorkerPlacement());
     }
 
-    public void invalidWorkerSelection() {
-        sendEvent(new InvalidWorkerSelection());
+    public void invalidWorkerSelection(int x, int y) {
+        sendEvent(new InvalidWorkerSelection(x,y));
     }
 
 

@@ -17,10 +17,6 @@ import java.util.Map;
 
 public class Controller implements Observer<ClientEvent> {
 
-    private final static String invalidMove = "ERROR! -> YOU CAN'T MOVE HERE!";
-    private final static String invalidBuild = "ERROR! -> YOU CAN'T BUILD HERE!";
-    //other error messages
-
     private Match model;
     private List<ServerView> playersInGame;
     private List<String> playersUsernames;
@@ -75,7 +71,7 @@ public class Controller implements Observer<ClientEvent> {
         } catch (InvalidWorkerSelectionException e) {
             //playersInGame.get(currentPlayerId).showMessage("error");
             //playersInGame.get(currentPlayerId).selectWorker();
-            playersInGame.get(currentPlayerId).invalidWorkerSelection();
+            playersInGame.get(currentPlayerId).invalidWorkerSelection(x,y);
         }
     }
 
@@ -98,7 +94,7 @@ public class Controller implements Observer<ClientEvent> {
         } catch (InvalidMoveException e1) {
             //playersInGame.get(currentPlayerId).showMessage("error");
             //nextActionHandler();
-            playersInGame.get(currentPlayerId).invalidMove(model.getCurrentPlayer().getPossibleActions());
+            playersInGame.get(currentPlayerId).invalidMove(model.getCurrentPlayer().getPossibleActions(),x,y);
         } catch (InterruptedException e2) {
             e2.printStackTrace();
         }
@@ -120,7 +116,7 @@ public class Controller implements Observer<ClientEvent> {
         } catch (InvalidBuildException e1) {
             //playersInGame.get(currentPlayerId).showMessage("error");
             //nextActionHandler();
-            playersInGame.get(currentPlayerId).invalidBuild(model.getCurrentPlayer().getPossibleActions());
+            playersInGame.get(currentPlayerId).invalidBuild(model.getCurrentPlayer().getPossibleActions(),x,y);
         } catch (InterruptedException e2) {
             e2.printStackTrace();
         }
@@ -156,9 +152,7 @@ public class Controller implements Observer<ClientEvent> {
                 playersInGame.remove(playersInGame.get(currentPlayerId));
                 playersUsernames.remove(playersUsernames.get(currentPlayerId));
                 //sendMessageToAll(message);
-                System.out.println("check1");
                 currentPlayerId = model.getCurrentPlayerId();
-                System.out.println("check2");
                 playersInGame.get(currentPlayerId).startTurn(playersUsernames.get(currentPlayerId));
             }
         }
@@ -172,8 +166,14 @@ public class Controller implements Observer<ClientEvent> {
     }
 
 
-    public void handleUnexpectedDisconnection(String playerName) {
+    /*public void handleUnexpectedDisconnection(String playerName) {
         model.setLoser(playerName);
+    }*/
+
+    //handle disconnection of client by ui (es button "exit" in gui)
+    public void handleDisconnection(String player) {
+        playersInGame.stream().forEach(x -> x.playerDisconnection(player));
+        disconnectAll();
     }
 
 

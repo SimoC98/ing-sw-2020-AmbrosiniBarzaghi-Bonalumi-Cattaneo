@@ -1,0 +1,4 @@
+.panel{
+    -fx-background-image: url("/graphics/endGame/endgame_victorywin.png");
+    -fx-background-size: cover;
+}

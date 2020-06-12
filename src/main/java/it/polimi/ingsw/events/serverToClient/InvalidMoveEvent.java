@@ -8,14 +8,17 @@ import java.util.List;
 
 public class InvalidMoveEvent implements ServerEvent{
     private List<Action> possibleActions;
+    private int wrongX, wrongY;
 
-    public InvalidMoveEvent(List<Action> possibleActions) {
+    public InvalidMoveEvent(List<Action> possibleActions, int wrongX, int wrongY) {
         this.possibleActions = possibleActions;
+        this.wrongX = wrongX;
+        this.wrongY = wrongY;
     }
 
     @Override
     public void handleEvent(ClientView clientView) {
-        clientView.manageInvalidMove(possibleActions);
+        clientView.manageInvalidMove(possibleActions,wrongX,wrongY);
     }
 
     @Override

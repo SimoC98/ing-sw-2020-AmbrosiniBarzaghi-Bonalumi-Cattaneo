@@ -4,7 +4,6 @@ import it.polimi.ingsw.Pair;
 import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Color;
 
-import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +29,10 @@ public class CLI implements UI{
     Scanner scanner;
 
     private final Object lock = new Object();
-    private boolean boardUpdate = false;
+
+    private int selectedWX;
+    private int selectedWY;
+
 
     public CLI(ClientView clientView) {
         this.clientView = clientView;
@@ -371,7 +373,6 @@ public class CLI implements UI{
         updateBoard();
         selectWorker();
 
-        boardUpdate = false;
     }
 
     @Override
@@ -407,9 +408,10 @@ public class CLI implements UI{
 
         System.out.println("\n\n");
 
+        this.selectedWX = selectedWorker.getFirst();
+        this.selectedWY = selectedWorker.getSecond();
+
         clientView.selectWorkerQuestion(selectedWorker.getFirst(), selectedWorker.getSecond());
-
-
     }
 
 
@@ -568,14 +570,38 @@ public class CLI implements UI{
     }
 
     @Override
-    public void invalidMove(List<Action> possibleActions) {
-        System.out.println("\n\nERROR! YOU CAN'T MOVE HERE!");
+    public void invalidMove(List<Action> possibleActions, int wrongX, int wrongY) {
+        StringBuilder s = new StringBuilder();
+        s.append("ERROR!");
+
+        if(board.getBoard()[wrongX][wrongY]==4) s.append(" YOU CAN'T MOVE ON A DOME!");
+        else if(board.isThereAWorker(wrongX,wrongY)!=null) s.append(" YOU CAN'T MOVE ON AN OCCUPIED TILE!");
+        else if(board.getBoard()[wrongX][wrongY]-board.getBoard()[selectedWY][selectedWY]>1) s.append(" YOU CAN'T MOVE TO A TILE SO HIGH!");
+        else if(wrongX<0 || wrongX>4 || wrongY<0 || wrongY>4) s.append(" YOU MUST SELECT A TILE ON THE BOARD!");
+        else if(Math.abs(wrongX-selectedWX)>1 || Math.abs(wrongY-selectedWY)>1) s.append(" YOU MUST SELECT AN ADJACENT TILE!");
+        else s.append(" YOU CAN'T MOVE HERE!");
+
+        System.out.println(s.toString());
+
+
+        //System.out.println("\n\nERROR! YOU CAN'T MOVE HERE!");
         performAction(possibleActions);
     }
 
     @Override
-    public void invalidBuild(List<Action> possibleActions) {
-        System.out.println("\n\nERROR! YOU CAN'T BUILD HERE!");
+    public void invalidBuild(List<Action> possibleActions, int wrongX, int wrongY) {
+        StringBuilder s = new StringBuilder();
+        s.append("ERROR!");
+
+        if(board.getBoard()[wrongX][wrongY]==4) s.append(" YOU CAN'T BUILD ON A DOME!");
+        else if(board.isThereAWorker(wrongX,wrongY)!=null) s.append(" YOU CAN'T BUILD ON AN OCCUPIED TILE!");
+        else if(wrongX<0 || wrongX>4 || wrongY<0 || wrongY>4) s.append(" YOU MUST SELECT A TILE ON THE BOARD!");
+        else if(Math.abs(wrongX-selectedWX)>1 || Math.abs(wrongY-selectedWY)>1) s.append(" YOU MUST SELECT AN ADJACENT TILE!");
+        else s.append(" YOU CAN'T BUILD HERE!");
+
+        System.out.println(s.toString());
+
+        //System.out.println("\n\nERROR! YOU CAN'T BUILD HERE!");
         performAction(possibleActions);
     }
 
@@ -586,10 +612,18 @@ public class CLI implements UI{
     }
 
     @Override
-    public void invalidWorkerSelection() {
-        System.out.println("\n\nERROR! INVALID WORKER SELECTION!");
-        selectWorker();
+    public void invalidWorkerSelection(int wrongX, int wrongY) {
+        StringBuilder s = new StringBuilder();
+        s.append("ERROR!");
 
+        if(board.isThereAWorker(wrongX,wrongY)==null) s.append(" YOU CAN'T SELECT A VOID CELL!");
+        else if(!board.isThereAWorker(wrongX,wrongY).equals(clientView.getColor())) s.append(" YOU CAN'T SELECT AN OPPONENT WORKER!");
+        else if(wrongX<0 || wrongX>4 || wrongY<0 || wrongY>4) s.append(" YOU MUST SELECT A TILE ON THE BOARD!");
+        else s.append("YOU CAN'T USE THIS WORKER!");
+
+        System.out.println(s.toString());
+        //System.out.println("\n\nERROR! INVALID WORKER SELECTION!");
+        selectWorker();
     }
 
     @Override

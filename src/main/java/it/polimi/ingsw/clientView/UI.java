@@ -46,13 +46,13 @@ public interface UI {
     public void endTurn();
 
     //errors
-    public void invalidMove(List<Action> possibleActions);
+    public void invalidMove(List<Action> possibleActions, int wrongX, int wrongY);
 
-    public void invalidBuild(List<Action> possibleActions);
+    public void invalidBuild(List<Action> possibleActions, int wrongX, int wrongY);
 
     public void invalidWorkerPlacement();
 
-    public void invalidWorkerSelection();
+    public void invalidWorkerSelection(int wrongX, int wrongY);
 
     //updates from model
     public void moveUpdate(String player,int xFrom,int yFrom,int xTo,int yTo);

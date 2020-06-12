@@ -1,19 +1,15 @@
 package it.polimi.ingsw.clientView;
 
 import it.polimi.ingsw.events.serverToClient.BuildEvent;
-import it.polimi.ingsw.events.serverToClient.MoveEvent;
 import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Color;
-import it.polimi.ingsw.model.Tile;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class ClientViewTest {
 
     @Test
     public void basicTest() {
-        ClientView cv = new ClientView();
+        ClientView cv = new ClientView(ip, port);
         CLI cli = new CLI(cv);
         cv.setUI(cli);
         BoardRepresentation board = cv.getBoard();

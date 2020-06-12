@@ -12,7 +12,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 
-import java.io.IOException;
 import java.util.List;
 
 public class GUI extends Application implements UI {
@@ -125,18 +124,6 @@ public class GUI extends Application implements UI {
         this.matchController = matchLoader.getController();
         this.disconnectionController = disconnectionLoader.getController();
 
-
-        //GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-
-
-        //stage.setScene(new Scene(welcomeRoot,1100,750));
-
-
-        //stage.setFullScreen(true);
-        //stage.setMaximized(true);
-
-       // stage.show();
-
         clientView.startConnection();
     }
 
@@ -154,8 +141,6 @@ public class GUI extends Application implements UI {
         if(clientView.getUsername()!=null) clientView.loginQuestion(clientView.getUsername());
         else {
             Platform.runLater(()->{
-
-                //primaryStage.getScene().setRoot(loginRoot);
                 primaryStage.setScene(new Scene(loginRoot,1500,1000));
                 primaryStage.show();
             });
@@ -202,9 +187,7 @@ public class GUI extends Application implements UI {
             matchController.setActionPlaceWorkers();
         });
     }
-//    public void selectDivinityAndPlaceWorkers(List<String> divinityNames) {}
 
-    public void updateBoard() {}
     public void textMessage(String msg) {}
 
     public void startTurn() {
@@ -214,6 +197,7 @@ public class GUI extends Application implements UI {
             matchController.setActionSelectWorker();
         });
     }
+
     public void selectWorker() {
         System.out.println("select worker...");
 
@@ -221,14 +205,25 @@ public class GUI extends Application implements UI {
             matchController.setActionSelectWorker();
         });
     }
+
     public void performAction(List<Action> possibleActions) {
         Platform.runLater(() -> {
             matchController.handlePossibleActions(possibleActions);
         });
     }
 
-    public void loser(String username) {}
-    public void winner(String username) {}
+    public void loser(String username) {
+        /*
+        TODO: loser --> on the right side communication that has lost; keep receiving notifications and board updates
+              not loser --> communication of loser (alert?)
+         */
+    }
+
+    public void winner(String username) {
+        /*
+        TODO: end game scene loaded; buttons to exit or start a new match
+         */
+    }
 
     @Override
     public void playersDivinities() {
@@ -275,12 +270,12 @@ public class GUI extends Application implements UI {
     }
 
     @Override
-    public void invalidMove(List<Action> possibleActions) {
+    public void invalidMove(List<Action> possibleActions, int wrongX, int wrongY) {
 
     }
 
     @Override
-    public void invalidBuild(List<Action> possibleActions) {
+    public void invalidBuild(List<Action> possibleActions, int wrongX, int wrongY) {
 
     }
 
@@ -290,7 +285,8 @@ public class GUI extends Application implements UI {
     }
 
     @Override
-    public void invalidWorkerSelection() {
+    public void invalidWorkerSelection(int wrongX, int wrongY) {
+        System.out.println("errore selezione worker");
 
     }
 

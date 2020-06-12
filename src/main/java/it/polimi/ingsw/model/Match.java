@@ -475,4 +475,38 @@ public class Match extends Observable<ServerEvent> {
     public int getCurrentPlayerId() {
         return players.indexOf(currentPlayer);
     }
+
+
+
+    //not official
+    public Map<Action,List<Pair<Integer,Integer>>> getPossibleActions() {
+        HashMap map = new HashMap();
+        List<Action> possibleActions = currentPlayer.getPossibleActions();
+
+        for(int i=0; i<possibleActions.size(); i++) {
+            Action a = possibleActions.get(i);
+            List<Pair<Integer,Integer>> availableTiles = new ArrayList<>();
+            List<Tile> l = null;
+
+            switch (a) {
+                case MOVE: {
+                    l = board.getAvailableMoveTiles(selectedWorker);
+                    break;
+                }
+                case BUILD:
+                case BUILDDOME: {
+                    l = board.getAvailableBuildTiles(selectedWorker);
+                    break;
+                }
+                case END: break;
+            }
+
+            l.stream().forEach(x -> availableTiles.add(new Pair<>(x.getX(),x.getY())));
+
+            map.put(a,availableTiles);
+
+        }
+
+        return map;
+    }
 }

@@ -1,7 +1,6 @@
 package it.polimi.ingsw.clientView.gui;
 
 import it.polimi.ingsw.Pair;
-import it.polimi.ingsw.clientView.BoardRepresentation;
 import it.polimi.ingsw.clientView.ClientView;
 import it.polimi.ingsw.model.Action;
 
@@ -9,9 +8,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,11 +16,6 @@ import javafx.scene.layout.*;
 
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.lang.reflect.Type;
 import java.util.*;
 
 public class MatchController {
@@ -253,11 +245,20 @@ public class MatchController {
         int x = GridPane.getRowIndex(s);
         int y = GridPane.getColumnIndex(s);
 
-        if(v.getImage() != null){
+        it.polimi.ingsw.model.Color color = clientView.getColor();
+        it.polimi.ingsw.model.Color selectedColor = clientView.getBoard().isThereAWorker(x,y);
+
+        if(selectedColor!=null && selectedColor.equals(color)) {
+            System.out.println("Worker Selected");
+            clientView.selectWorkerQuestion(x,y);
+        }
+
+
+        /*if(v.getImage() != null){
             System.out.println("Worker Selected");
             clientView.selectWorkerQuestion(x,y);
 
-        }
+        }*/
 
     }
 

@@ -1,13 +1,10 @@
 package it.polimi.ingsw.clientView;
 
-import it.polimi.ingsw.ErrorsType;
 import it.polimi.ingsw.Observer;
 import it.polimi.ingsw.events.clientToServer.*;
 import it.polimi.ingsw.events.serverToClient.ServerEvent;
-import it.polimi.ingsw.events.serverToClient.WorkerInitializationEvent;
 import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Color;
-import javafx.application.Platform;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -19,10 +16,6 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.*;
 
-import static java.lang.System.exit;
-
-
-//TODO: FIX EVENTS --> CANNOT CONTAIN NOT-SERIALIZABLE ATTRIBUTES!!!
 
 public class ClientView implements Observer<ServerEvent> {
 
@@ -30,26 +23,36 @@ public class ClientView implements Observer<ServerEvent> {
     private BoardRepresentation board;
     private UI ui;
     private String username;
+    private Color color;
+
     private int userID;
 
-    private String ip;
-    private int port;
+     private final String ip;
+     private final int port;
 
     private Object lock = new Object();
 
-    public ClientView(){
+    /*public ClientView(String ip, int port){
+        this.ip = ip;
+        this.port = port;
         board = new BoardRepresentation();
         username = null;
         userID = -1;      //may become userID but we have no method to tell for now
+
+
     }
 
-    public ClientView(UI ui) {
+    public ClientView(UI ui, String ip, int port) {
+        this.ip = ip;
+        this.port = port;
         board = new BoardRepresentation();
         username = null;
         userID = -1;      //may become userID but we have no method to tell for now
 
         this.ui = ui;
-    }
+
+
+    }*/
 
     public ClientView(String ip, int port, UI ui) {
         board = new BoardRepresentation();
@@ -58,12 +61,6 @@ public class ClientView implements Observer<ServerEvent> {
         this.ui = ui;
     }
 
-    public ClientView(String ip, int port) {
-        board = new BoardRepresentation();
-
-        this.ip = ip;
-        this.port = port;
-    }
 
     //USED JUST FOR TEST
     //TODO: REMOVE
@@ -94,6 +91,10 @@ public class ClientView implements Observer<ServerEvent> {
 
     public String getUsername() {
         return username;
+    }
+
+    public Color getColor() {
+        return this.color;
     }
 
     //USED JUST FOR TEST
@@ -183,6 +184,8 @@ public class ClientView implements Observer<ServerEvent> {
         for(int i=0; i<playersNames.size(); i++) {
             board.addPlayer(playersNames.get(i), colors.get(i));
         }
+        int thisPlayer = playersNames.indexOf(this.username);
+        this.color = colors.get(thisPlayer);
         //ui.printPlayersInGame();
     }
 
@@ -269,21 +272,20 @@ public class ClientView implements Observer<ServerEvent> {
         ui.endTurn();
     }
 
-    public void manageInvalidMove(List<Action> possibleActions) {
-        ui.invalidMove(possibleActions);
-
+    public void manageInvalidMove(List<Action> possibleActions, int wrongX, int wrongY) {
+        ui.invalidMove(possibleActions,wrongX,wrongY );
     }
 
-    public void manageInvalidBuild(List<Action> possibleActions) {
-        ui.invalidBuild(possibleActions);
+    public void manageInvalidBuild(List<Action> possibleActions,int wrongX,int wrongY) {
+        ui.invalidBuild(possibleActions, wrongX, wrongY);
     }
 
     public void manageInvalidWorkerPlacement() {
         ui.invalidWorkerPlacement();
     }
 
-    public void manageInvalidWorkerSelection() {
-        ui.invalidWorkerSelection();
+    public void manageInvalidWorkerSelection(int wrongX, int wrongY) {
+        ui.invalidWorkerSelection(wrongX, wrongY);
     }
 
 

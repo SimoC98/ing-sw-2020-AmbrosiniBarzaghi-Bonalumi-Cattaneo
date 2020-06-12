@@ -77,6 +77,7 @@ public class GUI extends Application implements UI {
         PlayerDivinitySelectionController.setClientView(clientView);
         MatchController.setClientView(clientView);
         DisconnectionController.setClientView(clientView);
+        EndGameController.setClientView(clientView);
 
         clientView.setUI(this);
 
@@ -222,6 +223,8 @@ public class GUI extends Application implements UI {
 
     public void winner(String username) {
 
+        System.out.println("winner event");
+
         Platform.runLater(() -> {
             primaryStage.getScene().setRoot(endGameWinnerRoot);
         });
@@ -243,6 +246,8 @@ public class GUI extends Application implements UI {
 
     @Override
     public void playerDisconnection(String username) {
+        System.out.println("disconnection event");
+
         clientView.disconnect();
 
         Platform.runLater(() -> {

@@ -77,7 +77,7 @@ public class TemporaryMain {
 
 
         //start
-        clientView.startUI();
+        //clientView.startUI();
         //clientView.startProxy(socket);
     }
 

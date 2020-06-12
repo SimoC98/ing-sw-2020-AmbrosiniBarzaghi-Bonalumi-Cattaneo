@@ -5,6 +5,10 @@ import it.polimi.ingsw.model.update.ModelUpdate;
 
 import java.util.List;
 
+/**
+ * Decoration to be applied to other players' divinities when Chrono is in game.
+ * If a player completes a tower so that there are five towers with 3 levels and a dome, Chrono's player wins.
+ */
 public class Check5CompleteTowerWinCondition extends DivinityDecoratorWithEffects {
     private Player winnerPlayer;
 

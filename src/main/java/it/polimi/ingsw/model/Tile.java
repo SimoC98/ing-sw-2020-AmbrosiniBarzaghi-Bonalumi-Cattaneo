@@ -1,6 +1,10 @@
 package it.polimi.ingsw.model;
 
-
+/**
+ * The tile is equivalent to a cell in an array where in this case, the array is the board.
+ * It contains its coordinates alongside its level, whether it holds a dome and whether it is occupied by a
+ * worker in which case, it saves its reference.
+ */
 public class Tile {
     private final int x;
     private final int y;

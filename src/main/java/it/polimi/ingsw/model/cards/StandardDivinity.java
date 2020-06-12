@@ -5,7 +5,6 @@ import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.exceptions.InvalidBuildException;
 import it.polimi.ingsw.model.exceptions.InvalidMoveException;
 import it.polimi.ingsw.model.update.ModelUpdate;
-import it.polimi.ingsw.model.update.MoveUpdate;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +55,7 @@ public class StandardDivinity implements Divinity {
      * @param board Reference to {@link Board} so that it can be accessed and modified
      * @param selectedWorker {@link Worker} that will perform an action
      * @param selectedTile {@link Tile} the action will be performed on
-     * @return List of tiles to update on the UI representations. {@link MoveUpdate}
+     * @return List of tiles to update on the UI representations. {@link ModelUpdate}
      */
     @Override
     public List<ModelUpdate> move(Board board, Worker selectedWorker, Tile selectedTile) {

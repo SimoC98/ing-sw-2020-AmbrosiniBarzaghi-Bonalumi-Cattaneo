@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
@@ -16,6 +17,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -48,6 +50,9 @@ public class DivinitySelectionController {
     @FXML
     private Label labelTxt;
 
+    @FXML
+    private StackPane sPane;
+
 
 
     @FXML
@@ -68,9 +73,22 @@ public class DivinitySelectionController {
 
     @FXML
     public void initialize() {
+        GUI g = (GUI)clientView.getUi();
+        Stage stage = g.getPrimaryStage();
+
+        /*bPane.prefHeightProperty().bind(stage.heightProperty());
+        bPane.prefWidthProperty().bind(stage.widthProperty());*/
+
         godGrid.setAlignment(Pos.CENTER);
+
         godGrid.setHgap(10);
         godGrid.setVgap(50);
+
+        godGrid.prefHeightProperty().bind(bPane.heightProperty().divide(1.34));
+        godGrid.prefWidthProperty().bind(bPane.widthProperty());
+
+        godDescription.prefHeightProperty().bind(bPane.heightProperty().divide(1.37));
+        godDescription.prefWidthProperty().bind(bPane.widthProperty().divide(2.73));
 
         godGrid.setPadding(new Insets(10,10,10,10));
 
@@ -78,13 +96,6 @@ public class DivinitySelectionController {
     }
 
     public DivinitySelectionController() {
-        /*this.divinities = new ArrayList<>();
-        this.descriptions = new ArrayList<>();
-        this.players = new ArrayList<>();
-        chosenGods = new ArrayList<>();
-        chosenGodsNode = new ArrayList<>();
-
-        nodeListenersOff = false;*/
     }
 
     public static void setClientView(ClientView clientView) {
@@ -112,12 +123,17 @@ public class DivinitySelectionController {
 
                     god.setImage(godImage);
 
-                    god.setFitHeight(220);
-                    god.setFitWidth(150);
+                    god.fitHeightProperty().bind(bPane.heightProperty().divide(4.55));
+                    god.fitWidthProperty().bind(bPane.widthProperty().divide(12));
 
+                    god.maxHeight(220);
+                    god.maxWidth(150);
 
-                   // god.setFitHeight(mainPane.getHeight()/20);
-                   // god.setFitWidth(mainPane.getWidth()/20);
+                    god.isPreserveRatio();
+
+                    //god.setFitHeight(220);
+                    //god.setFitWidth(150);
+
 
                     addCell(god,r,c,count);
 
@@ -134,8 +150,14 @@ public class DivinitySelectionController {
         String back = "/graphics/clp_bg.png";
         ImageView b = new ImageView(new Image(back));
 
-        b.setFitHeight(240);
-        b.setFitWidth(160);
+        b.fitHeightProperty().bind(bPane.heightProperty().divide(4.55).add(20));
+        b.fitWidthProperty().bind(bPane.widthProperty().divide(12).add(20));
+
+        b.maxHeight(240);
+        b.maxWidth(160);
+
+        //b.setFitHeight(240);
+        //b.setFitWidth(160);
 
         godGrid.add(new StackPane(b,node),x,y);
 
@@ -177,14 +199,21 @@ public class DivinitySelectionController {
             ImageView god = new ImageView();
             Image godImg = new Image("/graphics/" + divinities.get(count).toLowerCase() + ".png");
             god.setImage(godImg);
-            god.setFitHeight(350);
-            god.setFitWidth(250);
+            //god.setFitHeight(350);
+            //god.setFitWidth(250);
+
+            god.fitHeightProperty().bind(godDescription.heightProperty().divide(1.8));
+            god.fitWidthProperty().bind(godDescription.widthProperty().divide(2.2));
             god.isPreserveRatio();
 
             String clip = "/graphics/clp_bg.png";
             ImageView c = new ImageView(new Image(back));
-            c.setFitHeight(390);
-            c.setFitWidth(280);
+            //c.setFitHeight(390);
+            //c.setFitWidth(280);
+            c.fitHeightProperty().bind(godDescription.heightProperty().divide(1.8).add(60));
+            c.fitWidthProperty().bind(godDescription.widthProperty().divide(2.2).add(40));
+
+            sPane.setAlignment(Pos.CENTER);
 
             //add image of divinity selected to the desc panel
             godDescription.getChildren().add(new StackPane(c,god));
@@ -210,12 +239,6 @@ public class DivinitySelectionController {
             close.setPrefHeight(40);
             close.setPrefWidth(100);
 
-            //Image coralButton = new Image("/home/simone/IdeaProjects/ing-sw-2020-AmbrosiniBarzaghi-Bonalumi-Cattaneo/src/main/resources/graphics/btn_coral.png");
-            /*String path = "/graphics/btn_coral.png";
-            BackgroundImage coralButton = new BackgroundImage(new Image(path),BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,new BackgroundSize(close.getWidth(),close.getHeight(),true,true,true,false));
-            Background closeBack = new Background(coralButton);
-
-            close.setBackground(closeBack);*/
 
             close.getStyleClass().add("coral");
             close.getStylesheets().add("/css/btn.css");

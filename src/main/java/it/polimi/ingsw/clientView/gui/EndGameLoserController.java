@@ -7,6 +7,8 @@ import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
+
 import static java.lang.System.exit;
 
 public class EndGameLoserController {
@@ -53,6 +55,12 @@ public class EndGameLoserController {
         });
 
         newGame.setOnMouseClicked((e) -> {
+            try {
+                GUI gui = (GUI) clientView.getUi();
+                gui.loadGUI();
+            } catch (IOException ioException) {
+                //ioException.printStackTrace();
+            }
             clientView.startConnection();
         });
 

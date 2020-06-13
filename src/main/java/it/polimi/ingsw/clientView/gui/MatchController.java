@@ -169,6 +169,7 @@ public class MatchController {
         if(workerPlacement.size()==2) {
             System.out.println("workers placed in: " + workerPlacement.get(0).getFirst() + "-" + workerPlacement.get(0).getSecond() + "and " + workerPlacement.get(1).getFirst() + "-" + workerPlacement.get(1).getSecond());
             actualAction = "default";
+            setShadowOff();
             clientView.workerPlacement(workerPlacement.get(0).getFirst(),workerPlacement.get(0).getSecond(),workerPlacement.get(1).getFirst(),workerPlacement.get(1).getSecond());
         }
     }
@@ -350,6 +351,8 @@ public class MatchController {
      */
 
     public void setActionPlaceWorkers() {
+        workerPlacement.clear();
+
         System.out.println("Now you PLACEWORKERS");
         message.setText("CLICK ON TILE WHERE YOU WANT TO PLACE WORKERS");
         //userInteractionLabel.setVisible(true);
@@ -459,5 +462,14 @@ public class MatchController {
         a.setTitle(title);
         a.setHeaderText(header);
         a.show();
+    }
+
+    private void setShadowOff() {
+        for(int i=0; i<5; i++) {
+            for(int j=0; j<5; j++) {
+                StackPane cell = (StackPane)getBoardCell(i,j);
+                cell.getChildren().get(SHADOW).setVisible(false);
+            }
+        }
     }
 }

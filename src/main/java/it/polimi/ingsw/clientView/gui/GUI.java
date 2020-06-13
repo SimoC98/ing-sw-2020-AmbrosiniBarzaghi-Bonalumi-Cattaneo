@@ -9,6 +9,8 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 
@@ -96,14 +98,6 @@ public class GUI extends Application implements UI {
 
 
         System.out.println("\nlogin...");
-
-       /* if(clientView.getUsername()!=null) clientView.loginQuestion(clientView.getUsername());
-        else {
-            Platform.runLater(()->{
-                primaryStage.setScene(new Scene(loginRoot,1500,1000));
-                primaryStage.show();
-            });
-        }*/
 
         Platform.runLater(()->{
             primaryStage.setScene(new Scene(loginRoot,1500,1000));
@@ -269,7 +263,6 @@ public class GUI extends Application implements UI {
     @Override
     public void invalidWorkerSelection(int wrongX, int wrongY) {
         System.out.println("errore selezione worker");
-
     }
 
     @Override
@@ -300,6 +293,10 @@ public class GUI extends Application implements UI {
     }
 
 
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
     protected void loadGUI() throws IOException {
         FXMLLoader welcomeLoader = new FXMLLoader(getClass().getResource("/fxml/Welcome.fxml"));
         Parent welcomePane = welcomeLoader.load();
@@ -312,19 +309,18 @@ public class GUI extends Application implements UI {
 
         FXMLLoader playableDivinitiesLoader = new FXMLLoader(getClass().getResource("/fxml/DivinitySelection.fxml"));
         Parent playableDivinitiesPane = playableDivinitiesLoader.load();
-        // Scene loginScene = new Scene(loginPane, 750, 500);
         this.playableDivinityRoot = playableDivinitiesPane;
+        //to make scene reseizable
+        Pane p = (Pane) playableDivinitiesPane;
+        p.prefHeightProperty().bind(primaryStage.heightProperty());
+        p.prefWidthProperty().bind(primaryStage.widthProperty());
 
         FXMLLoader playerDivinityLoader = new FXMLLoader(getClass().getResource("/fxml/PlayerDivinitySelection.fxml"));
-        //Parent playableDivinitiesPane = playableDivinitiesLoader.load();
         Parent playerDivinityPane = playerDivinityLoader.load();
-        // Scene loginScene = new Scene(loginPane, 750, 500);
         this.playerDivinityRoot = playerDivinityPane;
 
         FXMLLoader matchLoader = new FXMLLoader(getClass().getResource("/fxml/Match.fxml"));
-        //Parent playableDivinitiesPane = playableDivinitiesLoader.load();
         Parent matchPane = matchLoader.load();
-        // Scene loginScene = new Scene(loginPane, 750, 500);
         this.matchRoot = matchPane;
 
         FXMLLoader disconnectionLoader = new FXMLLoader(getClass().getResource("/fxml/Disconnection.fxml"));
@@ -338,8 +334,6 @@ public class GUI extends Application implements UI {
         FXMLLoader endLoserLoader = new FXMLLoader(getClass().getResource("/fxml/EndGameLoser.fxml"));
         Parent endLoserPane = endLoserLoader.load();
         this.endGameLoserRoot = endLoserPane;
-
-
 
 
 

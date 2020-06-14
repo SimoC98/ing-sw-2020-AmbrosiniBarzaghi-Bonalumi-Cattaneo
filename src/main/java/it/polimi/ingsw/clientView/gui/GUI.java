@@ -243,6 +243,14 @@ public class GUI extends Application implements UI {
     }
 
     @Override
+    public void startGame() {
+        Platform.runLater(() -> {
+            loginController.gameStart();
+        });
+
+    }
+
+    @Override
     public void invalidMove(List<Action> possibleActions, int wrongX, int wrongY) {
 
     }
@@ -311,9 +319,9 @@ public class GUI extends Application implements UI {
         Parent playableDivinitiesPane = playableDivinitiesLoader.load();
         this.playableDivinityRoot = playableDivinitiesPane;
         //to make scene reseizable
-        Pane p = (Pane) playableDivinitiesPane;
-        p.prefHeightProperty().bind(primaryStage.heightProperty());
-        p.prefWidthProperty().bind(primaryStage.widthProperty());
+        Pane p2 = (Pane) playableDivinitiesPane;
+        p2.prefHeightProperty().bind(primaryStage.heightProperty());
+        p2.prefWidthProperty().bind(primaryStage.widthProperty());
 
         FXMLLoader playerDivinityLoader = new FXMLLoader(getClass().getResource("/fxml/PlayerDivinitySelection.fxml"));
         Parent playerDivinityPane = playerDivinityLoader.load();
@@ -322,6 +330,10 @@ public class GUI extends Application implements UI {
         FXMLLoader matchLoader = new FXMLLoader(getClass().getResource("/fxml/Match.fxml"));
         Parent matchPane = matchLoader.load();
         this.matchRoot = matchPane;
+        //to make scene reseizable
+        Pane p3 = (Pane) playableDivinitiesPane;
+        p3.prefHeightProperty().bind(primaryStage.heightProperty());
+        p3.prefWidthProperty().bind(primaryStage.widthProperty());
 
         FXMLLoader disconnectionLoader = new FXMLLoader(getClass().getResource("/fxml/Disconnection.fxml"));
         Parent disconnectionPane = disconnectionLoader.load();

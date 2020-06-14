@@ -570,6 +570,11 @@ public class CLI implements UI{
     }
 
     @Override
+    public void startGame() {
+        System.out.println("\n\nYOUR GAME IS STARTING! PLEASE WAIT...\n\n");
+    }
+
+    @Override
     public void invalidMove(List<Action> possibleActions, int wrongX, int wrongY) {
         StringBuilder s = new StringBuilder();
         s.append("ERROR!");

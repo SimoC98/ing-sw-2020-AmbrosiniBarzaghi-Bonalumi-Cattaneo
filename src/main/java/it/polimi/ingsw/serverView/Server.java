@@ -188,6 +188,7 @@ public class Server{
             match.addObserver(s);
         }
 
+        connections.stream().forEach(x -> x.sendEvent(new GameStart()));
         controller.startGame(new ArrayList<String>(),null);
     }
 

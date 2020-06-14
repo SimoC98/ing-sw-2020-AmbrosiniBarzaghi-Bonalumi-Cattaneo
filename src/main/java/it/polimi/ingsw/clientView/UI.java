@@ -45,6 +45,8 @@ public interface UI {
 
     public void endTurn();
 
+    public void startGame();
+
     //errors
     public void invalidMove(List<Action> possibleActions, int wrongX, int wrongY);
 

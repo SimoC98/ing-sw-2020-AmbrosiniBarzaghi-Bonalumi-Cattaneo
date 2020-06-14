@@ -1,5 +1,6 @@
 package it.polimi.ingsw.clientView.aaaaGUITesting;
 
+import it.polimi.ingsw.clientView.gui.DivinitySelectionController;
 import it.polimi.ingsw.clientView.gui.EndGameWinnerController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -14,6 +15,8 @@ public class FXMLTest extends Application {
 
    private EndGameWinnerController endGameController;
 
+   private DivinitySelectionController divinitySelectionController;
+
     @Override
     public void start(Stage stage) throws Exception {
         /*URL testFXML = new File("/fxml/EndGameWinner.fxml").toURI().toURL();
@@ -21,9 +24,10 @@ public class FXMLTest extends Application {
         Parent testPane = testLoader.load();
         this.gameController = testLoader.getController();*/
 
-        FXMLLoader endLoader = new FXMLLoader(getClass().getResource("/fxml/EndGameWinner.fxml"));
+        FXMLLoader endLoader = new FXMLLoader(getClass().getResource("/fxml/DivinitySelection.fxml"));
         Parent endPane = endLoader.load();
-        this.endGameController = endLoader.getController();
+        //this.endGameController = endLoader.getController();
+        this.divinitySelectionController = endLoader.getController();
 
         Scene game = new Scene(endPane, 1500,1000);
 

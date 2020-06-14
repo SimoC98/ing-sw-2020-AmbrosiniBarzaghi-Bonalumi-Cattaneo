@@ -53,6 +53,8 @@ public class DivinitySelectionController {
     @FXML
     private StackPane sPane;
 
+    ProgressIndicator progress;
+
 
 
     @FXML
@@ -73,8 +75,6 @@ public class DivinitySelectionController {
 
     @FXML
     public void initialize() {
-        GUI g = (GUI)clientView.getUi();
-        Stage stage = g.getPrimaryStage();
 
         /*bPane.prefHeightProperty().bind(stage.heightProperty());
         bPane.prefWidthProperty().bind(stage.widthProperty());*/
@@ -90,9 +90,11 @@ public class DivinitySelectionController {
         godDescription.prefHeightProperty().bind(bPane.heightProperty().divide(1.37));
         godDescription.prefWidthProperty().bind(bPane.widthProperty().divide(2.73));
 
-        godGrid.setPadding(new Insets(10,10,10,10));
+        endVBox.prefHeightProperty().bind(bPane.heightProperty().divide(5));
+        endVBox.prefWidthProperty().bind(bPane.widthProperty());
 
         endVBox.setVisible(false);
+
     }
 
     public DivinitySelectionController() {
@@ -123,8 +125,9 @@ public class DivinitySelectionController {
 
                     god.setImage(godImage);
 
-                    god.fitHeightProperty().bind(bPane.heightProperty().divide(4.55));
-                    god.fitWidthProperty().bind(bPane.widthProperty().divide(12));
+                    //height: 4.55; width 12
+                    god.fitHeightProperty().bind(bPane.heightProperty().divide(4));
+                    god.fitWidthProperty().bind(bPane.widthProperty().divide(11));
 
                     god.maxHeight(220);
                     god.maxWidth(150);
@@ -147,11 +150,12 @@ public class DivinitySelectionController {
     }
 
     private void addCell(Node node, int x, int y,int count) {
-        String back = "/graphics/clp_bg.png";
+        //String back = "/graphics/clp_bg.png";
+        String back = "/graphics/fg_panel4.png";
         ImageView b = new ImageView(new Image(back));
 
-        b.fitHeightProperty().bind(bPane.heightProperty().divide(4.55).add(20));
-        b.fitWidthProperty().bind(bPane.widthProperty().divide(12).add(20));
+        b.fitHeightProperty().bind(bPane.heightProperty().divide(4).add(20));
+        b.fitWidthProperty().bind(bPane.widthProperty().divide(10).add(20));
 
         b.maxHeight(240);
         b.maxWidth(160);
@@ -159,7 +163,7 @@ public class DivinitySelectionController {
         //b.setFitHeight(240);
         //b.setFitWidth(160);
 
-        godGrid.add(new StackPane(b,node),x,y);
+        godGrid.add(new StackPane(node,b),x,y);
 
         GridPane.setHgrow(node, Priority.ALWAYS);
         GridPane.setVgrow(node,Priority.ALWAYS);
@@ -207,7 +211,7 @@ public class DivinitySelectionController {
             god.isPreserveRatio();
 
             String clip = "/graphics/clp_bg.png";
-            ImageView c = new ImageView(new Image(back));
+            ImageView c = new ImageView(new Image(clip));
             //c.setFitHeight(390);
             //c.setFitWidth(280);
             c.fitHeightProperty().bind(godDescription.heightProperty().divide(1.8).add(60));
@@ -312,14 +316,15 @@ public class DivinitySelectionController {
 
                     if(chosenGods.size()==playerNumber) {
                         StringBuilder s = new StringBuilder();
-                        s.append("You chose: ");
+                        /*s.append("You chose: ");
                         chosenGods.stream().forEach(z -> s.append(z + " "));
-                        s.append("\n");
+                        s.append("\n");*/
                         s.append("WAIT OTHER PLAYERS...");
                         labelTxt.setText(s.toString());
                         labelTxt.setFont(new Font(18));
 
                         endVBox.setVisible(true);
+                        endVBox.setSpacing(5);
 
                         nodeListenersOff = true;
 

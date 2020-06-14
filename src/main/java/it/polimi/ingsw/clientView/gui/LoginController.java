@@ -126,4 +126,16 @@ public class LoginController {
 
     }
 
+    public void gameStart() {
+        messages.getChildren().clear();
+        Label label = new Label();
+        label.setFont(new Font(18));
+        label.setText("YOUR GAME IS STARTING! PLEASE WAIT...");
+
+        ProgressIndicator progress = new ProgressIndicator();
+        progress.setMaxSize(50,50);
+
+        messages.getChildren().addAll(label,progress);
+    }
+
 }

@@ -37,11 +37,14 @@
                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
                          </rowConstraints>
+                     <VBox.margin>
+                        <Insets bottom="50.0" left="50.0" right="50.0" top="30.0" />
+                     </VBox.margin>
                      </GridPane>
                   <VBox fx:id="endVBox" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" spacing="20.0" visible="false" VBox.vgrow="ALWAYS">
                      <children>
                         <Label fx:id="labelTxt" text="Label" />
-                        <ProgressIndicator />
+                        <ProgressIndicator fx:id="progress" maxHeight="40.0" maxWidth="40.0" prefHeight="40.0" prefWidth="40.0" />
                      </children>
                   </VBox>
                </children>

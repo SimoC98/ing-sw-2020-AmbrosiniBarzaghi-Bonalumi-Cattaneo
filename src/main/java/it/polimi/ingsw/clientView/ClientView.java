@@ -290,6 +290,9 @@ public class ClientView implements Observer<ServerEvent> {
         ui.invalidWorkerSelection(wrongX, wrongY);
     }
 
+    public void startGame() {
+        ui.startGame();
+    }
 
     @Override
     public void update(ServerEvent event) {

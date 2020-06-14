@@ -252,11 +252,18 @@ public class GUI extends Application implements UI {
 
     @Override
     public void invalidMove(List<Action> possibleActions, int wrongX, int wrongY) {
-
+        Platform.runLater(() -> {
+            matchController.textMessage("ERROR", "Something went wrong with your move", "Please, repeat the action!");
+            matchController.handlePossibleActions(possibleActions);
+        });
     }
 
     @Override
     public void invalidBuild(List<Action> possibleActions, int wrongX, int wrongY) {
+        Platform.runLater(() -> {
+            matchController.textMessage("ERROR", "Something went wrong with your move", "Please, repeat the action!");
+            matchController.handlePossibleActions(possibleActions);
+        });
 
     }
 

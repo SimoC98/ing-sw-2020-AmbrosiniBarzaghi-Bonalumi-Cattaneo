@@ -9,6 +9,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.effect.Light;
+import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -82,6 +84,13 @@ public class MatchController {
     }
 
     public void createBoard() {
+        Light.Distant light = new Light.Distant();
+        light.setAzimuth(-135.0);
+
+        Lighting lighting = new Lighting();
+        lighting.setLight(light);
+        lighting.setSurfaceScale(4.0);
+
         for(int i=0; i<board.getColumnCount(); i++) {
             for(int j=0; j<board.getRowCount(); j++) {
                 StackPane s = new StackPane();
@@ -471,5 +480,9 @@ public class MatchController {
                 cell.getChildren().get(SHADOW).setVisible(false);
             }
         }
+    }
+
+    public void endTurn() {
+        message.setText("YOUR TURN IS ENDED");
     }
 }

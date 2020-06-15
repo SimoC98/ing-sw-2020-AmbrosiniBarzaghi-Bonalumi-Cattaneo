@@ -84,13 +84,6 @@ public class MatchController {
     }
 
     public void createBoard() {
-        Light.Distant light = new Light.Distant();
-        light.setAzimuth(-135.0);
-
-        Lighting lighting = new Lighting();
-        lighting.setLight(light);
-        lighting.setSurfaceScale(4.0);
-
         for(int i=0; i<board.getColumnCount(); i++) {
             for(int j=0; j<board.getRowCount(); j++) {
                 StackPane s = new StackPane();
@@ -118,7 +111,6 @@ public class MatchController {
                 selectableShade.setOpacity(0.4);
                 selectableShade.setVisible(false);
                 s.getChildren().add(selectableShade);
-
 
 
                 board.add(s, i, j);

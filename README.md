@@ -9,7 +9,7 @@
 
 | Functionality | State |
 |:-----------------------|:------------------------------------:|
-| Basic rules | [![RED](https://placehold.it/15/f03c15/f03c15)](#) |
+| Basic rules |  [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
 | Complete rules | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
 | Socket | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |
 | GUI | [![GREEN](https://placehold.it/15/44bb44/44bb44)](#) |

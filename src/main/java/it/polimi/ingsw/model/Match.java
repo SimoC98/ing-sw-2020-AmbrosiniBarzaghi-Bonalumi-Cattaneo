@@ -491,7 +491,7 @@ public class Match extends Observable<ServerEvent> {
         for(int i=0; i<possibleActions.size(); i++) {
             Action a = possibleActions.get(i);
             List<Pair<Integer,Integer>> availableTiles = new ArrayList<>();
-            List<Tile> l = null;
+            List<Tile> l = new ArrayList<>();
 
             switch (a) {
                 case MOVE: {
@@ -506,7 +506,10 @@ public class Match extends Observable<ServerEvent> {
                 case END: break;
             }
 
-            l.stream().forEach(x -> availableTiles.add(new Pair<>(x.getX(),x.getY())));
+            for(int j=0; j<l.size();j++) {
+                availableTiles.add(new Pair<>(l.get(j).getX(),l.get(j).getY()));
+
+            }
 
             map.put(a,availableTiles);
 

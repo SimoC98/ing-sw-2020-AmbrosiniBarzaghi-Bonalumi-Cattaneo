@@ -2,6 +2,7 @@ package it.polimi.ingsw.serverView;
 
 import it.polimi.ingsw.Observable;
 import it.polimi.ingsw.Observer;
+import it.polimi.ingsw.Pair;
 import it.polimi.ingsw.events.serverToClient.*;
 import it.polimi.ingsw.events.clientToServer.ClientEvent;
 import it.polimi.ingsw.model.Action;
@@ -72,7 +73,7 @@ public class ServerView extends Observable<ClientEvent> implements Observer<Serv
      * {@link PossibleActionsEvent}
      * @param possibleActions list taken from controller and thus from model
      */
-    public void askAction(List<Action> possibleActions){
+    public void askAction(Map<Action,List<Pair<Integer,Integer>>> possibleActions){
         sendEvent(new PossibleActionsEvent(possibleActions));
     }
 
@@ -147,11 +148,11 @@ public class ServerView extends Observable<ClientEvent> implements Observer<Serv
         proxy.sendEvent(new EndTurnEvent());
     }
 
-    public void invalidMove(List<Action> possileActions, int wrongX, int wrongY) {
+    public void invalidMove(Map<Action,List<Pair<Integer,Integer>>> possileActions, int wrongX, int wrongY) {
         sendEvent(new InvalidMoveEvent(possileActions,wrongX,wrongY));
     }
 
-    public void invalidBuild(List<Action> possileActions, int x, int y) {
+    public void invalidBuild(Map<Action,List<Pair<Integer,Integer>>>possileActions, int x, int y) {
         sendEvent(new InvalidBuildEvent(possileActions,x,y));
     }
 
@@ -170,7 +171,7 @@ public class ServerView extends Observable<ClientEvent> implements Observer<Serv
      * @param event
      */
     private void sendEvent(ServerEvent event) {
-        proxy.sendEvent(event);
+        if(proxy!=null)  proxy.sendEvent(event);
     }
 
     /**
@@ -182,7 +183,7 @@ public class ServerView extends Observable<ClientEvent> implements Observer<Serv
     }
 
     public void stopPing() {
-        proxy.stopPing();
+        if(proxy!=null) proxy.stopPing();
     }
 
     /**

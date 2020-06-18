@@ -292,7 +292,7 @@ public class CLI implements UI{
             } while (selection <= 0 || selection > divinitiesNames.size() + 1);
 
             if (selection == divinitiesNames.size() + 1) {
-                printDescriptions();
+                printDescriptions(divinitiesNames);
                 System.out.println("\n\n\n");
                 System.out.println("You have to select your divinity. Choose from:");
                 for (int i = 0; i < divinitiesNames.size(); i++)
@@ -416,7 +416,7 @@ public class CLI implements UI{
 
 
     @Override
-    public void performAction(List<Action> possibleActions) {
+    public void performAction(Map<Action, List<Pair<Integer, Integer>>> possibleActions) {
 
         synchronized (lock) {
 
@@ -424,7 +424,11 @@ public class CLI implements UI{
             //System.out.println("Now you have to select the action you want your worker to perform.");
         }
         updateBoard();
-        printActions(possibleActions);
+
+        List<Action> l = new ArrayList<>();
+        possibleActions.keySet().stream().forEach(x -> l.add(x));
+
+        printActions(l);
 
         String inputAction;
         boolean done = false;
@@ -438,34 +442,35 @@ public class CLI implements UI{
             switch (inputAction) {
                 case "m":
                     action = Action.MOVE;
-                    done = true;
+                    //done = true;
                     break;
 
                 case "b":
                     action = Action.BUILD;
-                    done = true;
+                    //done = true;
                     break;
 
                 case "d":
                     action = Action.BUILDDOME;
-                    done = true;
+                    //done = true;
                     break;
 
                 case "e":
                     action = Action.END;
-                    done = true;
+                    //done = true;
                     break;
 
                 case "div":
-                    printDescriptions();
+                    printDescriptions(new ArrayList<>(board.getDivinities().keySet()));
                     updateBoard();
-                    printActions(possibleActions);
+                    printActions(l);
                     break;
 
                 case "up":
                     updateBoard();
-                    printActions(possibleActions);
+                    printActions(l);
             }
+            if(l.contains(action)) done = true;
         }while(!done);
 
         String inputTile;
@@ -575,7 +580,7 @@ public class CLI implements UI{
     }
 
     @Override
-    public void invalidMove(List<Action> possibleActions, int wrongX, int wrongY) {
+    public void invalidMove(Map<Action, List<Pair<Integer, Integer>>> possibleActions, int wrongX, int wrongY) {
         StringBuilder s = new StringBuilder();
         s.append("ERROR!");
 
@@ -594,7 +599,7 @@ public class CLI implements UI{
     }
 
     @Override
-    public void invalidBuild(List<Action> possibleActions, int wrongX, int wrongY) {
+    public void invalidBuild(Map<Action, List<Pair<Integer, Integer>>> possibleActions, int wrongX, int wrongY) {
         StringBuilder s = new StringBuilder();
         s.append("ERROR!");
 
@@ -746,7 +751,7 @@ public class CLI implements UI{
         System.out.println();
     }
 
-    private void printDescriptions() {
+    private void printDescriptions(List<String> divinities) {
         Map<String, String> divDescriptions = board.getDivinities();
         List<String> divNames = new ArrayList<>(divDescriptions.keySet());
 
@@ -756,8 +761,11 @@ public class CLI implements UI{
             System.out.println("Choose the divinity which you want to read the description:");
 
             System.out.println("\t0) Quit");
-            for (int i = 0; i < divNames.size(); i++)
-                System.out.println("\t" + (i + 1) + ") " + divNames.get(i));
+            for (int i = 0; i < divinities.size(); i++){
+                //System.out.println("\t" + (i + 1) + ") " + divNames.get(i));
+                System.out.println("\t" + (i + 1) + ") " + divinities.get(i));
+
+            }
 
             int selection = -1;
             String input;
@@ -766,12 +774,12 @@ public class CLI implements UI{
                 input = scanner.nextLine();
                 if(input.matches("[0-9]+"))
                     selection = Integer.parseInt(input);
-            } while (selection < 0 || selection > divNames.size());
+            } while (selection < 0 || selection > divinities.size());
 
             if (selection == 0)
                 return;
             else
-                System.out.println("\t" + divDescriptions.get(divNames.get(selection-1)) + "\n");
+                System.out.println("\t" + divDescriptions.get(divinities.get(selection-1)) + "\n");
         }
     }
 

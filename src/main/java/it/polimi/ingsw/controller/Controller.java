@@ -1,6 +1,7 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.Observer;
+import it.polimi.ingsw.Pair;
 import it.polimi.ingsw.XMLparser.XMLParserUtility;
 import it.polimi.ingsw.events.clientToServer.ClientEvent;
 import it.polimi.ingsw.model.Action;
@@ -10,7 +11,6 @@ import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.serverView.ServerView;
 
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -94,7 +94,7 @@ public class Controller implements Observer<ClientEvent> {
         } catch (InvalidMoveException e1) {
             //playersInGame.get(currentPlayerId).showMessage("error");
             //nextActionHandler();
-            playersInGame.get(currentPlayerId).invalidMove(model.getCurrentPlayer().getPossibleActions(),x,y);
+            playersInGame.get(currentPlayerId).invalidMove(model.getPossibleActions(),x,y);
         } catch (InterruptedException e2) {
             e2.printStackTrace();
         }
@@ -116,14 +116,14 @@ public class Controller implements Observer<ClientEvent> {
         } catch (InvalidBuildException e1) {
             //playersInGame.get(currentPlayerId).showMessage("error");
             //nextActionHandler();
-            playersInGame.get(currentPlayerId).invalidBuild(model.getCurrentPlayer().getPossibleActions(),x,y);
+            playersInGame.get(currentPlayerId).invalidBuild(model.getPossibleActions(),x,y);
         } catch (InterruptedException e2) {
             e2.printStackTrace();
         }
     }
 
     public void nextActionHandler() {
-       List<Action> possibleActions =  model.getCurrentPlayer().getPossibleActions();
+        Map<Action,List<Pair<Integer,Integer>>> possibleActions =  model.getPossibleActions();
 
         if(possibleActions.size()==0) {
             //playersInGame.get(currentPlayerId).showMessage("your turn is ended");
@@ -137,26 +137,32 @@ public class Controller implements Observer<ClientEvent> {
 
     public void handleStartNextTurn() {
         model.startNextTurn();
-        currentPlayerId = model.getCurrentPlayerId();
+        this.currentPlayerId = model.getCurrentPlayerId();
 
         boolean isLoser = model.checkLoser();
         if(isLoser) {
-            if(playersInGame.size()==2) {
-                System.out.println("\n\ncheck disconnecting all");
-                disconnectAll();
-            }
-            else {
-               // playersInGame.get(currentPlayerId).disconnect();
-                playersInGame.get(currentPlayerId).stopPing();
-                //String message = "User " + playersUsernames.get(currentPlayerId) + " has been disconnected. You remain in " + playersInGame.size();
-                playersInGame.remove(playersInGame.get(currentPlayerId));
-                playersUsernames.remove(playersUsernames.get(currentPlayerId));
-                //sendMessageToAll(message);
-                currentPlayerId = model.getCurrentPlayerId();
-                playersInGame.get(currentPlayerId).startTurn(playersUsernames.get(currentPlayerId));
-            }
+            manageLoser();
         }
-        else playersInGame.get(currentPlayerId).startTurn(playersUsernames.get(currentPlayerId));
+        else {
+            playersInGame.get(currentPlayerId).startTurn(playersUsernames.get(currentPlayerId));
+        }
+    }
+
+    public void manageLoser() {
+        if(playersInGame.size()==2) {
+            System.out.println("\n\ncheck disconnecting all");
+            disconnectAll();
+        }
+        else {
+            // playersInGame.get(currentPlayerId).disconnect();
+            playersInGame.get(currentPlayerId).stopPing();
+            //String message = "User " + playersUsernames.get(currentPlayerId) + " has been disconnected. You remain in " + playersInGame.size();
+            playersInGame.remove(playersInGame.get(currentPlayerId));
+            playersUsernames.remove(playersUsernames.get(currentPlayerId));
+            //sendMessageToAll(message);
+            this.currentPlayerId = model.getCurrentPlayerId();
+            playersInGame.get(currentPlayerId).startTurn(playersUsernames.get(currentPlayerId));
+        }
     }
 
     public void disconnectAll() {
@@ -209,6 +215,26 @@ public class Controller implements Observer<ClientEvent> {
         }
     }
 
+    public int getStartPlayer() {
+        return startPlayer;
+    }
+
+    public List<ServerView> getPlayersInGame() {
+        return playersInGame;
+    }
+
+    public List<String> getPlayersUsernames() {
+        return playersUsernames;
+    }
+
+    public int getCurrentPlayerId() {
+        return currentPlayerId;
+    }
+
+    public void setStartPlayer(String player) {
+        this.startPlayer = playersUsernames.indexOf(player);
+    }
+
 
     public void handleDivinityInitialization(String divinity) {
         //boolean endInitialization=false;
@@ -257,7 +283,10 @@ public class Controller implements Observer<ClientEvent> {
             currentPlayerId = model.getCurrentPlayerId();
 
             if(model.getCurrentPlayerId() == this.startPlayer) {
-                playersInGame.get(currentPlayerId).startTurn(playersUsernames.get(currentPlayerId));
+                boolean loser = model.checkLoser();
+                if(loser) manageLoser();
+                else playersInGame.get(currentPlayerId).startTurn(playersUsernames.get(currentPlayerId));
+                //playersInGame.get(currentPlayerId).startTurn(playersUsernames.get(currentPlayerId));
             }
             else {
                 playersInGame.get(currentPlayerId).sendWorkerInitialization();
@@ -269,44 +298,6 @@ public class Controller implements Observer<ClientEvent> {
             playersInGame.get(currentPlayerId).invalidWorkerPlacement();
         }
     }
-
-
-
-
-    //OLD
-    public void gameInitialization(int x1,int y1, int x2, int y2, String chosenDivinity) {
-        boolean endInitialization=false;
-        if(gameDivinities.size()==1) endInitialization=true;
-
-        currentPlayerId = model.getCurrentPlayerId();
-
-        try {
-            model.playerInitialization(x1,y1,x2,y2,chosenDivinity);
-            currentPlayerId = model.getCurrentPlayerId();
-
-            gameDivinities.remove(chosenDivinity);
-
-            if(endInitialization) {
-                for(ServerView s : playersInGame) {
-                    //s.startGame(model.getPlayersUsernames(), model.getPlayersColors(), model.getPlayersDivinities(), model.getPlayersDivinitiesDescriptions());
-                    s.sendDivinitiesSetup(model.getPlayersUsernames(),model.getPlayersDivinities());
-                }
-
-                playersInGame.get(currentPlayerId).startTurn(playersUsernames.get(currentPlayerId));
-            }
-            else {
-                playersInGame.get(currentPlayerId).sendDivinityInitialization(new ArrayList<>(gameDivinities));
-            }
-
-        } catch (WorkerBadPlacementException | InvalidDivinitySelectionEvent e) {
-            playersInGame.get(currentPlayerId).showMessage("error");
-            playersInGame.get(currentPlayerId).sendDivinityInitialization(new ArrayList<>(gameDivinities));
-        }
-
-    }
-
-
-
 
     @Override
     public void update(ClientEvent event) {

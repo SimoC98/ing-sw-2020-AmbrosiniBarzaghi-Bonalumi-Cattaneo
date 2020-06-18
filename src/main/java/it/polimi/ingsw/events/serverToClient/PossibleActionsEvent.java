@@ -1,20 +1,22 @@
 package it.polimi.ingsw.events.serverToClient;
 
+import it.polimi.ingsw.Pair;
 import it.polimi.ingsw.clientView.ClientView;
 import it.polimi.ingsw.clientView.PingReceiver;
 import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.serverView.ServerView;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * List containing the actions a user can select: move, build, builddome, end
  */
 public class PossibleActionsEvent implements ServerEvent {
 
-    private final List<Action> possibleActions;
+    private final Map<Action,List<Pair<Integer,Integer>>> possibleActions;
 
-    public PossibleActionsEvent(List<Action> possibleActions){
+    public PossibleActionsEvent(Map<Action, List<Pair<Integer, Integer>>> possibleActions) {
         this.possibleActions = possibleActions;
     }
 

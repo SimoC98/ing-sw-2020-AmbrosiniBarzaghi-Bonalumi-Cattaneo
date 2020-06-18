@@ -56,6 +56,7 @@ public class Board {
                 }
             }
         }
+        list.add(t);
         return list;
     }
 

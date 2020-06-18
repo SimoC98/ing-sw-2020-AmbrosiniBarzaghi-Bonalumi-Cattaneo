@@ -1,5 +1,6 @@
 package it.polimi.ingsw.clientView.gui;
 
+import it.polimi.ingsw.Pair;
 import it.polimi.ingsw.clientView.BoardRepresentation;
 import it.polimi.ingsw.clientView.ClientView;
 import it.polimi.ingsw.clientView.UI;
@@ -14,7 +15,9 @@ import javafx.stage.Stage;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class GUI extends Application implements UI {
 
@@ -165,7 +168,10 @@ public class GUI extends Application implements UI {
         });
     }
 
-    public void performAction(List<Action> possibleActions) {
+    public void performAction(Map<Action, List<Pair<Integer, Integer>>> possibleActions) {
+        List<Action> l = new ArrayList<>();
+        possibleActions.keySet().stream().forEach(x -> l.add(x));
+
         Platform.runLater(() -> {
             matchController.handlePossibleActions(possibleActions);
         });
@@ -176,6 +182,18 @@ public class GUI extends Application implements UI {
         TODO: loser --> on the right side communication that has lost; keep receiving notifications and board updates
               not loser --> communication of loser (alert?)
          */
+
+        Platform.runLater(() -> {
+            matchController.manageLoserPlayer();
+
+            if(username.equals(clientView.getUsername())) {
+                matchController.loserPlayer();
+            }
+            else {
+                matchController.textMessage("LOSER","user " + username + "has lost","fffffffffff");
+            }
+        });
+
     }
 
     public void winner(String username) {
@@ -250,7 +268,10 @@ public class GUI extends Application implements UI {
     }
 
     @Override
-    public void invalidMove(List<Action> possibleActions, int wrongX, int wrongY) {
+    public void invalidMove(Map<Action, List<Pair<Integer, Integer>>> possibleActions, int wrongX, int wrongY) {
+        List<Action> l = new ArrayList<>();
+        possibleActions.keySet().stream().forEach(x -> l.add(x));
+
         Platform.runLater(() -> {
             matchController.textMessage("ERROR", "Something went wrong with your move", "Please, repeat the action!");
             matchController.handlePossibleActions(possibleActions);
@@ -258,7 +279,10 @@ public class GUI extends Application implements UI {
     }
 
     @Override
-    public void invalidBuild(List<Action> possibleActions, int wrongX, int wrongY) {
+    public void invalidBuild(Map<Action, List<Pair<Integer, Integer>>> possibleActions, int wrongX, int wrongY) {
+        List<Action> l = new ArrayList<>();
+        possibleActions.keySet().stream().forEach(x -> l.add(x));
+
         Platform.runLater(() -> {
             matchController.textMessage("ERROR", "Something went wrong with your move", "Please, repeat the action!");
             matchController.handlePossibleActions(possibleActions);
@@ -277,6 +301,10 @@ public class GUI extends Application implements UI {
     @Override
     public void invalidWorkerSelection(int wrongX, int wrongY) {
         System.out.println("errore selezione worker");
+
+        Platform.runLater(() -> {
+            matchController.setActionSelectWorker();
+        });
     }
 
     @Override

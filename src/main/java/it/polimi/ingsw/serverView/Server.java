@@ -89,6 +89,7 @@ public class Server{
         printUsers();
 
         if(isGameStarted && loggedPlayers.size()==0) {
+            connections.clear();
             isGameStarted=false;
         }
     }
@@ -152,7 +153,7 @@ public class Server{
                     public void run() {
                         startMatch();
                     }
-                },3000);
+                },30000);
             }).start();
 
 
@@ -167,6 +168,7 @@ public class Server{
      */
     private void startMatch() {
         System.out.println("GAME START\n");
+        //this.playerGameNumber = connections.size();
         isGameStarted=true;
 
         List<ServerView> users = new ArrayList<>();
@@ -212,14 +214,15 @@ public class Server{
      */
     protected void disconnectAll(ServerSocketHandler connection){
 
-        for(int i=0;i<connections.size();i++) {
+        for(int i=0; i<connections.size(); i++) {
             ServerSocketHandler s = connections.get(i);
             if(!s.equals(connection)) {
                 s.sendEvent(new PlayerDisconnectionEvent(loggedPlayers.get(connection)));
                 s.stopPing();
-                s.close();
             }
+
         }
+
 
         System.out.println("this match is ended...\n\n\n");
         /*try {

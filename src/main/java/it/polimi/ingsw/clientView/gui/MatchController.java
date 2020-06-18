@@ -43,6 +43,8 @@ public class MatchController {
 
     private List<Pair<Integer,Integer>> workerPlacement = new ArrayList<>();
 
+    private Map<Action,List<Pair<Integer,Integer>>> possibleActions;
+
 
 
     public MatchController() {
@@ -184,6 +186,7 @@ public class MatchController {
         actualAction = "default";
 
         emptyPossibleActions();
+        setShadowOff();
         clientView.actionQuestion(Action.MOVE,x,y);
     }
 
@@ -196,6 +199,7 @@ public class MatchController {
         actualAction = "default";
 
         emptyPossibleActions();
+        setShadowOff();
         clientView.actionQuestion(Action.BUILD,x,y);
     }
 
@@ -208,19 +212,24 @@ public class MatchController {
         actualAction = "default";
 
         emptyPossibleActions();
+        setShadowOff();
         clientView.actionQuestion(Action.BUILDDOME,x,y);
     }
 
-    public void handlePossibleActions(List<Action> possibleActions) {
+    public void handlePossibleActions(Map<Action,List<Pair<Integer,Integer>>> possibleActions) {
+        this.possibleActions = possibleActions;
+
         message.setText("Choose the action\nto perform: ");
 
         List<Button> actionButtons = new ArrayList<>();
-        for(Action action : possibleActions) {
+        for(Action action : possibleActions.keySet()) {
             System.out.println(action.toString());
 
             Button actionBtn = new Button(action.toString());
             actionBtn.setOnMouseClicked((event) -> {
                 actualAction = action.toString().toLowerCase();
+                setShadowOff();
+                markAvailableTiles(action);
 //                emptyPossibleActions();
                 if(action != Action.END)
                     message.setText("Choose tile to\n" + action.toString());
@@ -253,6 +262,7 @@ public class MatchController {
 
         if(selectedColor!=null && selectedColor.equals(color)) {
             System.out.println("Worker Selected");
+            setShadowOff();
             clientView.selectWorkerQuestion(x,y);
         }
 
@@ -423,7 +433,7 @@ public class MatchController {
         StackPane s = (StackPane) board.getChildren().get(board.getRowCount()*y + x);
         StackPane shadow = (StackPane) s.getChildren().get(SHADOW);
 
-        //shadow.setVisible(val);
+        shadow.setVisible(val);
     }
 
     public void focusWorkers(boolean value) {
@@ -476,5 +486,33 @@ public class MatchController {
 
     public void endTurn() {
         message.setText("YOUR TURN IS ENDED");
+    }
+
+    public void markAvailableTiles(Action action) {
+        List<Pair<Integer,Integer>> availableTiles = possibleActions.get(action);
+
+        for(int i=0; i<availableTiles.size();i++) {
+            Pair<Integer,Integer> cell = availableTiles.get(i);
+
+            StackPane s = (StackPane) getBoardCell(cell.getFirst(),cell.getSecond());
+
+            s.getChildren().get(SHADOW).setVisible(true);
+        }
+    }
+
+    public void loserPlayer() {
+        message.setText("FFFFFFFFFFF");
+    }
+
+    public void manageLoserPlayer() {
+        for(int i=0; i<5; i++) {
+            for(int j=0; j<5; j++) {
+                StackPane s = (StackPane) getBoardCell(i,j);
+                if(clientView.getBoard().isThereAWorker(i,j)==null) {
+                    ImageView worker = (ImageView) s.getChildren().get(WORKER);
+                    worker.setImage(null);
+                }
+            }
+        }
     }
 }

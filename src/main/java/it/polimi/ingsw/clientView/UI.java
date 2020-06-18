@@ -1,8 +1,10 @@
 package it.polimi.ingsw.clientView;
 
+import it.polimi.ingsw.Pair;
 import it.polimi.ingsw.model.Action;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UI {
 
@@ -29,7 +31,7 @@ public interface UI {
 
     public void selectWorker();
 
-    public void performAction(List<Action> possibleActions);
+    public void performAction(Map<Action, List<Pair<Integer, Integer>>> possibleActions);
 
     public void loser(String username);
 
@@ -48,9 +50,9 @@ public interface UI {
     public void startGame();
 
     //errors
-    public void invalidMove(List<Action> possibleActions, int wrongX, int wrongY);
+    public void invalidMove(Map<Action, List<Pair<Integer, Integer>>> possibleActions, int wrongX, int wrongY);
 
-    public void invalidBuild(List<Action> possibleActions, int wrongX, int wrongY);
+    public void invalidBuild(Map<Action, List<Pair<Integer, Integer>>> possibleActions, int wrongX, int wrongY);
 
     public void invalidWorkerPlacement();
 

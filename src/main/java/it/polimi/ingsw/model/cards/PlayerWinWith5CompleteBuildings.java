@@ -30,11 +30,14 @@ public class PlayerWinWith5CompleteBuildings extends SetEffectOnOpponent{
     private int checkCompleteTowersNumber(Board b) {
         int count=0;
 
-        for(int i=0;i<5;i++) {
-            for(int j=0;j<5;j++) {
-                if(b.getTile(i,j).getLevel()==3 && b.getTile(i,j).isDome()) count++;
+       if(board!=null) {
+            for(int i=0;i<5;i++) {
+                for(int j=0;j<5;j++) {
+                    if(b.getTile(i,j).getLevel()==3 && b.getTile(i,j).isDome()) count++;
+                }
             }
         }
+
         return count;
     }
 

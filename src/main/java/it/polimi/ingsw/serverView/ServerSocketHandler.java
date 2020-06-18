@@ -61,16 +61,14 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
                 else notify(event);
             }
         }catch (Exception e) {
-            //e.printStackTrace();
+            e.printStackTrace();
             e.getMessage();
-
             try {
                 socket.close();
                 in.close();
                 out.close();
-                System.out.println("socket closed --> client disc");
             } catch (IOException ioException) {
-                ioException.printStackTrace();
+                //ioException.printStackTrace();
             }
         }
     }
@@ -85,8 +83,7 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
             out.flush();
         } catch (Exception e) {
             e.getMessage();
-            //disconnect();
-            //e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
@@ -95,13 +92,12 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
             in.close();
             out.close();
             socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            e.getMessage();
+        } finally {
             server.unregisterConnection(this);
             stopPing();
-
-            System.out.println("socket closed!!");
-        } catch (IOException e) {
-            //e.printStackTrace();
-            e.getMessage();
         }
     }
 

@@ -1,11 +1,13 @@
 package it.polimi.ingsw;
 
+import java.io.Serializable;
+
 /**
  * Custom class created to easily send packages through the socket
  * @param <T>
  * @param <V>
  */
-public class Pair<T, V> {
+public class Pair<T, V> implements Serializable {
     private T first;
     private V second;
 

@@ -58,6 +58,7 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
             }
         } catch(Exception e) {
             //notify(new Disconnect());
+            e.printStackTrace();
         }
 
 
@@ -74,7 +75,7 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
            socket.close();
         }
         catch(Exception e) {
-            //e.printStackTrace();
+            e.printStackTrace();
             e.getMessage();
         }
     }
@@ -85,39 +86,8 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
             out.writeObject(event);
             out.flush();
         } catch (IOException e) {
+            e.printStackTrace();
             //notify(new Disconnect());
         }
     }
-
-
-
-
-
-
-//    private void connectionConfigParser() throws IOException {
-//        File xmlFile = new File("resources/connection_config.xml");
-//
-//        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-//        DocumentBuilder builder = null;
-//        try {
-//            builder = factory.newDocumentBuilder();
-//        } catch (ParserConfigurationException e) {
-//            e.printStackTrace();
-//        }
-//        Document doc = null;
-//        try {
-//            if (builder != null) {
-//                doc = builder.parse(xmlFile);
-//            }
-//        } catch (SAXException | IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        String hostname = doc.getDocumentElement().getElementsByTagName("hostname").item(0).getTextContent();
-//        int port = Integer.parseInt(doc.getDocumentElement().getElementsByTagName("port").item(0).getTextContent());
-//        System.out.println("Config red: " + hostname + " " + port);
-//
-//        socket = new Socket(hostname, port);
-//    }
-
 }

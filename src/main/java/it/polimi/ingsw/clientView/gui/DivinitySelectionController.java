@@ -120,7 +120,8 @@ public class DivinitySelectionController {
                 if(count<divinities.size()) {
                     ImageView god = new ImageView();
 
-                    Image godImage = new Image("/graphics/" + divinities.get(count).toLowerCase() + ".png");
+                    //Image godImage = new Image("/graphics/" + divinities.get(count).toLowerCase() + ".png");
+                    Image godImage = new Image(getClass().getResource("/graphics/" + divinities.get(count).toLowerCase() + ".png").toExternalForm());
 
 
                     god.setImage(godImage);
@@ -152,7 +153,7 @@ public class DivinitySelectionController {
     private void addCell(Node node, int x, int y,int count) {
         //String back = "/graphics/clp_bg.png";
         String back = "/graphics/fg_panel4.png";
-        ImageView b = new ImageView(new Image(back));
+        ImageView b = new ImageView(new Image(getClass().getResource(back).toExternalForm()));
 
         b.fitHeightProperty().bind(bPane.heightProperty().divide(4).add(20));
         b.fitWidthProperty().bind(bPane.widthProperty().divide(10).add(20));
@@ -201,7 +202,7 @@ public class DivinitySelectionController {
             nodeListenersOff = true;
 
             ImageView god = new ImageView();
-            Image godImg = new Image("/graphics/" + divinities.get(count).toLowerCase() + ".png");
+            Image godImg = new Image(getClass().getResource("/graphics/" + divinities.get(count).toLowerCase() + ".png").toExternalForm());
             god.setImage(godImg);
             //god.setFitHeight(350);
             //god.setFitWidth(250);

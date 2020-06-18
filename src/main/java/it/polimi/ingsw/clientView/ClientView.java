@@ -1,6 +1,7 @@
 package it.polimi.ingsw.clientView;
 
 import it.polimi.ingsw.Observer;
+import it.polimi.ingsw.Pair;
 import it.polimi.ingsw.events.clientToServer.*;
 import it.polimi.ingsw.events.serverToClient.ServerEvent;
 import it.polimi.ingsw.model.Action;
@@ -232,7 +233,7 @@ public class ClientView implements Observer<ServerEvent> {
         ui.selectWorker();
     }
 
-    public void managePossibleActions(List<Action> possibleActions){
+    public void managePossibleActions(Map<Action,List<Pair<Integer,Integer>>> possibleActions){
         ui.performAction(possibleActions);
     }
 
@@ -274,11 +275,11 @@ public class ClientView implements Observer<ServerEvent> {
         ui.endTurn();
     }
 
-    public void manageInvalidMove(List<Action> possibleActions, int wrongX, int wrongY) {
+    public void manageInvalidMove(Map<Action,List<Pair<Integer,Integer>>> possibleActions, int wrongX, int wrongY) {
         ui.invalidMove(possibleActions,wrongX,wrongY );
     }
 
-    public void manageInvalidBuild(List<Action> possibleActions,int wrongX,int wrongY) {
+    public void manageInvalidBuild(Map<Action,List<Pair<Integer,Integer>>> possibleActions,int wrongX,int wrongY) {
         ui.invalidBuild(possibleActions, wrongX, wrongY);
     }
 

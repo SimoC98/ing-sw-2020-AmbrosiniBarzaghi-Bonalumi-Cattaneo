@@ -347,6 +347,10 @@ public class GUI extends Application implements UI {
         FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));
         Parent loginPane = loginLoader.load();
         this.loginRoot = loginPane;
+        //to make scene reseizable
+        /*Pane p1 = (Pane) loginPane;
+        p1.prefHeightProperty().bind(primaryStage.heightProperty());
+        p1.prefWidthProperty().bind(primaryStage.widthProperty());*/
 
 
         FXMLLoader playableDivinitiesLoader = new FXMLLoader(getClass().getResource("/fxml/DivinitySelection.fxml"));
@@ -365,7 +369,7 @@ public class GUI extends Application implements UI {
         Parent matchPane = matchLoader.load();
         this.matchRoot = matchPane;
         //to make scene reseizable
-        Pane p3 = (Pane) playableDivinitiesPane;
+        Pane p3 = (Pane) matchPane;
         p3.prefHeightProperty().bind(primaryStage.heightProperty());
         p3.prefWidthProperty().bind(primaryStage.widthProperty());
 

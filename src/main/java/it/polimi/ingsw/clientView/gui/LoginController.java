@@ -9,8 +9,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -21,6 +24,25 @@ import java.util.List;
 import static java.lang.System.exit;
 
 public class LoginController {
+
+    @FXML
+    private VBox vBoxSup;
+    @FXML
+    private StackPane sPaneInf;
+    @FXML
+    private HBox hBoxCloudSup;
+    @FXML
+    private ImageView cloudSupImage;
+    @FXML
+    private StackPane titleStackPane;
+    @FXML
+    private HBox titleHBox;
+    @FXML
+    private ImageView titleCloudLeft;
+    @FXML
+    private ImageView titleCloudRight;
+    @FXML
+    private ImageView santoriniTitle;
 
     @FXML
     private TextField txt;
@@ -42,9 +64,39 @@ public class LoginController {
 
     @FXML
     public void initialize() {
+        vBoxSup.prefWidthProperty().bind(root.widthProperty());
+        vBoxSup.prefHeightProperty().bind(root.heightProperty().multiply(0.463));
+
+        sPaneInf.prefWidthProperty().bind(root.widthProperty().divide(1.36));
+        sPaneInf.prefHeightProperty().bind(root.heightProperty().divide(2.6));
+
+        hBoxCloudSup.prefWidthProperty().bind(vBoxSup.widthProperty());
+        hBoxCloudSup.prefHeightProperty().bind(vBoxSup.heightProperty().divide(2.12));
+
+        Image cloudSup = new Image(getClass().getResource("/graphics/title_cloud_back_right.png").toExternalForm());
+        cloudSupImage.setImage(cloudSup);
+        cloudSupImage.fitHeightProperty().bind(hBoxCloudSup.heightProperty());
+        cloudSupImage.fitWidthProperty().bind(hBoxCloudSup.widthProperty().divide(3.9));
+
+        titleStackPane.prefWidthProperty().bind(root.widthProperty());
+        titleStackPane.prefHeightProperty().bind(root.heightProperty().divide(4.1));
+
+        titleHBox.prefHeightProperty().bind(titleStackPane.heightProperty());
+        titleHBox.prefWidthProperty().bind(titleStackPane.widthProperty().divide(1.27));
+
+        titleCloudLeft.fitWidthProperty().bind(titleHBox.widthProperty().divide(3.45));
+        titleCloudLeft.fitHeightProperty().bind(titleHBox.heightProperty());
+
+        titleCloudRight.fitWidthProperty().bind(titleHBox.widthProperty().divide(3.45));
+        titleCloudRight.fitHeightProperty().bind(titleHBox.heightProperty());
+
+        santoriniTitle.fitHeightProperty().bind(titleHBox.heightProperty());
+        santoriniTitle.fitWidthProperty().bind(titleHBox.widthProperty().divide(1.75));
+
+
+
 
     }
-
 
     public static void setClientView(ClientView clientView) {
         LoginController.clientView = clientView;

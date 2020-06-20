@@ -19,6 +19,8 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import java.util.*;
 
+import static java.lang.System.exit;
+
 public class MatchController {
     private static ClientView clientView;
 
@@ -427,6 +429,12 @@ public class MatchController {
 
             vBoxLeft.getChildren().add(box);
         }
+
+        Button exit = new Button("QUIT");
+        exit.setOnMouseClicked((e)->{
+            exit(0);
+        });
+        vBoxLeft.getChildren().add(exit);
     }
 
     public void setSelectable(int x, int y, boolean val) {

@@ -212,7 +212,7 @@ public class DivinitySelectionController {
             god.isPreserveRatio();
 
             String clip = "/graphics/clp_bg.png";
-            ImageView c = new ImageView(new Image(clip));
+            ImageView c = new ImageView(new Image(getClass().getResource(clip).toExternalForm()));
             //c.setFitHeight(390);
             //c.setFitWidth(280);
             c.fitHeightProperty().bind(godDescription.heightProperty().divide(1.8).add(60));
@@ -246,7 +246,7 @@ public class DivinitySelectionController {
 
 
             close.getStyleClass().add("coral");
-            close.getStylesheets().add("/css/btn.css");
+            close.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
 
             close.setOnMouseEntered((e)->{
                 close.setEffect(lighting);
@@ -278,7 +278,7 @@ public class DivinitySelectionController {
                 });
 
                 deselect.getStyleClass().add("blue");
-                deselect.getStylesheets().add("/css/btn.css");
+                deselect.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
 
                 deselect.setOnMouseClicked((e)->{
                     chosenGods.remove(divinities.get(count));
@@ -305,7 +305,7 @@ public class DivinitySelectionController {
                 });
 
                 select.getStyleClass().add("blue");
-                select.getStylesheets().add("/css/btn.css");
+                select.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
 
                 select.setOnMouseClicked((e)->{
                     chosenGods.add(divinities.get(count));

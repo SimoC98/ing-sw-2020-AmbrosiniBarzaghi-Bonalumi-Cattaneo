@@ -4,6 +4,8 @@ import it.polimi.ingsw.clientView.ClientView;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.Light;
+import javafx.scene.effect.Lighting;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -33,6 +35,39 @@ public class DisconnectionController {
 
     public static void setClientView(ClientView clientView) {
         DisconnectionController.clientView = clientView;
+    }
+
+    @FXML
+    public void initialize() {
+        Light.Distant light = new Light.Distant();
+        light.setAzimuth(-135.0);
+
+        Lighting lighting = new Lighting();
+        lighting.setLight(light);
+        lighting.setSurfaceScale(4.0);
+
+        exit.getStyleClass().add("coral");
+        connect.getStyleClass().add("blue");
+        exit.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
+        connect.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
+
+        connect.setOnMouseEntered((e)-> {
+            connect.setEffect(lighting);
+        });
+
+        connect.setOnMouseExited((e) -> {
+            connect.setEffect(null);
+        });
+
+        exit.setOnMouseEntered((e) -> {
+            exit.setEffect(lighting);
+        });
+
+        exit.setOnMouseExited((e) -> {
+            exit.setEffect(null);
+        });
+
+
     }
 
     public void disconnect(String player) {

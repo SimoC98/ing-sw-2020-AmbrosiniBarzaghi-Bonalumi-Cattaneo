@@ -7,30 +7,30 @@
 
 <VBox fx:id="root" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1500.0" spacing="100.0" styleClass="bodybg" stylesheets="@../css/loginBack.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.clientView.gui.LoginController">
    <children>
-      <VBox prefHeight="431.0" prefWidth="1578.0" VBox.vgrow="ALWAYS">
+      <VBox fx:id="vBoxSup" prefHeight="405.0" prefWidth="1577.0" VBox.vgrow="ALWAYS">
          <children>
-            <HBox alignment="TOP_RIGHT" prefHeight="101.0" prefWidth="1101.0" VBox.vgrow="ALWAYS">
+            <HBox fx:id="hBoxCloudSup" alignment="TOP_RIGHT" prefHeight="101.0" prefWidth="1101.0" VBox.vgrow="ALWAYS">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
                <children>
-                  <ImageView fitHeight="202.0" fitWidth="387.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="cloudSupImage" fitHeight="247.0" fitWidth="384.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
                      <image>
                         <Image url="@../graphics/title_cloud_back_right.png" />
                      </image>
                   </ImageView>
                </children>
             </HBox>
-            <StackPane prefHeight="150.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+            <StackPane fx:id="titleStackPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="150.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                <children>
-                  <HBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="266.0" prefWidth="1229.0" spacing="500.0">
+                  <HBox fx:id="titleHBox" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="266.0" prefWidth="1229.0" spacing="500.0">
                      <children>
-                        <ImageView fitHeight="238.0" fitWidth="403.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="titleCloudLeft" fitHeight="238.0" fitWidth="403.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../graphics/title_FG_cloud.png" />
                            </image>
                         </ImageView>
-                        <ImageView fitHeight="227.0" fitWidth="342.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="titleCloudRight" fitHeight="227.0" fitWidth="342.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../graphics/title_FG_cloud2.png" />
                            </image>
@@ -43,7 +43,7 @@
                         <Insets left="200.0" right="200.0" />
                      </StackPane.margin>
                   </HBox>
-                  <ImageView fitHeight="245.0" fitWidth="673.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="santoriniTitle" fitHeight="245.0" fitWidth="673.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../graphics/santorini-logo.png" />
                      </image>
@@ -52,7 +52,7 @@
             </StackPane>
          </children>
       </VBox>
-      <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="150.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+      <StackPane fx:id="sPaneInf" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="150.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
          <children>
             <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="500.0" prefWidth="1500.0" spacing="30.0" StackPane.alignment="CENTER">
                <children>

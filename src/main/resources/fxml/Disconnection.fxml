@@ -4,18 +4,17 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-
-<VBox fx:id="root" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1500.0" spacing="50.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.clientView.gui.DisconnectionController">
+<VBox fx:id="root" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1500.0" spacing="50.0" styleClass="mid" stylesheets="@../css/divinitySelectionBack.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.clientView.gui.DisconnectionController">
    <children>
       <Label fx:id="disconnectionLabel" text="Label">
          <font>
-            <Font size="36.0" />
+            <Font name="Serif Bold Italic" size="36.0" />
          </font>
       </Label>
       <VBox fx:id="buttons" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0">
          <children>
-            <Button fx:id="exit" mnemonicParsing="false" text="EXIT" />
-            <Button fx:id="connect" mnemonicParsing="false" text="RECONNECT" />
+            <Button fx:id="exit" minHeight="40.0" mnemonicParsing="false" prefWidth="100.0" text="EXIT" />
+            <Button fx:id="connect" minHeight="40.0" mnemonicParsing="false" prefWidth="100.0" text="RECONNECT" />
          </children>
       </VBox>
    </children>

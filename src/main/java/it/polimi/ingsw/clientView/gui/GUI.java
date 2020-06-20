@@ -72,8 +72,8 @@ public class GUI extends Application implements UI {
     public void start(Stage stage) throws Exception {
         this.primaryStage = stage;
 
-        primaryStage.setMinHeight(800);
-        primaryStage.setMinWidth(1200);
+        primaryStage.setMinHeight(100);
+        primaryStage.setMinWidth(500);
 
         primaryStage.setTitle("SANTORINI");
 
@@ -348,9 +348,9 @@ public class GUI extends Application implements UI {
         Parent loginPane = loginLoader.load();
         this.loginRoot = loginPane;
         //to make scene reseizable
-        /*Pane p1 = (Pane) loginPane;
+        Pane p1 = (Pane) loginPane;
         p1.prefHeightProperty().bind(primaryStage.heightProperty());
-        p1.prefWidthProperty().bind(primaryStage.widthProperty());*/
+        p1.prefWidthProperty().bind(primaryStage.widthProperty());
 
 
         FXMLLoader playableDivinitiesLoader = new FXMLLoader(getClass().getResource("/fxml/DivinitySelection.fxml"));
@@ -364,14 +364,18 @@ public class GUI extends Application implements UI {
         FXMLLoader playerDivinityLoader = new FXMLLoader(getClass().getResource("/fxml/PlayerDivinitySelection.fxml"));
         Parent playerDivinityPane = playerDivinityLoader.load();
         this.playerDivinityRoot = playerDivinityPane;
+        //to make scene reseizable
+        Pane p3 = (Pane) playerDivinityPane;
+        p3.prefHeightProperty().bind(primaryStage.heightProperty());
+        p3.prefWidthProperty().bind(primaryStage.widthProperty());
 
         FXMLLoader matchLoader = new FXMLLoader(getClass().getResource("/fxml/Match.fxml"));
         Parent matchPane = matchLoader.load();
         this.matchRoot = matchPane;
         //to make scene reseizable
-        Pane p3 = (Pane) matchPane;
-        p3.prefHeightProperty().bind(primaryStage.heightProperty());
-        p3.prefWidthProperty().bind(primaryStage.widthProperty());
+        Pane p4 = (Pane) matchPane;
+        p4.prefHeightProperty().bind(primaryStage.heightProperty());
+        p4.prefWidthProperty().bind(primaryStage.widthProperty());
 
         FXMLLoader disconnectionLoader = new FXMLLoader(getClass().getResource("/fxml/Disconnection.fxml"));
         Parent disconnectionPane = disconnectionLoader.load();

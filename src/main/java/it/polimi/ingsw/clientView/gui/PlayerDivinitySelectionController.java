@@ -2,6 +2,7 @@ package it.polimi.ingsw.clientView.gui;
 
 import it.polimi.ingsw.clientView.ClientView;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -9,6 +10,7 @@ import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -20,6 +22,8 @@ public class PlayerDivinitySelectionController {
 
     private static ClientView clientView;
 
+    @FXML
+    private BorderPane bPane;
 
     @FXML
     private HBox hBox;
@@ -45,6 +49,14 @@ public class PlayerDivinitySelectionController {
         PlayerDivinitySelectionController.clientView = clientView;
     }
 
+    @FXML
+    public void initialize() {
+
+        hBox.prefWidthProperty().bind(bPane.widthProperty());
+        hBox.prefHeightProperty().bind(bPane.heightProperty().divide(4.4));
+
+    }
+
 
     public void selectPlayerDivinity(List<String> divinities) {
 
@@ -55,8 +67,12 @@ public class PlayerDivinitySelectionController {
             ImageView god = new ImageView();
             Image godImage = new Image("/graphics/" + divinities.get(i).toLowerCase() + ".png");
             god.setImage(godImage);
-            god.setFitHeight(350);
-            god.setFitWidth(240);
+
+            god.fitHeightProperty().bind(bPane.heightProperty().divide(2.4));
+            god.fitWidthProperty().bind(bPane.widthProperty().divide(6.25));
+
+            /*god.setFitHeight(350);
+            god.setFitWidth(240);*/
 
             addDivinityToHbox(god,i);
 
@@ -77,8 +93,12 @@ public class PlayerDivinitySelectionController {
         //background of cards
         String back = "/graphics/clp_bg.png";
         ImageView b = new ImageView(new Image(back));
-        b.setFitHeight(370);
-        b.setFitWidth(260);
+
+        b.fitWidthProperty().bind(bPane.widthProperty().divide(6.25).add(30));
+        b.fitHeightProperty().bind(bPane.heightProperty().divide(2.4).add(40));
+
+        /*b.setFitHeight(370);
+        b.setFitWidth(260);*/
 
         hBox.getChildren().add(new StackPane(b,node));
         godImages.add((ImageView)node);

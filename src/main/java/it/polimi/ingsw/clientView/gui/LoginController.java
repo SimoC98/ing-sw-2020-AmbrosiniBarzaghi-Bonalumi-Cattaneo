@@ -26,25 +26,6 @@ import static java.lang.System.exit;
 public class LoginController {
 
     @FXML
-    private VBox vBoxSup;
-    @FXML
-    private StackPane sPaneInf;
-    @FXML
-    private HBox hBoxCloudSup;
-    @FXML
-    private ImageView cloudSupImage;
-    @FXML
-    private StackPane titleStackPane;
-    @FXML
-    private HBox titleHBox;
-    @FXML
-    private ImageView titleCloudLeft;
-    @FXML
-    private ImageView titleCloudRight;
-    @FXML
-    private ImageView santoriniTitle;
-
-    @FXML
     private TextField txt;
 
     @FXML
@@ -64,7 +45,7 @@ public class LoginController {
 
     @FXML
     public void initialize() {
-        vBoxSup.prefWidthProperty().bind(root.widthProperty());
+        /*vBoxSup.prefWidthProperty().bind(root.widthProperty());
         vBoxSup.prefHeightProperty().bind(root.heightProperty().multiply(0.463));
 
         sPaneInf.prefWidthProperty().bind(root.widthProperty().divide(1.36));
@@ -91,7 +72,7 @@ public class LoginController {
         titleCloudRight.fitHeightProperty().bind(titleHBox.heightProperty());
 
         santoriniTitle.fitHeightProperty().bind(titleHBox.heightProperty());
-        santoriniTitle.fitWidthProperty().bind(titleHBox.widthProperty().divide(1.75));
+        santoriniTitle.fitWidthProperty().bind(titleHBox.widthProperty().divide(1.75));*/
 
 
 

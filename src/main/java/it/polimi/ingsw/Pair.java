@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 /**
  * Custom class created to easily send packages through the socket
- * @param <T>
- * @param <V>
+ * @param <T> first object
+ * @param <V> second object
  */
 public class Pair<T, V> implements Serializable {
     private T first;

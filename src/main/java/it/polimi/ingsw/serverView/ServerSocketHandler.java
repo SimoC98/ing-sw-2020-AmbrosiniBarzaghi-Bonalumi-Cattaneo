@@ -9,7 +9,7 @@ import java.io.*;
 import java.net.Socket;
 
 /**
- * Helps to manage each client connection, pairing it with the server's
+ * Helps to manage each client connection, pairing it with the server's one.
  */
 public class ServerSocketHandler extends Observable<ClientEvent> implements Runnable {
 
@@ -46,7 +46,7 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
 
     /**
      * The thread catches the events coming from the client to communicate to the server.
-     * If the event is of login type a method is called
+     * If the event is a {@link LoginEvent}, a method is called
      */
     public void run() {
         //
@@ -87,6 +87,9 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
         }
     }
 
+    /**
+     * Closes the streams, the socket and closes the connection  on the server
+     */
     public void close() {
         try {
             in.close();
@@ -101,6 +104,10 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
         }
     }
 
+    /**
+     * Logs the user on the server
+     * @param event Valid {@link LoginEvent}
+     */
     private void login(LoginEvent event) {
         synchronized (lock) {
             server.loginUser(event.getUsername(),this);
@@ -109,7 +116,7 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
 
     /**
      * Disconnects a client if the game has not started yet;
-     * disconnects every client if the game has already begun
+     * disconnects every client if the game has already begun.
      */
     protected void disconnect() {
         System.out.println("disconnection");
@@ -127,10 +134,16 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
         }
     }
 
+    /**
+     * Starts {@link PingManager}
+     */
     public void startPing() {
         sender.startPing();
     }
 
+    /**
+     * Stops {@link PingManager}
+     */
     public void stopPing() {
         sender.stop();
     }

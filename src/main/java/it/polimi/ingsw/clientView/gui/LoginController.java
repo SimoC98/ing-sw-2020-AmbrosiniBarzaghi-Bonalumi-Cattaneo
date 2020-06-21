@@ -78,6 +78,8 @@ public class LoginController {
 
         txt.setFont(new Font(18));
 
+
+        
         hBox.prefHeightProperty().bind(vBoxInf.heightProperty().divide(2.3));
         hBox.prefWidthProperty().bind(vBoxInf.widthProperty());
 

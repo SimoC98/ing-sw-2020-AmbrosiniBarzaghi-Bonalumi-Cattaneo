@@ -375,8 +375,8 @@ public class ClientView implements Observer<ServerEvent> {
 //    }
 
 
-    private static Socket connectionConfigParser() throws IOException {
-        File xmlFile = new File("src/main/resources/connection_config.xml");
+    private Socket connectionConfigParser() throws IOException {
+        //File xmlFile = new File("src/main/resources/connection_config.xml");
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = null;
@@ -388,7 +388,8 @@ public class ClientView implements Observer<ServerEvent> {
         Document doc = null;
         try {
             if (builder != null) {
-                doc = builder.parse(xmlFile);
+                //doc = builder.parse(xmlFile);
+                doc = builder.parse(getClass().getResource("src/main/resources/connection_config.xml").toExternalForm());
             }
         } catch (SAXException | IOException e) {
             e.printStackTrace();

@@ -23,6 +23,7 @@ import java.util.concurrent.Callable;
  */
 public class XMLParserUtility {
 
+    private static String xmlpath = XMLParserUtility.class.getResource("/divinities.xml").toExternalForm();
     /**
      * Maps each divinity to their effects
      */
@@ -84,7 +85,7 @@ public class XMLParserUtility {
      * @return Divinities mapped with their name and an instance of their class
      */
     public static Map<String, Divinity> getDivinities(){
-        File xmlFile = new File("src/main/resources/divinities.xml");
+        //File xmlFile = new File("src/main/resources/divinities.xml");
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = null;
@@ -96,7 +97,7 @@ public class XMLParserUtility {
         Document doc = null;
         try {
             if (builder != null) {
-                doc = builder.parse(xmlFile);
+                doc = builder.parse(xmlpath);
             }
         } catch (SAXException | IOException e) {
             e.printStackTrace();

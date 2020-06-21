@@ -656,6 +656,7 @@ public class CLI implements UI{
 
     public void updateBoard() {
 
+        clearScreen();
         printPlayersInGame();
 
         synchronized (lock) {

@@ -389,7 +389,7 @@ public class ClientView implements Observer<ServerEvent> {
         try {
             if (builder != null) {
                 //doc = builder.parse(xmlFile);
-                doc = builder.parse(getClass().getResource("src/main/resources/connection_config.xml").toExternalForm());
+                doc = builder.parse(getClass().getResource("/connection_config.xml").toExternalForm());
             }
         } catch (SAXException | IOException e) {
             e.printStackTrace();

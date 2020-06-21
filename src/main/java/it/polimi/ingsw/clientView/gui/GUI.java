@@ -35,8 +35,6 @@ public class GUI extends Application implements UI {
 
 
     private DisconnectionController disconnectionController;
-    private EndGameWinnerController endGameWinnerController;
-    private EndGameLoserController endGameLoserController;
 
 
     private Stage primaryStage;
@@ -51,8 +49,6 @@ public class GUI extends Application implements UI {
 
 
     private Parent disconnectionRoot;
-    private Parent endGameWinnerRoot;
-    private Parent endGameLoserRoot;
 
 
 
@@ -95,8 +91,6 @@ public class GUI extends Application implements UI {
 
         EndGameController.setClientView(clientView);
         //
-        EndGameWinnerController.setClientView(clientView);
-        EndGameLoserController.setClientView(clientView);
 
         clientView.setUI(this);
 
@@ -394,7 +388,7 @@ public class GUI extends Application implements UI {
         Parent endPane = endLoader.load();
         this.endGameRoot = endPane;
         //to make scene reseizable
-        Pane p5 = (Pane) matchPane;
+        Pane p5 = (Pane) endPane;
         p5.prefHeightProperty().bind(primaryStage.heightProperty());
         p5.prefWidthProperty().bind(primaryStage.widthProperty());
 
@@ -405,27 +399,12 @@ public class GUI extends Application implements UI {
 
 
 
-        /*
-        +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-         */
-        FXMLLoader endWinnerLoader = new FXMLLoader(getClass().getResource("/fxml/EndGameWinner.fxml"));
-        Parent endWinnerPane = endWinnerLoader.load();
-        this.endGameWinnerRoot = endWinnerPane;
-
-        FXMLLoader endLoserLoader = new FXMLLoader(getClass().getResource("/fxml/EndGameLoser.fxml"));
-        Parent endLoserPane = endLoserLoader.load();
-        this.endGameLoserRoot = endLoserPane;
-
-
-
         this.welcomeController = welcomeLoader.getController();
         this.loginController = loginLoader.getController();
         this.divinitySelectionController = playableDivinitiesLoader.getController();
         this.playerDivinitySelectionController = playerDivinityLoader.getController();
         this.matchController = matchLoader.getController();
         this.disconnectionController = disconnectionLoader.getController();
-        this.endGameWinnerController = endWinnerLoader.getController();
-        this.endGameLoserController = endLoserLoader.getController();
         this.endController = endLoader.getController();
 
 

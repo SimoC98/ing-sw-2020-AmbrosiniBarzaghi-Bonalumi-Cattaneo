@@ -183,7 +183,7 @@ public class ServerView extends Observable<ClientEvent> implements Observer<Serv
     }
 
     public void stopPing() {
-        if(proxy!=null) proxy.stopPing();
+        if(proxy!=null) proxy.loserPlayer();
     }
 
     /**

@@ -90,6 +90,7 @@ public class Server{
 
         if(isGameStarted && loggedPlayers.size()==0) {
             connections.clear();
+            loggedPlayers.clear();
             isGameStarted=false;
         }
     }
@@ -122,7 +123,7 @@ public class Server{
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            connection.close();
+            //connection.close();
             return;
         }
         else if(loggedPlayers.values().contains(username)) {

@@ -1,9 +1,6 @@
 package it.polimi.ingsw.clientView.aaaaGUITesting;
 
-import it.polimi.ingsw.clientView.gui.DivinitySelectionController;
 import it.polimi.ingsw.clientView.gui.EndGameController;
-import it.polimi.ingsw.clientView.gui.EndGameWinnerController;
-import it.polimi.ingsw.clientView.gui.LoginController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

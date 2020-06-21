@@ -1,6 +1,7 @@
 package it.polimi.ingsw.clientView.aaaaGUITesting;
 
 import it.polimi.ingsw.clientView.gui.DivinitySelectionController;
+import it.polimi.ingsw.clientView.gui.EndGameController;
 import it.polimi.ingsw.clientView.gui.EndGameWinnerController;
 import it.polimi.ingsw.clientView.gui.LoginController;
 import javafx.application.Application;
@@ -13,7 +14,7 @@ import javafx.stage.Stage;
 
 public class FXMLTest extends Application {
 
-   private LoginController loginController;
+   private EndGameController endGameController;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -22,17 +23,17 @@ public class FXMLTest extends Application {
         Parent testPane = testLoader.load();
         this.gameController = testLoader.getController();*/
 
-        FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));
-        Parent loginPane = loginLoader.load();
+        FXMLLoader endLoader = new FXMLLoader(getClass().getResource("/fxml/EndGame.fxml"));
+        Parent endPane = endLoader.load();
         //this.endGameController = endLoader.getController();
-        this.loginController = loginLoader.getController();
+        this.endGameController = endLoader.getController();
 
         //to make scene reseizable
-        Pane p3 = (Pane) loginPane;
+        Pane p3 = (Pane) endPane;
         p3.prefHeightProperty().bind(stage.heightProperty());
         p3.prefWidthProperty().bind(stage.widthProperty());
 
-        Scene game = new Scene(loginPane, 1500,1000);
+        Scene game = new Scene(endPane, 1500,1000);
 
         stage.setScene(game);
         stage.setResizable(true);

@@ -2,3 +2,12 @@
     -fx-background-image: url("/graphics/title_sky.png");
     -fx-background-size: 100% 100%;
 }
+
+@font-face {
+    font-family: 'LillyBelle';
+    src: url('/font/LillyBelle.ttf');
+}
+
+.font{
+    -fx-font-family: 'LillyBelle';
+}

@@ -30,6 +30,9 @@ public class LoginController {
     private VBox vBoxSup;
 
     @FXML
+    private VBox vBoxInf;
+
+    @FXML
     private TextField txt;
 
     @FXML
@@ -42,6 +45,9 @@ public class LoginController {
     private HBox messages;
 
     @FXML
+    private Label username;
+
+    @FXML
     private VBox root;
 
     private static ClientView clientView;
@@ -49,37 +55,12 @@ public class LoginController {
 
     @FXML
     public void initialize() {
-        /*vBoxSup.prefWidthProperty().bind(root.widthProperty());
-        vBoxSup.prefHeightProperty().bind(root.heightProperty().multiply(0.463));
 
-        sPaneInf.prefWidthProperty().bind(root.widthProperty().divide(1.36));
-        sPaneInf.prefHeightProperty().bind(root.heightProperty().divide(2.6));
-
-        hBoxCloudSup.prefWidthProperty().bind(vBoxSup.widthProperty());
-        hBoxCloudSup.prefHeightProperty().bind(vBoxSup.heightProperty().divide(2.12));
-
-        Image cloudSup = new Image(getClass().getResource("/graphics/title_cloud_back_right.png").toExternalForm());
-        cloudSupImage.setImage(cloudSup);
-        cloudSupImage.fitHeightProperty().bind(hBoxCloudSup.heightProperty());
-        cloudSupImage.fitWidthProperty().bind(hBoxCloudSup.widthProperty().divide(3.9));
-
-        titleStackPane.prefWidthProperty().bind(root.widthProperty());
-        titleStackPane.prefHeightProperty().bind(root.heightProperty().divide(4.1));
-
-        titleHBox.prefHeightProperty().bind(titleStackPane.heightProperty());
-        titleHBox.prefWidthProperty().bind(titleStackPane.widthProperty().divide(1.27));
-
-        titleCloudLeft.fitWidthProperty().bind(titleHBox.widthProperty().divide(3.45));
-        titleCloudLeft.fitHeightProperty().bind(titleHBox.heightProperty());
-
-        titleCloudRight.fitWidthProperty().bind(titleHBox.widthProperty().divide(3.45));
-        titleCloudRight.fitHeightProperty().bind(titleHBox.heightProperty());
-
-        santoriniTitle.fitHeightProperty().bind(titleHBox.heightProperty());
-        santoriniTitle.fitWidthProperty().bind(titleHBox.widthProperty().divide(1.75));*/
-
-        vBoxSup.prefHeightProperty().bind(root.heightProperty().divide(1.5));
+        vBoxSup.prefHeightProperty().bind(root.heightProperty().divide(2));
         vBoxSup.prefWidthProperty().bind(root.widthProperty());
+
+        vBoxInf.prefHeightProperty().bind(root.heightProperty().divide(2));
+        vBoxInf.prefWidthProperty().bind(root.widthProperty());
 
         vBoxSup.setAlignment(Pos.CENTER);
 
@@ -92,6 +73,19 @@ public class LoginController {
 
         txt.setFont(new Font(18));
 
+        hBox.prefHeightProperty().bind(vBoxInf.heightProperty().divide(2.3));
+        hBox.prefWidthProperty().bind(vBoxInf.widthProperty());
+
+        messages.prefHeightProperty().bind(vBoxInf.heightProperty().divide(2));
+        messages.prefWidthProperty().bind(vBoxInf.widthProperty());
+
+        btn.prefHeightProperty().bind(hBox.heightProperty().divide(2));
+        btn.prefWidthProperty().bind(hBox.widthProperty().divide(14));
+
+        txt.prefHeightProperty().bind(hBox.heightProperty().divide(2));
+        txt.prefWidthProperty().bind(hBox.widthProperty().divide(9));
+
+        username.setFont(Font.font(getClass().getResource("/font/LillyBelle.ttf").toExternalForm()));
 
 
 
@@ -162,7 +156,7 @@ public class LoginController {
         messages.getChildren().clear();
 
         Label inLobbyMessage = new Label("WAIT THE GAME START...");
-        inLobbyMessage.setFont(new Font(18));
+        inLobbyMessage.setFont(new Font(16));
 
         messages.getChildren().add(inLobbyMessage);
 
@@ -183,7 +177,7 @@ public class LoginController {
     public void gameStart() {
         messages.getChildren().clear();
         Label label = new Label();
-        label.setFont(new Font(18));
+        label.setFont(new Font(16));
         label.setText("YOUR GAME IS STARTING! PLEASE WAIT...");
 
         ProgressIndicator progress = new ProgressIndicator();

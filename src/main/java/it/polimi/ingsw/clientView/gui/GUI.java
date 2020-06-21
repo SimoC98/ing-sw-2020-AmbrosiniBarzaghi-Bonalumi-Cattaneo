@@ -30,6 +30,10 @@ public class GUI extends Application implements UI {
     private DivinitySelectionController divinitySelectionController;
     private PlayerDivinitySelectionController playerDivinitySelectionController;
     private MatchController matchController;
+
+    private EndGameController endController;
+
+
     private DisconnectionController disconnectionController;
     private EndGameWinnerController endGameWinnerController;
     private EndGameLoserController endGameLoserController;
@@ -42,6 +46,10 @@ public class GUI extends Application implements UI {
     private Parent playableDivinityRoot;
     private Parent playerDivinityRoot;
     private Parent matchRoot;
+
+   private Parent endGameRoot;
+
+
     private Parent disconnectionRoot;
     private Parent endGameWinnerRoot;
     private Parent endGameLoserRoot;
@@ -72,8 +80,8 @@ public class GUI extends Application implements UI {
     public void start(Stage stage) throws Exception {
         this.primaryStage = stage;
 
-        primaryStage.setMinHeight(100);
-        primaryStage.setMinWidth(500);
+        primaryStage.setMinHeight(700);
+        primaryStage.setMinWidth(600);
 
         primaryStage.setTitle("SANTORINI");
 
@@ -84,6 +92,9 @@ public class GUI extends Application implements UI {
         PlayerDivinitySelectionController.setClientView(clientView);
         MatchController.setClientView(clientView);
         DisconnectionController.setClientView(clientView);
+
+        EndGameController.setClientView(clientView);
+        //
         EndGameWinnerController.setClientView(clientView);
         EndGameLoserController.setClientView(clientView);
 
@@ -202,12 +213,14 @@ public class GUI extends Application implements UI {
 
         if(username.equals(clientView.getUsername())) {
             Platform.runLater(() -> {
-                primaryStage.getScene().setRoot(endGameWinnerRoot);
+                endController.setWinner();
+                primaryStage.getScene().setRoot(endGameRoot);
             });
         }
         else {
             Platform.runLater(() -> {
-                primaryStage.getScene().setRoot(endGameLoserRoot);
+                endController.setLoser();
+                primaryStage.getScene().setRoot(endGameRoot);
             });
         }
 
@@ -377,10 +390,24 @@ public class GUI extends Application implements UI {
         p4.prefHeightProperty().bind(primaryStage.heightProperty());
         p4.prefWidthProperty().bind(primaryStage.widthProperty());
 
+        FXMLLoader endLoader = new FXMLLoader(getClass().getResource("/fxml/EndGame.fxml"));
+        Parent endPane = endLoader.load();
+        this.endGameRoot = endPane;
+        //to make scene reseizable
+        Pane p5 = (Pane) matchPane;
+        p5.prefHeightProperty().bind(primaryStage.heightProperty());
+        p5.prefWidthProperty().bind(primaryStage.widthProperty());
+
         FXMLLoader disconnectionLoader = new FXMLLoader(getClass().getResource("/fxml/Disconnection.fxml"));
         Parent disconnectionPane = disconnectionLoader.load();
         this.disconnectionRoot = disconnectionPane;
 
+
+
+
+        /*
+        +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+         */
         FXMLLoader endWinnerLoader = new FXMLLoader(getClass().getResource("/fxml/EndGameWinner.fxml"));
         Parent endWinnerPane = endWinnerLoader.load();
         this.endGameWinnerRoot = endWinnerPane;
@@ -399,6 +426,8 @@ public class GUI extends Application implements UI {
         this.disconnectionController = disconnectionLoader.getController();
         this.endGameWinnerController = endWinnerLoader.getController();
         this.endGameLoserController = endLoserLoader.getController();
+        this.endController = endLoader.getController();
+
 
 
 

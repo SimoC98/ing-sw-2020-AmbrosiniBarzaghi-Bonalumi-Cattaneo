@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox fx:id="vBox1" alignment="CENTER" prefHeight="1000.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.clientView.gui.EndGameController">
+   <children>
+      <VBox fx:id="vBox2" alignment="CENTER" spacing="10.0">
+         <children>
+            <Button fx:id="newGame" mnemonicParsing="false" text="NEW GAME">
+               <VBox.margin>
+                  <Insets top="150.0" />
+               </VBox.margin></Button>
+            <Button fx:id="quit" mnemonicParsing="false" text="QUIT" />
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </VBox>
+   </children>
+</VBox>

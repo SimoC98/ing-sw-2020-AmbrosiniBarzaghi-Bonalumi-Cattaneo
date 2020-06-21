@@ -7,9 +7,9 @@
 
 <HBox fx:id="hBox" alignment="CENTER" fillHeight="false" prefHeight="400.0" prefWidth="1000.0" style="-fx-background-color: lightblue;" styleClass="root" stylesheets="@../css/gameBack.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.clientView.gui.MatchController">
     <children>
-        <VBox fx:id="vBoxLeft" fillWidth="false" maxWidth="-Infinity" prefHeight="15.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+        <VBox fx:id="vBoxLeft" fillWidth="false" maxWidth="-Infinity" HBox.hgrow="ALWAYS" />
 
-        <GridPane fx:id="board" alignment="CENTER" minHeight="200.0" minWidth="200.0" scaleShape="false" styleClass="bodybg" stylesheets="@../css/gameBack.css">
+        <GridPane fx:id="board" alignment="CENTER" minHeight="300.0" minWidth="300.0" scaleShape="false" styleClass="bodybg" stylesheets="@../css/gameBack.css">
             <columnConstraints>
                 <ColumnConstraints hgrow="ALWAYS" />
                 <ColumnConstraints hgrow="ALWAYS" />
@@ -25,7 +25,7 @@
                 <RowConstraints vgrow="ALWAYS" />
             </rowConstraints>
         </GridPane>
-        <StackPane fx:id="rightStack" centerShape="false">
+        <StackPane fx:id="rightStack" centerShape="false" maxWidth="400.0">
             <children>
                 <Label fx:id="message" textAlignment="CENTER">
                     <font>

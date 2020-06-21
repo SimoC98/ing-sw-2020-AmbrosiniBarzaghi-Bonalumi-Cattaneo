@@ -3,21 +3,23 @@ package it.polimi.ingsw.clientView.gui;
 import it.polimi.ingsw.Pair;
 import it.polimi.ingsw.clientView.ClientView;
 import it.polimi.ingsw.model.Action;
-
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.effect.Light;
-import javafx.scene.effect.Lighting;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-
-
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
+import java.util.List;
 
 import static java.lang.System.exit;
 
@@ -37,6 +39,8 @@ public class MatchController {
     private VBox vBoxLeft;
     @FXML
     private VBox vBoxRight;
+    @FXML
+    private StackPane rightStack;
 
     private final int LVL1=0, LVL2=1, LVL3=2, DOME=3, WORKER=4, SHADOW=5;
     private String actualAction;
@@ -48,6 +52,8 @@ public class MatchController {
 
     private Map<Action,List<Pair<Integer,Integer>>> possibleActions;
 
+    Font santoriniFont = Font.loadFont(getClass().getResource("/font/LillyBelle.ttf").toExternalForm(), 20);
+
 
 
     public MatchController() {
@@ -56,8 +62,8 @@ public class MatchController {
     @FXML
     public void initialize() {
         createBoard();
-        board.prefHeightProperty().bind(hBox.heightProperty().subtract(50));
-        board.prefWidthProperty().bind(board.heightProperty());
+//        board.prefHeightProperty().bind(hBox.heightProperty().subtract(50));
+//        board.prefWidthProperty().bind(board.heightProperty());
         hBox.setMinHeight(200);
         hBox.setMinWidth(400);
 
@@ -82,6 +88,27 @@ public class MatchController {
                 new Image("/graphics/dome.png"));
 
         isInitialized = true;
+
+        board.prefWidthProperty().bind(hBox.widthProperty().divide(2));
+        board.prefHeightProperty().bind(board.widthProperty());
+
+        vBoxLeft.prefWidthProperty().bind(hBox.widthProperty().divide(4));
+        vBoxLeft.prefHeightProperty().bind(hBox.widthProperty().multiply(0.8));
+        vBoxLeft.alignmentProperty().setValue(Pos.CENTER);
+
+        rightStack.prefWidthProperty().bind(hBox.widthProperty().divide(4));
+        rightStack.prefHeightProperty().bind(hBox.widthProperty().multiply(0.8));
+        rightStack.alignmentProperty().setValue(Pos.CENTER);
+
+        message.prefWidthProperty().bind(rightStack.widthProperty());
+        message.maxWidthProperty().bind(rightStack.maxWidthProperty());
+        message.setWrapText(true);
+        message.alignmentProperty().setValue(Pos.TOP_CENTER);
+
+        possibleActionsBox.alignmentProperty().setValue(Pos.BOTTOM_CENTER);
+        possibleActionsBox.setSpacing(20);
+
+        message.setFont(santoriniFont);
     }
 
     public static void setClientView(ClientView clientView) {
@@ -227,7 +254,7 @@ public class MatchController {
     public void handlePossibleActions(Map<Action,List<Pair<Integer,Integer>>> possibleActions) {
         this.possibleActions = possibleActions;
 
-        message.setText("Choose the action\nto perform: ");
+        message.setText("Choose the action to perform: ");
 
         List<Button> actionButtons = new ArrayList<>();
         for(Action action : possibleActions.keySet()) {
@@ -244,6 +271,13 @@ public class MatchController {
                 else
                     endTurnConfirmation();
             });
+
+            actionBtn.setFont(santoriniFont);
+            actionBtn.getStyleClass().add("blue");
+            actionBtn.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
+            actionBtn.prefWidthProperty().bind(possibleActionsBox.widthProperty().multiply(0.66));
+            actionBtn.prefHeightProperty().bind(actionBtn.widthProperty().multiply(0.33));
+
             actionButtons.add(actionBtn);
         }
 
@@ -266,21 +300,36 @@ public class MatchController {
         int y = GridPane.getColumnIndex(s);
 
         it.polimi.ingsw.model.Color color = clientView.getColor();
-        it.polimi.ingsw.model.Color selectedColor = clientView.getBoard().isThereAWorker(x,y);
+        it.polimi.ingsw.model.Color selectedColor = clientView.getBoard().isThereAWorker(x, y);
 
-        if(selectedColor!=null && selectedColor.equals(color)) {
+        if (selectedColor != null && selectedColor.equals(color)) {
             System.out.println("Worker Selected");
-            setShadowOff();
-            clientView.selectWorkerQuestion(x,y);
-        }
+//            setShadowOff();
 
+            Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+            a.setTitle("Confirm Selection");
+            a.setHeaderText("Are you sure you want to select this worker?");
+            a.setContentText("Press \"Yes\" to confirm.");
+
+            ButtonType select = new ButtonType("Yes");
+            ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+            a.getButtonTypes().clear();
+            a.getButtonTypes().addAll(select, cancel);
+
+            Optional<ButtonType> result = a.showAndWait();
+            if (result.get() == select) {
+                setShadowOff();
+                message.setText("Selected worker: " + x + "-" + y);
+                clientView.selectWorkerQuestion(x, y);
+            }
+        }
 
         /*if(v.getImage() != null){
             System.out.println("Worker Selected");
             clientView.selectWorkerQuestion(x,y);
 
         }*/
-
     }
 
     public void placeWorkers(String username, int x1, int y1, int x2, int y2) {
@@ -294,7 +343,6 @@ public class MatchController {
         ImageView w2 = (ImageView) s2.getChildren().get(WORKER);
 
         String color = clientView.getBoard().getPlayersMap().get(username).getColor().toString().toLowerCase();
-
 
         Image image = workerColors.get(color);
         w1.setImage(image);
@@ -373,7 +421,7 @@ public class MatchController {
         workerPlacement.clear();
 
         System.out.println("Now you PLACEWORKERS");
-        message.setText("CLICK ON TILE WHERE YOU WANT TO PLACE WORKERS");
+        message.setText("Click on the tile you want to place your workers");
         //userInteractionLabel.setVisible(true);
         actualAction = "placeworkers";
 
@@ -381,7 +429,7 @@ public class MatchController {
 
     public void setActionSelectWorker() {
         System.out.println("Now you SELECTWORKER");
-        message.setText("CLICK THE WORKER YOU WANT TO PLAY WITH");
+        message.setText("Click the worker you want to play with");
         //userInteractionLabel.setVisible(true);
         actualAction = "selectworker";
         focusWorkers(true);
@@ -407,17 +455,15 @@ public class MatchController {
         }
     }
 
-
-
     public void setPlayers() {
         List<String> players = clientView.getBoard().getPlayersNames();
         List<String> divinities = new ArrayList<>();
 
         clientView.getBoard().getDivinities().keySet().forEach(x -> divinities.add(x));
 
-
-
         for(int i=0;i<divinities.size();i++) {
+            String div = divinities.get(i);
+
             ImageView god = new ImageView();
 
             String url = "/graphics/" + divinities.get(i).toLowerCase() + ".png";
@@ -427,16 +473,44 @@ public class MatchController {
             god.setFitHeight(150);
             god.setFitWidth(100);
 
+            Tooltip tt = new Tooltip();
+            tt.setFont(Font.font("Felix Titling", 16));
+            tt.setText(clientView.getBoard().getDivinities().get(div));
+
+            Tooltip.install(
+                    god,
+                    tt
+            );
+
+            god.setOnMouseClicked((e) -> {
+                Alert a = new Alert(Alert.AlertType.INFORMATION);
+                a.setTitle(div.toUpperCase());
+                a.setHeaderText("Here's " + div + " description");
+                a.setContentText(clientView.getBoard().getDivinities().get(div));
+
+                a.show();
+            });
+
             VBox box = new VBox();
             box.setSpacing(5);
             box.setAlignment(Pos.CENTER);
 
-            box.getChildren().addAll(god,new Label(players.get(i)));
+            Label playerName = new Label(players.get(i));
+            playerName.setFont(santoriniFont);
+
+            box.getChildren().addAll(god, playerName);
 
             vBoxLeft.getChildren().add(box);
         }
 
         Button exit = new Button("QUIT");
+        exit.setFont(santoriniFont);
+
+        exit.getStyleClass().add("coral");
+        exit.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
+        exit.prefHeightProperty().setValue(40);
+        exit.prefWidthProperty().setValue(120);
+
         exit.setOnMouseClicked((e)->{
             exit(0);
         });
@@ -455,9 +529,9 @@ public class MatchController {
         StackPane x;
         ImageView v;
         for(int i=0; i<25; i++) {
-            Label l = new Label(i%5 + "-" + i/5);
+//            Label l = new Label(i%5 + "-" + i/5);
             x = (StackPane) board.getChildren().get(i);
-            x.getChildren().add(l);
+//            x.getChildren().add(l);
             v = (ImageView) x.getChildren().get(WORKER);
             if(v.getImage()!=null && v.getImage().equals(workerColors.get(color)))
                 setSelectable(i%5, i/5, value);

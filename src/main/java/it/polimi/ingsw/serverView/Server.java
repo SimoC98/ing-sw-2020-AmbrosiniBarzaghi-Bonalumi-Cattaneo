@@ -9,8 +9,6 @@ import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static java.lang.System.exit;
-
 
 /*
 Following tutor Michele Bertoni's tips:
@@ -21,7 +19,13 @@ Following tutor Michele Bertoni's tips:
  */
 
 /**
- * Server contains the main to create a server that manages the clients
+ * Server contains the main to create a server that manages the clients, allowing them to communicate and playing a game.
+ * <p>
+ * Following the tutor's tips:
+ * <ul><li>-The server accepts connections without blocking itself  and asking to the first user the players number to start the match</li>
+ * <li>-The server start the match as soon as 3 users connects</li>
+ * <li>-When 2 users are connected, a timer is scheduled: after XX seconds the match starts with 2 players</li>
+ * <li>-If 2 players are in the waiting room and one of them disconnects, the timer is deleted </li></ul>
  */
 public class Server{
     private int port;
@@ -49,7 +53,8 @@ public class Server{
     }
 
     /**
-     * Prepares the server to listen to clients and to accept their connection increasing their id
+     * Prepares the server to listen to clients and to accept their connection increasing their id.
+     * It also creates a {@link ServerSocketHandler} for each client and sends them a {@link WelcomeEvent}
      */
     public void startServer() {
         ServerSocket serverSocket = null;
@@ -71,12 +76,20 @@ public class Server{
     }
 
 
-
-
+    /**
+     * Adds a connection to the list of connections saved on the server
+     * @param connection New user connection
+     */
     public synchronized void registerConnection(ServerSocketHandler connection) {
         connections.add(connection);
     }
 
+    /**
+     * Removes the client's connection from the list of registered connections.
+     * If the client disconnecting was the second one, the timer is reset so that the game can not
+     * begin with only one player
+     * @param connection Connection of the disconnecting client
+     */
     public synchronized void unregisterConnection(ServerSocketHandler connection) {
         if(!isGameStarted && loggedPlayers.size()==2) {
             timer.cancel();
@@ -95,6 +108,10 @@ public class Server{
         }
     }
 
+    /**
+     * Returns true if the game started after waiting for a certain time to make sure that the game is not starting when called.
+     * @return {@code true} when the game start with two or three players
+     */
     public synchronized boolean isLobbyFull()  {
         try {
             Thread.sleep(100);
@@ -106,7 +123,7 @@ public class Server{
 
     /**
      * Manages a user's connection: if the lobby is not full and the submitted username has not
-     * been already take, the client is accepted into the lobby
+     * been already take, the client is accepted into the lobby and a {@link InLobbyEvent} is sent.
      * <p>
      * We decided, after consulting the tutor, that the lobby holds up to 3 players; once 2 players have arrived
      * a timer is scheduled and if it expires before the third player arrives, the match begins. If the lobby fills with
@@ -165,7 +182,8 @@ public class Server{
     }
 
     /**
-     * Start the game saving the current players
+     * Start the game saving the current players, initializing the due observer and observable classes and sending each
+     * client a {@link GameStartEvent}
      */
     private void startMatch() {
         System.out.println("GAME START\n");
@@ -191,11 +209,13 @@ public class Server{
             match.addObserver(s);
         }
 
-        connections.stream().forEach(x -> x.sendEvent(new GameStart()));
+        connections.stream().forEach(x -> x.sendEvent(new GameStartEvent()));
         controller.startGame(new ArrayList<String>(),null);
     }
 
-
+    /**
+     * Prints the users to verify the correct functioning of the server and the sockets.
+     */
     private void printUsers() {
         System.out.println("\nLOGGED PLAYERS: ");
         /*for(ServerSocketHandler s : loggedPlayers.keySet()) {
@@ -211,7 +231,7 @@ public class Server{
 
     /**
      * Disconnects users after a user disconnects or there is a winner
-     * @param connection
+     * @param connection Socket of the lost connection
      */
     protected void disconnectAll(ServerSocketHandler connection){
 

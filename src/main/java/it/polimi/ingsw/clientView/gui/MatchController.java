@@ -23,6 +23,7 @@ import static java.lang.System.exit;
 
 public class MatchController {
     private static ClientView clientView;
+    private static GUI gui;
 
     @FXML
     private Label message;
@@ -85,6 +86,11 @@ public class MatchController {
 
     public static void setClientView(ClientView clientView) {
         MatchController.clientView = clientView;
+    }
+
+    public static void setGui(GUI gui) {
+        MatchController.gui = gui;
+        MatchController.clientView = gui.getClientView();
     }
 
     public void createBoard() {

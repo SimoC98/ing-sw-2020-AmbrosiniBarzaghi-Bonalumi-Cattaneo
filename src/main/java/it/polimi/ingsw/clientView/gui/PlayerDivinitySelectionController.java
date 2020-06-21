@@ -21,6 +21,7 @@ import java.util.List;
 public class PlayerDivinitySelectionController {
 
     private static ClientView clientView;
+    private static GUI gui;
 
     @FXML
     private BorderPane bPane;
@@ -47,6 +48,11 @@ public class PlayerDivinitySelectionController {
 
     public static void setClientView(ClientView clientView) {
         PlayerDivinitySelectionController.clientView = clientView;
+    }
+
+    public static void setGui(GUI gui) {
+        PlayerDivinitySelectionController.gui = gui;
+        PlayerDivinitySelectionController.clientView = gui.getClientView();
     }
 
     @FXML

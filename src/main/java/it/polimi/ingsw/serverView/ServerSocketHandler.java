@@ -61,7 +61,7 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
                 else notify(event);
             }
         }catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             e.getMessage();
             try {
                 socket.close();
@@ -83,7 +83,7 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
             out.flush();
         } catch (Exception e) {
             e.getMessage();
-            e.printStackTrace();
+            //e.printStackTrace();
         }
     }
 
@@ -93,7 +93,7 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
             out.close();
             socket.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             e.getMessage();
         } finally {
             server.unregisterConnection(this);
@@ -115,13 +115,9 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
         System.out.println("disconnection");
         synchronized (lock) {
             if(server.isGameStarted()) {
-                //System.out.println("game already started...");
-                //sender.stop();
                 server.disconnectAll(this);
             }
             else {
-                //System.out.println("game not already started...");
-                //sender.stop();
                 server.unregisterConnection(this);
             }
         }

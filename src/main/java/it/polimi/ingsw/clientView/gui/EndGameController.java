@@ -24,6 +24,7 @@ public class EndGameController {
     private Button newGame;
 
     private static ClientView clientView;
+    private static GUI gui;
 
     @FXML
     public void initialize() {
@@ -74,7 +75,6 @@ public class EndGameController {
         newGame.setOnMouseClicked((e) -> {
             try {
                 clientView.resetBoard();
-                GUI gui = (GUI) clientView.getUi();
                 gui.loadGUI();
             } catch (IOException ioException) {
                 //ioException.printStackTrace();
@@ -88,6 +88,11 @@ public class EndGameController {
 
     public static void setClientView(ClientView clientView) {
         EndGameController.clientView = clientView;
+    }
+
+    public static void setGui(GUI gui) {
+        EndGameController.gui = gui;
+        EndGameController.clientView = gui.getClientView();
     }
 
     public void setWinner() {

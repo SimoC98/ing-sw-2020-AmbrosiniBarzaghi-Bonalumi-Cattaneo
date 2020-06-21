@@ -28,6 +28,7 @@ import java.util.List;
 public class DivinitySelectionController {
 
     private static ClientView clientView;
+    private static GUI gui;
 
     @FXML
     private BorderPane bPane;
@@ -102,6 +103,11 @@ public class DivinitySelectionController {
 
     public static void setClientView(ClientView clientView) {
         DivinitySelectionController.clientView = clientView;
+    }
+
+    public static void setGui(GUI gui) {
+        DivinitySelectionController.gui = gui;
+        DivinitySelectionController.clientView = gui.getClientView();
     }
 
     public void setDivinityOnGrid(List<String> divinities, List<String> descriptions, int playerNumber,List<String> players) {

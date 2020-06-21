@@ -80,14 +80,20 @@ public class GUI extends Application implements UI {
         primaryStage.setTitle("SANTORINI");
 
 
-        LoginController.setClientView(clientView);
+        /*LoginController.setClientView(clientView);
         WelcomeController.setClientView(clientView);
         DivinitySelectionController.setClientView(clientView);
         PlayerDivinitySelectionController.setClientView(clientView);
         MatchController.setClientView(clientView);
         DisconnectionController.setClientView(clientView);
+        EndGameController.setClientView(clientView);*/
 
-        EndGameController.setClientView(clientView);
+        LoginController.setGui(this);
+        DivinitySelectionController.setGui(this);
+        PlayerDivinitySelectionController.setGui(this);
+        MatchController.setGui(this);
+        DisconnectionController.setGui(this);
+        EndGameController.setGui(this);
         //
 
         clientView.setUI(this);

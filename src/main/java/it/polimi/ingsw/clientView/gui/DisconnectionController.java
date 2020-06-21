@@ -16,6 +16,7 @@ import static java.lang.System.exit;
 public class DisconnectionController {
 
     private static ClientView clientView;
+    private static GUI gui;
 
     @FXML
     private VBox root;
@@ -35,6 +36,11 @@ public class DisconnectionController {
 
     public static void setClientView(ClientView clientView) {
         DisconnectionController.clientView = clientView;
+    }
+
+    public static void setGui(GUI gui) {
+        DisconnectionController.gui = gui;
+        DisconnectionController.clientView = gui.getClientView();
     }
 
     @FXML
@@ -80,7 +86,6 @@ public class DisconnectionController {
         connect.setOnMouseClicked((e) -> {
             try {
                 clientView.resetBoard();
-                GUI gui = (GUI) clientView.getUi();
                 gui.loadGUI();
             } catch (IOException ioException) {
                 //ioException.printStackTrace();

@@ -12,6 +12,7 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -60,7 +61,6 @@ public class LoginController {
 
     @FXML
     public void initialize() {
-
         vBoxSup.prefHeightProperty().bind(root.heightProperty().divide(2));
         vBoxSup.prefWidthProperty().bind(root.widthProperty());
 
@@ -78,8 +78,6 @@ public class LoginController {
 
         txt.setFont(new Font(18));
 
-
-        
         hBox.prefHeightProperty().bind(vBoxInf.heightProperty().divide(2.3));
         hBox.prefWidthProperty().bind(vBoxInf.widthProperty());
 
@@ -92,8 +90,17 @@ public class LoginController {
         txt.prefHeightProperty().bind(hBox.heightProperty().divide(2));
         txt.prefWidthProperty().bind(hBox.widthProperty().divide(9));
 
-        username.setFont(Font.font(getClass().getResource("/font/LillyBelle.ttf").toExternalForm()));
+        txt.setOnKeyPressed((e) -> {
 
+            if(e.getCode().equals(KeyCode.ENTER)) {
+                handleLogin();
+            }
+        });
+
+        Font santoriniFont = Font.loadFont(getClass().getResource("/font/LillyBelle.ttf").toExternalForm(),18);
+        username.setFont(santoriniFont);
+
+        txt.setFont(santoriniFont);
 
 
     }

@@ -134,10 +134,11 @@ public class DivinitySelectionController {
 
                     //height: 4.55; width 12
                     god.fitHeightProperty().bind(bPane.heightProperty().divide(4));
-                    god.fitWidthProperty().bind(bPane.widthProperty().divide(11));
+                    god.fitWidthProperty().bind(god.fitHeightProperty().divide(1.5));
+                    //god.fitWidthProperty().bind(bPane.widthProperty().divide(11));
 
-                    god.maxHeight(220);
-                    god.maxWidth(150);
+                    //god.maxHeight(220);
+                    //god.maxWidth(150);
 
                     god.isPreserveRatio();
 
@@ -162,7 +163,8 @@ public class DivinitySelectionController {
         ImageView b = new ImageView(new Image(getClass().getResource(back).toExternalForm()));
 
         b.fitHeightProperty().bind(bPane.heightProperty().divide(4).add(20));
-        b.fitWidthProperty().bind(bPane.widthProperty().divide(10).add(20));
+        //b.fitWidthProperty().bind(bPane.widthProperty().divide(10).add(20));
+        b.fitWidthProperty().bind(b.fitHeightProperty().divide(1.5));
 
         b.maxHeight(240);
         b.maxWidth(160);

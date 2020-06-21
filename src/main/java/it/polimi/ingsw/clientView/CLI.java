@@ -71,6 +71,7 @@ public class CLI implements UI{
         System.out.println("8\"\"88888P'  `Y888\"\"8o o888o o888o   \"888\" `Y8bod8P' d888b    o888o o888o o888o o888o" + "\n\n");
 
         clientView.startConnection();
+        //this.board = clientView.getBoard();
     }
 
 //    @Override

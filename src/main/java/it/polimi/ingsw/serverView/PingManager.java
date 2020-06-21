@@ -10,10 +10,9 @@ import java.util.TimerTask;
 public class PingManager implements Observer<ClientEvent> {
     private ServerSocketHandler connection;
     private boolean ping;
-    private boolean isNew = true;
     private Timer pinger;
-    private Timer waitNextPing;
     private TimerTask task;
+    private boolean stopPing=false;
 
     public PingManager(ServerSocketHandler connection) {
         this.connection = connection;
@@ -38,6 +37,7 @@ public class PingManager implements Observer<ClientEvent> {
                 if(ping==false) {
                     //System.out.println("TIMEEER");
                     pinger.cancel();
+                    stopPing=true;
                     connection.disconnect();
                 }
                 else {
@@ -56,7 +56,10 @@ public class PingManager implements Observer<ClientEvent> {
 
 
     public void stop() {
-        pinger.cancel();
+        if(!stopPing) {
+            pinger.cancel();
+            stopPing=true;
+        }
     }
 
     @Override

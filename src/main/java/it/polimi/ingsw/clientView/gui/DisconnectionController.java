@@ -79,6 +79,7 @@ public class DisconnectionController {
 
         connect.setOnMouseClicked((e) -> {
             try {
+                clientView.resetBoard();
                 GUI gui = (GUI) clientView.getUi();
                 gui.loadGUI();
             } catch (IOException ioException) {

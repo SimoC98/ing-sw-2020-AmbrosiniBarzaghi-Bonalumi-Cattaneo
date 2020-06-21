@@ -22,6 +22,8 @@ public class Controller implements Observer<ClientEvent> {
     private List<String> playersUsernames;
     private int currentPlayerId;
 
+    private List<ServerView> loserPlayers;
+
     private int startPlayer=-1;
 
     private List<String> gameDivinities;
@@ -37,6 +39,7 @@ public class Controller implements Observer<ClientEvent> {
         currentPlayerId = 0;
 
         gameDivinities = new ArrayList<>();
+        loserPlayers = new ArrayList<>();
     }
 
     public void handleActionValidation(Action action, int x, int y) {
@@ -157,6 +160,7 @@ public class Controller implements Observer<ClientEvent> {
             // playersInGame.get(currentPlayerId).disconnect();
             playersInGame.get(currentPlayerId).stopPing();
             //String message = "User " + playersUsernames.get(currentPlayerId) + " has been disconnected. You remain in " + playersInGame.size();
+            loserPlayers.add(playersInGame.get(currentPlayerId));
             playersInGame.remove(playersInGame.get(currentPlayerId));
             playersUsernames.remove(playersUsernames.get(currentPlayerId));
             //sendMessageToAll(message);
@@ -167,6 +171,10 @@ public class Controller implements Observer<ClientEvent> {
 
     public void disconnectAll() {
         for(ServerView s : playersInGame) {
+            s.disconnect();
+        }
+
+        for(ServerView s : loserPlayers) {
             s.disconnect();
         }
     }

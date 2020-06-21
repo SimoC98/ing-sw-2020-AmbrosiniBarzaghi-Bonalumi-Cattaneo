@@ -321,6 +321,7 @@ public class ClientView implements Observer<ServerEvent> {
         /*this.ui = new CLI(this);
         ui.start();*/
 
+        //this.board = new BoardRepresentation();
         Socket socket = null;
 
         try {
@@ -398,6 +399,10 @@ public class ClientView implements Observer<ServerEvent> {
         System.out.println("Config red: " + hostname + " " + port);
 
         return new Socket(hostname, port);
+    }
+
+    public void resetBoard() {
+        this.board = new BoardRepresentation();
     }
 
 }

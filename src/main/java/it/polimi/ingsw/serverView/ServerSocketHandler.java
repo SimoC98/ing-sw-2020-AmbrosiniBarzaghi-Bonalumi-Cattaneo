@@ -135,9 +135,4 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
         sender.stop();
     }
 
-    public void loserPlayer() {
-        stopPing();
-        server.unregisterConnection(this);
-    }
-
 }

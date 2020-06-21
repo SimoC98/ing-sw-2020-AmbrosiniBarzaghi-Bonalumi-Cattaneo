@@ -51,7 +51,12 @@ public class LoginController {
     private VBox root;
 
     private static ClientView clientView;
+    private static GUI gui;
 
+    public static void setGui(GUI gui) {
+        LoginController.gui = gui;
+        LoginController.clientView = gui.getClientView();
+    }
 
     @FXML
     public void initialize() {

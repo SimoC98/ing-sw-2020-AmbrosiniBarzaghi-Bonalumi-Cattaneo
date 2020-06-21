@@ -33,7 +33,6 @@ public class GUI extends Application implements UI {
 
     private EndGameController endController;
 
-
     private DisconnectionController disconnectionController;
 
 
@@ -46,7 +45,6 @@ public class GUI extends Application implements UI {
     private Parent matchRoot;
 
    private Parent endGameRoot;
-
 
     private Parent disconnectionRoot;
 

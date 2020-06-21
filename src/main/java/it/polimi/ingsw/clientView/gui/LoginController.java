@@ -4,6 +4,7 @@ import it.polimi.ingsw.clientView.ClientView;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -24,6 +25,9 @@ import java.util.List;
 import static java.lang.System.exit;
 
 public class LoginController {
+
+    @FXML
+    private VBox vBoxSup;
 
     @FXML
     private TextField txt;
@@ -74,6 +78,20 @@ public class LoginController {
         santoriniTitle.fitHeightProperty().bind(titleHBox.heightProperty());
         santoriniTitle.fitWidthProperty().bind(titleHBox.widthProperty().divide(1.75));*/
 
+        vBoxSup.prefHeightProperty().bind(root.heightProperty().divide(1.5));
+        vBoxSup.prefWidthProperty().bind(root.widthProperty());
+
+        vBoxSup.setAlignment(Pos.CENTER);
+
+        ImageView logo = new ImageView();
+        Image img = new Image(getClass().getResource("/graphics/logo2.png").toExternalForm());
+        logo.setImage(img);
+        logo.fitHeightProperty().bind(root.heightProperty().divide(1.3));
+        logo.fitWidthProperty().bind(root.widthProperty().divide(1.7));
+        vBoxSup.getChildren().add(logo);
+
+        txt.setFont(new Font(18));
+
 
 
 
@@ -93,6 +111,7 @@ public class LoginController {
         String username = txt.getText();
 
         Label label = new Label();
+        label.setFont(new Font(18));
         label.setVisible(false);
         messages.getChildren().clear();
         messages.getChildren().add(label);
@@ -134,7 +153,9 @@ public class LoginController {
         }
 
         messages.getChildren().clear();
-        messages.getChildren().add(new Label(s.toString()));
+        Label l = new Label(s.toString());
+        l.setFont(new Font(18));
+        messages.getChildren().add(l);
     }
 
     public void inLobby() {

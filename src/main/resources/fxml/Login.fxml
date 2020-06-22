@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
@@ -19,7 +20,10 @@
                   <TextField fx:id="txt">
                      <font>
                         <Font name="Serif Regular" size="16.0" />
-                     </font></TextField>
+                     </font>
+                     <effect>
+                        <SepiaTone />
+                     </effect></TextField>
                   <Button fx:id="btn" mnemonicParsing="false" onAction="#handleLogin" styleClass="font" text="login" underline="true" HBox.hgrow="ALWAYS">
                      <font>
                         <Font name="SansSerif Italic" size="16.0" />

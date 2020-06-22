@@ -132,6 +132,7 @@ public class GUI extends Application implements UI {
         Platform.runLater(()-> {
             divinitySelectionController.setDivinityOnGrid(divinitiesNames,divinitiesDescriptions,playersNumber,players);
 
+            primaryStage.setMinHeight(850);
             primaryStage.getScene().setRoot(playableDivinityRoot);
         });
 
@@ -229,6 +230,7 @@ public class GUI extends Application implements UI {
         Platform.runLater(()->{
             matchController.setPlayers();
 
+            primaryStage.setMinHeight(700);
             primaryStage.getScene().setRoot(matchRoot);
         });
     }

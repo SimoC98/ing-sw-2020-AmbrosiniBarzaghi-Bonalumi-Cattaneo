@@ -123,6 +123,12 @@ public class Match extends Observable<ServerEvent> {
             }
         }
 
+        System.out.println("\n\nMATCH START TURN:");
+        for(int i=0; i<players.size();i++) {
+            System.out.println(players.get(i).getUsername() + players.get(i).getDivinity().getName() + players.get(i).getDivinity());
+        }
+
+
         int playerIndex = players.indexOf(currentPlayer);
         if (playerIndex + 1>= players.size()) {
             playerIndex = 0;
@@ -139,6 +145,10 @@ public class Match extends Observable<ServerEvent> {
 
         turnId++;
         currentPlayer.startOfTurn();
+
+        System.out.println("current player:");
+        System.out.println(players.indexOf(currentPlayer));
+        System.out.println(currentPlayer.getUsername());
     }
 
     /**
@@ -310,6 +320,9 @@ public class Match extends Observable<ServerEvent> {
      * @throws InvalidMoveException The player chose an incorrect position
      */
     public void move (int x, int y) throws InvalidMoveException {
+
+        System.out.println(currentPlayer.getUsername() + currentPlayer.getDivinity());
+
         Tile t = board.getTile(x,y);
         Tile startTile = selectedWorker.getPositionOnBoard();
         if( t != null && currentPlayer.move(board,selectedWorker,t)){

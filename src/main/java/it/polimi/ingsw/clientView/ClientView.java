@@ -141,6 +141,7 @@ public class ClientView implements Observer<ServerEvent> {
     }
 
     public void divinitySelection(String divinity){
+        System.out.println(divinity);
         proxy.sendEvent(new DivinitySelectionEvent(divinity));
     }
 

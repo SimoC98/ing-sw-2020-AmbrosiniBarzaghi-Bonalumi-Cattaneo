@@ -324,11 +324,11 @@ public class DivinitySelectionController {
                     nodeListenersOff=false;
 
                     if(chosenGods.size()==playerNumber) {
-                        StringBuilder s = new StringBuilder();
+                        /*StringBuilder s = new StringBuilder();
                         /*s.append("You chose: ");
                         chosenGods.stream().forEach(z -> s.append(z + " "));
                         s.append("\n");*/
-                        s.append("WAIT OTHER PLAYERS...");
+                        /*s.append("WAIT OTHER PLAYERS...");
                         labelTxt.setText(s.toString());
                         labelTxt.setFont(new Font(18));
 
@@ -337,7 +337,8 @@ public class DivinitySelectionController {
 
                         nodeListenersOff = true;
 
-                        clientView.playableDivinitiesSelection(chosenGods,players.get(0));
+                        clientView.playableDivinitiesSelection(chosenGods,players.get(0));*/
+                        askStarter();
                     }
 
 
@@ -409,6 +410,66 @@ public class DivinitySelectionController {
         });
 
         //add event listener
+    }
+
+
+    public void askStarter() {
+        godDescription.getChildren().clear();
+        godDescription.setVisible(true);
+
+        godDescription.setSpacing(30);
+
+        Label label = new Label("SELECT THE STARTER:");
+        label.setStyle("-fx-font-weight: bold");
+        label.setFont(Font.loadFont(getClass().getResource("/font/LillyBelle.ttf").toExternalForm(),30));
+
+        VBox v = new VBox();
+        v.setSpacing(20);
+        v.setAlignment(Pos.CENTER);
+
+        godDescription.getChildren().add(label);
+        godDescription.getChildren().add(v);
+
+        nodeListenersOff = true;
+
+        for(int i=0; i<players.size(); i++) {
+            String player = players.get(i);
+            Label p = new Label(players.get(i));
+            p.setFont(Font.loadFont(getClass().getResource("/font/LillyBelle.ttf").toExternalForm(),24));
+
+
+            p.setOnMouseEntered((e) -> {
+                p.getStyleClass().clear();
+                p.getStyleClass().add("mouse_in");
+            });
+
+            p.setOnMouseExited((e) -> {
+                p.getStyleClass().clear();
+                p.getStyleClass().add("mouse_out");
+            });
+
+            p.setOnMouseClicked((e) -> {
+                godDescription.setVisible(false);
+
+
+                StringBuilder s = new StringBuilder();
+                        /*s.append("You chose: ");
+                        chosenGods.stream().forEach(z -> s.append(z + " "));
+                        s.append("\n");*/
+                s.append("WAIT OTHER PLAYERS...");
+                labelTxt.setText(s.toString());
+                labelTxt.setFont(new Font(18));
+
+                endVBox.setVisible(true);
+                endVBox.setSpacing(5);
+
+                clientView.playableDivinitiesSelection(chosenGods,player);
+            });
+
+            v.getChildren().add(p);
+        }
+
+
     }
 
 

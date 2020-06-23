@@ -155,13 +155,14 @@ public class Server{
         connection.sendEvent(new InLobbyEvent());
 
         loggedPlayers.put(connection,username);
-        connection.startPing();
+        //connection.startPing();
         printUsers();
 
 
         if(loggedPlayers.keySet().size()==3) {
             timer.cancel();
             startMatch();
+            connection.startPing();
         }
         else if(loggedPlayers.keySet().size()==2) {
             timer = new Timer();
@@ -173,8 +174,10 @@ public class Server{
                     }
                 },30000);
             }).start();
-
-
+            connection.startPing();
+        }
+        else {
+            connection.startPing();
         }
         /*else {
             connection.sendEvent(new WaitingRoomEvent());

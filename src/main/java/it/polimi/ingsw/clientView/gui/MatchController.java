@@ -2,6 +2,7 @@ package it.polimi.ingsw.clientView.gui;
 
 import it.polimi.ingsw.Pair;
 import it.polimi.ingsw.clientView.ClientView;
+import it.polimi.ingsw.clientView.PlayerRepresentation;
 import it.polimi.ingsw.model.Action;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -456,17 +457,23 @@ public class MatchController {
     }
 
     public void setPlayers() {
-        List<String> players = clientView.getBoard().getPlayersNames();
-        List<String> divinities = new ArrayList<>();
+       //ArrayList<String> players = new ArrayList<>( clientView.getBoard().getPlayersMap().keySet());
+        //List<String> divinities = new ArrayList<>();
 
-        clientView.getBoard().getDivinities().keySet().forEach(x -> divinities.add(x));
+        List<PlayerRepresentation> players = clientView.getBoard().getPlayersList();
 
-        for(int i=0;i<divinities.size();i++) {
-            String div = divinities.get(i);
+        for(int i=0; i<players.size();i++) {
+            System.out.println(players.get(i).getUsername() + players.get(i).getDivinity());
+        }
+
+        //clientView.getBoard().getPlayersMap().values().stream().forEach(x -> divinities.add(x.getDivinity()));
+
+        for(int i=0;i<players.size();i++) {
+            String div = players.get(i).getDivinity();
 
             ImageView god = new ImageView();
 
-            String url = "/graphics/" + divinities.get(i).toLowerCase() + ".png";
+            String url = "/graphics/" +players.get(i).getDivinity().toLowerCase() + ".png";
             Image godImage = new Image(url);
 
             god.setImage(godImage);
@@ -495,7 +502,10 @@ public class MatchController {
             box.setSpacing(5);
             box.setAlignment(Pos.CENTER);
 
-            Label playerName = new Label(players.get(i));
+            //Label playerName = new Label(players.get(i).getUsername());
+            Label playerName = new Label();
+            if(players.get(i).getUsername().equals(clientView.getUsername())) playerName.setText("YOU");
+            else playerName.setText(players.get(i).getUsername());
             playerName.setFont(santoriniFont);
 
             box.getChildren().addAll(god, playerName);

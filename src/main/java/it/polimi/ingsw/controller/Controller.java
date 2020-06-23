@@ -142,6 +142,12 @@ public class Controller implements Observer<ClientEvent> {
         model.startNextTurn();
         this.currentPlayerId = model.getCurrentPlayerId();
 
+        System.out.println("\n\n CONTROLLER START TURN:");
+        System.out.println(currentPlayerId);
+        System.out.println(playersUsernames.get(currentPlayerId));
+        System.out.println(model.getCurrentPlayer().getUsername());
+        System.out.println("\n\n");
+
         boolean isLoser = model.checkLoser();
         if(isLoser) {
             manageLoser();
@@ -249,6 +255,7 @@ public class Controller implements Observer<ClientEvent> {
         //if(gameDivinities.size()==1) endInitialization=true;
 
         currentPlayerId = model.getCurrentPlayerId();
+        System.out.println(playersUsernames.get(currentPlayerId));
 
         try {
             model.divinityInitialization(divinity);

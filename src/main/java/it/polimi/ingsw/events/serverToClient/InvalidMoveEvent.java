@@ -8,6 +8,10 @@ import it.polimi.ingsw.model.Action;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Tells the client that they performed a bad move and sends again the list of possible action through a map:
+ * the action and the list of coordinates as a {@link Pair}
+ */
 public class InvalidMoveEvent implements ServerEvent{
     private Map<Action,List<Pair<Integer,Integer>>> possibleActions;
     private int wrongX, wrongY;

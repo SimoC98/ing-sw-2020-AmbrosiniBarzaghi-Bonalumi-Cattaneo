@@ -6,6 +6,12 @@ import it.polimi.ingsw.model.Color;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class to represent a player at the client side. It is a simplification of the model's player: it contains
+ * the username, the color, two boolean to check if they lost or won, their workers' position through a pair of coordinates
+ * and their divinity as a string.
+ * It has setters and getters for every item.
+ */
 public class PlayerRepresentation {
 
     private final String username;
@@ -39,10 +45,16 @@ public class PlayerRepresentation {
         return hasLost;
     }
 
+    /**
+     * Called when a player performed a winning condition
+     */
     public void setWinner() {
         this.hasWon = true;
     }
 
+    /**
+     * Called when a player has fallen into a losing condition
+     */
     public void setLoser() {
         this.hasLost = true;
     }
@@ -51,6 +63,11 @@ public class PlayerRepresentation {
         return workers;
     }
 
+    /**
+     * Used to change a worker position or to initially place it. See {@link PlayerRepresentation#moveWorker(int, int, int, int)}
+     * @param x worker initial x coordinate
+     * @param y worker initial y coordinate
+     */
     public void addWorker(int x, int y){
         workers.add(new Pair<>(x,y));
     }
@@ -74,6 +91,14 @@ public class PlayerRepresentation {
         return divinity;
     }
 
+    /**
+     * Called when moving a worker from a tile to another.
+     * @param fromX initial x coordinate
+     * @param fromY initial y coordinate
+     * @param toX destination x coordinate
+     * @param toY destination y coordinate
+     * @return {@code boolean} indicating if the move was successful
+     */
     public boolean moveWorker(int fromX, int fromY, int toX, int toY) {
         for(int i=0; i < workers.size(); i++) {
             if(workers.get(i).equals(new Pair(fromX, fromY))) {

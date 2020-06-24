@@ -5,7 +5,7 @@ import it.polimi.ingsw.serverView.PingManager;
 
 /**
  * Event to manage the connection between the client and server.
- * It verifies that a client is always active and reachable
+ * It verifies that a client is always active and reachable, sending a pong to the server once a ping is received.
  */
 public class Pong implements ClientEvent{
 

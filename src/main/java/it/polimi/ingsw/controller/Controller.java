@@ -15,6 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+
+/**
+ * The controller is the bridge between the network and the model. It observes the clients' events and communicates
+ * with them thanks to the server.
+ */
 public class Controller implements Observer<ClientEvent> {
 
     private Match model;
@@ -42,6 +47,14 @@ public class Controller implements Observer<ClientEvent> {
         loserPlayers = new ArrayList<>();
     }
 
+
+    /**
+     * Verifies that the action extracted from the clientEvent is valid on the model; if it is not, then it notifies the client.
+     * If the action is valid it uses a handle method to manage it.
+     * @param action {@link Action} chosen by the client.
+     * @param x x coordinate of the action to perform with the selected worker.
+     * @param y y coordinate of the action to perform with the selected worker.
+     */
     public void handleActionValidation(Action action, int x, int y) {
         try {
             model.setAction(action);
@@ -67,6 +80,12 @@ public class Controller implements Observer<ClientEvent> {
         }
     }
 
+    /**
+     * Manages the {@link it.polimi.ingsw.events.clientToServer.WorkerSelectionQuestionEvent} of the current playing client.
+     * If the selection is not valid, it throws an exception and notifies the client.
+     * @param x x coordinate of the chosen worker
+     * @param y y coordinate of the chosen worker
+     */
     public void handleSelectionWorker(int x, int y) {
         try {
             model.selectWorker(x,y);
@@ -79,7 +98,12 @@ public class Controller implements Observer<ClientEvent> {
     }
 
 
-    //TODO: riguardare winner condition
+    /**
+     * Manages the move to perform with the selected worker on the board, after receiving the corresponding event.
+     * If the move is not valid, it throws an exception and notifies the client through the server.
+     * @param x x coordinate to move the worker onto
+     * @param y y coordinate to move the worker onto
+     */
     public void handleMove(int x, int y) {
         try {
             model.move(x,y);
@@ -103,7 +127,12 @@ public class Controller implements Observer<ClientEvent> {
         }
     }
 
-    //TODO: riguardare winner condition
+    /**
+     * Manages the build to perform with the selected worker on the board, after receiving the corresponding event.
+     * If the move is not valid, it throws an exception and notifies the client through the server.
+     * @param x x coordinate to build on
+     * @param y y coordinate to build on
+     */
     public void handleBuild(int x, int y) {
         try {
             model.build(x,y);
@@ -125,6 +154,11 @@ public class Controller implements Observer<ClientEvent> {
         }
     }
 
+    /**
+     * Called at the end of every action. It creates a map of the available actions with the possible tiles of these.
+     * If the map is not empty, it sends the player the map; otherwise it ends their turn, notifying them and starting
+     * the next turn.
+     */
     public void nextActionHandler() {
         Map<Action,List<Pair<Integer,Integer>>> possibleActions =  model.getPossibleActions();
 
@@ -138,6 +172,11 @@ public class Controller implements Observer<ClientEvent> {
         }
     }
 
+    /**
+     * Called at the beginning of the game or at the end of a player's turn. It move the reference in the model to the next
+     * player and checks if this one has lost. If they lost, it calls {@link Controller#manageLoser()}, otherwise it tells the
+     * player that it is their turn.
+     */
     public void handleStartNextTurn() {
         model.startNextTurn();
         this.currentPlayerId = model.getCurrentPlayerId();
@@ -157,6 +196,10 @@ public class Controller implements Observer<ClientEvent> {
         }
     }
 
+    /**
+     * Called when there is a losing condition. If there are two remaining players, the last one is declared victorious.
+     * The losing player is removed from all the list they were inserted into and their ping flow is interrupted (see {@link ServerView#stopPing()})
+     */
     public void manageLoser() {
         if(playersInGame.size()==2) {
             System.out.println("\n\ncheck disconnecting all");
@@ -175,6 +218,9 @@ public class Controller implements Observer<ClientEvent> {
         }
     }
 
+    /**
+     * Closes the connections when a player has won or has disconnected.
+     */
     public void disconnectAll() {
         for(ServerView s : playersInGame) {
             s.disconnect();
@@ -190,13 +236,27 @@ public class Controller implements Observer<ClientEvent> {
         model.setLoser(playerName);
     }*/
 
-    //handle disconnection of client by ui (es button "exit" in gui)
+
+    //todo: è usato questo metodo???
+    /**
+     * Handles the disconnection of a player and disconnects the others
+     * @param player Player disconnecting
+     */
     public void handleDisconnection(String player) {
         playersInGame.stream().forEach(x -> x.playerDisconnection(player));
         disconnectAll();
     }
 
 
+    /**
+     * Called after {@link it.polimi.ingsw.events.clientToServer.DivinitiesInGameSelectionEvent} is received and the map containing
+     * the divinities is no longer of size zero (the user correctly picked the divinities).
+     * It retrieves the information of the divinities through {@link XMLParserUtility}, it sends to every client the details
+     * regaring the game (usernames, colors for each player, divinities to choose and their description).
+     * Eventually it sends the starting player a {@link it.polimi.ingsw.events.serverToClient.DivinityInitializationEvent}
+     * @param gameDivinities List of divinities equal in number to the number of players
+     * @param startPlayer Username of the player that will begin.
+     */
     public void startGame(List<String> gameDivinities, String startPlayer) {
         List<String> allDivinities = model.getAllDivinities();
         List<String> allDivinitiesDescription = model.getAllDivinitiesDescriptions();
@@ -250,6 +310,13 @@ public class Controller implements Observer<ClientEvent> {
     }
 
 
+    /**
+     * Maps the divinity chosen by the player and the player on the model. It updated the list of the available divinities
+     * removing the specified divinity; if the list reaches the size of one, the remaining divinity is paired with the
+     * remaining player and the game skips to the worker placement after informing the players' with the others' choice
+     * of the divinity {@link it.polimi.ingsw.events.serverToClient.DivinitiesSetupEvent}
+     * @param divinity Name of the divinity chosen by a player
+     */
     public void handleDivinityInitialization(String divinity) {
         //boolean endInitialization=false;
         //if(gameDivinities.size()==1) endInitialization=true;
@@ -288,6 +355,15 @@ public class Controller implements Observer<ClientEvent> {
 
     }
 
+    /**
+     * Places a player's worker on the {@link it.polimi.ingsw.model.Board}. If the player places the workers wrongly, an
+     * exception is thrown and they have to choose again.
+     * After each player placed their workers the game start (see {@link Match#workerPlacementInitialization(int, int, int, int)}
+     * @param x1 first x coordinate
+     * @param y1 first y coordinate
+     * @param x2 second x coordinate
+     * @param y2 second y coordinate
+     */
     public void handleWorkerPlacementInitialization(int x1, int y1, int x2, int y2) {
         currentPlayerId = model.getCurrentPlayerId();
 
@@ -314,6 +390,10 @@ public class Controller implements Observer<ClientEvent> {
         }
     }
 
+    /**
+     * Extracts the information from the {@link ClientEvent} which will call a method on the controller.
+     * @param event Event from the client.
+     */
     @Override
     public void update(ClientEvent event) {
         //if(!(event instanceof VCEvent)) throw new RuntimeException("Wrong event type");

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Class with a role similar to a proxy that tells the speaks to the client sending events
+ * Class with a role similar to a proxy that speaks to the client sending events
  */
 public class ServerView extends Observable<ClientEvent> implements Observer<ServerEvent>{
 
@@ -93,8 +93,8 @@ public class ServerView extends Observable<ClientEvent> implements Observer<Serv
      * {@link DivinitiesInGameEvent}
      * @param divinities list of all divinities from model
      * @param descriptions descriptions of divinities
-     * @param playerNumber
-     * @param playersUsernames
+     * @param playerNumber number of players in game
+     * @param playersUsernames list of players' usernames
      */
     public void chooseDivinitiesInGame(List<String> divinities, List<String> descriptions, int playerNumber, List<String> playersUsernames) {
         sendEvent(new DivinitiesInGameEvent(divinities,descriptions,playerNumber,playersUsernames));
@@ -102,7 +102,7 @@ public class ServerView extends Observable<ClientEvent> implements Observer<Serv
 
     /**
      * {@link DivinityInitializationEvent}
-     * @param divinities
+     * @param divinities List of all the game's divinities to pick from
      */
     public void sendDivinityInitialization(List<String> divinities) {
         sendEvent(new DivinityInitializationEvent(divinities));
@@ -120,11 +120,11 @@ public class ServerView extends Observable<ClientEvent> implements Observer<Serv
     }*/
 
     /**
-     * {@link GameSetupEvent} communicates to the client the choices of the other players
-     * @param players
-     * @param colors
-     * @param divinities
-     * @param descriptions
+     * {@link GameSetupEvent} communicates to the client the choices of the other players.
+     * @param players Players' username
+     * @param colors Players's colors (automatically set)
+     * @param divinities Players' chosen divinity
+     * @param descriptions Description of the divinities' powers
      */
     public void sendGameSetupInfo(List<String> players, List<Color> colors, List<String> divinities, List<String> descriptions) {
         sendEvent(new GameSetupEvent(players,colors,divinities,descriptions));
@@ -132,8 +132,8 @@ public class ServerView extends Observable<ClientEvent> implements Observer<Serv
 
     /**
      * {@link DivinitiesSetupEvent}
-     * @param player
-     * @param divinities
+     * @param player List of players that chose a divinity
+     * @param divinities List of divinities chosen
      */
     public void sendDivinitiesSetup(List<String> player, List<String> divinities) {
         Map<String,String> playersDivinities = new HashMap<>();
@@ -144,22 +144,46 @@ public class ServerView extends Observable<ClientEvent> implements Observer<Serv
     }
 
 
+    /**
+     * Sends a {@link EndTurnEvent}
+     */
     public void endTurn() {
         proxy.sendEvent(new EndTurnEvent());
     }
 
+    /**
+     * Sends a {@link InvalidMoveEvent} communicating a bad move and sends again parameters
+     * @param possileActions Old list of possible actions
+     * @param wrongX Wrong x coordinate chosen by the player
+     * @param wrongY Wrong y coordinate chosen by the player
+     */
     public void invalidMove(Map<Action,List<Pair<Integer,Integer>>> possileActions, int wrongX, int wrongY) {
         sendEvent(new InvalidMoveEvent(possileActions,wrongX,wrongY));
     }
 
+    /**
+     * Sends a {@link InvalidBuildEvent} communicating a bad move and sends again parameters
+     * @param possileActions Old list of possible actions
+     * @param x Wrong x coordinate chosen by the player
+     * @param y Wrong y coordinate chosen by the player
+     */
     public void invalidBuild(Map<Action,List<Pair<Integer,Integer>>>possileActions, int x, int y) {
         sendEvent(new InvalidBuildEvent(possileActions,x,y));
     }
 
+    /**
+     * Sends a {@link InvalidWorkerPlacement} if the player chooses a tile holding another worker or the worker will be
+     * blocked once selected
+     */
     public void invalidWorkerPlacement() {
         sendEvent(new InvalidWorkerPlacement());
     }
 
+    /**
+     * Sends a {@link InvalidWorkerSelection} when a player chooses a blocked worker
+     * @param x x tile of the blocked worker
+     * @param y y tile of the blocked worker
+     */
     public void invalidWorkerSelection(int x, int y) {
         sendEvent(new InvalidWorkerSelection(x,y));
     }
@@ -168,27 +192,30 @@ public class ServerView extends Observable<ClientEvent> implements Observer<Serv
 
     /**
      * Sends the specified event to the client
-     * @param event
+     * @param event {@link ServerEvent}
      */
     private void sendEvent(ServerEvent event) {
         if(proxy!=null)  proxy.sendEvent(event);
     }
 
     /**
-     * {@link PlayerDisconnectionEvent}
+     * Closes the connection of the client
      */
     public void disconnect() {
         //sendEvent(new PlayerDisconnectionEvent(playerName));
         proxy.close();
     }
 
+    /**
+     * Stops sending pings and checking that the client is connected when a player lose. see {@link ServerSocketHandler#stopPing()}
+     */
     public void stopPing() {
         if(proxy!=null) proxy.stopPing();
     }
 
     /**
      * Method invoked when there is a notify on the controller
-     * @param event
+     * @param event Specified {@link ServerEvent}
      */
     @Override
     public void update(ServerEvent event) {

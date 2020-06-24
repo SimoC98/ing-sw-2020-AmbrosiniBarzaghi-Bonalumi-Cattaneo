@@ -5,6 +5,9 @@ import it.polimi.ingsw.serverView.PingManager;
 
 import java.io.Serializable;
 
+/**
+ * Base class that client events inherit. These events are sent to the server to communicate a user's action.
+ */
 public interface ClientEvent extends Serializable {
     void handleEvent(Controller controller);
     void handleEvent(PingManager pingSender);

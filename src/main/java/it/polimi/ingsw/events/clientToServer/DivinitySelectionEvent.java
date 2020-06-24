@@ -4,7 +4,7 @@ import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.serverView.PingManager;
 
 /**
- * Divinity chosen by the player
+ * Tells the server which divinity the player chose.
  */
 public class DivinitySelectionEvent implements ClientEvent{
     private final String chosenDivinity;

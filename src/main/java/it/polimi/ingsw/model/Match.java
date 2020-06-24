@@ -390,6 +390,7 @@ public class Match extends Observable<ServerEvent> {
      * @param y2
      * @param divName
      */
+        //TODO: has to be removed
     public void playerInitialization(int x1, int y1, int x2, int y2, String divName) throws WorkerBadPlacementException, InvalidDivinitySelectionEvent {
         placeWorkers(x1,y1,x2,y2);
         loadPlayerDivinity(divName);
@@ -403,9 +404,6 @@ public class Match extends Observable<ServerEvent> {
         }
     }
 
-
-
-    //TODO: create an exception for invalid divinity
 
     /**
      * Sets a player's divinity.

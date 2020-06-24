@@ -4,7 +4,8 @@ import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.serverView.PingManager;
 
 /**
- * Selects the worker that will perform the action specified in the other events
+ * Selects the worker that will perform the action specified in the other events. The worker's position is passed
+ * through its coordinates.
  */
 public class WorkerSelectionQuestionEvent implements ClientEvent {
     private int x;

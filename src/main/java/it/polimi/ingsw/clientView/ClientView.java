@@ -181,6 +181,7 @@ public class ClientView implements Observer<ServerEvent> {
         ui.selectPlayableDivinities(divinitiesNames, divinitiesDescriptions, playersNumber,players);
     }
 
+    //TODO: why players are put in random order???
     public void playersSetup(List<String> playersNames, List<Color> colors) {
 
         for(int i=0; i<playersNames.size(); i++) {
@@ -216,7 +217,13 @@ public class ClientView implements Observer<ServerEvent> {
     }
 
     public void managePlayersDivinities(Map<String, String> divinities) {
+
+        for(int i=0; i<divinities.size();i++) {
+            System.out.println(divinities);
+        }
+
         for(String player : board.getPlayersNames()) {
+            System.out.println(board.getPlayersMap().get(player).getUsername());
             board.getPlayersMap().get(player).setDivinity(divinities.get(player));
         }
         ui.playersDivinities();

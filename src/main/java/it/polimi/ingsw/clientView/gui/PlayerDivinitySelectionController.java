@@ -38,6 +38,9 @@ public class PlayerDivinitySelectionController {
     @FXML
     private Button btn;
 
+    @FXML
+    private VBox vBoxInf;
+
     private List<String> divinities;
 
     private List<ImageView> godImages = new ArrayList<>();
@@ -57,9 +60,19 @@ public class PlayerDivinitySelectionController {
 
     @FXML
     public void initialize() {
+        bPane.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
 
         hBox.prefWidthProperty().bind(bPane.widthProperty());
         hBox.prefHeightProperty().bind(bPane.heightProperty().divide(4.4));
+
+        vBoxInf.prefWidthProperty().bind(bPane.widthProperty());
+
+        label.maxWidthProperty().bind(vBoxInf.widthProperty().subtract(50));
+
+        btn.getStyleClass().add("blue");
+
+
+
 
     }
 

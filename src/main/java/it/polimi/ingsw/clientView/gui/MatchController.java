@@ -11,6 +11,8 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.effect.Light;
+import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -55,6 +57,7 @@ public class MatchController {
 
     Font santoriniFont = Font.loadFont(getClass().getResource("/font/LillyBelle.ttf").toExternalForm(), 20);
 
+    Lighting lighting;
 
 
     public MatchController() {
@@ -62,6 +65,15 @@ public class MatchController {
 
     @FXML
     public void initialize() {
+        hBox.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
+
+        Light.Distant light = new Light.Distant();
+        light.setAzimuth(-135.0);
+
+        this.lighting = new Lighting();
+        lighting.setLight(light);
+        lighting.setSurfaceScale(4.0);
+
         createBoard();
 //        board.prefHeightProperty().bind(hBox.heightProperty().subtract(50));
 //        board.prefWidthProperty().bind(board.heightProperty());
@@ -273,9 +285,17 @@ public class MatchController {
                     endTurnConfirmation();
             });
 
+            actionBtn.setOnMouseEntered((e) -> {
+                actionBtn.setEffect(lighting);
+            });
+
+            actionBtn.setOnMouseExited((e) -> {
+                actionBtn.setEffect(null);
+            });
+
             actionBtn.setFont(santoriniFont);
             actionBtn.getStyleClass().add("blue");
-            actionBtn.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
+            //actionBtn.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
             actionBtn.prefWidthProperty().bind(possibleActionsBox.widthProperty().multiply(0.66));
             actionBtn.prefHeightProperty().bind(actionBtn.widthProperty().multiply(0.33));
 
@@ -517,13 +537,22 @@ public class MatchController {
         exit.setFont(santoriniFont);
 
         exit.getStyleClass().add("coral");
-        exit.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
+        //exit.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
         exit.prefHeightProperty().setValue(40);
         exit.prefWidthProperty().setValue(120);
 
         exit.setOnMouseClicked((e)->{
             exit(0);
         });
+
+        exit.setOnMouseEntered((e) -> {
+            exit.setEffect(lighting);
+        });
+
+        exit.setOnMouseExited((e) -> {
+            exit.setEffect(null);
+        });
+
         vBoxLeft.getChildren().add(exit);
     }
 

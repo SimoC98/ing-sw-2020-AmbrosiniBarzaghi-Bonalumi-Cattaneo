@@ -12,12 +12,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static java.lang.System.exit;
 
 public class GUI extends Application implements UI {
 
@@ -78,6 +81,11 @@ public class GUI extends Application implements UI {
         primaryStage.setMinWidth(600);
 
         primaryStage.setTitle("SANTORINI");
+
+        primaryStage.setOnCloseRequest((WindowEvent t) -> {
+            Platform.exit();
+            exit(0);
+        });
 
 
         /*LoginController.setClientView(clientView);

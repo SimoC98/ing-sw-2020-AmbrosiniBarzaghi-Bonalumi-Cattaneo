@@ -24,6 +24,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.w3c.dom.events.MouseEvent;
 
@@ -81,6 +82,7 @@ public class LoginController {
         lighting.setSurfaceScale(4.0);
 
         btn.getStyleClass().add("blue");
+        btn.getStyleClass().add("whiteTxt");
         btn.setOnMouseEntered((e) -> {
             btn.setEffect(lighting);
         });
@@ -130,7 +132,6 @@ public class LoginController {
             }
         });
 
-        //Font santoriniFont = Font.loadFont(getClass().getResource("/font/LillyBelle.ttf").toExternalForm(),18);
         username.setFont(santoriniFont);
 
         txt.setFont(santoriniFont);
@@ -150,7 +151,6 @@ public class LoginController {
         String username = txt.getText();
 
         Label label = new Label();
-        //label.setFont(new Font(18));
         label.setFont(santoriniFont);
         label.setVisible(false);
         messages.getChildren().clear();
@@ -194,22 +194,21 @@ public class LoginController {
         }
 
         messages.getChildren().clear();
-        Label l = new Label(s.toString());
+        Text l = new Text(s.toString());
         l.setFont(santoriniFont);
-        //l.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
+        l.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
         messages.getChildren().add(l);
     }
 
     public void inLobby() {
-        Font font = Font.loadFont(getClass().getResource("/font/LillyBelle.ttf").toExternalForm(),18);
-
         messages.getChildren().clear();
 
-        Label inLobbyMessage = new Label();
+        Text inLobbyMessage = new Text();
         inLobbyMessage.setText("WAIT THE GAME START...");
         //inLobbyMessage.setFont(new Font(16));
-        inLobbyMessage.setFont(font);
+        inLobbyMessage.setFont(santoriniFont);
         inLobbyMessage.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
+
 
         messages.getChildren().add(inLobbyMessage);
 
@@ -223,18 +222,18 @@ public class LoginController {
     }
 
     public void lobbyFull() {
-        Font f = Font.loadFont(getClass().getResource("/font/LillyBelle.ttf").toExternalForm(),18);
-
         messages.getChildren().clear();
         messages.setSpacing(20);
         String s = "LOBBY IS FULL! YOU CAN'T JOIN THIS MATCH!";
-        Label lobbyFull = new Label(s);
+        Text lobbyFull = new Text(s);
         lobbyFull.setFont(santoriniFont);
-        //lobbyFull.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
+        lobbyFull.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
+
 
         Button exit = new Button("QUIT");
         exit.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
         exit.getStyleClass().add("coral");
+        exit.getStyleClass().add("whiteTxt");
 
         exit.setOnMouseEntered((e) -> {
             exit.setEffect(lighting);
@@ -251,20 +250,20 @@ public class LoginController {
 
         messages.getChildren().addAll(lobbyFull,exit);
 
-
-
     }
 
     public void gameStart() {
         messages.getChildren().clear();
-        Label label = new Label();
-        label.setFont(new Font(16));
-        label.setText("YOUR GAME IS STARTING! PLEASE WAIT...");
+        Text t = new Text();
+        t.setFont(santoriniFont);
+        t.setText("YOUR GAME IS STARTING! PLEASE WAIT...");
+        t.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
 
         ProgressIndicator progress = new ProgressIndicator();
         progress.setMaxSize(50,50);
+        progress.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
 
-        messages.getChildren().addAll(label,progress);
+        messages.getChildren().addAll(t,progress);
     }
 
 }

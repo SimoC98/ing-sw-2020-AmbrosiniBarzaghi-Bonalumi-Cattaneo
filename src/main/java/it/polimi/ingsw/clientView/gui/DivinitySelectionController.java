@@ -84,6 +84,8 @@ public class DivinitySelectionController {
 
     @FXML
     public void initialize() {
+        bPane.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
+
         fontSize.bind(bPane.widthProperty().add(bPane.heightProperty()).divide(150));
 
         /*bPane.prefHeightProperty().bind(stage.heightProperty());
@@ -226,8 +228,6 @@ public class DivinitySelectionController {
             //add image of divinity selected to the desc panel
             godDescription.getChildren().add(new StackPane(c,god));
 
-            Label desc = new Label();
-
             Text text1=new Text(descriptions.get(count));
             text1.setStyle("-fx-font-style: italic");
             //text1.setFont(new Font(18));
@@ -246,12 +246,17 @@ public class DivinitySelectionController {
             buttons.setSpacing(20);
 
             Button close = new Button("close");
+            //close.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
             close.setPrefHeight(40);
             close.setPrefWidth(100);
 
 
+
             close.getStyleClass().add("coral");
-            close.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
+            close.getStyleClass().add("whiteTxt");
+            close.setFont(santoriniFont);
+            //close.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
+            close.setFont(santoriniFont);
 
             close.setOnMouseEntered((e)->{
                 close.setEffect(lighting);
@@ -271,8 +276,9 @@ public class DivinitySelectionController {
             //if this god was already selected --> add deselect button
             if(chosenGodsNode.contains(node)) {
                 Button deselect = new Button("deselect");
-                deselect.setPrefHeight(40);
-                deselect.setPrefWidth(100);
+                deselect.setFont(santoriniFont);
+                //deselect.setPrefHeight(40);
+                //deselect.setPrefWidth(100);
 
                 deselect.setOnMouseEntered((e)->{
                     deselect.setEffect(lighting);
@@ -283,7 +289,10 @@ public class DivinitySelectionController {
                 });
 
                 deselect.getStyleClass().add("blue");
-                deselect.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
+                deselect.getStyleClass().add("whiteTxt");
+                deselect.setFont(santoriniFont);
+                //deselect.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
+                //deselect.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
 
                 deselect.setOnMouseClicked((e)->{
                     chosenGods.remove(divinities.get(count));
@@ -298,8 +307,10 @@ public class DivinitySelectionController {
             //else --> add select button
             else{
                 Button select = new Button("select");
+                select.setFont(santoriniFont);
                 select.setPrefHeight(40);
                 select.setPrefWidth(100);
+                //select.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
 
                 select.setOnMouseEntered((e)->{
                     select.setEffect(lighting);
@@ -310,7 +321,9 @@ public class DivinitySelectionController {
                 });
 
                 select.getStyleClass().add("blue");
-                select.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
+                select.getStyleClass().add("whiteTxt");
+                select.setFont(santoriniFont);
+                //select.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
 
                 select.setOnMouseClicked((e)->{
                     chosenGods.add(divinities.get(count));

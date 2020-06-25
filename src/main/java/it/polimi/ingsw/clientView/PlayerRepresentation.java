@@ -64,24 +64,14 @@ public class PlayerRepresentation {
     }
 
     /**
-     * Used to change a worker position or to initially place it. See {@link PlayerRepresentation#moveWorker(int, int, int, int)}
-     * @param x worker initial x coordinate
-     * @param y worker initial y coordinate
+     * Used to change a worker's position or to initially place it. See {@link PlayerRepresentation#moveWorker(int, int, int, int)}
+     * @param x worker's x coordinate
+     * @param y worker's y coordinate
      */
     public void addWorker(int x, int y){
         workers.add(new Pair<>(x,y));
     }
 
-//    public Pair<Integer, Integer> getWorker(int x, int y){
-//        Pair<Integer, Integer> goal = new Pair<>(x,y);
-//
-//        for(int i=0; i<workers.size(); i++){
-//            if(workers.get(i) == goal)
-//                return workers.get(i);
-//        }
-//
-//        return null;
-//    }
 
     public void setDivinity(String divinity){
         this.divinity = divinity;

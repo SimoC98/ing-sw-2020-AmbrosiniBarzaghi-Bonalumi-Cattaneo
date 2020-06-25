@@ -9,7 +9,8 @@ import java.io.*;
 import java.net.Socket;
 
 /**
- * Helps to manage each client connection, pairing it with the server's one.
+ * Helps to manage each client connection, pairing it with the server. It holds the input stream to
+ * receive {@link ClientEvent} and holds an output stream to send {@link ServerEvent}
  */
 public class ServerSocketHandler extends Observable<ClientEvent> implements Runnable {
 
@@ -26,7 +27,7 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
 
 
     /**
-     * Opens a channel between the client and the server
+     * Opens a channel between the client and the server and start the pinging process ({@link PingManager}
      * @param socket client connection
      * @param server server connection
      */

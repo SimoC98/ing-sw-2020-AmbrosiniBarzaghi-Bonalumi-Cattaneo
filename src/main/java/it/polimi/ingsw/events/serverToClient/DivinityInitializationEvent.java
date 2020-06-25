@@ -6,7 +6,8 @@ import it.polimi.ingsw.clientView.PingReceiver;
 import java.util.List;
 
 /**
- * List of divinities chosen by the last player that each user can choose from
+ * List of divinities chosen by the last player that each user can choose from. The list has a starting size equals to
+ * the number of players in game and is reduced each time a user chooses a divinity.
  */
 public class DivinityInitializationEvent implements ServerEvent{
 

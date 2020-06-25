@@ -50,7 +50,8 @@ public class Controller implements Observer<ClientEvent> {
 
     /**
      * Verifies that the action extracted from the clientEvent is valid on the model; if it is not, then it notifies the client.
-     * If the action is valid it uses a handle method to manage it.
+     * If the selection is not valid, it throws an exception and notifies the client. Called when {@link it.polimi.ingsw.events.clientToServer.WorkerSelectionQuestionEvent}
+     * is received
      * @param action {@link Action} chosen by the client.
      * @param x x coordinate of the action to perform with the selected worker.
      * @param y y coordinate of the action to perform with the selected worker.
@@ -219,7 +220,7 @@ public class Controller implements Observer<ClientEvent> {
     }
 
     /**
-     * Closes the connections when a player has won or has disconnected.
+     * Handles the disconnection of a player and disconnects the others. Caused by {@link it.polimi.ingsw.events.clientToServer.DisconnectionEvent}
      */
     public void disconnectAll() {
         for(ServerView s : playersInGame) {
@@ -314,7 +315,8 @@ public class Controller implements Observer<ClientEvent> {
      * Maps the divinity chosen by the player and the player on the model. It updated the list of the available divinities
      * removing the specified divinity; if the list reaches the size of one, the remaining divinity is paired with the
      * remaining player and the game skips to the worker placement after informing the players' with the others' choice
-     * of the divinity {@link it.polimi.ingsw.events.serverToClient.DivinitiesSetupEvent}
+     * of the divinity. See {@link it.polimi.ingsw.events.serverToClient.DivinitiesSetupEvent}
+     * Called when a {@link it.polimi.ingsw.events.clientToServer.DivinitySelectionEvent} is received.
      * @param divinity Name of the divinity chosen by a player
      */
     public void handleDivinityInitialization(String divinity) {
@@ -359,6 +361,7 @@ public class Controller implements Observer<ClientEvent> {
      * Places a player's worker on the {@link it.polimi.ingsw.model.Board}. If the player places the workers wrongly, an
      * exception is thrown and they have to choose again.
      * After each player placed their workers the game start (see {@link Match#workerPlacementInitialization(int, int, int, int)}
+     * Called when a {@link it.polimi.ingsw.events.clientToServer.WorkerPlacementSelectionEvent} is received
      * @param x1 first x coordinate
      * @param y1 first y coordinate
      * @param x2 second x coordinate

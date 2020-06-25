@@ -124,12 +124,6 @@ public class ClientView implements Observer<ServerEvent> {
         proxy.sendEvent(new LoginEvent(username));
     }
 
-    //TODO: This should be temporary
-//    public void loginQuestion2(int playersNumber, String username) {
-//        this.username = username;
-//        proxy.sendEvent(new LoginEvent(playersNumber, username));
-//    }
-
     //IF USERID==0
     public void playersNumberQuestion(int num) {
         proxy.sendEvent(new PlayersNumberQuestionEvent(num));
@@ -303,6 +297,14 @@ public class ClientView implements Observer<ServerEvent> {
         ui.startGame();
     }
 
+    /**
+     * Called from {@link it.polimi.ingsw.events.serverToClient.LobbyFullEvent} because the user tried to connected
+     * once the game already started.
+     */
+    public void lobbyFull() {
+        ui.lobbyFull();
+    }
+
     @Override
     public void update(ServerEvent event) {
         /*synchronized (lock) {
@@ -312,19 +314,11 @@ public class ClientView implements Observer<ServerEvent> {
     }
 
 
-
-
-
-
-
-
-
-//    //temp main and start
-//    public static void main(String[] args) {
-//        ClientView c = new ClientView();
-//        //c.start();
-//    }
-
+    /**
+     * Opens the client connection starting a {@link ClientSocketHandler}.
+     * The ip and the port are either passed as parameters in the constructor of ClientView or they are retrieved from
+     * an xml file.
+     */
     public void startConnection() {
         /*this.ui = new CLI(this);
         ui.start();*/
@@ -352,37 +346,20 @@ public class ClientView implements Observer<ServerEvent> {
         new Thread(proxy).start();
     }
 
-    public void lobbyFull() {
-        ui.lobbyFull();
-    }
-
+    /**
+     * Method that causes to close the client socket. It is caused by a generic user's connection problem, by a full lobby event
+     * or by the presence of winner
+     */
     public void disconnect() {
         proxy.close();
     }
 
-//    public void login(int id) {
-//        if(id==0) {
-//            System.out.println("player number");
-//            Scanner scanner = new Scanner(System.in);
-//            int playernumber = scanner.nextInt();
-//            proxy.sendEvent(new LoginEvent(playernumber,this.username));
-//        }
-//        else {
-//            proxy.sendEvent(new LoginEvent(this.username));
-//        }
-//
-//
-//        pingTimer.schedule(new TimerTask() {
-//            @Override
-//            public void run() {
-////                System.out.println("PING");
-//                proxy.sendEvent(new Ping());
-//            }
-//        },0,5000);
-//
-//    }
-
-
+    /**
+     * Retrieves the connection configuration file to be read to get the ip and the port, that will be used
+     * if the user did not specify them in when opening the jar. If the retrieval is successful, a socket is opened.
+     * @return {@code Socket} used in the {@link ClientSocketHandler}
+     * @throws IOException Thrown if it fails to read the document
+     */
     private Socket connectionConfigParser() throws IOException {
         //File xmlFile = new File("src/main/resources/connection_config.xml");
 
@@ -410,6 +387,10 @@ public class ClientView implements Observer<ServerEvent> {
         return new Socket(hostname, port);
     }
 
+
+    /**
+     * Resets the client's {@link BoardRepresentation} at the end of the game, building a new one
+     */
     public void resetBoard() {
         this.board = new BoardRepresentation();
     }

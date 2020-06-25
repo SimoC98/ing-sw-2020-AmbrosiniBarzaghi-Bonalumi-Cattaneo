@@ -150,10 +150,8 @@ public class Server{
             return;
         }
 
-        registerConnection(connection);
-
         connection.sendEvent(new InLobbyEvent());
-
+        registerConnection(connection);
         loggedPlayers.put(connection,username);
         //connection.startPing();
         printUsers();
@@ -179,9 +177,6 @@ public class Server{
         else {
             connection.startPing();
         }
-        /*else {
-            connection.sendEvent(new WaitingRoomEvent());
-        }*/
     }
 
     /**
@@ -202,8 +197,6 @@ public class Server{
             users.add(newUser);
         }
 
-
-        //Match match = new Match(new ArrayList<>(loggedPlayers.values()));
         Match match = new Match(players);
         Controller controller = new Controller(match,users);
 
@@ -221,9 +214,6 @@ public class Server{
      */
     private void printUsers() {
         System.out.println("\nLOGGED PLAYERS: ");
-        /*for(ServerSocketHandler s : loggedPlayers.keySet()) {
-            System.out.println(loggedPlayers.get(s));
-        }*/
         loggedPlayers.values().forEach(x -> System.out.println(x));
         System.out.println("\n");
     }
@@ -249,12 +239,6 @@ public class Server{
 
 
         System.out.println("this match is ended...\n\n\n");
-        /*try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }*/
-        //exit(0);
         connections.clear();
         loggedPlayers.clear();
         isGameStarted=false;

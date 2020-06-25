@@ -68,6 +68,7 @@ public class Match extends Observable<ServerEvent> {
         currentPlayer = null;
     }
 
+
     public void setStartPlayer(String startPlayer) {
         for(Player p : players) {
             if(p.getUsername().equals(startPlayer)) {

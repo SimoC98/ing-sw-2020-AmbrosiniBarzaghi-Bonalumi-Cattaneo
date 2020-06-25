@@ -14,6 +14,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +61,15 @@ public class PlayerDivinitySelectionController {
 
     @FXML
     public void initialize() {
+        Light.Distant light = new Light.Distant();
+        light.setAzimuth(-135.0);
+
+        Lighting lighting = new Lighting();
+        lighting.setLight(light);
+        lighting.setSurfaceScale(4.0);
+
+        Font santorini = Font.loadFont(getClass().getResource("/font/LillyBelle.ttf").toExternalForm(), 18);
+
         bPane.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
 
         hBox.prefWidthProperty().bind(bPane.widthProperty());
@@ -67,9 +77,25 @@ public class PlayerDivinitySelectionController {
 
         vBoxInf.prefWidthProperty().bind(bPane.widthProperty());
 
-        label.maxWidthProperty().bind(vBoxInf.widthProperty().subtract(50));
+        label.maxWidthProperty().bind(bPane.widthProperty().subtract(50));
+        label.setAlignment(Pos.CENTER);
+        label.setFont(santorini);
+        label.setWrapText(true);
 
         btn.getStyleClass().add("blue");
+        btn.setFont(santorini);
+        btn.setOnMouseEntered((e) -> {
+            btn.setEffect(lighting);
+        });
+        btn.setOnMouseExited((e) -> {
+            btn.setEffect(null);
+        });
+        //btn.prefWidthProperty().bind(bPane.widthProperty().divide(10));
+        //btn.prefHeightProperty().bind(btn.widthProperty().divide(1.5));
+
+
+
+
 
 
 

@@ -12,6 +12,10 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.net.Socket;
 
+/**
+ * ClientSocketHandler manages a client's connection receiving holding an input stream and an output one
+ * to receive {@link ServerEvent} and to send {@link ClientEvent}.
+ */
 public class ClientSocketHandler extends Observable<ServerEvent> implements Runnable {
 
     Socket socket;
@@ -21,6 +25,10 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
 
     private Object lock = new Object();
 
+    /**
+     * Assigns the client socket passed as parameters, it opens the streams and it starts the pong process ({@link PingReceiver}
+     * @param socket
+     */
     public ClientSocketHandler(Socket socket) {
         this.socket = socket;
 
@@ -41,6 +49,9 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
     }
 
 
+    /**
+     * Thread to remain open to accept server events
+     */
     @Override
     public void run() {
         System.out.println("running...");
@@ -64,10 +75,17 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
 
     }
 
+    /**
+     * Called whenever a new server event is received; it notifies the client view of such event through {@link ClientView#update(ServerEvent)}.
+     * @param event
+     */
     private void receiveEvent(ServerEvent event) {
         notify(event);
     }
 
+    /**
+     * Closes the socket after closing the streams.
+     */
     public void close() {
         try {
            in.close();
@@ -80,7 +98,10 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
         }
     }
 
-
+    /**
+     * Sends the specified ClientEvent to the server (it arrives to the {@link it.polimi.ingsw.serverView.ServerSocketHandler} that dispatches it)
+     * @param event {@link ClientEvent}
+     */
     public void sendEvent(ClientEvent event) {
         try {
             out.writeObject(event);

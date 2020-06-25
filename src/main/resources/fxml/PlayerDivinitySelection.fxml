@@ -20,7 +20,7 @@
                      <font>
                         <Font name="System Italic" size="18.0" />
                      </font></Label>
-                  <Button fx:id="btn" mnemonicParsing="false" text="Choose" visible="false" VBox.vgrow="ALWAYS" />
+                  <Button fx:id="btn" maxHeight="50.0" maxWidth="150.0" minHeight="30.0" minWidth="70.0" mnemonicParsing="false" text="Choose" textFill="WHITE" visible="false" VBox.vgrow="ALWAYS" />
                </children>
             </VBox>
          </children>

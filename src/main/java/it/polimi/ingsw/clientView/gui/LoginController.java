@@ -1,6 +1,10 @@
 package it.polimi.ingsw.clientView.gui;
 
 import it.polimi.ingsw.clientView.ClientView;
+import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -10,6 +14,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.Light;
+import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -54,6 +60,10 @@ public class LoginController {
     private static ClientView clientView;
     private static GUI gui;
 
+    private DoubleProperty fontSize = new SimpleDoubleProperty(10);
+    Font santoriniFont = Font.loadFont(getClass().getResource("/font/LillyBelle.ttf").toExternalForm(),18);
+    Lighting lighting;
+
     public static void setGui(GUI gui) {
         LoginController.gui = gui;
         LoginController.clientView = gui.getClientView();
@@ -61,6 +71,29 @@ public class LoginController {
 
     @FXML
     public void initialize() {
+        root.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
+
+        Light.Distant light = new Light.Distant();
+        light.setAzimuth(-135.0);
+
+        this.lighting = new Lighting();
+        lighting.setLight(light);
+        lighting.setSurfaceScale(4.0);
+
+        btn.getStyleClass().add("blue");
+        btn.setOnMouseEntered((e) -> {
+            btn.setEffect(lighting);
+        });
+        btn.setOnMouseExited((e) -> {
+            btn.setEffect(null);
+        });
+
+        fontSize.bind(root.widthProperty().add(root.heightProperty()).divide(100));
+        txt.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
+        btn.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
+        username.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
+        messages.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
+
         vBoxSup.prefHeightProperty().bind(root.heightProperty().divide(2));
         vBoxSup.prefWidthProperty().bind(root.widthProperty());
 
@@ -97,12 +130,10 @@ public class LoginController {
             }
         });
 
-        Font santoriniFont = Font.loadFont(getClass().getResource("/font/LillyBelle.ttf").toExternalForm(),18);
+        //Font santoriniFont = Font.loadFont(getClass().getResource("/font/LillyBelle.ttf").toExternalForm(),18);
         username.setFont(santoriniFont);
 
         txt.setFont(santoriniFont);
-
-
     }
 
     public static void setClientView(ClientView clientView) {
@@ -119,7 +150,8 @@ public class LoginController {
         String username = txt.getText();
 
         Label label = new Label();
-        label.setFont(new Font(18));
+        //label.setFont(new Font(18));
+        label.setFont(santoriniFont);
         label.setVisible(false);
         messages.getChildren().clear();
         messages.getChildren().add(label);
@@ -149,6 +181,7 @@ public class LoginController {
     }
 
     public void invalidUsername(List<String> loggedUsers) {
+        //Font santoriniFont = Font.loadFont(getClass().getResource("/font/LillyBelle.ttf").toExternalForm(),18);
 
         hBox.setVisible(true);
 
@@ -162,20 +195,27 @@ public class LoginController {
 
         messages.getChildren().clear();
         Label l = new Label(s.toString());
-        l.setFont(new Font(18));
+        l.setFont(santoriniFont);
+        //l.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
         messages.getChildren().add(l);
     }
 
     public void inLobby() {
+        Font font = Font.loadFont(getClass().getResource("/font/LillyBelle.ttf").toExternalForm(),18);
+
         messages.getChildren().clear();
 
-        Label inLobbyMessage = new Label("WAIT THE GAME START...");
-        inLobbyMessage.setFont(new Font(16));
+        Label inLobbyMessage = new Label();
+        inLobbyMessage.setText("WAIT THE GAME START...");
+        //inLobbyMessage.setFont(new Font(16));
+        inLobbyMessage.setFont(font);
+        inLobbyMessage.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
 
         messages.getChildren().add(inLobbyMessage);
 
         ProgressIndicator progress = new ProgressIndicator();
         progress.setMaxSize(50,50);
+        progress.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
 
         messages.getChildren().add(progress);
 
@@ -183,8 +223,35 @@ public class LoginController {
     }
 
     public void lobbyFull() {
+        Font f = Font.loadFont(getClass().getResource("/font/LillyBelle.ttf").toExternalForm(),18);
+
         messages.getChildren().clear();
-        messages.getChildren().add(new Label("LOBBY IS FULL! YOU CAN'T JOIN THIS MATCH!"));
+        messages.setSpacing(20);
+        String s = "LOBBY IS FULL! YOU CAN'T JOIN THIS MATCH!";
+        Label lobbyFull = new Label(s);
+        lobbyFull.setFont(santoriniFont);
+        //lobbyFull.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
+
+        Button exit = new Button("QUIT");
+        exit.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
+        exit.getStyleClass().add("coral");
+
+        exit.setOnMouseEntered((e) -> {
+            exit.setEffect(lighting);
+        });
+
+        exit.setOnMouseExited((e) -> {
+            exit.setEffect(null);
+        });
+
+        exit.setOnMouseClicked((e) -> {
+            Platform.exit();
+            exit(0);
+        });
+
+        messages.getChildren().addAll(lobbyFull,exit);
+
+
 
     }
 

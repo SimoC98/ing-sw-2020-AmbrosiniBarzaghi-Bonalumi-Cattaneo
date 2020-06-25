@@ -1,6 +1,9 @@
 package it.polimi.ingsw.clientView.gui;
 
 import it.polimi.ingsw.clientView.ClientView;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -56,6 +59,8 @@ public class DivinitySelectionController {
 
     ProgressIndicator progress;
 
+    Font santoriniFont = Font.loadFont(getClass().getResource("/font/LillyBelle.ttf").toExternalForm(),18);
+
 
 
     @FXML
@@ -73,9 +78,13 @@ public class DivinitySelectionController {
 
     private boolean nodeListenersOff = false;
 
+    private DoubleProperty fontSize = new SimpleDoubleProperty(10);
+
+
 
     @FXML
     public void initialize() {
+        fontSize.bind(bPane.widthProperty().add(bPane.heightProperty()).divide(150));
 
         /*bPane.prefHeightProperty().bind(stage.heightProperty());
         bPane.prefWidthProperty().bind(stage.widthProperty());*/
@@ -137,14 +146,7 @@ public class DivinitySelectionController {
                     //god.fitWidthProperty().bind(god.fitHeightProperty().divide(1.5));
                     god.fitWidthProperty().bind(bPane.widthProperty().divide(11));
 
-                    //god.maxHeight(220);
-                    //god.maxWidth(150);
-
                     god.isPreserveRatio();
-
-                    //god.setFitHeight(220);
-                    //god.setFitWidth(150);
-
 
                     addCell(god,r,c,count);
 
@@ -201,9 +203,6 @@ public class DivinitySelectionController {
         });
 
         node.setOnMouseClicked((e1)-> {
-
-
-
             //if already chosen return without show desc
             if(nodeListenersOff) return;
 
@@ -212,8 +211,6 @@ public class DivinitySelectionController {
             ImageView god = new ImageView();
             Image godImg = new Image(getClass().getResource("/graphics/" + divinities.get(count).toLowerCase() + ".png").toExternalForm());
             god.setImage(godImg);
-            //god.setFitHeight(350);
-            //god.setFitWidth(250);
 
             god.fitHeightProperty().bind(godDescription.heightProperty().divide(1.8));
             god.fitWidthProperty().bind(godDescription.widthProperty().divide(2.2));
@@ -221,8 +218,6 @@ public class DivinitySelectionController {
 
             String clip = "/graphics/clp_bg.png";
             ImageView c = new ImageView(new Image(getClass().getResource(clip).toExternalForm()));
-            //c.setFitHeight(390);
-            //c.setFitWidth(280);
             c.fitHeightProperty().bind(godDescription.heightProperty().divide(1.8).add(60));
             c.fitWidthProperty().bind(godDescription.widthProperty().divide(2.2).add(40));
 
@@ -235,7 +230,9 @@ public class DivinitySelectionController {
 
             Text text1=new Text(descriptions.get(count));
             text1.setStyle("-fx-font-style: italic");
-            text1.setFont(new Font(18));
+            //text1.setFont(new Font(18));
+            text1.setFont(santoriniFont);
+            text1.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
             text1.setWrappingWidth(250);
             text1.setTextAlignment(TextAlignment.CENTER);
 

@@ -1,6 +1,7 @@
 package it.polimi.ingsw.clientView.aaaaGUITesting;
 
 import it.polimi.ingsw.clientView.gui.EndGameController;
+import it.polimi.ingsw.clientView.gui.LoginController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,7 +12,7 @@ import javafx.stage.Stage;
 
 public class FXMLTest extends Application {
 
-   private EndGameController endGameController;
+   private LoginController loginController;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -20,10 +21,10 @@ public class FXMLTest extends Application {
         Parent testPane = testLoader.load();
         this.gameController = testLoader.getController();*/
 
-        FXMLLoader endLoader = new FXMLLoader(getClass().getResource("/fxml/EndGame.fxml"));
+        FXMLLoader endLoader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));
         Parent endPane = endLoader.load();
         //this.endGameController = endLoader.getController();
-        this.endGameController = endLoader.getController();
+        this.loginController = endLoader.getController();
 
         //to make scene reseizable
         Pane p3 = (Pane) endPane;

@@ -41,11 +41,15 @@ public class MatchController {
     @FXML
     private VBox vBoxLeft;
     @FXML
-    private VBox vBoxRight;
-    @FXML
     private StackPane rightStack;
+    @FXML
+    private VBox alertVBox;
 
+    //CONSTANTS
     private final int LVL1=0, LVL2=1, LVL3=2, DOME=3, WORKER=4, SHADOW=5;
+    private final double CARD_RATIO = 1.68;
+    private final int BTN_WIDTH=120, BTN_HEIGHT=40;
+
     private String actualAction;
     private Map<String, Image> workerColors;
     private List<Image> tileLevel;
@@ -56,9 +60,9 @@ public class MatchController {
     private Map<Action,List<Pair<Integer,Integer>>> possibleActions;
     private int selectedWX,selectedWY;
 
-    Font santoriniFont = Font.loadFont(getClass().getResource("/font/LillyBelle.ttf").toExternalForm(), 20);
+    private Font santoriniFont = Font.loadFont(getClass().getResource("/font/LillyBelle.ttf").toExternalForm(), 20);
 
-    Lighting lighting;
+    private Lighting lighting;
 
 
     public MatchController() {
@@ -66,8 +70,6 @@ public class MatchController {
 
     @FXML
     public void initialize() {
-        hBox.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
-
         Light.Distant light = new Light.Distant();
         light.setAzimuth(-135.0);
 
@@ -76,19 +78,11 @@ public class MatchController {
         lighting.setSurfaceScale(4.0);
 
         createBoard();
-//        board.prefHeightProperty().bind(hBox.heightProperty().subtract(50));
-//        board.prefWidthProperty().bind(board.heightProperty());
+
         hBox.setMinHeight(200);
         hBox.setMinWidth(400);
-
-        //Testing
-        //placeWorkers(2,2,3,4);
-//        for(int i=0; i<5; i++)
-//            toggleSelectable(i,i);
-        //actualAction = "build";
-
-        vBoxLeft.setSpacing(40);
-        vBoxLeft.setAlignment(Pos.CENTER);
+        hBox.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
+        hBox.setSpacing(20);
 
         workerColors = Map.of(
                 "blue" , new Image("/graphics/blue.png"),
@@ -103,26 +97,38 @@ public class MatchController {
 
         isInitialized = true;
 
-        board.prefWidthProperty().bind(hBox.widthProperty().divide(2));
+        board.prefWidthProperty().bind(hBox.widthProperty().divide(2).subtract(10));
         board.prefHeightProperty().bind(board.widthProperty());
 
-        vBoxLeft.prefWidthProperty().bind(hBox.widthProperty().divide(4));
-        vBoxLeft.prefHeightProperty().bind(hBox.widthProperty().multiply(0.8));
+        vBoxLeft.setSpacing(10);
+        vBoxLeft.setAlignment(Pos.CENTER);
+        vBoxLeft.prefWidthProperty().bind(hBox.widthProperty().divide(4).subtract(10));
+        vBoxLeft.prefHeightProperty().bind(hBox.heightProperty().multiply(0.8));
+        vBoxLeft.minHeightProperty().setValue(100);
         vBoxLeft.alignmentProperty().setValue(Pos.CENTER);
 
-        rightStack.prefWidthProperty().bind(hBox.widthProperty().divide(4));
-        rightStack.prefHeightProperty().bind(hBox.widthProperty().multiply(0.8));
+        rightStack.prefWidthProperty().bind(hBox.widthProperty().divide(4).subtract(10));
+        rightStack.prefHeightProperty().bind(hBox.heightProperty().multiply(0.8));
         rightStack.alignmentProperty().setValue(Pos.CENTER);
 
         message.prefWidthProperty().bind(rightStack.widthProperty());
         message.maxWidthProperty().bind(rightStack.maxWidthProperty());
         message.setWrapText(true);
         message.alignmentProperty().setValue(Pos.TOP_CENTER);
+        message.setFont(santoriniFont);
 
         possibleActionsBox.alignmentProperty().setValue(Pos.BOTTOM_CENTER);
         possibleActionsBox.setSpacing(20);
 
-        message.setFont(santoriniFont);
+        alertVBox.prefWidthProperty().unbind();
+        alertVBox.prefHeightProperty().unbind();
+        alertVBox.prefWidthProperty().setValue(500);
+        alertVBox.prefHeightProperty().setValue(500);
+        alertVBox.maxWidthProperty().bind(alertVBox.prefWidthProperty());
+        alertVBox.maxHeightProperty().bind(alertVBox.prefHeightProperty());
+        alertVBox.alignmentProperty().setValue(Pos.CENTER);
+        alertVBox.setVisible(false);
+        alertVBox.setSpacing(10);
     }
 
     protected int getSelectedWX() {
@@ -282,7 +288,8 @@ public class MatchController {
         for(Action action : possibleActions.keySet()) {
             System.out.println(action.toString());
 
-            Button actionBtn = new Button(action.toString());
+            Button actionBtn = newStandardizedButton();
+            actionBtn.setText(action.toString());
             actionBtn.setOnMouseClicked((event) -> {
                 actualAction = action.toString().toLowerCase();
                 setShadowOff();
@@ -294,20 +301,6 @@ public class MatchController {
                     endTurnConfirmation();
             });
 
-            actionBtn.setOnMouseEntered((e) -> {
-                actionBtn.setEffect(lighting);
-            });
-
-            actionBtn.setOnMouseExited((e) -> {
-                actionBtn.setEffect(null);
-            });
-
-            actionBtn.setFont(santoriniFont);
-            actionBtn.getStyleClass().add("blue");
-            //actionBtn.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
-            actionBtn.prefWidthProperty().bind(possibleActionsBox.widthProperty().multiply(0.66));
-            actionBtn.prefHeightProperty().bind(actionBtn.widthProperty().multiply(0.33));
-
             actionButtons.add(actionBtn);
         }
 
@@ -317,11 +310,6 @@ public class MatchController {
     private void emptyPossibleActions() {
         possibleActionsBox.getChildren().clear();
     }
-
-
-    /*
-
-     */
 
     public void selectWorker(StackPane s) {
         ImageView v = (ImageView) s.getChildren().get(WORKER);
@@ -336,25 +324,47 @@ public class MatchController {
             System.out.println("Worker Selected");
 //            setShadowOff();
 
-            Alert a = new Alert(Alert.AlertType.CONFIRMATION);
-            a.setTitle("Confirm Selection");
-            a.setHeaderText("Are you sure you want to select this worker?");
-            a.setContentText("Press \"Yes\" to confirm.");
+            alertVBox.prefWidth(250);
+            alertVBox.prefHeight(100);
 
-            ButtonType select = new ButtonType("Yes");
-            ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
-
-            a.getButtonTypes().clear();
-            a.getButtonTypes().addAll(select, cancel);
-
-            Optional<ButtonType> result = a.showAndWait();
-            if (result.get() == select) {
+            Button select = newStandardizedButton();
+            select.setText("SELECT");
+            select.prefWidth(BTN_WIDTH/2);
+            select.setFont(getSantoriniFont(16));
+            select.setOnMouseClicked(event -> {
+                alertVBox.setVisible(false);
+                alertVBox.getChildren().clear();
                 setShadowOff();
                 message.setText("Selected worker: " + x + "-" + y);
                 this.selectedWX = x;
                 this.selectedWY = y;
                 clientView.selectWorkerQuestion(x, y);
-            }
+            });
+            select.getStylesheets().add("blue");
+
+            Button cancel = newStandardizedButton();
+            cancel.setText("CANCEL");
+            cancel.prefWidth(BTN_WIDTH/2);
+            cancel.setFont(getSantoriniFont(16));
+            cancel.setOnMouseClicked(event -> {
+                alertVBox.setVisible(false);
+                alertVBox.getChildren().clear();
+            });
+            cancel.getStyleClass().add("coral");
+
+            HBox btnBox = new HBox();
+            btnBox.setAlignment(Pos.CENTER);
+            btnBox.setSpacing(20);
+            btnBox.getChildren().addAll(select, cancel);
+
+            Label text = new Label("Do you want to select this worker? " + x + "-" + y);
+            text.setWrapText(true);
+            text.setFont(getSantoriniFont(18));
+            text.prefWidth(alertVBox.getWidth() * 0.6);
+            text.setAlignment(Pos.CENTER);
+
+            alertVBox.getChildren().addAll(text, btnBox);
+            alertVBox.setVisible(true);
         }
 
         /*if(v.getImage() != null){
@@ -468,23 +478,45 @@ public class MatchController {
     }
 
     public void endTurnConfirmation() {
-        Alert a = new Alert(Alert.AlertType.CONFIRMATION);
-        a.setTitle("End Turn?");
-        a.setHeaderText("Are you sure you want to end your turn?");
-        a.setContentText("Press \"End Turn\" to confirm.");
+        alertVBox.prefWidth(250);
+        alertVBox.prefHeight(100);
 
-        ButtonType endTurn = new ButtonType("End Turn");
-        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
-
-        a.getButtonTypes().clear();
-        a.getButtonTypes().addAll(endTurn,buttonTypeCancel);
-
-        Optional<ButtonType> result = a.showAndWait();
-        if (result.get() == endTurn){
+        Button select = newStandardizedButton();
+        select.setText("END");
+        select.prefWidth(BTN_WIDTH/2);
+        select.setFont(getSantoriniFont(16));
+        select.setOnMouseClicked(event -> {
+            alertVBox.setVisible(false);
+            alertVBox.getChildren().clear();
             message.setText("Your turn is over");
             emptyPossibleActions();
             clientView.actionQuestion(Action.END, -1, -1);
-        }
+        });
+        select.getStylesheets().add("blue");
+
+        Button cancel = newStandardizedButton();
+        cancel.setText("CANCEL");
+        cancel.prefWidth(BTN_WIDTH/2);
+        cancel.setFont(getSantoriniFont(16));
+        cancel.setOnMouseClicked(event -> {
+            alertVBox.setVisible(false);
+            alertVBox.getChildren().clear();
+        });
+        cancel.getStyleClass().add("coral");
+
+        HBox btnBox = new HBox();
+        btnBox.setAlignment(Pos.CENTER);
+        btnBox.setSpacing(20);
+        btnBox.getChildren().addAll(select, cancel);
+
+        Label text = new Label("Do you want to end your turn?");
+        text.setWrapText(true);
+        text.setFont(getSantoriniFont(18));
+        text.prefWidth(alertVBox.getWidth() * 0.6);
+        text.setAlignment(Pos.CENTER);
+
+        alertVBox.getChildren().addAll(text, btnBox);
+        alertVBox.setVisible(true);
     }
 
     public void setPlayers() {
@@ -503,31 +535,22 @@ public class MatchController {
             String div = players.get(i).getDivinity();
 
             ImageView god = new ImageView();
-
+            god.fitHeightProperty().bind(vBoxLeft.heightProperty().multiply(0.25));
+            god.fitWidthProperty().bind(god.fitHeightProperty().divide(CARD_RATIO));
             String url = "/graphics/" +players.get(i).getDivinity().toLowerCase() + ".png";
             Image godImage = new Image(url);
-
             god.setImage(godImage);
-            god.setFitHeight(150);
-            god.setFitWidth(100);
 
             Tooltip tt = new Tooltip();
-            tt.setFont(Font.font("Felix Titling", 16));
-            tt.setText(clientView.getBoard().getDivinities().get(div));
-
+            tt.setFont(santoriniFont);
+//            tt.setText(clientView.getBoard().getDivinities().get(div)); //hinta la descrizione
+            tt.setText("Click to see God's description");
             Tooltip.install(
-                    god,
-                    tt
+                god,
+                tt
             );
 
-            god.setOnMouseClicked((e) -> {
-                Alert a = new Alert(Alert.AlertType.INFORMATION);
-                a.setTitle(div.toUpperCase());
-                a.setHeaderText("Here's " + div + " description");
-                a.setContentText(clientView.getBoard().getDivinities().get(div));
-
-                a.show();
-            });
+            god.setOnMouseClicked((e) -> godDescrAlertSetup(div, god.getImage()));
 
             VBox box = new VBox();
             box.setSpacing(5);
@@ -535,7 +558,7 @@ public class MatchController {
 
             //Label playerName = new Label(players.get(i).getUsername());
             Label playerName = new Label();
-            if(players.get(i).getUsername().equals(clientView.getUsername())) playerName.setText("YOU");
+            if(players.get(i).getUsername().equals(clientView.getUsername())) playerName.setText(clientView.getUsername() + "\n(YOU)");
             else playerName.setText(players.get(i).getUsername());
             playerName.setFont(santoriniFont);
 
@@ -544,27 +567,49 @@ public class MatchController {
             vBoxLeft.getChildren().add(box);
         }
 
-        Button exit = new Button("QUIT");
-        exit.setFont(santoriniFont);
-
+        Button exit = newStandardizedButton();
+        exit.setText("QUIT");
         exit.getStyleClass().add("coral");
-        //exit.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
-        exit.prefHeightProperty().setValue(40);
-        exit.prefWidthProperty().setValue(120);
-
-        exit.setOnMouseClicked((e)->{
-            exit(0);
-        });
-
-        exit.setOnMouseEntered((e) -> {
-            exit.setEffect(lighting);
-        });
-
-        exit.setOnMouseExited((e) -> {
-            exit.setEffect(null);
-        });
+        exit.setOnMouseClicked((e)-> exit(0));
 
         vBoxLeft.getChildren().add(exit);
+    }
+
+    public void godDescrAlertSetup(String godName, Image godImg) {
+        System.out.println("Opening description, " + godName);
+
+        alertVBox.prefWidth(400);
+        alertVBox.prefHeight(600);
+
+        System.out.println("ciao");
+
+        ImageView imgView = new ImageView(godImg);
+        imgView.fitHeightProperty().setValue(alertVBox.getHeight() * 0.5);
+        imgView.fitWidthProperty().setValue(alertVBox.getHeight() * 0.5 / CARD_RATIO);
+
+        Label description = new Label(clientView.getBoard().getDivinities().get(godName));
+        description.setWrapText(true);
+        description.setFont(getSantoriniFont(18));
+        description.alignmentProperty().setValue(Pos.CENTER);
+        description.prefWidthProperty().bind(alertVBox.widthProperty().multiply(0.6));
+
+        Button closeBtn = newStandardizedButton();
+        closeBtn.setText("CLOSE");
+        closeBtn.setAlignment(Pos.BOTTOM_CENTER);
+        closeBtn.setOnMouseClicked(event -> {
+            alertVBox.setVisible(false);
+            alertVBox.getChildren().clear();
+        });
+        closeBtn.getStyleClass().add("coral");
+
+        System.out.println("ciao 2");
+
+        alertVBox.getChildren().addAll(imgView, description, closeBtn);
+        alertVBox.setVisible(true);
+    }
+
+    public Font getSantoriniFont(int dimension) {
+        return Font.loadFont(getClass().getResource("/font/LillyBelle.ttf").toExternalForm(), dimension);
     }
 
     public void setSelectable(int x, int y, boolean val) {
@@ -622,10 +667,6 @@ public class MatchController {
         }
     }
 
-    public void endTurn() {
-        message.setText("YOUR TURN IS ENDED");
-    }
-
     public void markAvailableTiles(Action action) {
         List<Pair<Integer,Integer>> availableTiles = possibleActions.get(action);
 
@@ -652,5 +693,20 @@ public class MatchController {
                 }
             }
         }
+    }
+
+    //returns a button with standard values, css+blue, 120x40, santoriniFont+dimension20, Centered, lighting_effect
+    public Button newStandardizedButton() {
+        Button btn = new Button("STD_BTN");
+        btn.prefHeight(BTN_HEIGHT);
+        btn.prefWidth(BTN_WIDTH);
+        btn.setFont(santoriniFont);
+        btn.setAlignment(Pos.CENTER);
+
+        btn.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
+        btn.setOnMouseEntered(event -> btn.setEffect(lighting));
+        btn.setOnMouseExited(event -> btn.setEffect(null));
+
+        return btn;
     }
 }

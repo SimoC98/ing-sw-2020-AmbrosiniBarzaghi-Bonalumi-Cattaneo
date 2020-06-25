@@ -260,7 +260,6 @@ public class GUI extends Application implements UI {
             primaryStage.getScene().setRoot(loginRoot);
             loginController.inLobby();
         });
-
     }
 
     @Override
@@ -300,7 +299,6 @@ public class GUI extends Application implements UI {
         else header=" YOU CAN'T MOVE HERE!";
 
         Platform.runLater(() -> {
-
             matchController.textMessage("INVALID MOVE!", header, "Please, repeat the action!");
             matchController.handlePossibleActions(possibleActions);
         });
@@ -427,9 +425,6 @@ public class GUI extends Application implements UI {
         Parent disconnectionPane = disconnectionLoader.load();
         this.disconnectionRoot = disconnectionPane;
 
-
-
-
         this.welcomeController = welcomeLoader.getController();
         this.loginController = loginLoader.getController();
         this.divinitySelectionController = playableDivinitiesLoader.getController();
@@ -437,10 +432,6 @@ public class GUI extends Application implements UI {
         this.matchController = matchLoader.getController();
         this.disconnectionController = disconnectionLoader.getController();
         this.endController = endLoader.getController();
-
-
-
-
     }
 
 

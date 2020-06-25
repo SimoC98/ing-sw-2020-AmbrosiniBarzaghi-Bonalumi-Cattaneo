@@ -135,7 +135,7 @@ public class ClientView implements Observer<ServerEvent> {
     }
 
     public void divinitySelection(String divinity){
-        System.out.println(divinity);
+        //System.out.println(divinity);
         proxy.sendEvent(new DivinitySelectionEvent(divinity));
     }
 
@@ -211,11 +211,6 @@ public class ClientView implements Observer<ServerEvent> {
     }
 
     public void managePlayersDivinities(Map<String, String> divinities) {
-
-        for(int i=0; i<divinities.size();i++) {
-            System.out.println(divinities);
-        }
-
         for(String player : board.getPlayersNames()) {
             System.out.println(board.getPlayersMap().get(player).getUsername());
             board.getPlayersMap().get(player).setDivinity(divinities.get(player));

@@ -102,7 +102,7 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
      * Sends the specified ClientEvent to the server (it arrives to the {@link it.polimi.ingsw.serverView.ServerSocketHandler} that dispatches it)
      * @param event {@link ClientEvent}
      */
-    public void sendEvent(ClientEvent event) {
+    public synchronized void sendEvent(ClientEvent event) {
         try {
             out.writeObject(event);
             out.flush();

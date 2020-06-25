@@ -113,7 +113,6 @@ public class CLI implements UI{
         }*/
 
         clientView.loginQuestion(username);
-//        clientView.startPing();
 
     }
 

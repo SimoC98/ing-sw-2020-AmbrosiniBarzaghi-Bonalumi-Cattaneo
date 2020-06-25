@@ -54,6 +54,7 @@ public class MatchController {
     private List<Pair<Integer,Integer>> workerPlacement = new ArrayList<>();
 
     private Map<Action,List<Pair<Integer,Integer>>> possibleActions;
+    private int selectedWX,selectedWY;
 
     Font santoriniFont = Font.loadFont(getClass().getResource("/font/LillyBelle.ttf").toExternalForm(), 20);
 
@@ -122,6 +123,14 @@ public class MatchController {
         possibleActionsBox.setSpacing(20);
 
         message.setFont(santoriniFont);
+    }
+
+    protected int getSelectedWX() {
+        return selectedWX;
+    }
+
+    protected int getSelectedWY() {
+        return selectedWY;
     }
 
     public static void setClientView(ClientView clientView) {
@@ -342,6 +351,8 @@ public class MatchController {
             if (result.get() == select) {
                 setShadowOff();
                 message.setText("Selected worker: " + x + "-" + y);
+                this.selectedWX = x;
+                this.selectedWY = y;
                 clientView.selectWorkerQuestion(x, y);
             }
         }

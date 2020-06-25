@@ -78,7 +78,7 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
      * Sends an event to the client
      * @param event {@link ServerEvent}
      */
-    public void sendEvent(ServerEvent event) {
+    public synchronized void sendEvent(ServerEvent event) {
         try {
             out.writeObject(event);
             out.flush();

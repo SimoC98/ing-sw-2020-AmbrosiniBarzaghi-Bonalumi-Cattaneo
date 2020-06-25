@@ -24,7 +24,8 @@ import static java.lang.System.exit;
 
 public class GUI extends Application implements UI {
 
-    private static BoardRepresentation board;
+
+    //private static BoardRepresentation board;
 
     private static ClientView clientView;
 
@@ -51,16 +52,12 @@ public class GUI extends Application implements UI {
 
     private Parent disconnectionRoot;
 
-
-
-
-
     public GUI() {
     }
 
     public void setClientView(ClientView clientView) {
         this.clientView = clientView;
-        this.board = clientView.getBoard();
+        //this.board = clientView.getBoard();
     }
 
     public ClientView getClientView() {
@@ -290,22 +287,41 @@ public class GUI extends Application implements UI {
 
     @Override
     public void invalidMove(Map<Action, List<Pair<Integer, Integer>>> possibleActions, int wrongX, int wrongY) {
-        List<Action> l = new ArrayList<>();
-        possibleActions.keySet().stream().forEach(x -> l.add(x));
+        BoardRepresentation board = clientView.getBoard();
+        int selectedWX = matchController.getSelectedWX();
+        int selectedWY = matchController.getSelectedWY();
+        String header;
+
+        if(board.getBoard()[wrongX][wrongY]==4) header = " YOU CAN'T MOVE ON A DOME!";
+        else if(board.isThereAWorker(wrongX,wrongY)!=null) header=" YOU CAN'T MOVE ON AN OCCUPIED TILE!";
+        else if(board.getBoard()[wrongX][wrongY]-board.getBoard()[selectedWY][selectedWY]>1) header=" YOU CAN'T MOVE TO A TILE SO HIGH!";
+        else if(wrongX<0 || wrongX>4 || wrongY<0 || wrongY>4) header=" YOU MUST SELECT A TILE ON THE BOARD!";
+        else if(Math.abs(wrongX-selectedWX)>1 || Math.abs(wrongY-selectedWY)>1) header=" YOU MUST SELECT AN ADJACENT TILE!";
+        else header=" YOU CAN'T MOVE HERE!";
 
         Platform.runLater(() -> {
-            matchController.textMessage("ERROR", "Something went wrong with your move", "Please, repeat the action!");
+
+            matchController.textMessage("INVALID MOVE!", header, "Please, repeat the action!");
             matchController.handlePossibleActions(possibleActions);
         });
     }
 
     @Override
     public void invalidBuild(Map<Action, List<Pair<Integer, Integer>>> possibleActions, int wrongX, int wrongY) {
-        List<Action> l = new ArrayList<>();
-        possibleActions.keySet().stream().forEach(x -> l.add(x));
+        BoardRepresentation board = clientView.getBoard();
+        int selectedWX = matchController.getSelectedWX();
+        int selectedWY = matchController.getSelectedWY();
+        String header;
+
+        if(board.getBoard()[wrongX][wrongY]==4) header=" YOU CAN'T BUILD ON A DOME!";
+        else if(board.isThereAWorker(wrongX,wrongY)!=null) header=" YOU CAN'T BUILD ON AN OCCUPIED TILE!";
+        else if(wrongX<0 || wrongX>4 || wrongY<0 || wrongY>4) header=" YOU MUST SELECT A TILE ON THE BOARD!";
+        else if(Math.abs(wrongX-selectedWX)>1 || Math.abs(wrongY-selectedWY)>1) header=" YOU MUST SELECT A TILE ON THE BOARD!";
+        else header=" YOU CAN'T BUILD HERE!";
+
 
         Platform.runLater(() -> {
-            matchController.textMessage("ERROR", "Something went wrong with your move", "Please, repeat the action!");
+            matchController.textMessage("INVALID BUILD!", header, "Please, repeat the action!");
             matchController.handlePossibleActions(possibleActions);
         });
 
@@ -324,6 +340,7 @@ public class GUI extends Application implements UI {
         System.out.println("errore selezione worker");
 
         Platform.runLater(() -> {
+            matchController.textMessage("ERROR!","Invalid worker selection","Please, repeat the action!");
             matchController.setActionSelectWorker();
         });
     }

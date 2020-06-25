@@ -126,7 +126,6 @@ public class LoginController {
         txt.prefWidthProperty().bind(hBox.widthProperty().divide(9));
 
         txt.setOnKeyPressed((e) -> {
-
             if(e.getCode().equals(KeyCode.ENTER)) {
                 handleLogin();
             }

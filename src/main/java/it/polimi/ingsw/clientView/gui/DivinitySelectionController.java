@@ -246,7 +246,7 @@ public class DivinitySelectionController {
             buttons.setSpacing(20);
 
             Button close = new Button("close");
-            //close.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
+            close.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
             close.setPrefHeight(40);
             close.setPrefWidth(100);
 
@@ -254,7 +254,6 @@ public class DivinitySelectionController {
 
             close.getStyleClass().add("coral");
             close.getStyleClass().add("whiteTxt");
-            close.setFont(santoriniFont);
             //close.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
             close.setFont(santoriniFont);
 
@@ -292,7 +291,7 @@ public class DivinitySelectionController {
                 deselect.getStyleClass().add("whiteTxt");
                 deselect.setFont(santoriniFont);
                 //deselect.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
-                //deselect.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
+                deselect.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
 
                 deselect.setOnMouseClicked((e)->{
                     chosenGods.remove(divinities.get(count));
@@ -310,7 +309,7 @@ public class DivinitySelectionController {
                 select.setFont(santoriniFont);
                 select.setPrefHeight(40);
                 select.setPrefWidth(100);
-                //select.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
+                select.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
 
                 select.setOnMouseEntered((e)->{
                     select.setEffect(lighting);

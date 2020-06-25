@@ -31,17 +31,20 @@ public class MatchController {
     private static GUI gui;
 
     @FXML
-    private Label message;
-    @FXML
-    private VBox possibleActionsBox;
-    @FXML
-    private GridPane board;
-    @FXML
     private HBox hBox;
     @FXML
     private VBox vBoxLeft;
     @FXML
+    private GridPane board;
+    @FXML
     private StackPane rightStack;
+    @FXML
+    private Label turnInformation;
+    @FXML
+    private Label message;
+    @FXML
+    private VBox possibleActionsBox;
+
     @FXML
     private VBox alertVBox;
 
@@ -111,11 +114,18 @@ public class MatchController {
         rightStack.prefHeightProperty().bind(hBox.heightProperty().multiply(0.8));
         rightStack.alignmentProperty().setValue(Pos.CENTER);
 
-        message.prefWidthProperty().bind(rightStack.widthProperty());
+        turnInformation.maxWidthProperty().bind(rightStack.maxWidthProperty());
+        turnInformation.prefWidthProperty().bind(rightStack.widthProperty());
+//        turnInformation.setWrapText(true);
+        turnInformation.alignmentProperty().setValue(Pos.TOP_CENTER);
+        turnInformation.setFont(getSantoriniFont(30));
+        turnInformation.setText("OPPONENTS'\nPLACING WORKERS");
+
         message.maxWidthProperty().bind(rightStack.maxWidthProperty());
+        message.prefWidthProperty().bind(rightStack.widthProperty());
         message.setWrapText(true);
         message.alignmentProperty().setValue(Pos.TOP_CENTER);
-        message.setFont(santoriniFont);
+        message.setFont(getSantoriniFont(24));
 
         possibleActionsBox.alignmentProperty().setValue(Pos.BOTTOM_CENTER);
         possibleActionsBox.setSpacing(20);
@@ -237,6 +247,7 @@ public class MatchController {
             actualAction = "default";
             setShadowOff();
             clientView.workerPlacement(workerPlacement.get(0).getFirst(),workerPlacement.get(0).getSecond(),workerPlacement.get(1).getFirst(),workerPlacement.get(1).getSecond());
+            endTurn();
         }
     }
 
@@ -300,6 +311,7 @@ public class MatchController {
                 else
                     endTurnConfirmation();
             });
+            actionBtn.getStyleClass().addAll("blue", "whiteTxt");
 
             actionButtons.add(actionBtn);
         }
@@ -309,6 +321,14 @@ public class MatchController {
 
     private void emptyPossibleActions() {
         possibleActionsBox.getChildren().clear();
+    }
+
+    public void startTurn() {
+        turnInformation.setText("YOUR TURN");
+    }
+
+    public void endTurn() {
+        turnInformation.setText("OPPONENTS'\nTURNS");
     }
 
     public void selectWorker(StackPane s) {
@@ -340,7 +360,7 @@ public class MatchController {
                 this.selectedWY = y;
                 clientView.selectWorkerQuestion(x, y);
             });
-            select.getStylesheets().add("blue");
+            select.getStyleClass().addAll("blue", "whiteTxt");
 
             Button cancel = newStandardizedButton();
             cancel.setText("CANCEL");
@@ -350,7 +370,7 @@ public class MatchController {
                 alertVBox.setVisible(false);
                 alertVBox.getChildren().clear();
             });
-            cancel.getStyleClass().add("coral");
+            cancel.getStyleClass().addAll("coral", "whiteTxt");
 
             HBox btnBox = new HBox();
             btnBox.setAlignment(Pos.CENTER);
@@ -463,6 +483,7 @@ public class MatchController {
         workerPlacement.clear();
 
         System.out.println("Now you PLACEWORKERS");
+        turnInformation.setText("YOUR TURN\nTO PLACE WORKERS");
         message.setText("Click on the tile you want to place your workers");
         //userInteractionLabel.setVisible(true);
         actualAction = "placeworkers";
@@ -492,7 +513,7 @@ public class MatchController {
             emptyPossibleActions();
             clientView.actionQuestion(Action.END, -1, -1);
         });
-        select.getStylesheets().add("blue");
+        select.getStyleClass().addAll("blue", "whiteTxt");
 
         Button cancel = newStandardizedButton();
         cancel.setText("CANCEL");
@@ -502,7 +523,7 @@ public class MatchController {
             alertVBox.setVisible(false);
             alertVBox.getChildren().clear();
         });
-        cancel.getStyleClass().add("coral");
+        cancel.getStyleClass().addAll("coral", "whiteTxt");
 
         HBox btnBox = new HBox();
         btnBox.setAlignment(Pos.CENTER);
@@ -558,7 +579,7 @@ public class MatchController {
 
             //Label playerName = new Label(players.get(i).getUsername());
             Label playerName = new Label();
-            if(players.get(i).getUsername().equals(clientView.getUsername())) playerName.setText(clientView.getUsername() + "\n(YOU)");
+            if(players.get(i).getUsername().equals(clientView.getUsername())) playerName.setText(clientView.getUsername() + " (YOU)");
             else playerName.setText(players.get(i).getUsername());
             playerName.setFont(santoriniFont);
 
@@ -569,7 +590,7 @@ public class MatchController {
 
         Button exit = newStandardizedButton();
         exit.setText("QUIT");
-        exit.getStyleClass().add("coral");
+        exit.getStyleClass().addAll("coral", "whiteTxt");
         exit.setOnMouseClicked((e)-> exit(0));
 
         vBoxLeft.getChildren().add(exit);
@@ -600,7 +621,7 @@ public class MatchController {
             alertVBox.setVisible(false);
             alertVBox.getChildren().clear();
         });
-        closeBtn.getStyleClass().add("coral");
+        closeBtn.getStyleClass().addAll("coral", "whiteTxt");
 
         System.out.println("ciao 2");
 
@@ -680,7 +701,7 @@ public class MatchController {
     }
 
     public void loserPlayer() {
-        message.setText("FFFFFFFFFFF");
+        message.setText("UNFORTUNATELY YOU HAVE LOST\nFFFFFFFFFFF");
     }
 
     public void manageLoserPlayer() {

@@ -29,14 +29,20 @@
               </GridPane>
               <StackPane fx:id="rightStack" centerShape="false" maxWidth="400.0">
                   <children>
-                      <Label fx:id="message" textAlignment="CENTER">
-                          <font>
+                  <VBox spacing="80.0">
+                     <children>
+                        <Label fx:id="turnInformation" layoutX="10.0" layoutY="10.0" textAlignment="CENTER">
+                           <font>
                               <Font name="Felix Titling" size="18.0" />
-                          </font>
-                          <StackPane.margin>
-                              <Insets />
-                          </StackPane.margin>
-                      </Label>
+                           </font>
+                        </Label>
+                            <Label fx:id="message" textAlignment="CENTER">
+                                <font>
+                                    <Font name="Felix Titling" size="18.0" />
+                                </font>
+                            </Label>
+                     </children>
+                  </VBox>
                       <VBox fx:id="possibleActionsBox" alignment="BOTTOM_CENTER" fillWidth="false" />
                   </children>
                   <HBox.margin>

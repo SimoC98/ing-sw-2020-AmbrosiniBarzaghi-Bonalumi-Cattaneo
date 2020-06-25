@@ -159,11 +159,21 @@ public class ClientView implements Observer<ServerEvent> {
      *-----------------------------
      */
 
+    public void manageSocketPort(int gamePort) {
+        try {
+            ClientSocketHandler gameProxy = new ClientSocketHandler(new Socket(ip, gamePort));
+            gameProxy.addObserver(this);
+            this.proxy = gameProxy;
+            new Thread(proxy).start();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Login into Game Server failed");
+        }
+    }
+
     public void manageLogin(int id){
         setUserID(id);  //TEMP
         ui.login();
-
-
     }
 
     public void manageWrongUsername(List<String> usernames) {

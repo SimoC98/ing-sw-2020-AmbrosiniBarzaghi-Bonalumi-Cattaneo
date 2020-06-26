@@ -541,17 +541,12 @@ public class MatchController {
     }
 
     public void setPlayers() {
-       //ArrayList<String> players = new ArrayList<>( clientView.getBoard().getPlayersMap().keySet());
-        //List<String> divinities = new ArrayList<>();
-
         List<PlayerRepresentation> players = clientView.getBoard().getPlayersList();
 
         for(int i=0; i<players.size();i++) {
             System.out.println(players.get(i).getUsername() + players.get(i).getDivinity());
         }
-
-        //clientView.getBoard().getPlayersMap().values().stream().forEach(x -> divinities.add(x.getDivinity()));
-
+        
         for(int i=0;i<players.size();i++) {
             String div = players.get(i).getDivinity();
 

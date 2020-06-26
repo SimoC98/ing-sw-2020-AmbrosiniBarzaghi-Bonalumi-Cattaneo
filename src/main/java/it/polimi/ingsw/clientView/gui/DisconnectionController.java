@@ -52,8 +52,8 @@ public class DisconnectionController {
         lighting.setLight(light);
         lighting.setSurfaceScale(4.0);
 
-        exit.getStyleClass().add("coral");
-        connect.getStyleClass().add("blue");
+        exit.getStyleClass().addAll("coral","whiteTxt");
+        connect.getStyleClass().addAll("blue","whiteTxt");
         exit.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
         connect.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
 

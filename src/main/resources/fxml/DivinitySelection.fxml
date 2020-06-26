@@ -1,23 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
 <BorderPane fx:id="bPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1500.0" stylesheets="@../css/divinitySelectionBack.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.clientView.gui.DivinitySelectionController">
    <top>
-      <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" styleClass="up" stylesheets="@../css/divinitySelectionBack.css" BorderPane.alignment="CENTER">
-         <children>
-               <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" prefHeight="48.0" prefWidth="412.0" text="CHOOSE GODS THAT WILL BE USED IN THIS MATCH: " HBox.hgrow="ALWAYS">
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin>
-               <font>
-                  <Font name="System Bold Italic" size="30.0" />
-               </font></Label>
-         </children>
-      </HBox>
+      <HBox fx:id="titleHBox" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" styleClass="up" stylesheets="@../css/divinitySelectionBack.css" BorderPane.alignment="CENTER" />
    </top>
    <center>
       <StackPane fx:id="sPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="150.0" prefWidth="200.0" styleClass="mid" stylesheets="@../css/divinitySelectionBack.css" BorderPane.alignment="CENTER">
@@ -41,12 +29,7 @@
                         <Insets bottom="50.0" left="50.0" right="50.0" top="30.0" />
                      </VBox.margin>
                      </GridPane>
-                  <VBox fx:id="endVBox" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" spacing="20.0" visible="false" VBox.vgrow="ALWAYS">
-                     <children>
-                        <Label fx:id="labelTxt" text="Label" />
-                        <ProgressIndicator fx:id="progress" maxHeight="40.0" maxWidth="40.0" prefHeight="40.0" prefWidth="40.0" />
-                     </children>
-                  </VBox>
+                  <VBox fx:id="endVBox" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" spacing="20.0" visible="false" VBox.vgrow="ALWAYS" />
                </children>
                <StackPane.margin>
                   <Insets top="20.0" />

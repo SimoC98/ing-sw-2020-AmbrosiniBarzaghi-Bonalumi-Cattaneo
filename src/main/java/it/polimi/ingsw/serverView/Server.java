@@ -187,14 +187,6 @@ public class Server{
         //this.playerGameNumber = connections.size();
         isGameStarted=true;
 
-        //ADDED FOR MULTI_SERVER
-        synchronized(MasterServer.masterLock) {
-//            System.out.println("masterLock exists");
-            MasterServer.setStarted(true);
-            MasterServer.masterLock.notifyAll();
-        }
-        //END OF ADDITION FOR MULTI_SERVER
-
         List<ServerView> users = new ArrayList<>();
         List<String> players = new ArrayList<>();
 

@@ -25,13 +25,9 @@ import static java.lang.System.exit;
 
 public class GUI extends Application implements UI {
 
-
-    //private static BoardRepresentation board;
-
     private static ClientView clientView;
 
     private LoginController loginController;
-    private WelcomeController welcomeController;
     private DivinitySelectionController divinitySelectionController;
     private PlayerDivinitySelectionController playerDivinitySelectionController;
     private MatchController matchController;
@@ -85,15 +81,6 @@ public class GUI extends Application implements UI {
             Platform.exit();
             exit(0);
         });
-
-
-        /*LoginController.setClientView(clientView);
-        WelcomeController.setClientView(clientView);
-        DivinitySelectionController.setClientView(clientView);
-        PlayerDivinitySelectionController.setClientView(clientView);
-        MatchController.setClientView(clientView);
-        DisconnectionController.setClientView(clientView);
-        EndGameController.setClientView(clientView);*/
 
         LoginController.setGui(this);
         DivinitySelectionController.setGui(this);
@@ -381,10 +368,6 @@ public class GUI extends Application implements UI {
     }
 
     protected void loadGUI() throws IOException {
-        FXMLLoader welcomeLoader = new FXMLLoader(getClass().getResource("/fxml/Welcome.fxml"));
-        Parent welcomePane = welcomeLoader.load();
-        this.welcomeRoot = welcomePane;
-
         FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("/fxml/Login.fxml"));
         Parent loginPane = loginLoader.load();
         this.loginRoot = loginPane;
@@ -430,7 +413,6 @@ public class GUI extends Application implements UI {
         Parent disconnectionPane = disconnectionLoader.load();
         this.disconnectionRoot = disconnectionPane;
 
-        this.welcomeController = welcomeLoader.getController();
         this.loginController = loginLoader.getController();
         this.divinitySelectionController = playableDivinitiesLoader.getController();
         this.playerDivinitySelectionController = playerDivinityLoader.getController();

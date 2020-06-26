@@ -57,11 +57,8 @@ public class DivinitySelectionController {
     @FXML
     private StackPane sPane;
 
-    ProgressIndicator progress;
-
-    Font santoriniFont = Font.loadFont(getClass().getResource("/font/LillyBelle.ttf").toExternalForm(),18);
-
-
+    @FXML
+    private HBox titleHBox;
 
     @FXML
     private ProgressIndicator progressIndicator;
@@ -78,18 +75,28 @@ public class DivinitySelectionController {
 
     private boolean nodeListenersOff = false;
 
-    private DoubleProperty fontSize = new SimpleDoubleProperty(10);
+    private DoubleProperty fontSizeTitle = new SimpleDoubleProperty(20);
+    private DoubleProperty fontSizeDescriptions = new SimpleDoubleProperty(20);
+    private DoubleProperty fontSizeNames = new SimpleDoubleProperty(20);
+    Font santoriniFont = Font.loadFont(getClass().getResource("/font/LillyBelle.ttf").toExternalForm(),18);
 
 
 
     @FXML
     public void initialize() {
+        fontSizeTitle.bind(bPane.widthProperty().add(bPane.heightProperty()).divide(80));
+        fontSizeDescriptions.bind(bPane.widthProperty().add(bPane.heightProperty()).divide(150));
+        fontSizeNames.bind(bPane.widthProperty().add(bPane.heightProperty()).divide(110));
+
         bPane.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
 
-        fontSize.bind(bPane.widthProperty().add(bPane.heightProperty()).divide(150));
 
-        /*bPane.prefHeightProperty().bind(stage.heightProperty());
-        bPane.prefWidthProperty().bind(stage.widthProperty());*/
+        titleHBox.setAlignment(Pos.CENTER);
+        Text title = new Text("CHOOSE GODS THAT WILL BE USED IN THIS MATCH:");
+        title.setFont(santoriniFont);
+        title.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSizeTitle.asString(), ";"));
+        titleHBox.getChildren().add(title);
+
 
         godGrid.setAlignment(Pos.CENTER);
 
@@ -106,7 +113,6 @@ public class DivinitySelectionController {
         endVBox.prefWidthProperty().bind(bPane.widthProperty());
 
         endVBox.setVisible(false);
-
     }
 
     public DivinitySelectionController() {
@@ -232,7 +238,7 @@ public class DivinitySelectionController {
             text1.setStyle("-fx-font-style: italic");
             //text1.setFont(new Font(18));
             text1.setFont(santoriniFont);
-            text1.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
+            text1.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSizeDescriptions.asString(), ";"));
             text1.setWrappingWidth(250);
             text1.setTextAlignment(TextAlignment.CENTER);
 
@@ -246,7 +252,7 @@ public class DivinitySelectionController {
             buttons.setSpacing(20);
 
             Button close = new Button("close");
-            close.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
+            close.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSizeDescriptions.asString(), ";"));
             close.setPrefHeight(40);
             close.setPrefWidth(100);
 
@@ -276,8 +282,6 @@ public class DivinitySelectionController {
             if(chosenGodsNode.contains(node)) {
                 Button deselect = new Button("deselect");
                 deselect.setFont(santoriniFont);
-                //deselect.setPrefHeight(40);
-                //deselect.setPrefWidth(100);
 
                 deselect.setOnMouseEntered((e)->{
                     deselect.setEffect(lighting);
@@ -290,8 +294,7 @@ public class DivinitySelectionController {
                 deselect.getStyleClass().add("blue");
                 deselect.getStyleClass().add("whiteTxt");
                 deselect.setFont(santoriniFont);
-                //deselect.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
-                deselect.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
+                deselect.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSizeDescriptions.asString(), ";"));
 
                 deselect.setOnMouseClicked((e)->{
                     chosenGods.remove(divinities.get(count));
@@ -309,7 +312,7 @@ public class DivinitySelectionController {
                 select.setFont(santoriniFont);
                 select.setPrefHeight(40);
                 select.setPrefWidth(100);
-                select.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
+                select.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSizeDescriptions.asString(), ";"));
 
                 select.setOnMouseEntered((e)->{
                     select.setEffect(lighting);
@@ -333,20 +336,6 @@ public class DivinitySelectionController {
                     nodeListenersOff=false;
 
                     if(chosenGods.size()==playerNumber) {
-                        /*StringBuilder s = new StringBuilder();
-                        /*s.append("You chose: ");
-                        chosenGods.stream().forEach(z -> s.append(z + " "));
-                        s.append("\n");*/
-                        /*s.append("WAIT OTHER PLAYERS...");
-                        labelTxt.setText(s.toString());
-                        labelTxt.setFont(new Font(18));
-
-                        endVBox.setVisible(true);
-                        endVBox.setSpacing(5);
-
-                        nodeListenersOff = true;
-
-                        clientView.playableDivinitiesSelection(chosenGods,players.get(0));*/
                         askStarter();
                     }
 
@@ -355,70 +344,9 @@ public class DivinitySelectionController {
                 buttons.getChildren().add(select);
             }
 
-
-            //godDescription.getChildren().add(close);
-
             godDescription.setVisible(true);
 
-
-
-             /*labelTxt.setText(divinities.get(count).toUpperCase() + ": " + descriptions.get(count));
-             labelTxt.setWrapText(true);
-
-             confirmBtn.setOnMouseClicked((e2)->{
-
-                 if(chosenGods.contains(divinities.get(count))) {
-                     ImageView img = (ImageView) e1.getTarget();
-                     img.setEffect(null);
-                     chosenGods.remove(divinities.get(count));
-                     chosenGodsNode.remove(node);
-                     labelTxt.setText("God deselected ");
-                 }
-                 else {
-                     chosenGods.add(divinities.get(count));
-                     chosenGodsNode.add(node);
-
-                     ImageView img = (ImageView) e1.getTarget();
-                     img.setEffect(lighting);
-                 }
-
-                 if(chosenGods.size()==playerNumber) {
-                     confirmBtn.setOnAction(null);
-
-                     labelTxt.setText("WAIT YOUR TURN...");
-
-                     confirmBtn.setVisible(false);
-
-                     StringBuilder s = new StringBuilder();
-                     s.append("You chose: ");
-                     chosenGods.stream().forEach(z -> s.append(z + " "));
-                     s.append("\n");
-                     s.append("WAIT OTHER PLAYERS...");
-
-                     //progressIndicator.setVisible(true);
-
-                     labelTxt.setText(s.toString());
-
-
-                     //prova
-                     vBoxGod.getChildren().remove(confirmBtn);
-                     ProgressIndicator p = new ProgressIndicator();
-                     p.setMaxSize(50,50);
-
-                     vBoxGod.setSpacing(0);
-
-                     vBoxGod.getChildren().add(p);
-
-
-                     godsImages.stream().forEach(i -> i.setOnMouseClicked(null));
-
-                     clientView.playableDivinitiesSelection(chosenGods,players.get(0));
-                 }
-             });*/
-
         });
-
-        //add event listener
     }
 
 
@@ -456,18 +384,21 @@ public class DivinitySelectionController {
                 p.getStyleClass().clear();
                 p.getStyleClass().add("mouse_out");
             });
-
             p.setOnMouseClicked((e) -> {
                 godDescription.setVisible(false);
 
 
                 StringBuilder s = new StringBuilder();
-                        /*s.append("You chose: ");
-                        chosenGods.stream().forEach(z -> s.append(z + " "));
-                        s.append("\n");*/
                 s.append("WAIT OTHER PLAYERS...");
-                labelTxt.setText(s.toString());
-                labelTxt.setFont(new Font(18));
+                Text t = new Text("WAIT OTHER PLAYERS...");
+                t.setFont(santoriniFont);
+                t.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSizeDescriptions.asString(), ";"));
+
+                ProgressIndicator progress = new ProgressIndicator();
+                progress.setMaxSize(40,40);
+
+                endVBox.getChildren().addAll(t,progress);
+
 
                 endVBox.setVisible(true);
                 endVBox.setSpacing(5);

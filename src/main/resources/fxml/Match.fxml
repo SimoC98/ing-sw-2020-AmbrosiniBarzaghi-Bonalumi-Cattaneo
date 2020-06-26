@@ -5,41 +5,55 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<HBox fx:id="hBox" alignment="CENTER" fillHeight="false" prefHeight="400.0" prefWidth="1000.0" style="-fx-background-color: lightblue;" styleClass="root" stylesheets="@../css/gameBack.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.clientView.gui.MatchController">
-    <children>
-        <VBox fx:id="vBoxLeft" fillWidth="false" maxWidth="-Infinity" HBox.hgrow="ALWAYS" />
-
-        <GridPane fx:id="board" alignment="CENTER" minHeight="300.0" minWidth="300.0" scaleShape="false" styleClass="bodybg" stylesheets="@../css/gameBack.css">
-            <columnConstraints>
-                <ColumnConstraints hgrow="ALWAYS" />
-                <ColumnConstraints hgrow="ALWAYS" />
-                <ColumnConstraints hgrow="ALWAYS" />
-                <ColumnConstraints hgrow="ALWAYS" />
-                <ColumnConstraints hgrow="ALWAYS" />
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints vgrow="ALWAYS" />
-                <RowConstraints vgrow="ALWAYS" />
-                <RowConstraints vgrow="ALWAYS" />
-                <RowConstraints vgrow="ALWAYS" />
-                <RowConstraints vgrow="ALWAYS" />
-            </rowConstraints>
-        </GridPane>
-        <StackPane fx:id="rightStack" centerShape="false" maxWidth="400.0">
-            <children>
-                <Label fx:id="message" textAlignment="CENTER">
-                    <font>
-                        <Font name="Felix Titling" size="18.0" />
-                    </font>
-                    <StackPane.margin>
-                        <Insets />
-                    </StackPane.margin>
-                </Label>
-                <VBox fx:id="possibleActionsBox" alignment="BOTTOM_CENTER" fillWidth="false" />
-            </children>
-            <HBox.margin>
-                <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
-            </HBox.margin>
-        </StackPane>
-    </children>
-</HBox>
+<StackPane prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.clientView.gui.MatchController">
+   <children>
+      <HBox fx:id="hBox" alignment="CENTER" fillHeight="false" style="-fx-background-color: lightblue;" styleClass="root" stylesheets="@../css/gameBack.css">
+          <children>
+              <VBox fx:id="vBoxLeft" fillWidth="false" />
+      
+              <GridPane fx:id="board" alignment="CENTER" minHeight="300.0" minWidth="300.0" scaleShape="false" styleClass="bodybg" stylesheets="@../css/gameBack.css">
+                  <columnConstraints>
+                      <ColumnConstraints hgrow="ALWAYS" />
+                      <ColumnConstraints hgrow="ALWAYS" />
+                      <ColumnConstraints hgrow="ALWAYS" />
+                      <ColumnConstraints hgrow="ALWAYS" />
+                      <ColumnConstraints hgrow="ALWAYS" />
+                  </columnConstraints>
+                  <rowConstraints>
+                      <RowConstraints vgrow="ALWAYS" />
+                      <RowConstraints vgrow="ALWAYS" />
+                      <RowConstraints vgrow="ALWAYS" />
+                      <RowConstraints vgrow="ALWAYS" />
+                      <RowConstraints vgrow="ALWAYS" />
+                  </rowConstraints>
+              </GridPane>
+              <StackPane fx:id="rightStack" centerShape="false" maxWidth="400.0">
+                  <children>
+                  <VBox spacing="80.0">
+                     <children>
+                        <Label fx:id="turnInformation" layoutX="10.0" layoutY="10.0" textAlignment="CENTER">
+                           <font>
+                              <Font name="Felix Titling" size="18.0" />
+                           </font>
+                        </Label>
+                            <Label fx:id="message" textAlignment="CENTER">
+                                <font>
+                                    <Font name="Felix Titling" size="18.0" />
+                                </font>
+                            </Label>
+                     </children>
+                  </VBox>
+                      <VBox fx:id="possibleActionsBox" alignment="BOTTOM_CENTER" fillWidth="false" />
+                  </children>
+                  <HBox.margin>
+                      <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+                  </HBox.margin>
+              </StackPane>
+          </children>
+      </HBox>
+      <VBox fx:id="alertVBox" alignment="CENTER" prefHeight="200.0" prefWidth="300.0" styleClass="alert" stylesheets="@../css/gameBack.css">
+         <padding>
+            <Insets bottom="10.0" top="10.0" />
+         </padding></VBox>
+   </children>
+</StackPane>

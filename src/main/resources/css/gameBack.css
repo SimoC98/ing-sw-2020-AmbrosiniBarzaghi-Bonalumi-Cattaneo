@@ -7,3 +7,8 @@
     -fx-background-image: url("/graphics/Sea_v005.png");
     -fx-background-size: 100% 100%;
 }
+
+.alert{
+    -fx-background-image: url("/graphics/santorini_risorse-grafiche-2_Sprite_bg_panelMid.png");
+    -fx-background-size: 100% 100%;
+}

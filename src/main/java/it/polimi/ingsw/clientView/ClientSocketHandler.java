@@ -11,6 +11,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 
 /**
  * ClientSocketHandler manages a client's connection receiving holding an input stream and an output one
@@ -57,16 +58,20 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
         System.out.println("running...");
 
         try {
-            while(true) {
+            while (true) {
                 ServerEvent event = (ServerEvent) in.readObject();
 
-                Thread t = new Thread(()->{
+                Thread t = new Thread(() -> {
                     receiveEvent(event);
                 });
                 t.setDaemon(false);
                 t.setPriority(Thread.MAX_PRIORITY);
                 t.start();
             }
+        }catch(SocketException se){
+            System.out.println("SOCKET CLOSED, NO PROBLEM");
+            se.printStackTrace();
+            System.out.println("SOCKET CLOSED, NO PROBLEM");
         } catch(Exception e) {
             //notify(new Disconnect());
             e.printStackTrace();

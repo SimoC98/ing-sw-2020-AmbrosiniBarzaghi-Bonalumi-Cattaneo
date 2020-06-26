@@ -10,6 +10,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -78,6 +79,7 @@ public class GUI extends Application implements UI {
         primaryStage.setMinWidth(600);
 
         primaryStage.setTitle("SANTORINI");
+        primaryStage.getIcons().add(new Image(getClass().getResource("/graphics/santorini_risorse-grafiche-2_Texture2D_title_island.png").toExternalForm()));
 
         primaryStage.setOnCloseRequest((WindowEvent t) -> {
             Platform.exit();
@@ -171,6 +173,7 @@ public class GUI extends Application implements UI {
         System.out.println("select worker...");
 
         Platform.runLater(() -> {
+            matchController.startTurn();
             matchController.setActionSelectWorker();
         });
     }
@@ -273,7 +276,9 @@ public class GUI extends Application implements UI {
 
     @Override
     public void endTurn() {
-
+        Platform.runLater(() -> {
+            matchController.endTurn();
+        });
     }
 
     @Override

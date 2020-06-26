@@ -23,7 +23,7 @@ import java.util.Map;
  * and to communicate to other players the changes sending information through
  * {@link ModelUpdate}.
  */
-public class Match extends Observable<ServerEvent> {
+public class Match extends Observable<ServerEvent> implements Model{
     private ArrayList<Player> players;
     private Player currentPlayer;
     private Board board;
@@ -349,7 +349,7 @@ public class Match extends Observable<ServerEvent> {
      * @param y
      * @throws InvalidBuildException The player chose an incorrect tile
      */
-    public void build(int x, int y) throws InvalidBuildException{
+    public void build(int x, int y) throws InvalidBuildException {
         Tile t = board.getTile(x,y);
         if(t != null && currentPlayer.build(board,selectedWorker,t)){
             List<ModelUpdate> updates = currentPlayer.getModelUpdates();
@@ -493,9 +493,6 @@ public class Match extends Observable<ServerEvent> {
         return players.indexOf(currentPlayer);
     }
 
-
-
-    //not official
     public Map<Action,List<Pair<Integer,Integer>>> getPossibleActions() {
         HashMap map = new HashMap();
         List<Action> possibleActions = currentPlayer.getPossibleActions();

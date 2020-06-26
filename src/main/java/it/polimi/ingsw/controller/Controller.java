@@ -7,6 +7,7 @@ import it.polimi.ingsw.events.clientToServer.ClientEvent;
 import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Divinity;
 import it.polimi.ingsw.model.Match;
+import it.polimi.ingsw.model.Model;
 import it.polimi.ingsw.model.exceptions.*;
 import it.polimi.ingsw.serverView.ServerView;
 
@@ -22,7 +23,7 @@ import java.util.Map;
  */
 public class Controller implements Observer<ClientEvent> {
 
-    private Match model;
+    private Model model;
     private List<ServerView> playersInGame;
     private List<String> playersUsernames;
     private int currentPlayerId;
@@ -109,7 +110,6 @@ public class Controller implements Observer<ClientEvent> {
         try {
             model.move(x,y);
 
-            //momentaneo --> perchè possibleActionEvent arriva prima a volte??
             Thread.sleep(100);
 
             int winner = model.checkWinner();
@@ -185,7 +185,7 @@ public class Controller implements Observer<ClientEvent> {
         System.out.println("\n\n CONTROLLER START TURN:");
         System.out.println(currentPlayerId);
         System.out.println(playersUsernames.get(currentPlayerId));
-        System.out.println(model.getCurrentPlayer().getUsername());
+        //System.out.println(model.getCurrentPlayer().getUsername());
         System.out.println("\n\n");
 
         boolean isLoser = model.checkLoser();

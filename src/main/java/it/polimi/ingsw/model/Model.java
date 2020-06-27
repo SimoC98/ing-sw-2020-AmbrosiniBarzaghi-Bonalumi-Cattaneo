@@ -6,6 +6,9 @@ import it.polimi.ingsw.model.exceptions.*;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Interface implemented by the {@link Match}
+ */
 public interface Model {
 
     public void setStartPlayer(String startPlayer);

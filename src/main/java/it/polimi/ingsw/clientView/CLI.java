@@ -11,8 +11,13 @@ import java.util.Scanner;
 
 import static java.lang.System.exit;
 
+/**
+ * Class for the Command Line Interface. It implements the methods of the {@link UI}. The CLI is the default option
+ * for the {@link TemporaryMain}.
+ */
 public class CLI implements UI{
 
+    //terminal related
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_BLACK = "\u001B[30m";
     public static final String ANSI_RED = "\u001B[31m";
@@ -33,7 +38,11 @@ public class CLI implements UI{
     private int selectedWX;
     private int selectedWY;
 
-
+    /**
+     * Constructor passing the {@link ClientView} in order to communicate to the server. It also initializes a scanner
+     * to retrieve user's input data and the board's representation.
+     * @param clientView
+     */
     public CLI(ClientView clientView) {
         this.clientView = clientView;
         board = clientView.getBoard();
@@ -58,6 +67,9 @@ public class CLI implements UI{
      *  - back to worker selection until turn is ended (no more action is possible)
      */
 
+    /**
+     * Print's Santorini as a welcome title and opens the client socket.
+     */
     @Override
     public void start() {
         System.out.println("\n\nWelcome to..." + "\n");
@@ -74,51 +86,31 @@ public class CLI implements UI{
         //this.board = clientView.getBoard();
     }
 
-//    @Override
-//    public void login() {
-//        String username;
-//        do {
-//            System.out.print("Choose your username (at least 3 characters): ");
-//            username = scanner.nextLine();
-//        }while(username.length() < 3);
-//        clientView.loginQuestion(username);
-//    }
-    //TODO: this login is temporary
+    /**
+     * Attempts to log a player to a lobby with the username typed by the player (more than 3 char).
+     * It calls {@link ClientView#loginQuestion(String)}
+     */
     @Override
     public void login() {
         String username;
+
         do {
             System.out.print("Choose your username (at least 3 characters): ");
             username = scanner.nextLine();
-        }while(username.length() < 3);
-
-       /* if(clientView.getUserID() == 0)
-        {
-            System.out.println("You're the first logged user, so you have to choose the number of players for this match.");
-            System.out.println("You can choose between 2 and 3 players.");
-
-            String input;
-            int playersNumber = 0;
-
-            do{
-                System.out.print("Choose: ");
-                input = scanner.nextLine();
-                if(input.matches("[0-9]+"))
-                    playersNumber = Integer.parseInt(input);
-
-            }while(playersNumber<2 || playersNumber>3);
-            clientView.loginQuestion2(playersNumber, username);
-            clientView.startPing();
-            return;
-        }*/
+        } while(username.length() < 3);
 
         clientView.loginQuestion(username);
-
     }
 
+    /**
+     * Called when the server informs the client that their attempt to log was refused due to the unavailability of the
+     * picked username. It calls {@link ClientView#loginQuestion(String)} again
+     * @param users List of already logged players
+     */
     @Override
     public void failedLogin(List<String> users) {
         String username;
+
         System.out.println("Other users are logged in, and the username you chose is not available.");
         do {
             System.out.println("Please avoid choosing:");
@@ -126,27 +118,18 @@ public class CLI implements UI{
                 System.out.println("\t- " + user);
             System.out.print("Choose your username (at least 3 characters): ");
             username = scanner.nextLine();
-        }while(username.length()<3 && !users.contains(username));
+        } while(username.length()<3 && !users.contains(username));
+
         clientView.loginQuestion(username);
     }
 
-    public void selectPlayersNumber() {
-        System.out.println("You're the first logged user, so you have to choose the number of players for this match.");
-        System.out.println("You can choose between 2 and 3 players.");
-
-        String input;
-        int playersNumber = 0;
-        do{
-            System.out.print("Choose: ");
-            input = scanner.nextLine();
-            if(input.matches("[0-9]+"))
-                playersNumber = Integer.parseInt(input);
-        }while(playersNumber < 2 || playersNumber > 3);
-
-        clientView.playersNumberQuestion(playersNumber);
-    }
-
-    //TODO: print once and don't remove div from names list OR re print the list every time
+    /**
+     * Called if the CLI is the one of the last player. It displays the list of divinities with their description 
+     * @param divinitiesNames List of all divinities
+     * @param divinitiesDescriptions List of their effects
+     * @param playersNumber number of players in game
+     * @param players Names of the players
+     */
     @Override
     public void selectPlayableDivinities(List<String> divinitiesNames, List<String> divinitiesDescriptions, int playersNumber, List<String> players) {
         clearScreen();
@@ -166,7 +149,6 @@ public class CLI implements UI{
                 System.out.print("Select #" + (playableDivinities.size()+1) + " divinity: ");
                 input = scanner.nextLine();
 
-                //next line found at https://stackoverflow.com/questions/10575624/java-string-see-if-a-string-contains-only-numbers-and-not-letters
                 if(input.matches("[0-9]+"))
                     selection = Integer.parseInt(input);
 
@@ -200,75 +182,7 @@ public class CLI implements UI{
         clientView.playableDivinitiesSelection(playableDivinities,players.get(start));
     }
 
-//    @Override
-//    public void selectDivinityAndPlaceWorkers(List<String> divinitiesNames) {
-//        synchronized (lock) {
-//            String divinity=null;
-//
-//            System.out.println("You have to select your divinity. Choose from:");
-//            for (int i = 0; i < divinitiesNames.size(); i++)
-//                System.out.println("\t" + (i + 1) + ") " + divinitiesNames.get(i));
-//            System.out.println("\t" + (divinitiesNames.size() + 1) + ") " + "See divinities descriptions");
-//
-//            String input;
-//            int selection = 0;
-//            do {
-//                do {
-//                    System.out.print("\nChoose: ");
-//                    input = scanner.nextLine();
-//                    if (input.matches("[0-9]+"))
-//                        selection = Integer.parseInt(input);
-//                } while (selection <= 0 || selection > divinitiesNames.size() + 1);
-//
-//                if (selection == divinitiesNames.size() + 1) {
-//                    printDescriptions();
-//                    System.out.println("\n\n\n");
-//                    for (int i = 0; i < divinitiesNames.size(); i++)
-//                        System.out.println("\t" + (i + 1) + ") " + divinitiesNames.get(i));
-//                    System.out.println("\t" + (divinitiesNames.size() + 1) + ") " + "See divinities descriptions");
-//                }
-//                else
-//                    divinity = divinitiesNames.get(selection - 1);
-//            }while(divinity==null);
-//
-//            //----------------------------------------------------------------------
-//
-//            int x1, y1, x2, y2;
-//
-//            System.out.println("You have to choose your workers' initial position.");
-//            System.out.println("You must type the coordinate (E.G. A5, D2, E4) in which you want to place you workers, one at a time.");
-//            System.out.println("You cannot place workers on occupied tiles.");
-//
-//            System.out.println("+----+----+----+----+----+");
-//            System.out.println("| A1 | A2 | A3 | A4 | A5 |");
-//            System.out.println("+----+----+----+----+----+");
-//            System.out.println("| B1 | B2 | B3 | B4 | B5 |");
-//            System.out.println("+----+----+----+----+----+");
-//            System.out.println("| C1 | C2 | C3 | C4 | C5 |");
-//            System.out.println("+----+----+----+----+----+");
-//            System.out.println("| D1 | D2 | D3 | D4 | D5 |");
-//            System.out.println("+----+----+----+----+----+");
-//            System.out.println("| E1 | E2 | E3 | E4 | E5 |");
-//            System.out.println("+----+----+----+----+----+");
-//
-//
-//            do{
-//                System.out.print("\tChoose a position for first worker: ");
-//                input = scanner.nextLine().toUpperCase();
-//            }while(!input.matches("[A-E][1-5]"));
-//            x1 = (input.charAt(0) - 'A');
-//            y1 = (input.charAt(1) - '1');
-//
-//            do{
-//                System.out.print("\tChoose a position for second worker: ");
-//                input = scanner.nextLine().toUpperCase();
-//            }while(!input.matches("[A-E][1-5]"));
-//            x2 = (input.charAt(0) - 'A');
-//            y2 = (input.charAt(1) - '1');
-//
-//            clientView.divinitySelectionAndWorkerPlacement(divinity, x1, y1, x2, y2);
-//        }
-//    }
+
 
     @Override
     public void selectDivinity(List<String> divinitiesNames) {

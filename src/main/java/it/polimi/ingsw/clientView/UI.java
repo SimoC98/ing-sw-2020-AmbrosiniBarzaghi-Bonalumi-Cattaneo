@@ -30,7 +30,8 @@ public interface UI {
     public void failedLogin(List<String> usernames);
 
     /**
-     * Method to choose the divinity that can be picked by the players
+     * Method to choose the divinities that can be picked by the players and the starting player.
+     * See {@link CLI#selectPlayableDivinities(List, List, int, List) for a further description with an example of application.
      * @param divinitiesNames List of all divinities
      * @param divinitiesDescriptions List of their effects
      * @param playersNumber number of players in game

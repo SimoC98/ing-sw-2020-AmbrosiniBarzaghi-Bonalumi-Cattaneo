@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 import static java.lang.System.exit;
 
+//TODO:clearScreen doesn't seem to work. Do we remove it?
 /**
  * Class for the Command Line Interface. It implements the methods of the {@link UI}. The CLI is the default option
  * for the {@link TemporaryMain}.
@@ -124,7 +125,11 @@ public class CLI implements UI{
     }
 
     /**
-     * Called if the CLI is the one of the last player. It displays the list of divinities with their description 
+     * Called if the CLI is the one of the last player. It displays the list of divinities with their description
+     * at the side of an increasing number, it reads the player's input (in range integer) to add the relative divinity
+     * to the list of the divinities, and after repeating the process for a time equals to the number of players, it
+     * reads the number of the starting player selected (the list of players is printed) and sends everything to the
+     * server thanks to {@link ClientView#playableDivinitiesSelection(List, String)}.
      * @param divinitiesNames List of all divinities
      * @param divinitiesDescriptions List of their effects
      * @param playersNumber number of players in game
@@ -144,6 +149,7 @@ public class CLI implements UI{
         for(int i=0;i<divinitiesNames.size();i++) {
             System.out.println(i+1 + ") " + divinitiesNames.get(i) + "\n\t" + divinitiesDescriptions.get(i));
         }
+
         while(playableDivinities.size() != playersNumber) {
             do {
                 System.out.print("Select #" + (playableDivinities.size()+1) + " divinity: ");
@@ -153,9 +159,11 @@ public class CLI implements UI{
                     selection = Integer.parseInt(input);
 
             } while (selection <= 0 || selection > divinitiesNames.size());
+
             playableDivinities.add(divinitiesNames.get(selection-1));
             divinitiesNames.remove(selection-1);
             divinitiesDescriptions.remove(selection-1);
+
             if (playableDivinities.size() != playersNumber) {
                 System.out.println("\n\n\n\n");
                 for (int i = 0; i < divinitiesNames.size(); i++)
@@ -174,7 +182,7 @@ public class CLI implements UI{
 
         int start = -1;
         do{
-            System.out.println("Now choose the starter player: ");
+            System.out.println("Now choose the starting player: ");
             String in = scanner.nextLine();
             if(in.matches("[0-9]")) start = Integer.parseInt(in);
         } while(start<0||start>players.size());
@@ -182,8 +190,11 @@ public class CLI implements UI{
         clientView.playableDivinitiesSelection(playableDivinities,players.get(start));
     }
 
-
-
+    /**
+     * Called when a player has to select their divinity. The list of divinities they can choose from is printed, the
+     * user's input is read and if it is correct the choice is sent through the invocation of {@link ClientView#divinitySelection(String)}
+     * @param divinitiesNames names of the selectable divinities
+     */
     @Override
     public void selectDivinity(List<String> divinitiesNames) {
         clearScreen();
@@ -211,7 +222,7 @@ public class CLI implements UI{
                 System.out.println("You have to select your divinity. Choose from:");
                 for (int i = 0; i < divinitiesNames.size(); i++)
                     System.out.println("\t" + (i + 1) + ") " + divinitiesNames.get(i));
-                System.out.println("\t" + (divinitiesNames.size() + 1) + ") " + "See divinities descriptions");
+                System.out.println("\t" + (divinitiesNames.size() + 1) + ") " + "See divinities' descriptions");
             }
             else
                 divinity = divinitiesNames.get(selection - 1);
@@ -220,6 +231,11 @@ public class CLI implements UI{
         clientView.divinitySelection(divinity);
     }
 
+    /**
+     * It prints a dummy board (similar to a chess board) whose model will be used for the rest of the game.
+     * The player will have to choose the coordinates for the two worker. If the coordinates are valid,
+     * they will be sent to the server thanks to {@link ClientView#workerPlacement(int, int, int, int)}
+     */
     @Override
     public void placeWorkers() {
         int x1, y1, x2, y2;
@@ -227,7 +243,7 @@ public class CLI implements UI{
         synchronized (lock) {
 
             System.out.println("You have to choose your workers' initial position.");
-            System.out.println("You must type the coordinate (E.G. A5, D2, E4) in which you want to place you workers, one at a time.");
+            System.out.println("You must type the coordinate (E.G. A5, D2, E4) which you want to place you workers on, one at a time.");
             System.out.println("You cannot place workers on occupied tiles.");
 
             System.out.println("+----+----+----+----+----+");
@@ -243,18 +259,17 @@ public class CLI implements UI{
             System.out.println("+----+----+----+----+----+");
         }
 
-
         String input;
 
         do{
-            System.out.print("\tChoose a position for first worker: ");
+            System.out.print("\tChoose a position for the first worker: ");
             input = scanner.nextLine().toUpperCase();
         }while(!input.matches("[A-E][1-5]"));
         x1 = (input.charAt(0) - 'A');
         y1 = (input.charAt(1) - '1');
 
         do{
-            System.out.print("\tChoose a position for second worker: ");
+            System.out.print("\tChoose a position for the second worker: ");
             input = scanner.nextLine().toUpperCase();
         }while(!input.matches("[A-E][1-5]"));
         x2 = (input.charAt(0) - 'A');
@@ -263,7 +278,6 @@ public class CLI implements UI{
         System.out.println("\n\n");
 
         clientView.workerPlacement(x1, y1, x2, y2);
-
     }
 
     @Override

@@ -5,6 +5,7 @@ import it.polimi.ingsw.Pair;
 import it.polimi.ingsw.clientView.gui.GUI;
 import it.polimi.ingsw.events.clientToServer.*;
 import it.polimi.ingsw.events.serverToClient.ServerEvent;
+import it.polimi.ingsw.events.serverToClient.UsernameAlreadyUsed;
 import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Color;
 import org.w3c.dom.Document;
@@ -13,7 +14,6 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.*;
@@ -233,7 +233,7 @@ public class ClientView implements Observer<ServerEvent> {
 
     /**
      * Manages the case when a user selected an unavailable username or one with an unaccepted format.
-     * Caused by {@link it.polimi.ingsw.events.serverToClient.InvalidUsernameEvent}
+     * Caused by {@link UsernameAlreadyUsed}
      * @param usernames List of already taken nicknames.
      */
     public void manageWrongUsername(List<String> usernames) {

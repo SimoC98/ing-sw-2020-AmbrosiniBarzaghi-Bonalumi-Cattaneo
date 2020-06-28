@@ -139,20 +139,22 @@ public class Server{
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            //connection.close();
             return;
         }
         else if(loggedPlayers.values().contains(username)) {
             List<String> loggedUsernames = new ArrayList<>(loggedPlayers.values());
-            connection.sendEvent(new InvalidUsernameEvent(loggedUsernames));
+            connection.sendEvent(new UsernameAlreadyUsed(loggedUsernames));
             System.out.print("USERNAME NOT AVAILABLE");
             return;
         }
+        /*else if(username.length()<3 || username.length()>15 || username.contains(" ")) {
+            connection.sendEvent(new InvalidUsernameEvent());
+            return;
+        }*/
 
         connection.sendEvent(new InLobbyEvent());
         registerConnection(connection);
         loggedPlayers.put(connection,username);
-        //connection.startPing();
         printUsers();
 
 
@@ -213,7 +215,8 @@ public class Server{
      */
     private void printUsers() {
         System.out.println("\nLOGGED PLAYERS: ");
-        loggedPlayers.values().forEach(x -> System.out.println(x));
+        connections.stream().forEach(x -> System.out.println(loggedPlayers.get(x)));
+        //loggedPlayers.values().forEach(x -> System.out.println(x));
         System.out.println("\n");
     }
 

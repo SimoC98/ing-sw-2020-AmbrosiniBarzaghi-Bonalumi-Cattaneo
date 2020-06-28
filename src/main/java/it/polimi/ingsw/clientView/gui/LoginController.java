@@ -140,11 +140,6 @@ public class LoginController {
         LoginController.clientView = clientView;
     }
 
-    public LoginController() {
-        System.out.print("first");
-    }
-
-
     public void handleLogin() {
 
         String username = txt.getText();

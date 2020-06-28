@@ -182,44 +182,6 @@ public class Match extends Observable<ServerEvent> implements Model{
         }
         else throw new WorkerBadPlacementException();
     }
-/*
-    /**
-     * List of possible {@link Tile}s for the current {@link Player}
-     * to move onto with his selected worker, when he chooses {@link Action#MOVE}
-     * @param selectedWorker {@link Worker} that is going to move
-     * @return The list is created checking that each of the {@link Match#selectedWorker}'s adjacent tiles are free to move onto; such conditions are verified through the call of {@code legalMove} on {@link Player}
-     */
-    /*public List<Tile> getAvailableMoveTiles(Worker selectedWorker){
-        List<Tile> list = new ArrayList<>();
-        list = board.getAdjacentTiles(selectedWorker.getPositionOnBoard());
-        List<Tile> ret = new ArrayList<>();
-        for(int i=0; i<list.size();i++){
-            Tile t = list.get(i);
-            if (selectedWorker.getPlayer().getDivinity().legalMove(selectedWorker,t)==true) {
-                ret.add(t);
-            }
-        }
-        return ret;
-    }
-
-    /**
-     * List of possible {@link Tile}s for the current {@link Player}
-     * to build on with his selected worker, when he chooses {@link Action#MOVE}
-     * @param selectedWorker {@link Worker} that is going to build
-     * @return The list is created checking that each of the {@link Match#selectedWorker}'s adjacent tiles are free to build on; such conditions are verified through the call of {@code legalBuild} on {@link Player}
-     */
-    /*public List<Tile> getAvailableBuildTiles(Worker selectedWorker){
-        List<Tile> list;
-        list = board.getAdjacentTiles(selectedWorker.getPositionOnBoard());
-        List<Tile> ret = new ArrayList<>();
-        for(int i=0; i<list.size();i++){
-            Tile t = list.get(i);
-            if (selectedWorker.getPlayer().getDivinity().legalBuild(selectedWorker,t)==true) {
-                ret.add(t);
-            }
-        }
-        return ret;
-    }*/
 
     /**
      * @return The winning {@link Player}
@@ -272,28 +234,6 @@ public class Match extends Observable<ServerEvent> implements Model{
         return true;
     }
 
-    //happens when disconnected
-
-    /**
-     * When a player disconnects, they are considered as losers
-     * @param playerName
-     */
-    public void setLoser(String playerName){
-        for(Player player : players){
-            if(player.getUsername().equals(playerName)){
-                board.removePlayerWorkers(player);
-                players.remove(player);
-                if (players.size() == 1)
-                    currentPlayer.setWinner();
-                    //notify winner
-                else {
-                    //notify loser
-                }
-                //remove loser user form observer list
-            }
-        }
-    }
-
     /**
      * @param action one of the possible actions from  the enumeration {@link Action} i.e. {@link Action#BUILD}, {@link Action#BUILDDOME}, {@link Action#MOVE} or {@link Action#END}
      * @throws InvalidActionException The action is not present among the current player's actions
@@ -325,7 +265,6 @@ public class Match extends Observable<ServerEvent> implements Model{
         System.out.println(currentPlayer.getUsername() + currentPlayer.getDivinity());
 
         Tile t = board.getTile(x,y);
-        Tile startTile = selectedWorker.getPositionOnBoard();
         if( t != null && currentPlayer.move(board,selectedWorker,t)){
             List<ModelUpdate> updates = currentPlayer.getModelUpdates();
 

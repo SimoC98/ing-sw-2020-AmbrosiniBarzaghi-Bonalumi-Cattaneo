@@ -94,11 +94,17 @@ public class CLI implements UI{
     @Override
     public void login() {
         String username;
+        boolean end=false;
 
         do {
-            System.out.print("Choose your username (at least 3 characters): ");
+            System.out.print("Choose your username: ");
             username = scanner.nextLine();
-        } while(username.length() < 3);
+            if(username.length()<3) System.out.println("INVALID USERNAME! Username must have at least 3 characters");
+            else if(username.length()>15) System.out.println("INVALID USERNAME! Username must have at most 15 characters");
+            else if(username.contains(" ")) System.out.println("INVALID USERNAME! Username can't contain blank spaces");
+            else end=true;
+
+        } while(!end);
 
         clientView.loginQuestion(username);
     }

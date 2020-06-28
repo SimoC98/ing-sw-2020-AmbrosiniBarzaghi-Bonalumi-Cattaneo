@@ -47,7 +47,7 @@ public class DisconnectionController {
     @FXML
     public void initialize() {
         root.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
-        fontSize.bind(root.widthProperty().add(root.heightProperty()).divide(50));
+        fontSize.bind(root.widthProperty().add(root.heightProperty()).divide(70));
         fontSizeBtn.bind(root.widthProperty().add(root.heightProperty()).divide(130));
 
         Light.Distant light = new Light.Distant();

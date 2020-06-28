@@ -34,7 +34,7 @@ Download the files from [deliverables](/deliverables) folder.
 
 
 
-### [Server.jar](/deliverables/Server.jar)
+### [Server.jar](/deliverables/JAR/Server.jar)
 Run the file on the terminal by typing:
 ```
 java -jar PATH_TO_Server.jar
@@ -48,7 +48,7 @@ Keep in mind that in some systems like Linux it is forbidden to use ports until 
 
 
 
-### [Client.jar](/deliverables/Client.jar)
+### [Client.jar](/deliverables/JAR/Client.jar)
 Run the file on the terminal by typing
 ```
 java -jar PATH_TO_Client.jar

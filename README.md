@@ -32,6 +32,8 @@ Be sure to have installed Java 9 or newer.
 
 Download the files from [deliverables](/deliverables) folder.
 
+
+
 ### [Server.jar](/deliverables/Server.jar)
 Run the file on the terminal by typing:
 ```
@@ -44,6 +46,8 @@ java -jar PATH_TO_Server.jar PORT_NUMBER
 ```
 Keep in mind that in some systems like Linux it is forbidden to use ports until the 1024 for non-system tasks.
 
+
+
 ### [Client.jar](/deliverables/Client.jar)
 Run the file on the terminal by typing
 ```
@@ -55,15 +59,18 @@ If you want to specify the interface type `cli` or `gui` after the file path, li
 ```
 java -jar PATH_TO_Client.jar INTERFACE_MARK
 ```
-e.g. `java -jar ./Client.jar cli`
+e.g. `java -jar ./Client.jar cli`.
+
 Be aware that the program is NOT case-senstive, so `cli`, `CLI`, `cLi` are all accepted.
 
 If you want to specify the socket parameters you can do it by typing them after the file path, like this:
 ```
 java -jar PATH_TO_Client.jar IP PORT
 ```
-e.g. `java -jar ./Client.jar 192.168.10.83 4234`
+e.g. `java -jar ./Client.jar 192.168.10.83 4234`.
+
 Be aware that the program accepts the custom parameters only if you type them both.
 
 You can obviously type both the socket parameters and the interface mark.
+
 Lastly remember that you can type the parameters in any order you want and they will be accepted as long as they meet the specifications.

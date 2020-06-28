@@ -402,7 +402,7 @@ public class ClientView implements Observer<ServerEvent> {
      * @param username disconnected user
      */
     public void managePlayerDisconnection(String username) {
-        System.out.println("player disconnection");
+        //System.out.println("player disconnection");
 
         ui.playerDisconnection(username);
     }

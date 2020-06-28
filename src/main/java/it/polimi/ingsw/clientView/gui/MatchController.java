@@ -65,6 +65,8 @@ public class MatchController {
 
     private Lighting lighting;
 
+    private boolean listenerOff=false;
+
 
     public MatchController() {
     }
@@ -246,6 +248,7 @@ public class MatchController {
             setShadowOff();
             clientView.workerPlacement(workerPlacement.get(0).getFirst(),workerPlacement.get(0).getSecond(),workerPlacement.get(1).getFirst(),workerPlacement.get(1).getSecond());
             endTurn();
+            message.setText("");
         }
     }
 
@@ -353,8 +356,10 @@ public class MatchController {
         it.polimi.ingsw.model.Color selectedColor = clientView.getBoard().isThereAWorker(x, y);
 
         if (selectedColor != null && selectedColor.equals(color)) {
+            if(listenerOff)return;
+            listenerOff=true;
+
             System.out.println("Worker Selected");
-//            setShadowOff();
 
             alertVBox.prefWidth(250);
             alertVBox.prefHeight(100);
@@ -371,6 +376,7 @@ public class MatchController {
                 this.selectedWX = x;
                 this.selectedWY = y;
                 clientView.selectWorkerQuestion(x, y);
+                listenerOff=false;
             });
             select.getStyleClass().addAll("blue", "white");
 
@@ -381,6 +387,7 @@ public class MatchController {
             cancel.setOnMouseClicked(event -> {
                 alertVBox.setVisible(false);
                 alertVBox.getChildren().clear();
+                listenerOff=false;
             });
             cancel.getStyleClass().addAll("coral", "white");
 
@@ -514,6 +521,8 @@ public class MatchController {
         alertVBox.prefWidth(250);
         alertVBox.prefHeight(100);
 
+        listenerOff=true;
+
         Button select = newStandardizedButton();
         select.setText("END");
         select.prefWidth(BTN_WIDTH/2.0);
@@ -524,6 +533,7 @@ public class MatchController {
             message.setText("Your turn is over");
             emptyPossibleActions();
             clientView.actionQuestion(Action.END, -1, -1);
+            listenerOff=false;
         });
         select.getStyleClass().addAll("blue", "white");
 
@@ -534,6 +544,7 @@ public class MatchController {
         cancel.setOnMouseClicked(event -> {
             alertVBox.setVisible(false);
             alertVBox.getChildren().clear();
+            listenerOff=false;
         });
         cancel.getStyleClass().addAll("coral", "white");
 
@@ -554,10 +565,6 @@ public class MatchController {
 
     public void setPlayers() {
         List<PlayerRepresentation> players = clientView.getBoard().getPlayersList();
-
-        for(int i=0; i<players.size();i++) {
-            System.out.println(players.get(i).getUsername() + players.get(i).getDivinity());
-        }
         
         for(int i=0;i<players.size();i++) {
             String div = players.get(i).getDivinity();
@@ -604,12 +611,15 @@ public class MatchController {
     }
 
     public void godDescrAlertSetup(String godName, Image godImg) {
-        System.out.println("Opening description, " + godName);
+        if(listenerOff)return;
+        listenerOff=true;
+
+        //System.out.println("Opening description, " + godName);
 
         alertVBox.prefWidth(400);
         alertVBox.prefHeight(600);
 
-        System.out.println("ciao");
+       // System.out.println("ciao");
 
         ImageView imgView = new ImageView(godImg);
         imgView.fitHeightProperty().setValue(alertVBox.getHeight() * 0.5);
@@ -627,10 +637,11 @@ public class MatchController {
         closeBtn.setOnMouseClicked(event -> {
             alertVBox.setVisible(false);
             alertVBox.getChildren().clear();
+            listenerOff=false;
         });
         closeBtn.getStyleClass().addAll("coral", "white");
 
-        System.out.println("ciao 2");
+       // System.out.println("ciao 2");
 
         alertVBox.getChildren().addAll(imgView, description, closeBtn);
         alertVBox.setVisible(true);
@@ -708,7 +719,7 @@ public class MatchController {
     }
 
     public void loserPlayer() {
-        message.setText("UNFORTUNATELY YOU HAVE LOST\nFFFFFFFFFFF");
+        message.setText("YOU HAVE LOST!");
     }
 
     public void manageLoserPlayer() {
@@ -736,5 +747,31 @@ public class MatchController {
         btn.setOnMouseExited(event -> btn.setEffect(null));
 
         return btn;
+    }
+
+    public void opponentDefeated(String username) {
+        listenerOff=true;
+        alertVBox.getChildren().clear();
+        alertVBox.setVisible(true);
+
+        alertVBox.prefWidth(100);
+        alertVBox.prefHeight(200);
+
+        Label loserMsg = new Label("User " + username + " has lost!");
+        loserMsg.setFont(getSantoriniFont(24));
+        loserMsg.setAlignment(Pos.CENTER);
+
+        Button close = newStandardizedButton();
+        close.setText("CLOSE");
+        close.prefWidth(BTN_WIDTH/2.0);
+        close.setFont(getSantoriniFont(15));
+        close.setOnMouseClicked(event -> {
+            alertVBox.setVisible(false);
+            alertVBox.getChildren().clear();
+            listenerOff=false;
+        });
+        close.getStyleClass().addAll("coral", "white");
+
+        alertVBox.getChildren().addAll(loserMsg,close);
     }
 }

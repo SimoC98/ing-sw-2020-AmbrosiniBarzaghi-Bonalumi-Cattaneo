@@ -190,7 +190,8 @@ public class GUI extends Application implements UI {
                 matchController.loserPlayer();
             }
             else {
-                matchController.textMessage("LOSER","user " + username + "has lost","fffffffffff");
+                //matchController.textMessage("LOSER","user " + username + "has lost","fffffffffff");
+                matchController.opponentDefeated(username);
             }
         });
 

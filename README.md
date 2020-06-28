@@ -61,7 +61,7 @@ java -jar PATH_TO_Client.jar INTERFACE_MARK
 ```
 e.g. `java -jar ./Client.jar cli`.
 
-Be aware that the program is NOT case-senstive, so `cli`, `CLI`, `cLi` are all accepted.
+Be aware that the program is NOT case-sensitive, so `cli`, `CLI`, `cLi` are all accepted.
 
 If you want to specify the socket parameters you can do it by typing them after the file path, like this:
 ```

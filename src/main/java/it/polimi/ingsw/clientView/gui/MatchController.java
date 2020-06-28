@@ -49,9 +49,9 @@ public class MatchController {
     private VBox alertVBox;
 
     //CONSTANTS
-    private final int LVL1=0, LVL2=1, LVL3=2, DOME=3, WORKER=4, SHADOW=5;
+    private final int LVL1=0, LVL2=1, LVL3=2, DOME=3, WORKER=4, SHADOW=5;   //for every StackPane of the board
     private final double CARD_RATIO = 1.68;
-    private final int BTN_WIDTH=120, BTN_HEIGHT=40;
+    private final int BTN_WIDTH=100, BTN_HEIGHT=40;
 
     private String actualAction;
     private Map<String, Image> workerColors;
@@ -322,7 +322,7 @@ public class MatchController {
                     else
                         endTurnConfirmation();
                 });
-                actionBtn.getStyleClass().addAll("blue", "whiteTxt");
+                actionBtn.getStyleClass().addAll("blue", "white");
 
                 actionButtons.add(actionBtn);
             }
@@ -374,7 +374,7 @@ public class MatchController {
                 this.selectedWY = y;
                 clientView.selectWorkerQuestion(x, y);
             });
-            select.getStyleClass().addAll("blue", "whiteTxt");
+            select.getStyleClass().addAll("blue", "white");
 
             Button cancel = newStandardizedButton();
             cancel.setText("CANCEL");
@@ -384,7 +384,7 @@ public class MatchController {
                 alertVBox.setVisible(false);
                 alertVBox.getChildren().clear();
             });
-            cancel.getStyleClass().addAll("coral", "whiteTxt");
+            cancel.getStyleClass().addAll("coral", "white");
 
             HBox btnBox = new HBox();
             btnBox.setAlignment(Pos.CENTER);
@@ -518,7 +518,7 @@ public class MatchController {
 
         Button select = newStandardizedButton();
         select.setText("END");
-        select.prefWidth(BTN_WIDTH/2);
+        select.prefWidth(BTN_WIDTH/2.0);
         select.setFont(getSantoriniFont(16));
         select.setOnMouseClicked(event -> {
             alertVBox.setVisible(false);
@@ -527,17 +527,17 @@ public class MatchController {
             emptyPossibleActions();
             clientView.actionQuestion(Action.END, -1, -1);
         });
-        select.getStyleClass().addAll("blue", "whiteTxt");
+        select.getStyleClass().addAll("blue", "white");
 
         Button cancel = newStandardizedButton();
         cancel.setText("CANCEL");
-        cancel.prefWidth(BTN_WIDTH/2);
+        cancel.prefWidth(BTN_WIDTH/2.0);
         cancel.setFont(getSantoriniFont(16));
         cancel.setOnMouseClicked(event -> {
             alertVBox.setVisible(false);
             alertVBox.getChildren().clear();
         });
-        cancel.getStyleClass().addAll("coral", "whiteTxt");
+        cancel.getStyleClass().addAll("coral", "white");
 
         HBox btnBox = new HBox();
         btnBox.setAlignment(Pos.CENTER);
@@ -599,7 +599,7 @@ public class MatchController {
 
         Button exit = newStandardizedButton();
         exit.setText("QUIT");
-        exit.getStyleClass().addAll("coral", "whiteTxt");
+        exit.getStyleClass().addAll("coral", "white");
         exit.setOnMouseClicked((e)-> exit(0));
 
         vBoxLeft.getChildren().add(exit);
@@ -630,7 +630,7 @@ public class MatchController {
             alertVBox.setVisible(false);
             alertVBox.getChildren().clear();
         });
-        closeBtn.getStyleClass().addAll("coral", "whiteTxt");
+        closeBtn.getStyleClass().addAll("coral", "white");
 
         System.out.println("ciao 2");
 

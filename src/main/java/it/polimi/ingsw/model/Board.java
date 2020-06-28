@@ -84,7 +84,7 @@ public class Board {
         List<Tile> ret = new ArrayList<>();
         for(int i=0; i<list.size();i++){
             Tile t = list.get(i);
-            if (selectedWorker.getPlayer().getDivinity().legalMove(this,selectedWorker,t)==true) {
+            if (selectedWorker.getPlayer().getDivinity().legalMove(this, selectedWorker, t)) {
                 ret.add(t);
             }
         }
@@ -103,7 +103,7 @@ public class Board {
         List<Tile> ret = new ArrayList<>();
         for(int i=0; i<list.size();i++){
             Tile t = list.get(i);
-            if (selectedWorker.getPlayer().getDivinity().legalBuild(this,selectedWorker,t)==true) {
+            if (selectedWorker.getPlayer().getDivinity().legalBuild(this, selectedWorker, t)) {
                 ret.add(t);
             }
         }

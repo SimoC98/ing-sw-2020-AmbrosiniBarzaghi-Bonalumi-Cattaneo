@@ -384,10 +384,18 @@ public class Match extends Observable<ServerEvent> implements Model{
     }
 
 
+    /**
+     * List of all divinities
+     * @return list of divinities names
+     */
     public List<String> getAllDivinities() {
         return new ArrayList<>(divinities.keySet());
     }
 
+    /**
+     * Returns the list of all divinities' powers
+     * @return list of strings
+     */
     public List<String> getAllDivinitiesDescriptions() {
         ArrayList<String> descriptions = new ArrayList<>();
         for(Divinity d : divinities.values()) {
@@ -396,6 +404,10 @@ public class Match extends Observable<ServerEvent> implements Model{
         return descriptions;
     }
 
+    /**
+     * It gives a list of players' names
+     * @return list of username
+     */
     public List<String> getPlayersUsernames() {
         ArrayList<String> usernames = new ArrayList<>();
         for(Player p : players) {
@@ -404,6 +416,10 @@ public class Match extends Observable<ServerEvent> implements Model{
         return usernames;
     }
 
+    /**
+     * It gives the list of players' colors
+     * @return
+     */
     public List<Color> getPlayersColors() {
         ArrayList<Color> colors = new ArrayList<>();
         for(Player p : players) {
@@ -420,18 +436,14 @@ public class Match extends Observable<ServerEvent> implements Model{
         return divinities;
     }
 
-    public List<String> getPlayersDivinitiesDescriptions() {
-        ArrayList<String> divinitiesDescriptions = new ArrayList<>();
-        for(Player p : players) {
-            divinitiesDescriptions.add(p.getDivinity().getDescription());
-        }
-        return divinitiesDescriptions;
-    }
-
     public int getCurrentPlayerId() {
         return players.indexOf(currentPlayer);
     }
 
+    /**
+     * It gives a map containing the actions and a list of pair, that are the position available for an action.
+     * @return map of action and list of pair of int int
+     */
     public Map<Action,List<Pair<Integer,Integer>>> getPossibleActions() {
         HashMap map = new HashMap();
         List<Action> possibleActions = currentPlayer.getPossibleActions();

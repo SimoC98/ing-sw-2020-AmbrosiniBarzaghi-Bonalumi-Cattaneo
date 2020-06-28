@@ -143,7 +143,6 @@ public class CLI implements UI{
      */
     @Override
     public void selectPlayableDivinities(List<String> divinitiesNames, List<String> divinitiesDescriptions, int playersNumber, List<String> players) {
-        clearScreen();
         System.out.println("You're the last user logged in, so you must choose the divinities among which players will choose theirs.");
         System.out.println("You must choose exactly " + playersNumber + " cards.");
         System.out.println("\n");
@@ -203,7 +202,6 @@ public class CLI implements UI{
      */
     @Override
     public void selectDivinity(List<String> divinitiesNames) {
-        clearScreen();
 
         String divinity = null;
 
@@ -286,6 +284,10 @@ public class CLI implements UI{
         clientView.workerPlacement(x1, y1, x2, y2);
     }
 
+    /**
+     * Displays the text message received from the server
+     * @param msg generic message
+     */
     @Override
     public void textMessage(String msg) {
 
@@ -295,20 +297,27 @@ public class CLI implements UI{
         }
     }
 
+    /**
+     * Informs the client that their turn has started displaying a message, updating the board and starting the selection
+     * of the worker phase.
+     */
     @Override
     public void startTurn() {
 
         synchronized (lock) {
-            System.out.println("Your turn is started!");
+            System.out.println("Your turn started!");
 
         }
 
-
         updateBoard();
         selectWorker();
-
     }
 
+    /**
+     * Called when the client needs to choose the worker that will perform the actions until the end of the turn.
+     * The player's workers are shown and one has to be chosen. Once a valid choice is read the event is sent to the
+     * server through {@link ClientView#selectWorkerQuestion(int, int)}
+     */
     @Override
     public void selectWorker() {
         System.out.println("You have to select a worker to do an action with:");
@@ -348,15 +357,13 @@ public class CLI implements UI{
         clientView.selectWorkerQuestion(selectedWorker.getFirst(), selectedWorker.getSecond());
     }
 
-
+    /**
+     * Methods that prints the user's available actions and uses a scanner to get the input.
+     * Eventually it sends an event with {@link ClientView#actionQuestion(Action, int, int)}
+     * @param possibleActions {@code Map} of {@link Action} and list of coordinates
+     */
     @Override
     public void performAction(Map<Action, List<Pair<Integer, Integer>>> possibleActions) {
-
-        synchronized (lock) {
-
-            //print list of possible Actions, send AskActionEvent
-            //System.out.println("Now you have to select the action you want your worker to perform.");
-        }
         updateBoard();
 
         List<Action> l = new ArrayList<>();
@@ -366,7 +373,7 @@ public class CLI implements UI{
 
         String inputAction;
         boolean done = false;
-        Action action = Action.MOVE;    //should be overwritten
+        Action action = Action.MOVE;
         do {
             do {
                 System.out.print("Choose: ");
@@ -376,22 +383,18 @@ public class CLI implements UI{
             switch (inputAction) {
                 case "m":
                     action = Action.MOVE;
-                    //done = true;
                     break;
 
                 case "b":
                     action = Action.BUILD;
-                    //done = true;
                     break;
 
                 case "d":
                     action = Action.BUILDDOME;
-                    //done = true;
                     break;
 
                 case "e":
                     action = Action.END;
-                    //done = true;
                     break;
 
                 case "div":
@@ -427,16 +430,17 @@ public class CLI implements UI{
 
     }
 
+    /**
+     *
+     * @param username Name of loser
+     */
     @Override
     public void loser(String username) {
 
         synchronized (lock) {
             if(clientView.getUsername().equals(username)) {
-                System.out.println("You lost! Fs in the chat");
-                for(int i=0; i<10; i++)
-                    System.out.println("F");
-                //clientView.disconnect();
-            }else{
+                System.out.println("You lost!");
+            } else {
                 System.out.println("\n" + username + " has lost!");
             }
         }
@@ -444,6 +448,10 @@ public class CLI implements UI{
 
     }
 
+    /**
+     * Informs the client that a player won, then the user is disconnected {@link ClientView#disconnect()}
+     * @param username Name of winner
+     */
     @Override
     public void winner(String username) {
 
@@ -451,32 +459,35 @@ public class CLI implements UI{
             if(clientView.getUsername().equals(username)){
                 System.out.println("\n-----------------------------------------");
                 System.out.println("    Congratulation, you won the game!");
-                System.out.println("-----------------------------------------");
+                System.out.println("-----------------------------------------\n\n");
 
-//            System.out.println(" /$$     /$$                                                          /$$");
-//            System.out.println("|  $$   /$$/                                                         | $$");
-//            System.out.println(" \  $$ /$$//$$$$$$  /$$   /$$       /$$  /$$  /$$  /$$$$$$  /$$$$$$$ | $$");
-//            System.out.println("  \  $$$$//$$__  $$| $$  | $$      | $$ | $$ | $$ /$$__  $$| $$__  $$| $$");
-//            System.out.println("   \  $$/| $$  \ $$| $$  | $$      | $$ | $$ | $$| $$  \ $$| $$  \ $$|__/");
-//            System.out.println("    | $$ | $$  | $$| $$  | $$      | $$ | $$ | $$| $$  | $$| $$  | $$");
-//            System.out.println("    | $$ |  $$$$$$/|  $$$$$$/      |  $$$$$/$$$$/|  $$$$$$/| $$  | $$ /$$");
-//            System.out.println("    |__/  \______/  \______/        \_____/\___/  \______/ |__/  |__/|__/\");
 
+     System.out.println("██    ██  ██████  ██    ██     ██     ██  ██████  ███    ██ ██ ");
+     System.out.println(" ██  ██  ██    ██ ██    ██     ██     ██ ██    ██ ████   ██ ██ ");
+     System.out.println("  ████   ██    ██ ██    ██     ██  █  ██ ██    ██ ██ ██  ██ ██ ");
+     System.out.println("   ██    ██    ██ ██    ██     ██ ███ ██ ██    ██ ██  ██ ██    ");
+     System.out.println("   ██     ██████   ██████       ███ ███   ██████  ██   ████ ██ ");
+     System.out.println("                                                               ");
             }else{
-                System.out.println("\n" + username + " won! This means you lost, Fs in the chat");
-                for(int i=0; i<10; i++)
-                    System.out.println("F");
+                System.out.println("\n" + username + " won! See you again.");
             }
         }
 
         clientView.disconnect();
     }
 
+    /**
+     * Shows the players' divinities
+     */
     @Override
     public void playersDivinities() {
         printPlayersInGame();
     }
 
+    /**
+     * Disconnects the client if someone disconnected before the end of the game. {@link ClientView#disconnect()}
+     * @param username Disconnected player
+     */
     @Override
     public void playerDisconnection(String username) {
 
@@ -487,15 +498,19 @@ public class CLI implements UI{
 
             exit(0);
         }
-
-
     }
 
+    /**
+     * Informs the client that they joined a lobby
+     */
     @Override
     public void inLobby() {
         System.out.println("\nWAIT THE GAME START...\n\n");
     }
 
+    /**
+     * Informs the client that the lobby they tried to join is full. It then disconnects the player {@link ClientView#disconnect()}
+     */
     @Override
     public void lobbyFull() {
         System.out.println("The lobby is full, you can't join this match!");
@@ -503,16 +518,30 @@ public class CLI implements UI{
         clientView.disconnect();
     }
 
+    /**
+     * Called at the end of the client's turn.
+     */
     @Override
     public void endTurn() {
         System.out.println("\nYour turn is ended!\n");
     }
 
+    /**
+     * Called at the beginning of the client's turn.
+     */
     @Override
     public void startGame() {
         System.out.println("\n\nYOUR GAME IS STARTING! PLEASE WAIT...\n\n");
     }
 
+    /**
+     * Method invoked when the client attempted a bad move. It performs a basic control on the board to check if
+     * the move violated one of the basic rules of Santorini, otherwise, if the bad move was caused by a divinity's
+     * effect it displays YOU CAN'T MOVE HERE. Then the user needs to choose again {@link CLI#performAction(Map)}
+     * @param possibleActions list of possible actions
+     * @param wrongX wrong x coordinate
+     * @param wrongY wrong y coordinate
+     */
     @Override
     public void invalidMove(Map<Action, List<Pair<Integer, Integer>>> possibleActions, int wrongX, int wrongY) {
         StringBuilder s = new StringBuilder();
@@ -532,6 +561,14 @@ public class CLI implements UI{
         performAction(possibleActions);
     }
 
+    /**
+     * Method invoked when the client attempted a bad build. It performs a basic control on the board to check if
+     * the build violated one of the basic rules of Santorini, otherwise, if the bad build was caused by a divinity's
+     * effect it displays YOU CAN'T BUILD HERE. Then the user needs to choose again {@link CLI#performAction(Map)}
+     * @param possibleActions list of possible actions
+     * @param wrongX wrong x coordinate
+     * @param wrongY wrong y coordinate
+     */
     @Override
     public void invalidBuild(Map<Action, List<Pair<Integer, Integer>>> possibleActions, int wrongX, int wrongY) {
         StringBuilder s = new StringBuilder();
@@ -545,16 +582,23 @@ public class CLI implements UI{
 
         System.out.println(s.toString());
 
-        //System.out.println("\n\nERROR! YOU CAN'T BUILD HERE!");
         performAction(possibleActions);
     }
 
+    /**
+     * Informs the client that their workers' placement was incorrect. It causes the user to choose again {@link CLI#placeWorkers()}
+     */
     @Override
     public void invalidWorkerPlacement() {
         System.out.println("\n\nERROR! INVALID WORKER PLACEMENT!");
         placeWorkers();
     }
 
+    /**
+     * Informs the client that their worker's selection is wrong; it shows a pertinent message and it calls {@link CLI#selectWorker()}
+     * @param wrongX wrong x position
+     * @param wrongY wrong y position
+     */
     @Override
     public void invalidWorkerSelection(int wrongX, int wrongY) {
         StringBuilder s = new StringBuilder();
@@ -566,39 +610,61 @@ public class CLI implements UI{
         else s.append("YOU CAN'T USE THIS WORKER!");
 
         System.out.println(s.toString());
-        //System.out.println("\n\nERROR! INVALID WORKER SELECTION!");
+
         selectWorker();
     }
 
+    /**
+     * Called when a player moves a worker. It consequently updates the board.
+     * @param player name of the player moving
+     * @param xFrom beginning worker's position
+     * @param yFrom beginning worker's position
+     * @param xTo destination worker's position
+     * @param yTo destination worker's position
+     */
     @Override
     public void moveUpdate(String player, int xFrom, int yFrom, int xTo, int yTo) {
         updateBoard();
     }
 
+    /**
+     * Called when a player builds. It consequently updates the board.
+     * @param player name of the building player
+     * @param x coordinate of the tile built
+     * @param y coordinate of the tile built
+     */
     @Override
     public void buildUpdate(String player, int x, int y) {
         updateBoard();
     }
 
+    /**
+     * Called when a player places their workers; it updates the board.
+     * @param player name of the player to retrieve their color
+     * @param x1 first worker's coordinate
+     * @param y1 first worker's coordinate
+     * @param x2 second worker's coordinate
+     * @param y2 second worker's coordinate
+     */
     @Override
     public void workerPlacementUpdate(String player, int x1, int y1, int x2, int y2) {
         updateBoard();
     }
 
-
-
+    /**
+     * Prints the board writing the coordinates (numbers on top, letters at the side) and reads the {@link BoardRepresentation}
+     * to correctly place the workers, the buildings and the domes.
+     */
     public void updateBoard() {
 
-        clearScreen();
         printPlayersInGame();
 
         synchronized (lock) {
 
-            //System.out.println("\n\n\n");
             int [][]map = this.board.getBoard();
             char yCoordinate = 'A';
 
-            //coordinates line
+            //coordinates
             System.out.println("\t" + "    1      2      3      4      5");
 
             for(int i=0; i<board.boardDimension; i++){
@@ -644,20 +710,18 @@ public class CLI implements UI{
                 }
                 System.out.println("|");
 
-                //fourth line -- NOT USED
-//                System.out.println("\t" + "|       |       |       |       |       |");
 
             }
             //fifth and last line
             System.out.println("\t" + "+------+------+------+------+------+");
 
-
-
         }
-
-
     }
 
+    /**
+     * Prints the list of available actions with their description.
+     * @param possibleActions list of actions coming from the server.
+     */
     private void printActions(List<Action> possibleActions) {
         System.out.println("Here are you available actions:");
 
@@ -686,6 +750,10 @@ public class CLI implements UI{
         System.out.println();
     }
 
+    /**
+     * Prints the description of the divinity the user chose to see.
+     * @param divinities divinities in game
+     */
     private void printDescriptions(List<String> divinities) {
         Map<String, String> divDescriptions = board.getDivinities();
         List<String> divNames = new ArrayList<>(divDescriptions.keySet());
@@ -718,11 +786,9 @@ public class CLI implements UI{
         }
     }
 
-    public static void clearScreen() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-    }
-
+    /**
+     * Prints the list of players alongside with their divinity in a different colors each.
+     */
     public void printPlayersInGame() {
         System.out.println();
         List<PlayerRepresentation> players = board.getPlayersList();
@@ -745,5 +811,4 @@ public class CLI implements UI{
             System.out.print(ANSI_RESET);
         }
     }
-
 }

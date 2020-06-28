@@ -263,7 +263,7 @@ public class Server{
 
 
         if(args.length >= 1) {
-            portNumber = Integer.parseInt(args[1]);
+            portNumber = Integer.parseInt(args[0]);
         }
         else
         {

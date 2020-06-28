@@ -14,7 +14,7 @@ import static java.lang.System.exit;
 //TODO:clearScreen doesn't seem to work. Do we remove it?
 /**
  * Class for the Command Line Interface. It implements the methods of the {@link UI}. The CLI is the default option
- * for the {@link TemporaryMain}.
+ * for the {@link Main}.
  */
 public class CLI implements UI{
 

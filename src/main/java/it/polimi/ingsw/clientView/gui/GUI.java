@@ -412,6 +412,10 @@ public class GUI extends Application implements UI {
         FXMLLoader disconnectionLoader = new FXMLLoader(getClass().getResource("/fxml/Disconnection.fxml"));
         Parent disconnectionPane = disconnectionLoader.load();
         this.disconnectionRoot = disconnectionPane;
+        //to make scene reseizable
+        Pane p6 = (Pane) disconnectionPane;
+        p6.prefHeightProperty().bind(primaryStage.heightProperty());
+        p6.prefWidthProperty().bind(primaryStage.widthProperty());
 
         this.loginController = loginLoader.getController();
         this.divinitySelectionController = playableDivinitiesLoader.getController();

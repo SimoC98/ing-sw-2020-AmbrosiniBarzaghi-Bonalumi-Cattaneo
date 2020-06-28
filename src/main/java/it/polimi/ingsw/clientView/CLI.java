@@ -551,13 +551,10 @@ public class CLI implements UI{
         else if(board.isThereAWorker(wrongX,wrongY)!=null) s.append(" YOU CAN'T MOVE ON AN OCCUPIED TILE!");
         else if(board.getBoard()[wrongX][wrongY]-board.getBoard()[selectedWY][selectedWY]>1) s.append(" YOU CAN'T MOVE TO A TILE SO HIGH!");
         else if(wrongX<0 || wrongX>4 || wrongY<0 || wrongY>4) s.append(" YOU MUST SELECT A TILE ON THE BOARD!");
-        else if(Math.abs(wrongX-selectedWX)>1 || Math.abs(wrongY-selectedWY)>1) s.append(" YOU MUST SELECT AN ADJACENT TILE!");
         else s.append(" YOU CAN'T MOVE HERE!");
 
         System.out.println(s.toString());
 
-
-        //System.out.println("\n\nERROR! YOU CAN'T MOVE HERE!");
         performAction(possibleActions);
     }
 
@@ -577,7 +574,6 @@ public class CLI implements UI{
         if(board.getBoard()[wrongX][wrongY]==4) s.append(" YOU CAN'T BUILD ON A DOME!");
         else if(board.isThereAWorker(wrongX,wrongY)!=null) s.append(" YOU CAN'T BUILD ON AN OCCUPIED TILE!");
         else if(wrongX<0 || wrongX>4 || wrongY<0 || wrongY>4) s.append(" YOU MUST SELECT A TILE ON THE BOARD!");
-        else if(Math.abs(wrongX-selectedWX)>1 || Math.abs(wrongY-selectedWY)>1) s.append(" YOU MUST SELECT AN ADJACENT TILE!");
         else s.append(" YOU CAN'T BUILD HERE!");
 
         System.out.println(s.toString());

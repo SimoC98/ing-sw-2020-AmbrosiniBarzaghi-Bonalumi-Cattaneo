@@ -262,8 +262,6 @@ public class MatchController {
 
         emptyPossibleActions();
         setShadowOff();
-        this.selectedWY=y;
-        this.selectedWX=x;
         clientView.actionQuestion(Action.MOVE,x,y);
     }
 

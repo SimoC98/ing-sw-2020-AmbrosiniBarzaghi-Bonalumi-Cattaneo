@@ -40,7 +40,7 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
             tempout = new ObjectOutputStream(socket.getOutputStream());
             tempin = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
         this.in = tempin;
@@ -69,12 +69,12 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
                 t.start();
             }
         }catch(SocketException se){
-            System.out.println("SOCKET CLOSED, NO PROBLEM");
-            se.printStackTrace();
-            System.out.println("SOCKET CLOSED, NO PROBLEM");
+            //System.out.println("SOCKET CLOSED, NO PROBLEM");
+            //se.printStackTrace();
+            //System.out.println("SOCKET CLOSED, NO PROBLEM");
         } catch(Exception e) {
             //notify(new Disconnect());
-            e.printStackTrace();
+            //e.printStackTrace();
         }
 
 
@@ -98,7 +98,7 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
            socket.close();
         }
         catch(Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             e.getMessage();
         }
     }
@@ -112,7 +112,7 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
             out.writeObject(event);
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             //notify(new Disconnect());
         }
     }

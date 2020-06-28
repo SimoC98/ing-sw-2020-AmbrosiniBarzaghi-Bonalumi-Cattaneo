@@ -102,7 +102,7 @@ public class GUI extends Application implements UI {
     public void login(){
 
 
-        System.out.println("\nlogin...");
+        //System.out.println("\nlogin...");
 
         Platform.runLater(()->{
             primaryStage.setScene(new Scene(loginRoot,1500,1000));
@@ -133,7 +133,7 @@ public class GUI extends Application implements UI {
     }
 
     public void selectDivinity(List<String> divinitiesNames) {
-        System.out.print("\n\nCHOOSE A DIVINITY PLS");
+        //System.out.print("\n\nCHOOSE A DIVINITY PLS");
 
         Platform.runLater(()-> {
             playerDivinitySelectionController.selectPlayerDivinity(divinitiesNames);
@@ -157,7 +157,7 @@ public class GUI extends Application implements UI {
     }
 
     public void startTurn() {
-        System.out.println("select worker...");
+        //System.out.println("select worker...");
 
         Platform.runLater(() -> {
             matchController.startTurn();
@@ -166,7 +166,7 @@ public class GUI extends Application implements UI {
     }
 
     public void selectWorker() {
-        System.out.println("select worker...");
+        //System.out.println("select worker...");
 
         Platform.runLater(()->{
             matchController.setActionSelectWorker();
@@ -183,11 +183,6 @@ public class GUI extends Application implements UI {
     }
 
     public void loser(String username) {
-        /*
-        TODO: loser --> on the right side communication that has lost; keep receiving notifications and board updates
-              not loser --> communication of loser (alert?)
-         */
-
         Platform.runLater(() -> {
             matchController.manageLoserPlayer();
 
@@ -203,7 +198,7 @@ public class GUI extends Application implements UI {
 
     public void winner(String username) {
 
-        System.out.println("winner event");
+        //System.out.println("winner event");
 
         if(username.equals(clientView.getUsername())) {
             Platform.runLater(() -> {
@@ -232,7 +227,7 @@ public class GUI extends Application implements UI {
 
     @Override
     public void playerDisconnection(String username) {
-        System.out.println("disconnection event");
+        //System.out.println("disconnection event");
 
         clientView.disconnect();
 
@@ -327,7 +322,7 @@ public class GUI extends Application implements UI {
 
     @Override
     public void invalidWorkerSelection(int wrongX, int wrongY) {
-        System.out.println("errore selezione worker");
+        //System.out.println("errore selezione worker");
 
         Platform.runLater(() -> {
             matchController.textMessage("ERROR!","Invalid worker selection","Please, repeat the action!");
@@ -354,7 +349,7 @@ public class GUI extends Application implements UI {
 
     @Override
     public void workerPlacementUpdate(String player, int x1, int y1, int x2, int y2) {
-        System.out.println("placing workers...");
+        //System.out.println("placing workers...");
 
         Platform.runLater(() -> {
             matchController.placeWorkers(player,x1,y1,x2,y2);

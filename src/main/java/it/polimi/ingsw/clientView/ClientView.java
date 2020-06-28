@@ -66,16 +66,6 @@ public class ClientView implements Observer<ServerEvent> {
         this.ui = ui;
     }
 
-
-    //USED JUST FOR TEST
-    //TODO: REMOVE
-//    public ClientView(){
-//        pingTimer = new Timer();
-//        board = new BoardRepresentation();
-//        username = null;
-//        userID = -1;      //may become userID but we have no method to tell for now
-//    }
-
     public void startProxy(Socket socket) {
         proxy = new ClientSocketHandler(socket);
         proxy.addObserver(this);
@@ -318,7 +308,7 @@ public class ClientView implements Observer<ServerEvent> {
      */
     public void managePlayersDivinities(Map<String, String> divinities) {
         for(String player : board.getPlayersNames()) {
-            System.out.println(board.getPlayersMap().get(player).getUsername());
+            //System.out.println(board.getPlayersMap().get(player).getUsername());
             board.getPlayersMap().get(player).setDivinity(divinities.get(player));
         }
         ui.playersDivinities();
@@ -498,10 +488,7 @@ public class ClientView implements Observer<ServerEvent> {
      */
     @Override
     public void update(ServerEvent event) {
-        /*synchronized (lock) {
-        }*/
         event.handleEvent(this);
-
     }
 
 

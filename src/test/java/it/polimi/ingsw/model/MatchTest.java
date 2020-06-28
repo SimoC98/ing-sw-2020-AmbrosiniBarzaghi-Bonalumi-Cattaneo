@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.Pair;
 import it.polimi.ingsw.XMLparser.XMLParserUtility;
 import it.polimi.ingsw.model.cards.MoveTwiceNotBack;
 import it.polimi.ingsw.model.cards.OpponentCannotMoveUp;
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -33,6 +35,17 @@ class MatchTest {
         p1 = match.getPlayers().get(0);
         p2 = match.getPlayers().get(1);
         p3 = match.getPlayers().get(2);
+    }
+
+    @Test
+    public void matchInitializationTest() {
+        assert(match.getPlayersUsernames().size()==3);
+        assert(match.getPlayersUsernames().contains("paolo"));
+        assert(match.getPlayersUsernames().contains("giacomo"));
+        assert(match.getPlayersUsernames().contains("franco"));
+
+        assert(match.getPlayersColors().size()==3);
+
     }
 
     @Test
@@ -222,6 +235,14 @@ class MatchTest {
     }
 
     @Test
+    public void divinityMapInitializationTest() {
+        match.setDivinityMap(XMLParserUtility.getDivinities());
+
+        assert(match.getAllDivinities().size()==15);
+        assert(match.getAllDivinitiesDescriptions().size()==15);
+    }
+
+    @Test
     public void initializationTest() {
         match.setDivinityMap(XMLParserUtility.getDivinities());
 
@@ -247,6 +268,59 @@ class MatchTest {
         assertEquals(p3.getDivinity().getClass(), OpponentCannotMoveUp.class);
 
         assertEquals(match.getCurrentPlayer(),p1);
+    }
+
+    @Test
+    public void getPossibliActionTest() throws WorkerBadPlacementException, InvalidWorkerSelectionException {
+        p1.setDivinity(new StandardDivinity());
+        p2.setDivinity(new StandardDivinity());
+        p3.setDivinity(new StandardDivinity());
+
+        match.workerPlacementInitialization(0,0,1,1);
+        match.workerPlacementInitialization(2,3,4,4);
+        match.workerPlacementInitialization(4,0,4,1);
+
+        assertEquals(match.getCurrentPlayer().getUsername(),"paolo");
+        match.selectWorker(0,0);
+
+        Map<Action,List<Pair<Integer,Integer>>> possibleActions = match.getPossibleActions();
+
+        assert(possibleActions.size()==1);
+        assert(possibleActions.keySet().contains(Action.MOVE));
+
+        List<Pair<Integer,Integer>> availableTiles = possibleActions.get(Action.MOVE);
+
+        assert(availableTiles.size()==2);
+        assert(availableTiles.get(0).getFirst()==0 && availableTiles.get(0).getSecond()==1);
+        assert(availableTiles.get(1).getFirst()==1 && availableTiles.get(1).getSecond()==0);
+    }
+
+    @Test
+    public void divinityInitializationTest() throws InvalidDivinitySelectionEvent {
+        match.setDivinityMap(XMLParserUtility.getDivinities());
+
+        match.divinityInitialization("Apollo");
+
+        assertEquals(match.getCurrentPlayer().getUsername(),"giacomo");
+
+        match.divinityInitialization("Minotaur");
+
+        assertEquals(match.getCurrentPlayer().getUsername(),"franco");
+
+        match.divinityInitialization("Pan");
+
+        assertEquals(match.getCurrentPlayer().getUsername(),"paolo");
+
+
+        assertEquals(p1.getDivinity().getName(),"Apollo");
+        assertEquals(p2.getDivinity().getName(),"Minotaur");
+        assertEquals(p3.getDivinity().getName(),"Pan");
+
+        assert(match.getPlayersDivinities().contains(p1.getDivinity().getName()));
+        assert(match.getPlayersDivinities().contains(p2.getDivinity().getName()));
+        assert(match.getPlayersDivinities().contains(p3.getDivinity().getName()));
+
+
     }
 
 }

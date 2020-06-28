@@ -124,11 +124,6 @@ public class Match extends Observable<ServerEvent> implements Model{
             }
         }
 
-        System.out.println("\n\nMATCH START TURN:");
-        for(int i=0; i<players.size();i++) {
-            System.out.println(players.get(i).getUsername() + players.get(i).getDivinity().getName() + players.get(i).getDivinity());
-        }
-
 
         int playerIndex = players.indexOf(currentPlayer);
         if (playerIndex + 1>= players.size()) {

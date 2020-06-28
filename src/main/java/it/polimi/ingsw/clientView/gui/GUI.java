@@ -302,7 +302,7 @@ public class GUI extends Application implements UI {
         if(board.getBoard()[wrongX][wrongY]==4) header=" YOU CAN'T BUILD ON A DOME!";
         else if(board.isThereAWorker(wrongX,wrongY)!=null) header=" YOU CAN'T BUILD ON AN OCCUPIED TILE!";
         else if(wrongX<0 || wrongX>4 || wrongY<0 || wrongY>4) header=" YOU MUST SELECT A TILE ON THE BOARD!";
-        else if(Math.abs(wrongX-selectedWX)>1 || Math.abs(wrongY-selectedWY)>1) header=" YOU MUST SELECT A TILE ON THE BOARD!";
+        else if(Math.abs(wrongX-selectedWX)>1 || Math.abs(wrongY-selectedWY)>1) header=" YOU MUST SELECT AN ADJACENT TILE ON THE BOARD!";
         else header=" YOU CAN'T BUILD HERE!";
 
 

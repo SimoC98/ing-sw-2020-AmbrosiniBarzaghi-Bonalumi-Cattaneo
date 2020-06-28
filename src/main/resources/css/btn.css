@@ -13,3 +13,7 @@
     -fx-font-family: LillyBelle;
     -fx-font-style: italic;
 }
+
+.white{
+    -fx-text-fill: white;
+}

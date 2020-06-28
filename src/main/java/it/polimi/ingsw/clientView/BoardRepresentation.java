@@ -111,7 +111,6 @@ public class BoardRepresentation {
      */
     public void moveWorker(String username, int fromX, int fromY, int toX, int toY){
         players.get(username).moveWorker(fromX, fromY, toX, toY);
-        //maybe can use return value
     }
 
     /**

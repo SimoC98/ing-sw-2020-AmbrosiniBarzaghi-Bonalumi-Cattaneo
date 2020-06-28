@@ -93,8 +93,6 @@ public class Controller implements Observer<ClientEvent> {
             model.selectWorker(x,y);
             nextActionHandler();
         } catch (InvalidWorkerSelectionException e) {
-            //playersInGame.get(currentPlayerId).showMessage("error");
-            //playersInGame.get(currentPlayerId).selectWorker();
             playersInGame.get(currentPlayerId).invalidWorkerSelection(x,y);
         }
     }
@@ -120,8 +118,6 @@ public class Controller implements Observer<ClientEvent> {
             }
             else nextActionHandler();
         } catch (InvalidMoveException e1) {
-            //playersInGame.get(currentPlayerId).showMessage("error");
-            //nextActionHandler();
             playersInGame.get(currentPlayerId).invalidMove(model.getPossibleActions(),x,y);
         } catch (InterruptedException e2) {
             e2.printStackTrace();
@@ -147,8 +143,6 @@ public class Controller implements Observer<ClientEvent> {
             }
             else nextActionHandler();
         } catch (InvalidBuildException e1) {
-            //playersInGame.get(currentPlayerId).showMessage("error");
-            //nextActionHandler();
             playersInGame.get(currentPlayerId).invalidBuild(model.getPossibleActions(),x,y);
         } catch (InterruptedException e2) {
             e2.printStackTrace();
@@ -164,7 +158,6 @@ public class Controller implements Observer<ClientEvent> {
         Map<Action,List<Pair<Integer,Integer>>> possibleActions =  model.getPossibleActions();
 
         if(possibleActions.size()==0) {
-            //playersInGame.get(currentPlayerId).showMessage("your turn is ended");
             playersInGame.get(currentPlayerId).endTurn();
             handleStartNextTurn();
         }
@@ -185,7 +178,6 @@ public class Controller implements Observer<ClientEvent> {
         System.out.println("\n\n CONTROLLER START TURN:");
         System.out.println(currentPlayerId);
         System.out.println(playersUsernames.get(currentPlayerId));
-        //System.out.println(model.getCurrentPlayer().getUsername());
         System.out.println("\n\n");
 
         boolean isLoser = model.checkLoser();
@@ -207,13 +199,11 @@ public class Controller implements Observer<ClientEvent> {
             disconnectAll();
         }
         else {
-            // playersInGame.get(currentPlayerId).disconnect();
             playersInGame.get(currentPlayerId).stopPing();
             //String message = "User " + playersUsernames.get(currentPlayerId) + " has been disconnected. You remain in " + playersInGame.size();
             loserPlayers.add(playersInGame.get(currentPlayerId));
             playersInGame.remove(playersInGame.get(currentPlayerId));
             playersUsernames.remove(playersUsernames.get(currentPlayerId));
-            //sendMessageToAll(message);
             this.currentPlayerId = model.getCurrentPlayerId();
             playersInGame.get(currentPlayerId).startTurn(playersUsernames.get(currentPlayerId));
         }
@@ -320,9 +310,6 @@ public class Controller implements Observer<ClientEvent> {
      * @param divinity Name of the divinity chosen by a player
      */
     public void handleDivinityInitialization(String divinity) {
-        //boolean endInitialization=false;
-        //if(gameDivinities.size()==1) endInitialization=true;
-
         currentPlayerId = model.getCurrentPlayerId();
         System.out.println(playersUsernames.get(currentPlayerId));
 
@@ -370,8 +357,6 @@ public class Controller implements Observer<ClientEvent> {
     public void handleWorkerPlacementInitialization(int x1, int y1, int x2, int y2) {
         currentPlayerId = model.getCurrentPlayerId();
 
-        //if(currentPlayerId+1==playersInGame.size()) endInitialization = true;
-
         try {
             model.workerPlacementInitialization(x1,y1,x2,y2);
             currentPlayerId = model.getCurrentPlayerId();
@@ -387,8 +372,6 @@ public class Controller implements Observer<ClientEvent> {
             }
 
         } catch (WorkerBadPlacementException e) {
-            //playersInGame.get(currentPlayerId).showMessage("error");
-            //playersInGame.get(currentPlayerId).sendWorkerInitialization();
             playersInGame.get(currentPlayerId).invalidWorkerPlacement();
         }
     }

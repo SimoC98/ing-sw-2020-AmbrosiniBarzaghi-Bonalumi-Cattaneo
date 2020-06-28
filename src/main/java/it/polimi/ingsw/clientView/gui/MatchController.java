@@ -296,27 +296,41 @@ public class MatchController {
         message.setText("Choose the action to perform: ");
 
         List<Button> actionButtons = new ArrayList<>();
-        for(Action action : possibleActions.keySet()) {
-            System.out.println(action.toString());
 
-            Button actionBtn = newStandardizedButton();
-            actionBtn.setText(action.toString());
-            actionBtn.setOnMouseClicked((event) -> {
-                actualAction = action.toString().toLowerCase();
-                setShadowOff();
-                markAvailableTiles(action);
+        if(possibleActions.size()==1) {
+            Action action = (Action) possibleActions.keySet().toArray()[0];
+
+            actualAction = action.toString().toLowerCase();
+            setShadowOff();
+            markAvailableTiles(action);
+            message.setText("Choose tile to\n" + action.toString());
+
+        }
+        else {
+            for(Action action : possibleActions.keySet()) {
+                System.out.println(action.toString());
+
+                Button actionBtn = newStandardizedButton();
+                actionBtn.setText(action.toString());
+                actionBtn.setOnMouseClicked((event) -> {
+                    actualAction = action.toString().toLowerCase();
+                    setShadowOff();
+                    markAvailableTiles(action);
 //                emptyPossibleActions();
-                if(action != Action.END)
-                    message.setText("Choose tile to\n" + action.toString());
-                else
-                    endTurnConfirmation();
-            });
-            actionBtn.getStyleClass().addAll("blue", "whiteTxt");
+                    if(action != Action.END)
+                        message.setText("Choose tile to\n" + action.toString());
+                    else
+                        endTurnConfirmation();
+                });
+                actionBtn.getStyleClass().addAll("blue", "whiteTxt");
 
-            actionButtons.add(actionBtn);
+                actionButtons.add(actionBtn);
+            }
+
+            possibleActionsBox.getChildren().addAll(actionButtons);
         }
 
-        possibleActionsBox.getChildren().addAll(actionButtons);
+
     }
 
     private void emptyPossibleActions() {

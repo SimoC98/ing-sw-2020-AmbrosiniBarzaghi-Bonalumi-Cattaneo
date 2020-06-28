@@ -30,20 +30,6 @@ public class TemporaryMain {
                 port = Integer.parseInt(arg);
         }
 
-
-        //net init
-        /*try {
-            if(ip!=null && port>=0) {
-                System.out.println("User socket configuration found");
-                socket = new Socket(ip, port);
-            }else {
-                System.out.println("Default ip and port taken from file");
-                socket = connectionConfigParser();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-
         //ui init
         ClientView clientView = null;
         if(ui==null || ui.equals("gui")) {
@@ -56,54 +42,13 @@ public class TemporaryMain {
             new Thread(()->{
                 gui.start();
             }).start();
-
-
-            //clientView.setUI(new GUI(clientView));
         } else {
             System.out.println("You're going to play with the CLI interface");
             CLI cli = new CLI();
             clientView = new ClientView(ip,port,cli);
             cli.setClientView(clientView);
             cli.start();
-            /*GUI gui = new GUI();
-            clientView = new ClientView(ip,port,gui);
-            gui.setClientView(clientView);
-            clientView.setUI(gui);
-            new Thread(()->{
-                gui.start();
-            }).start();*/
         }
-
-
-
-        //start
-        //clientView.startUI();
-        //clientView.startProxy(socket);
     }
 
-    private static Socket connectionConfigParser() throws IOException {
-        File xmlFile = new File("src/main/resources/connection_config.xml");
-
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder builder = null;
-        try {
-            builder = factory.newDocumentBuilder();
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        }
-        Document doc = null;
-        try {
-            if (builder != null) {
-                doc = builder.parse(xmlFile);
-            }
-        } catch (SAXException | IOException e) {
-            e.printStackTrace();
-        }
-
-        String hostname = doc.getDocumentElement().getElementsByTagName("hostname").item(0).getTextContent();
-        int port = Integer.parseInt(doc.getDocumentElement().getElementsByTagName("port").item(0).getTextContent());
-        System.out.println("Config red: " + hostname + " " + port);
-
-        return new Socket(hostname, port);
-    }
 }

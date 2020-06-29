@@ -124,7 +124,6 @@ public class Match extends Observable<ServerEvent> implements Model{
             }
         }
 
-
         int playerIndex = players.indexOf(currentPlayer);
         if (playerIndex + 1>= players.size()) {
             playerIndex = 0;
@@ -141,10 +140,6 @@ public class Match extends Observable<ServerEvent> implements Model{
 
         turnId++;
         currentPlayer.startOfTurn();
-
-        System.out.println("current player:");
-        System.out.println(players.indexOf(currentPlayer));
-        System.out.println(currentPlayer.getUsername());
     }
 
     /**
@@ -256,9 +251,6 @@ public class Match extends Observable<ServerEvent> implements Model{
      * @throws InvalidMoveException The player chose an incorrect position
      */
     public void move (int x, int y) throws InvalidMoveException {
-
-        System.out.println(currentPlayer.getUsername() + currentPlayer.getDivinity());
-
         Tile t = board.getTile(x,y);
         if( t != null && currentPlayer.move(board,selectedWorker,t)){
             List<ModelUpdate> updates = currentPlayer.getModelUpdates();
@@ -294,9 +286,6 @@ public class Match extends Observable<ServerEvent> implements Model{
                 notify(new BuildEvent(updates.get(i).getWorker().getPlayer().getUsername(),userAction,builtTile.getFirst(),builtTile.getSecond()));
             }
             return;
-
-       //     Action action = userAction;
-         //   notify(new BuildEvent(currentPlayer.getUsername(),action,t.getX(),t.getY()));
         }
         else throw new InvalidBuildException();
     }

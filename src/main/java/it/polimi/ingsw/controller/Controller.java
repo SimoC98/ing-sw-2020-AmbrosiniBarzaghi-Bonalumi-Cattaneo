@@ -112,7 +112,7 @@ public class Controller implements Observer<ClientEvent> {
 
             int winner = model.checkWinner();
             if(winner>=0) {
-                System.out.println("vincitore");
+                //System.out.println("vincitore");
                 disconnectAll();
                 return;
             }
@@ -189,7 +189,7 @@ public class Controller implements Observer<ClientEvent> {
      */
     public void manageLoser() {
         if(playersInGame.size()==2) {
-            System.out.println("\n\ncheck disconnecting all");
+            //System.out.println("\n\ncheck disconnecting all");
             disconnectAll();
         }
         else {
@@ -217,12 +217,6 @@ public class Controller implements Observer<ClientEvent> {
     }
 
 
-    /*public void handleUnexpectedDisconnection(String playerName) {
-        model.setLoser(playerName);
-    }*/
-
-
-    //todo: è usato questo metodo???
     /**
      * Handles the disconnection of a player and disconnects the others
      * @param player Player disconnecting
@@ -359,7 +353,6 @@ public class Controller implements Observer<ClientEvent> {
                 boolean loser = model.checkLoser();
                 if(loser) manageLoser();
                 else playersInGame.get(currentPlayerId).startTurn(playersUsernames.get(currentPlayerId));
-                //playersInGame.get(currentPlayerId).startTurn(playersUsernames.get(currentPlayerId));
             }
             else {
                 playersInGame.get(currentPlayerId).sendWorkerInitialization();

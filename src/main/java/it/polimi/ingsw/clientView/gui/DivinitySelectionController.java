@@ -253,14 +253,12 @@ public class DivinitySelectionController {
 
             Button close = new Button("close");
             close.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSizeDescriptions.asString(), ";"));
-            close.setPrefHeight(40);
-            close.setPrefWidth(100);
-
-
-
+            //close.setPrefHeight(40);
+            //close.setPrefWidth(100);
+            close.prefWidthProperty().bind(godDescription.widthProperty().divide(5.5));
+            close.prefHeightProperty().bind(godDescription.heightProperty().divide(18.25));
             close.getStyleClass().add("coral");
             close.getStyleClass().add("whiteTxt");
-            //close.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
             close.setFont(santoriniFont);
 
             close.setOnMouseEntered((e)->{
@@ -295,6 +293,8 @@ public class DivinitySelectionController {
                 deselect.getStyleClass().add("whiteTxt");
                 deselect.setFont(santoriniFont);
                 deselect.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSizeDescriptions.asString(), ";"));
+                deselect.prefWidthProperty().bind(godDescription.widthProperty().divide(5.5));
+                deselect.prefHeightProperty().bind(godDescription.heightProperty().divide(18.25));
 
                 deselect.setOnMouseClicked((e)->{
                     chosenGods.remove(divinities.get(count));
@@ -310,8 +310,10 @@ public class DivinitySelectionController {
             else{
                 Button select = new Button("select");
                 select.setFont(santoriniFont);
-                select.setPrefHeight(40);
-                select.setPrefWidth(100);
+                //select.setPrefHeight(40);
+                //select.setPrefWidth(100);
+                select.prefWidthProperty().bind(godDescription.widthProperty().divide(5.5));
+                select.prefHeightProperty().bind(godDescription.heightProperty().divide(18.25));
                 select.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSizeDescriptions.asString(), ";"));
 
                 select.setOnMouseEntered((e)->{

@@ -139,6 +139,8 @@ public class MatchController {
         alertVBox.alignmentProperty().setValue(Pos.CENTER);
         alertVBox.setVisible(false);
         alertVBox.setSpacing(10);
+
+        actualAction="default";
     }
 
     protected int getSelectedWX() {
@@ -197,7 +199,6 @@ public class MatchController {
 
     public void action(StackPane s) {
 
-        //TODO: add worker selection
         switch(actualAction) {
             case "move":
                 moveOnClickedTile(s);
@@ -236,14 +237,14 @@ public class MatchController {
         int y = GridPane.getColumnIndex(s);
 
 
-        System.out.println(x + "-" + y);
+        //System.out.println(x + "-" + y);
 
         workerPlacement.add(new Pair<>(x,y));
 
         s.getChildren().get(SHADOW).setVisible(true);
 
         if(workerPlacement.size()==2) {
-            System.out.println("workers placed in: " + workerPlacement.get(0).getFirst() + "-" + workerPlacement.get(0).getSecond() + "and " + workerPlacement.get(1).getFirst() + "-" + workerPlacement.get(1).getSecond());
+            //System.out.println("workers placed in: " + workerPlacement.get(0).getFirst() + "-" + workerPlacement.get(0).getSecond() + "and " + workerPlacement.get(1).getFirst() + "-" + workerPlacement.get(1).getSecond());
             actualAction = "default";
             setShadowOff();
             clientView.workerPlacement(workerPlacement.get(0).getFirst(),workerPlacement.get(0).getSecond(),workerPlacement.get(1).getFirst(),workerPlacement.get(1).getSecond());
@@ -256,7 +257,7 @@ public class MatchController {
         int x = GridPane.getRowIndex(s);
         int y = GridPane.getColumnIndex(s);
 
-        System.out.println(x + "-" + y);
+        //System.out.println(x + "-" + y);
 
         actualAction = "default";
 
@@ -269,7 +270,7 @@ public class MatchController {
         int x = GridPane.getRowIndex(s);
         int y = GridPane.getColumnIndex(s);
 
-        System.out.println(x + "-" + y);
+        //System.out.println(x + "-" + y);
 
         actualAction = "default";
 
@@ -282,7 +283,7 @@ public class MatchController {
         int x = GridPane.getRowIndex(s);
         int y = GridPane.getColumnIndex(s);
 
-        System.out.println(x + "-" + y);
+        //System.out.println(x + "-" + y);
 
         actualAction = "default";
 
@@ -309,7 +310,7 @@ public class MatchController {
         }
         else {
             for(Action action : possibleActions.keySet()) {
-                System.out.println(action.toString());
+                //System.out.println(action.toString());
 
                 Button actionBtn = newStandardizedButton();
                 actionBtn.setText(action.toString());
@@ -359,7 +360,7 @@ public class MatchController {
             if(listenerOff)return;
             listenerOff=true;
 
-            System.out.println("Worker Selected");
+            //System.out.println("Worker Selected");
 
             alertVBox.prefWidth(250);
             alertVBox.prefHeight(100);
@@ -405,12 +406,6 @@ public class MatchController {
             alertVBox.getChildren().addAll(text, btnBox);
             alertVBox.setVisible(true);
         }
-
-        /*if(v.getImage() != null){
-            System.out.println("Worker Selected");
-            clientView.selectWorkerQuestion(x,y);
-
-        }*/
     }
 
     public void placeWorkers(String username, int x1, int y1, int x2, int y2) {
@@ -431,7 +426,7 @@ public class MatchController {
     }
 
     public void moveUpdate(String player, int x1, int y1, int x2, int y2) {
-        System.out.println("update move");
+        //System.out.println("update move");
 
         String color = clientView.getBoard().getPlayersMap().get(player).getColor().toString().toLowerCase();
 
@@ -447,14 +442,7 @@ public class MatchController {
             return;
         }
 
-        //List<ImageView> l = workersForColor.get(color);
-
-        //if(workerFrom.getImage().equals(workerColors.get(color))) workerFrom.setImage(null);
         if(clientView.getBoard().isThereAWorker(x1,y1)==null) workerFrom.setImage(null);
-
-
-
-        //workerFrom.setImage(null);
 
         ImageView workerTo = (ImageView) stackPaneTo.getChildren().get(WORKER);
         workerTo.setImage(null);
@@ -463,7 +451,7 @@ public class MatchController {
 
     public void buildUpdate(String player, int x, int y) {
         message.setText(player + " has built on tile " + x+"-"+y);
-        System.out.println(x + "-" + y);
+        //System.out.println(x + "-" + y);
         StackPane s = (StackPane) board.getChildren().get(y*board.getRowCount() + x);   //TODO: check if x and y must be inverted
 
         ImageView imageView;
@@ -489,7 +477,7 @@ public class MatchController {
                 imageView.setImage(tileLevel.get(DOME));
                 break;
             default:
-                System.out.println("boh");
+                //System.out.println("boh");
         }
     }
 
@@ -501,7 +489,7 @@ public class MatchController {
     public void setActionPlaceWorkers() {
         workerPlacement.clear();
 
-        System.out.println("Now you PLACEWORKERS");
+        //System.out.println("Now you PLACEWORKERS");
         turnInformation.setText("YOUR TURN\nTO PLACE WORKERS");
         message.setText("Click on the tile you want to place your workers");
         //userInteractionLabel.setVisible(true);
@@ -510,7 +498,7 @@ public class MatchController {
     }
 
     public void setActionSelectWorker() {
-        System.out.println("Now you SELECTWORKER");
+        //System.out.println("Now you SELECTWORKER");
         message.setText("Click the worker you want to play with");
         //userInteractionLabel.setVisible(true);
         actualAction = "selectworker";
@@ -518,10 +506,12 @@ public class MatchController {
     }
 
     public void endTurnConfirmation() {
+        if(listenerOff)return;
+        listenerOff=true;
+
         alertVBox.prefWidth(250);
         alertVBox.prefHeight(100);
 
-        listenerOff=true;
 
         Button select = newStandardizedButton();
         select.setText("END");
@@ -663,9 +653,7 @@ public class MatchController {
         StackPane x;
         ImageView v;
         for(int i=0; i<25; i++) {
-//            Label l = new Label(i%5 + "-" + i/5);
             x = (StackPane) board.getChildren().get(i);
-//            x.getChildren().add(l);
             v = (ImageView) x.getChildren().get(WORKER);
             if(v.getImage()!=null && v.getImage().equals(workerColors.get(color)))
                 setSelectable(i%5, i/5, value);

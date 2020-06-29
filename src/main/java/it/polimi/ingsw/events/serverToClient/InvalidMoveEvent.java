@@ -14,17 +14,19 @@ import java.util.Map;
  */
 public class InvalidMoveEvent implements ServerEvent{
     private Map<Action,List<Pair<Integer,Integer>>> possibleActions;
-    private int wrongX, wrongY;
+    private int wrongX, wrongY, startX, startY;
 
-    public InvalidMoveEvent(Map<Action, List<Pair<Integer, Integer>>> possibleActions, int wrongX, int wrongY) {
+    public InvalidMoveEvent(Map<Action, List<Pair<Integer, Integer>>> possibleActions, int wrongX, int wrongY, int startX, int startY) {
         this.possibleActions = possibleActions;
         this.wrongX = wrongX;
         this.wrongY = wrongY;
+        this.startX = startX;
+        this.startY = startY;
     }
 
     @Override
     public void handleEvent(ClientView clientView) {
-        clientView.manageInvalidMove(possibleActions,wrongX,wrongY);
+        clientView.manageInvalidMove(possibleActions,wrongX,wrongY,startX,startY);
     }
 
     @Override

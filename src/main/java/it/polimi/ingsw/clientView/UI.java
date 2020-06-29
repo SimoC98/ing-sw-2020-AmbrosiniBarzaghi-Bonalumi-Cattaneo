@@ -122,8 +122,10 @@ public interface UI {
      * @param possibleActions list of possible actions
      * @param wrongX wrong x coordinate
      * @param wrongY wrong y coordinate
+     * @param startX
+     * @param startY
      */
-    public void invalidMove(Map<Action, List<Pair<Integer, Integer>>> possibleActions, int wrongX, int wrongY);
+    public void invalidMove(Map<Action, List<Pair<Integer, Integer>>> possibleActions, int wrongX, int wrongY, int startX, int startY);
 
     /**
      * Tells the player that they commit a wrong build (coming from the server)

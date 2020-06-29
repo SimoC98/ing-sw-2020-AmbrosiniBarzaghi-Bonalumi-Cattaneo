@@ -46,4 +46,6 @@ public interface Model {
     public int getCurrentPlayerId();
 
     public Map<Action,List<Pair<Integer,Integer>>> getPossibleActions();
+
+    public Pair<Integer,Integer> getSelectedWorkerCoordinates();
 }

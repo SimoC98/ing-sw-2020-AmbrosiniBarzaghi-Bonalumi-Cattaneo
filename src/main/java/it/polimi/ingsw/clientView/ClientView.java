@@ -426,13 +426,13 @@ public class ClientView implements Observer<ServerEvent> {
     /**
      * Caused by an incorrect move {@link it.polimi.ingsw.events.serverToClient.InvalidMoveEvent}.
      * A map with the available actions and positions is sent alongside the incorrect coordinate.
-     * {@link CLI#invalidMove(Map, int, int)} and {@link GUI#invalidMove(Map, int, int)}
+     * {@link UI#invalidMove(Map, int, int, int, int)} and {@link UI#invalidMove(Map, int, int, int, int)}
      * @param possibleActions map of actions and list of positions available
      * @param wrongX wrong position sent
      * @param wrongY wrong position sent
      */
-    public void manageInvalidMove(Map<Action,List<Pair<Integer,Integer>>> possibleActions, int wrongX, int wrongY) {
-        ui.invalidMove(possibleActions,wrongX,wrongY );
+    public void manageInvalidMove(Map<Action,List<Pair<Integer,Integer>>> possibleActions, int wrongX, int wrongY,int startX, int startY) {
+        ui.invalidMove(possibleActions,wrongX,wrongY,startX,startY );
     }
 
     /**

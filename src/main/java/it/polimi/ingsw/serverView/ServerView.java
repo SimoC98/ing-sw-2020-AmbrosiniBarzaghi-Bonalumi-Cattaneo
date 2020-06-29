@@ -157,8 +157,8 @@ public class ServerView extends Observable<ClientEvent> implements Observer<Serv
      * @param wrongX Wrong x coordinate chosen by the player
      * @param wrongY Wrong y coordinate chosen by the player
      */
-    public void invalidMove(Map<Action,List<Pair<Integer,Integer>>> possileActions, int wrongX, int wrongY) {
-        sendEvent(new InvalidMoveEvent(possileActions,wrongX,wrongY));
+    public void invalidMove(Map<Action,List<Pair<Integer,Integer>>> possileActions, int wrongX, int wrongY,int startX, int startY) {
+        sendEvent(new InvalidMoveEvent(possileActions,wrongX,wrongY,startX,startY));
     }
 
     /**

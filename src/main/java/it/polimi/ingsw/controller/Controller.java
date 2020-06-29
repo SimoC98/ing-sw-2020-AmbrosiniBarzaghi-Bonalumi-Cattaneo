@@ -118,7 +118,7 @@ public class Controller implements Observer<ClientEvent> {
             }
             else nextActionHandler();
         } catch (InvalidMoveException e1) {
-            playersInGame.get(currentPlayerId).invalidMove(model.getPossibleActions(),x,y);
+            playersInGame.get(currentPlayerId).invalidMove(model.getPossibleActions(),x,y,model.getSelectedWorkerCoordinates().getFirst(),model.getSelectedWorkerCoordinates().getSecond());
         } catch (InterruptedException e2) {
             e2.printStackTrace();
         }

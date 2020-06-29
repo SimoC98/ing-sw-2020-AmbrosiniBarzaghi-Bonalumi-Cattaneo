@@ -461,4 +461,8 @@ public class Match extends Observable<ServerEvent> implements Model{
 
         return map;
     }
+
+    public Pair<Integer,Integer> getSelectedWorkerCoordinates() {
+        return new Pair<>(selectedWorker.getPositionOnBoard().getX(),selectedWorker.getPositionOnBoard().getY());
+    }
 }

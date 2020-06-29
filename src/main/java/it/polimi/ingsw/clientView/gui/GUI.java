@@ -291,8 +291,6 @@ public class GUI extends Application implements UI {
      */
     @Override
     public void playerDisconnection(String username) {
-        //System.out.println("disconnection event");
-
         clientView.disconnect();
 
         Platform.runLater(() -> {
@@ -352,17 +350,18 @@ public class GUI extends Application implements UI {
      * @param possibleActions list of possible actions
      * @param wrongX wrong x coordinate
      * @param wrongY wrong y coordinate
+     * @param startX
+     * @param startY
      */
     @Override
-    public void invalidMove(Map<Action, List<Pair<Integer, Integer>>> possibleActions, int wrongX, int wrongY) {
+    public void invalidMove(Map<Action, List<Pair<Integer, Integer>>> possibleActions, int wrongX, int wrongY, int startX, int startY) {
         BoardRepresentation board = clientView.getBoard();
-        int selectedWX = matchController.getSelectedWX();
-        int selectedWY = matchController.getSelectedWY();
         String header;
 
         if(board.getBoard()[wrongX][wrongY]==4) header = " YOU CAN'T MOVE ON A DOME!";
+        else if(Math.abs(startX-wrongX)>1 || Math.abs(startY-wrongY)>1) header = "YOU MUST SELECT AN ADJACENT TILE!";
         else if(board.isThereAWorker(wrongX,wrongY)!=null) header=" YOU CAN'T MOVE ON AN OCCUPIED TILE!";
-        else if(board.getBoard()[wrongX][wrongY]-board.getBoard()[selectedWX][selectedWY]>1) header=" YOU CAN'T MOVE TO A TILE SO HIGH!";
+        else if(board.getBoard()[wrongX][wrongY]-board.getBoard()[startX][startY]>1) header=" YOU CAN'T MOVE TO A TILE SO HIGH!";
         else if(wrongX<0 || wrongX>4 || wrongY<0 || wrongY>4) header=" YOU MUST SELECT A TILE ON THE BOARD!";
         else header=" YOU CAN'T MOVE HERE!";
 
@@ -415,7 +414,7 @@ public class GUI extends Application implements UI {
      */
     @Override
     public void invalidWorkerSelection(int wrongX, int wrongY) {
-        System.out.println("errore selezione worker");
+        //System.out.println("errore selezione worker");
 
         Platform.runLater(() -> {
             matchController.textMessage("ERROR!","Invalid worker selection","Please, repeat the action!");
@@ -464,7 +463,7 @@ public class GUI extends Application implements UI {
      */
     @Override
     public void workerPlacementUpdate(String player, int x1, int y1, int x2, int y2) {
-        System.out.println("placing workers...");
+        //System.out.println("placing workers...");
 
         Platform.runLater(() -> {
             matchController.placeWorkers(player,x1,y1,x2,y2);

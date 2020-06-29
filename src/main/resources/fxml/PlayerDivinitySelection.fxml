@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
 <BorderPane fx:id="bPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1500.0" stylesheets="@../css/divinitySelectionBack.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.clientView.gui.PlayerDivinitySelectionController">
    <center>
@@ -14,28 +12,12 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
             </HBox>
-            <VBox fx:id="vBoxInf" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" spacing="20.0" VBox.vgrow="ALWAYS">
-               <children>
-                  <Label fx:id="label" text="Label" visible="false">
-                     <font>
-                        <Font name="System Italic" size="18.0" />
-                     </font></Label>
-                  <Button fx:id="btn" maxHeight="50.0" maxWidth="150.0" minHeight="30.0" minWidth="70.0" mnemonicParsing="false" text="Choose" textFill="WHITE" visible="false" VBox.vgrow="ALWAYS" />
-               </children>
-            </VBox>
+            <VBox fx:id="vBoxInf" alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" spacing="20.0" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
 
    </center>
    <top>
-      <HBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" styleClass="up" BorderPane.alignment="CENTER">
-         <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="CHOOSE YOUR GOD" HBox.hgrow="ALWAYS">
-               <font>
-                  <Font name="System Bold Italic" size="30.0" />
-               </font>
-            </Label>
-         </children>
-      </HBox>
+      <HBox fx:id="sceneTitle" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="200.0" styleClass="up" BorderPane.alignment="CENTER" />
    </top>
 </BorderPane>

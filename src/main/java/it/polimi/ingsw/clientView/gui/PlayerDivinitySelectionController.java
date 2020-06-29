@@ -1,6 +1,9 @@
 package it.polimi.ingsw.clientView.gui;
 
 import it.polimi.ingsw.clientView.ClientView;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -15,6 +18,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,19 +39,22 @@ public class PlayerDivinitySelectionController {
     private VBox vBox;
 
     @FXML
-    private Label label;
-
-    @FXML
-    private Button btn;
-
-    @FXML
     private VBox vBoxInf;
 
+    @FXML
+    private HBox sceneTitle;
+
     private List<String> divinities;
-
     private List<ImageView> godImages = new ArrayList<>();
-
     private String chosenGod = null;
+
+    private DoubleProperty fontSize = new SimpleDoubleProperty(10);
+    private DoubleProperty fontSizeTitle = new SimpleDoubleProperty(20);
+    private DoubleProperty fontSizeDescriptions = new SimpleDoubleProperty(20);
+
+    private Text godDescription;
+    private Button chooseGod;
+
 
 
 
@@ -61,6 +69,10 @@ public class PlayerDivinitySelectionController {
 
     @FXML
     public void initialize() {
+        fontSize.bind(bPane.widthProperty().add(bPane.heightProperty()).divide(100));
+        fontSizeTitle.bind(bPane.widthProperty().add(bPane.heightProperty()).divide(80));
+        fontSizeDescriptions.bind(bPane.widthProperty().add(bPane.heightProperty()).divide(150));
+
         Light.Distant light = new Light.Distant();
         light.setAzimuth(-135.0);
 
@@ -68,38 +80,45 @@ public class PlayerDivinitySelectionController {
         lighting.setLight(light);
         lighting.setSurfaceScale(4.0);
 
-        Font santorini = Font.loadFont(getClass().getResource("/font/LillyBelle.ttf").toExternalForm(), 18);
+        Font santorini = Font.loadFont(getClass().getResource("/font/LillyBelle.ttf").toExternalForm(), 24);
+
+        sceneTitle.setAlignment(Pos.CENTER);
+        Text title = new Text("CHOOSE GODS THAT WILL BE USED IN THIS MATCH:");
+        title.setFont(santorini);
+        title.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSizeTitle.asString(), ";"));
+        sceneTitle.getChildren().add(title);
 
         bPane.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
 
         hBox.prefWidthProperty().bind(bPane.widthProperty());
         hBox.prefHeightProperty().bind(bPane.heightProperty().divide(4.4));
+        hBox.spacingProperty().bind(bPane.widthProperty().divide(10));
 
         vBoxInf.prefWidthProperty().bind(bPane.widthProperty());
 
-        label.maxWidthProperty().bind(bPane.widthProperty().subtract(50));
-        label.setAlignment(Pos.CENTER);
-        label.setFont(santorini);
-        label.setWrapText(true);
+        godDescription = new Text();
+        godDescription.wrappingWidthProperty().bind(bPane.widthProperty().subtract(50));
+        godDescription.setFont(santorini);
+        godDescription.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
+        godDescription.setVisible(false);
+        godDescription.setTextAlignment(TextAlignment.CENTER);
 
-        btn.getStyleClass().add("blue");
-        btn.setFont(santorini);
-        btn.setOnMouseEntered((e) -> {
-            btn.setEffect(lighting);
+        chooseGod = new Button("SELECT");
+        chooseGod.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSizeDescriptions.asString(), ";"));
+        chooseGod.prefWidthProperty().bind(bPane.widthProperty().divide(10));
+        chooseGod.prefHeightProperty().bind(bPane.heightProperty().divide(20));
+        chooseGod.getStyleClass().add("blue");
+        chooseGod.getStyleClass().add("whiteTxt");
+        //chooseGod.setFont(santorini);
+        chooseGod.setVisible(false);
+        chooseGod.setOnMouseEntered((e) -> {
+            chooseGod.setEffect(lighting);
         });
-        btn.setOnMouseExited((e) -> {
-            btn.setEffect(null);
+        chooseGod.setOnMouseExited((e) -> {
+            chooseGod.setEffect(null);
         });
-        //btn.prefWidthProperty().bind(bPane.widthProperty().divide(10));
-        //btn.prefHeightProperty().bind(btn.widthProperty().divide(1.5));
 
-
-
-
-
-
-
-
+        vBoxInf.getChildren().addAll(godDescription,chooseGod);
     }
 
 
@@ -157,26 +176,24 @@ public class PlayerDivinitySelectionController {
         });
 
         node.setOnMouseClicked((e1)-> {
-            label.setVisible(true);
-            label.setText("ciao");
+            godDescription.setVisible(true);
             String desc = clientView.getBoard().getDivinities().get(divinities.get(count));
-            label.setText(desc);
-            label.setWrapText(true);
+            godDescription.setText(desc);
+            //label.setWrapText(true);
 
-            btn.setVisible(true);
+            chooseGod.setVisible(true);
 
-            btn.setOnMouseClicked((e2) -> {
+            chooseGod.setOnMouseClicked((e2) -> {
                 ImageView img = (ImageView) e1.getTarget();
                 img.setEffect(lighting);
 
                 chosenGod = divinities.get(count);
 
-                btn.setVisible(false);
+                chooseGod.setVisible(false);
 
                 godImages.stream().forEach(i -> i.setOnMouseClicked(null));
 
-                label.setText("you chose " + chosenGod + "... Wait other player's choice!");
-
+                godDescription.setText("you chose " + chosenGod + "... Wait other player's choice!");
 
                 clientView.divinitySelection(divinities.get(count));
 

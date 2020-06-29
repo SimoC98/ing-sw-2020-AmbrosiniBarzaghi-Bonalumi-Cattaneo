@@ -70,6 +70,8 @@ public class DivinitySelectionController {
     private List<String> players;
     private int playerNumber;
 
+    private Text title;
+
     private List<String> chosenGods = new ArrayList<>();
     private List<Node> chosenGodsNode = new ArrayList<>();
 
@@ -92,7 +94,7 @@ public class DivinitySelectionController {
 
 
         titleHBox.setAlignment(Pos.CENTER);
-        Text title = new Text("CHOOSE GODS THAT WILL BE USED IN THIS MATCH:");
+        this.title = new Text();
         title.setFont(santoriniFont);
         title.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSizeTitle.asString(), ";"));
         titleHBox.getChildren().add(title);
@@ -128,6 +130,7 @@ public class DivinitySelectionController {
     }
 
     public void setDivinityOnGrid(List<String> divinities, List<String> descriptions, int playerNumber,List<String> players) {
+        title.setText("CHOOSE " + playerNumber + "GODS THAT WILL BE USED IN THIS MATCH:");
 
         this.players = players;
         this.divinities = new ArrayList<>(divinities);
@@ -168,19 +171,14 @@ public class DivinitySelectionController {
     }
 
     private void addCell(Node node, int x, int y,int count) {
-        //String back = "/graphics/clp_bg.png";
         String back = "/graphics/fg_panel4.png";
         ImageView b = new ImageView(new Image(getClass().getResource(back).toExternalForm()));
 
         b.fitHeightProperty().bind(bPane.heightProperty().divide(4).add(20));
         b.fitWidthProperty().bind(bPane.widthProperty().divide(10).add(20));
-        //b.fitWidthProperty().bind(b.fitHeightProperty().divide(1.5));
 
         b.maxHeight(240);
         b.maxWidth(160);
-
-        //b.setFitHeight(240);
-        //b.setFitWidth(160);
 
         godGrid.add(new StackPane(node,b),x,y);
 
@@ -236,7 +234,6 @@ public class DivinitySelectionController {
 
             Text text1=new Text(descriptions.get(count));
             text1.setStyle("-fx-font-style: italic");
-            //text1.setFont(new Font(18));
             text1.setFont(santoriniFont);
             text1.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSizeDescriptions.asString(), ";"));
             text1.setWrappingWidth(250);
@@ -253,8 +250,6 @@ public class DivinitySelectionController {
 
             Button close = new Button("close");
             close.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSizeDescriptions.asString(), ";"));
-            //close.setPrefHeight(40);
-            //close.setPrefWidth(100);
             close.prefWidthProperty().bind(godDescription.widthProperty().divide(5.5));
             close.prefHeightProperty().bind(godDescription.heightProperty().divide(18.25));
             close.getStyleClass().add("coral");

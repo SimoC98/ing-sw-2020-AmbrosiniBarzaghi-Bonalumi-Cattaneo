@@ -117,7 +117,7 @@ public class GUI extends Application implements UI {
      */
     public void login(){
 
-        System.out.println("\nlogin...");
+        //System.out.println("\nlogin...");
 
         Platform.runLater(()->{
             primaryStage.setScene(new Scene(loginRoot,1500,1000));
@@ -161,7 +161,7 @@ public class GUI extends Application implements UI {
      * @param divinitiesNames names of the selectable divinities
      */
     public void selectDivinity(List<String> divinitiesNames) {
-        System.out.print("\n\nCHOOSE A DIVINITY");
+        //System.out.print("\n\nCHOOSE A DIVINITY");
 
         Platform.runLater(()-> {
             playerDivinitySelectionController.selectPlayerDivinity(divinitiesNames);
@@ -173,7 +173,7 @@ public class GUI extends Application implements UI {
      * Called when the client has to position their workers. {@link MatchController#setActionPlaceWorkers()}
      */
     public void placeWorkers() {
-        System.out.println("place your workers...");
+        //System.out.println("place your workers...");
 
         Platform.runLater(() -> {
             matchController.setActionPlaceWorkers();
@@ -195,7 +195,7 @@ public class GUI extends Application implements UI {
      * {@link MatchController#setActionSelectWorker()}
      */
     public void startTurn() {
-        System.out.println("select worker...");
+        //System.out.println("select worker...");
 
         Platform.runLater(() -> {
             matchController.startTurn();
@@ -207,7 +207,7 @@ public class GUI extends Application implements UI {
      * Called when the player needs to select a worker (the previous selection was refused at least once)
      */
     public void selectWorker() {
-        System.out.println("select worker...");
+        //System.out.println("select worker...");
 
         Platform.runLater(()->{
             matchController.setActionSelectWorker();
@@ -236,11 +236,6 @@ public class GUI extends Application implements UI {
      * @param username Name of loser
      */
     public void loser(String username) {
-        /*
-        TODO: loser --> on the right side communication that has lost; keep receiving notifications and board updates
-              not loser --> communication of loser (alert?)
-         */
-
         Platform.runLater(() -> {
             matchController.manageLoserPlayer();
 
@@ -260,7 +255,7 @@ public class GUI extends Application implements UI {
      */
     public void winner(String username) {
 
-        System.out.println("winner event");
+        //System.out.println("winner event");
 
         if(username.equals(clientView.getUsername())) {
             Platform.runLater(() -> {
@@ -296,7 +291,7 @@ public class GUI extends Application implements UI {
      */
     @Override
     public void playerDisconnection(String username) {
-        System.out.println("disconnection event");
+        //System.out.println("disconnection event");
 
         clientView.disconnect();
 
@@ -367,7 +362,7 @@ public class GUI extends Application implements UI {
 
         if(board.getBoard()[wrongX][wrongY]==4) header = " YOU CAN'T MOVE ON A DOME!";
         else if(board.isThereAWorker(wrongX,wrongY)!=null) header=" YOU CAN'T MOVE ON AN OCCUPIED TILE!";
-        else if(board.getBoard()[wrongX][wrongY]-board.getBoard()[selectedWY][selectedWY]>1) header=" YOU CAN'T MOVE TO A TILE SO HIGH!";
+        else if(board.getBoard()[wrongX][wrongY]-board.getBoard()[selectedWX][selectedWY]>1) header=" YOU CAN'T MOVE TO A TILE SO HIGH!";
         else if(wrongX<0 || wrongX>4 || wrongY<0 || wrongY>4) header=" YOU MUST SELECT A TILE ON THE BOARD!";
         else header=" YOU CAN'T MOVE HERE!";
 
@@ -387,8 +382,6 @@ public class GUI extends Application implements UI {
     @Override
     public void invalidBuild(Map<Action, List<Pair<Integer, Integer>>> possibleActions, int wrongX, int wrongY) {
         BoardRepresentation board = clientView.getBoard();
-        int selectedWX = matchController.getSelectedWX();
-        int selectedWY = matchController.getSelectedWY();
         String header;
 
         if(board.getBoard()[wrongX][wrongY]==4) header=" YOU CAN'T BUILD ON A DOME!";

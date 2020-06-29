@@ -14,17 +14,19 @@ import java.util.Map;
  */
 public class InvalidBuildEvent implements ServerEvent{
     private Map<Action,List<Pair<Integer,Integer>>> possibleActions;
-    private int wrongX, wrongY;
+    private int wrongX, wrongY, actualX, actualY;
 
-    public InvalidBuildEvent(Map<Action, List<Pair<Integer, Integer>>> possibleActions, int wrongX, int wrongY) {
+    public InvalidBuildEvent(Map<Action, List<Pair<Integer, Integer>>> possibleActions, int wrongX, int wrongY, int actualX, int actualY) {
         this.possibleActions = possibleActions;
         this.wrongX = wrongX;
         this.wrongY = wrongY;
+        this.actualX = actualX;
+        this.actualY = actualY;
     }
 
     @Override
     public void handleEvent(ClientView clientView) {
-        clientView.manageInvalidBuild(possibleActions,wrongX,wrongY);
+        clientView.manageInvalidBuild(possibleActions,wrongX,wrongY,actualX,actualY);
     }
 
     @Override

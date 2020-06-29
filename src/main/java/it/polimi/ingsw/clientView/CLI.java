@@ -549,8 +549,8 @@ public class CLI implements UI{
         StringBuilder s = new StringBuilder();
         s.append("ERROR!");
 
-        if(board.getBoard()[wrongX][wrongY]==4) s.append(" YOU CAN'T MOVE ON A DOME!");
-        else if(Math.abs(startX-wrongX)>1 || Math.abs(startY-wrongY)>1) s.append("YOU MUST SELECT AN ADJACENT TILE!");
+        if(Math.abs(startX-wrongX)>1 || Math.abs(startY-wrongY)>1) s.append("YOU MUST SELECT AN ADJACENT TILE!");
+        else if(board.getBoard()[wrongX][wrongY]==4) s.append(" YOU CAN'T MOVE ON A DOME!");
         else if(board.isThereAWorker(wrongX,wrongY)!=null) s.append(" YOU CAN'T MOVE ON AN OCCUPIED TILE!");
         else if(board.getBoard()[wrongX][wrongY]-board.getBoard()[startX][startY]>1) s.append(" YOU CAN'T MOVE TO A TILE SO HIGH!");
         else if(wrongX<0 || wrongX>4 || wrongY<0 || wrongY>4) s.append(" YOU MUST SELECT A TILE ON THE BOARD!");
@@ -568,13 +568,16 @@ public class CLI implements UI{
      * @param possibleActions list of possible actions
      * @param wrongX wrong x coordinate
      * @param wrongY wrong y coordinate
+     * @param actualX
+     * @param actualY
      */
     @Override
-    public void invalidBuild(Map<Action, List<Pair<Integer, Integer>>> possibleActions, int wrongX, int wrongY) {
+    public void invalidBuild(Map<Action, List<Pair<Integer, Integer>>> possibleActions, int wrongX, int wrongY, int actualX, int actualY) {
         StringBuilder s = new StringBuilder();
         s.append("ERROR!");
 
-        if(board.getBoard()[wrongX][wrongY]==4) s.append(" YOU CAN'T BUILD ON A DOME!");
+        if(Math.abs(actualX-wrongX)>1 || Math.abs(actualY-wrongY)>1) s.append("YOU MUST SELECT AN ADJACENT TILE!");
+        else if(board.getBoard()[wrongX][wrongY]==4) s.append(" YOU CAN'T BUILD ON A DOME!");
         else if(board.isThereAWorker(wrongX,wrongY)!=null) s.append(" YOU CAN'T BUILD ON AN OCCUPIED TILE!");
         else if(wrongX<0 || wrongX>4 || wrongY<0 || wrongY>4) s.append(" YOU MUST SELECT A TILE ON THE BOARD!");
         else s.append(" YOU CAN'T BUILD HERE!");

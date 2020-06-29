@@ -143,7 +143,7 @@ public class Controller implements Observer<ClientEvent> {
             }
             else nextActionHandler();
         } catch (InvalidBuildException e1) {
-            playersInGame.get(currentPlayerId).invalidBuild(model.getPossibleActions(),x,y);
+            playersInGame.get(currentPlayerId).invalidBuild(model.getPossibleActions(),x,y,model.getSelectedWorkerCoordinates().getFirst(),model.getSelectedWorkerCoordinates().getSecond());
         } catch (InterruptedException e2) {
             e2.printStackTrace();
         }

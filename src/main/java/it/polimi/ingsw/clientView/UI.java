@@ -132,8 +132,10 @@ public interface UI {
      * @param possibleActions list of possible actions
      * @param wrongX wrong x coordinate
      * @param wrongY wrong y coordinate
+     * @param actualX
+     * @param actualY
      */
-    public void invalidBuild(Map<Action, List<Pair<Integer, Integer>>> possibleActions, int wrongX, int wrongY);
+    public void invalidBuild(Map<Action, List<Pair<Integer, Integer>>> possibleActions, int wrongX, int wrongY, int actualX, int actualY);
 
     /**
      * Called when the server meets a wrong workers' placement

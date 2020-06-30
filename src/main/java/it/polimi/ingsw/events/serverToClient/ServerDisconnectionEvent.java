@@ -1,7 +1,8 @@
 package it.polimi.ingsw.events.serverToClient;
 
-import it.polimi.ingsw.clientView.ClientView;
-import it.polimi.ingsw.clientView.PingReceiver;
+import it.polimi.ingsw.Client.ClientView;
+import it.polimi.ingsw.Client.PingReceiver;
+
 
 public class ServerDisconnectionEvent implements ServerEvent{
     @Override

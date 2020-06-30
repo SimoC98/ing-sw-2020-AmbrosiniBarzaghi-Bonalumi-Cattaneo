@@ -34,7 +34,7 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
     public ServerSocketHandler(Socket socket, Server server) {
         this.socket = socket;
         this.server = server;
-        sender = new PingManager(this);
+        this.sender = new PingManager(this);
 
         try {
             in = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));

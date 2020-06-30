@@ -18,6 +18,11 @@ import java.io.IOException;
 
 import static java.lang.System.exit;
 
+/**
+ * Class to manage what to show when a user disconnects. The {@code initialize} method is automatically called when
+ * the class is instantiated in the {@link GUI}. It displays the name of the disconnected player and it gives the
+ * possibility to reconnect to begin a new game or to exit the game.
+ */
 public class DisconnectionController {
 
     private static ClientView clientView;
@@ -37,11 +42,21 @@ public class DisconnectionController {
         DisconnectionController.clientView = clientView;
     }
 
+    /**
+     * Assigns the gui and retrieves the clientView
+     * @param gui {@link GUI}
+     */
     public static void setGui(GUI gui) {
         DisconnectionController.gui = gui;
         DisconnectionController.clientView = gui.getClientView();
     }
 
+    /**
+     * It extracts an fxml file to configure a button to exit the game or to create a new one.
+     * These buttons are decorated (colors, lighting, etc) and they are interactive: if the player presses exit
+     * the client is aborted; if the connect button is pressed, it clears the {@link it.polimi.ingsw.Client.BoardRepresentation}
+     * and restores the connection and all the gui parameters, invoking {@link GUI#loadGUI()}
+     */
     @FXML
     public void initialize() {
         root.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
@@ -112,10 +127,12 @@ public class DisconnectionController {
             }
             clientView.startConnection();
         });
-
-
     }
 
+    /**
+     * Creates the text with the disconnected player
+     * @param player username of the disconnected player.
+     */
     public void disconnect(String player) {
         disconnectionText.setText("User " + player + " has left the game... this match is ended");
     }

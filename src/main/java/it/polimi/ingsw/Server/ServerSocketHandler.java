@@ -1,4 +1,4 @@
-package it.polimi.ingsw.serverView;
+package it.polimi.ingsw.Server;
 
 import it.polimi.ingsw.Observable;
 import it.polimi.ingsw.events.clientToServer.LoginEvent;

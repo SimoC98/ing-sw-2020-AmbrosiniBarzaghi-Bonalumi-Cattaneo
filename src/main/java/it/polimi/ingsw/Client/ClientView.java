@@ -1,8 +1,8 @@
-package it.polimi.ingsw.clientView;
+package it.polimi.ingsw.Client;
 
 import it.polimi.ingsw.Observer;
 import it.polimi.ingsw.Pair;
-import it.polimi.ingsw.clientView.gui.GUI;
+import it.polimi.ingsw.Client.gui.GUI;
 import it.polimi.ingsw.events.clientToServer.*;
 import it.polimi.ingsw.events.serverToClient.ServerEvent;
 import it.polimi.ingsw.events.serverToClient.UsernameAlreadyUsed;
@@ -215,7 +215,7 @@ public class ClientView implements Observer<ServerEvent> {
 
     /**
      * It handles the login of the user on the selected UI. It is called through {@link it.polimi.ingsw.events.serverToClient.WelcomeEvent}.
-     * See {@link CLI#login()} and {@link it.polimi.ingsw.clientView.gui.LoginController}
+     * See {@link CLI#login()} and {@link it.polimi.ingsw.Client.gui.LoginController}
      * @param id Unique id labelling the player
      */
     public void manageLogin(int id){
@@ -237,7 +237,7 @@ public class ClientView implements Observer<ServerEvent> {
      * Called when {@link it.polimi.ingsw.events.serverToClient.DivinitiesInGameEvent} is received. The last user will
      * get a list of all the divinities in the game with their description, the number of players and their names.
      * Then it will select the divinities to make available during the game and the starting player.
-     * See {@link CLI#selectPlayableDivinities(List, List, int, List)} and {@link it.polimi.ingsw.clientView.gui.DivinitySelectionController}
+     * See {@link CLI#selectPlayableDivinities(List, List, int, List)} and {@link it.polimi.ingsw.Client.gui.DivinitySelectionController}
      * @param divinitiesNames names of all the divinities
      * @param divinitiesDescriptions description of the divinities' effects
      * @param playersNumber number of players in game
@@ -279,7 +279,7 @@ public class ClientView implements Observer<ServerEvent> {
 
     /**
      * Called when {@link it.polimi.ingsw.events.serverToClient.DivinityInitializationEvent} is received.
-     * It bears the divinities a user can choose from. See {@link CLI#selectDivinity(List)} and {@link it.polimi.ingsw.clientView.gui.PlayerDivinitySelectionController}
+     * It bears the divinities a user can choose from. See {@link CLI#selectDivinity(List)} and {@link it.polimi.ingsw.Client.gui.PlayerDivinitySelectionController}
      * @param availableDivinities
      */
     public void manageChooseDivinity(List<String> availableDivinities) {

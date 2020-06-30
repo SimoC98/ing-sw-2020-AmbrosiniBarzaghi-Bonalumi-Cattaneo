@@ -1,15 +1,10 @@
-package it.polimi.ingsw.clientView;
+package it.polimi.ingsw.Client;
 
 import it.polimi.ingsw.Observable;
 import it.polimi.ingsw.events.clientToServer.ClientEvent;
 import it.polimi.ingsw.events.serverToClient.ServerDisconnectionEvent;
 import it.polimi.ingsw.events.serverToClient.ServerEvent;
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
@@ -103,7 +98,7 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
     }
 
     /**
-     * Sends the specified ClientEvent to the server (it arrives to the {@link it.polimi.ingsw.serverView.ServerSocketHandler} that dispatches it)
+     * Sends the specified ClientEvent to the server (it arrives to the {@link it.polimi.ingsw.Server.ServerSocketHandler} that dispatches it)
      * @param event {@link ClientEvent}
      */
     public synchronized void sendEvent(ClientEvent event) {

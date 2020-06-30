@@ -1,4 +1,4 @@
-package it.polimi.ingsw.clientView;
+package it.polimi.ingsw.Client;
 
 import it.polimi.ingsw.Observer;
 
@@ -10,7 +10,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Class to verify that a user is still active. Once a ping is received from the {@link it.polimi.ingsw.serverView.Server},
+ * Class to verify that a user is still active. Once a ping is received from the {@link it.polimi.ingsw.Server.Server},
  * a {@link Pong} is sent to prove that the connection is working.
  * It extends the class observer to effectively update and override the method when a Pong (a ServerEvent) is received.
  */

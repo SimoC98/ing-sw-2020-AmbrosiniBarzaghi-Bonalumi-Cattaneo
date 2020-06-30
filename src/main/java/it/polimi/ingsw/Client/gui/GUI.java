@@ -1,9 +1,9 @@
-package it.polimi.ingsw.clientView.gui;
+package it.polimi.ingsw.Client.gui;
 
 import it.polimi.ingsw.Pair;
-import it.polimi.ingsw.clientView.BoardRepresentation;
-import it.polimi.ingsw.clientView.ClientView;
-import it.polimi.ingsw.clientView.UI;
+import it.polimi.ingsw.Client.BoardRepresentation;
+import it.polimi.ingsw.Client.ClientView;
+import it.polimi.ingsw.Client.UI;
 import it.polimi.ingsw.model.Action;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -120,7 +121,8 @@ public class GUI extends Application implements UI {
         //System.out.println("\nlogin...");
 
         Platform.runLater(()->{
-            primaryStage.setScene(new Scene(loginRoot,1500,1000));
+//            primaryStage.setScene(new Scene(loginRoot,1500,1000));
+            primaryStage.setScene(new Scene(loginRoot, Screen.getPrimary().getBounds().getWidth() * 0.9,Screen.getPrimary().getBounds().getHeight() * 0.9));
             primaryStage.show();
         });
 

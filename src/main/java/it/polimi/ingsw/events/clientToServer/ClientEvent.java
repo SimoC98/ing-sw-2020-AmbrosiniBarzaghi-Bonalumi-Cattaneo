@@ -1,7 +1,7 @@
 package it.polimi.ingsw.events.clientToServer;
 
 import it.polimi.ingsw.controller.Controller;
-import it.polimi.ingsw.serverView.PingManager;
+import it.polimi.ingsw.Server.PingManager;
 
 import java.io.Serializable;
 

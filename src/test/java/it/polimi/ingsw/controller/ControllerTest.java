@@ -1,17 +1,12 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.model.Match;
-import it.polimi.ingsw.model.Worker;
-import it.polimi.ingsw.model.exceptions.InvalidDivinitySelectionEvent;
-import it.polimi.ingsw.model.exceptions.WorkerBadPlacementException;
-import it.polimi.ingsw.serverView.ServerView;
+import it.polimi.ingsw.Server.ServerView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class ControllerTest {
     private Controller controller;

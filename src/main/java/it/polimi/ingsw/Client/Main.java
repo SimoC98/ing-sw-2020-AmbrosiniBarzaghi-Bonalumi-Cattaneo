@@ -1,15 +1,6 @@
-package it.polimi.ingsw.clientView;
+package it.polimi.ingsw.Client;
 
-import it.polimi.ingsw.clientView.gui.GUI;
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
-import java.io.IOException;
-import java.net.Socket;
+import it.polimi.ingsw.Client.gui.GUI;
 
 /**
  * Main class to start a game client side. It reads the choice of the user for the UI, ip address and port.

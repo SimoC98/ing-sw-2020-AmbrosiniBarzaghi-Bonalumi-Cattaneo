@@ -1,8 +1,8 @@
-package it.polimi.ingsw.clientView.gui;
+package it.polimi.ingsw.Client.gui;
 
 import it.polimi.ingsw.Pair;
-import it.polimi.ingsw.clientView.ClientView;
-import it.polimi.ingsw.clientView.PlayerRepresentation;
+import it.polimi.ingsw.Client.ClientView;
+import it.polimi.ingsw.Client.PlayerRepresentation;
 import it.polimi.ingsw.model.Action;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -24,6 +24,10 @@ import java.util.List;
 
 import static java.lang.System.exit;
 
+/**
+ * Core controller to menage the flow of the game. Here the board is shown in between the
+ * players with their divinity and another vbox to pick an action and to show messages.
+ */
 public class MatchController {
     private static ClientView clientView;
     private static GUI gui;
@@ -71,6 +75,10 @@ public class MatchController {
     public MatchController() {
     }
 
+    /**
+     * When created, this controller generates the board, the workers and the buildings, and the texts and alerts to display
+     * during the game.
+     */
     @FXML
     public void initialize() {
         Light.Distant light = new Light.Distant();
@@ -143,14 +151,6 @@ public class MatchController {
         actualAction="default";
     }
 
-    protected int getSelectedWX() {
-        return selectedWX;
-    }
-
-    protected int getSelectedWY() {
-        return selectedWY;
-    }
-
     public static void setClientView(ClientView clientView) {
         MatchController.clientView = clientView;
     }
@@ -160,6 +160,10 @@ public class MatchController {
         MatchController.clientView = gui.getClientView();
     }
 
+    /**
+     * For every tile, a StackPane is created to host the buildings and the workers.
+     * After adding graphical properties, the stackpane is bound to an action {@link #action(StackPane)}
+     */
     public void createBoard() {
         for(int i=0; i<board.getColumnCount(); i++) {
             for(int j=0; j<board.getRowCount(); j++) {
@@ -197,6 +201,10 @@ public class MatchController {
         }
     }
 
+    /**
+     * Switches on which action to perform on the selected StackPane
+     * @param s Board's tile
+     */
     public void action(StackPane s) {
 
         switch(actualAction) {
@@ -227,11 +235,11 @@ public class MatchController {
 
     }
 
-    /*
-    methods that manage click on tiles --> invocation of methods on clientView
-    commented methods can be useful to modify the board after model state changes
-     */
 
+    /**
+     * Called when a worker has to be placed on the passed tile. Calls {@link ClientView#workerPlacement(int, int, int, int)}
+     * @param s passed stackpane (tile)
+     */
     public void placeWorkerOnClickedTile(StackPane s) {
         int x = GridPane.getRowIndex(s);
         int y = GridPane.getColumnIndex(s);
@@ -253,6 +261,10 @@ public class MatchController {
         }
     }
 
+    /**
+     * Called when a worker has to be moved on the passed tile. Calls {@link ClientView#actionQuestion(Action, int, int)}
+     * @param s passed stackpane (tile)
+     */
     public void moveOnClickedTile(StackPane s) {
         int x = GridPane.getRowIndex(s);
         int y = GridPane.getColumnIndex(s);
@@ -266,6 +278,10 @@ public class MatchController {
         clientView.actionQuestion(Action.MOVE,x,y);
     }
 
+    /**
+     * Called when a building has to be placed on the tile. Calls {@link ClientView#actionQuestion(Action, int, int)}
+     * @param s passed stackpane (tile)
+     */
     public void buildOnClickedTile(StackPane s) {
         int x = GridPane.getRowIndex(s);
         int y = GridPane.getColumnIndex(s);
@@ -279,6 +295,10 @@ public class MatchController {
         clientView.actionQuestion(Action.BUILD,x,y);
     }
 
+    /**
+     * Called when a dome has to be placed on the tile. Calls {@link ClientView#actionQuestion(Action, int, int)}
+     * @param s passed stackpane (tile)
+     */
     public void buildDomeOnClickedTile(StackPane s) {
         int x = GridPane.getRowIndex(s);
         int y = GridPane.getColumnIndex(s);
@@ -292,6 +312,12 @@ public class MatchController {
         clientView.actionQuestion(Action.BUILDDOME,x,y);
     }
 
+    /**
+     * Shows on the left of the screen the possible actions. If it is only one, then the action is automatically
+     * selected, otherwise the player has to click on the corresponding action. On the board the available tiles are
+     * highlighted.
+     * @param possibleActions map of actions with their possible positions, coming from the server
+     */
     public void handlePossibleActions(Map<Action,List<Pair<Integer,Integer>>> possibleActions) {
         this.possibleActions = possibleActions;
 
@@ -331,22 +357,36 @@ public class MatchController {
 
             possibleActionsBox.getChildren().addAll(actionButtons);
         }
-
-
     }
 
+    /**
+     * Called after selecting an action in order to correctly update the list of action with data coming from the model.
+     * It clears the vbox of the possible actions
+     */
     private void emptyPossibleActions() {
         possibleActionsBox.getChildren().clear();
     }
 
+    /**
+     * Updates the textlabel
+     */
     public void startTurn() {
         turnInformation.setText("YOUR TURN");
     }
 
+    /**
+     * Updates the textlabel
+     */
     public void endTurn() {
         turnInformation.setText("OPPONENTS'\nTURNS");
     }
 
+
+    /**
+     * Method to select a worker on the specified tile. If the operation is not correct, an alert is displayed.
+     * If correct, calls {@link ClientView#selectWorkerQuestion(int, int)}
+     * @param s passed stackpane (tile)
+     */
     public void selectWorker(StackPane s) {
         ImageView v = (ImageView) s.getChildren().get(WORKER);
 
@@ -408,6 +448,14 @@ public class MatchController {
         }
     }
 
+    /**
+     * Called to update the board with another player's workers' placement
+     * @param username Player placing workers
+     * @param x1 first worker's coordinates
+     * @param y1 first worker's coordinates
+     * @param x2 second worker's coordinates
+     * @param y2 second worker's coordinates
+     */
     public void placeWorkers(String username, int x1, int y1, int x2, int y2) {
 
         StackPane s1 = (StackPane) getBoardCell(x1,y1);
@@ -425,6 +473,14 @@ public class MatchController {
         w2.setImage(image);
     }
 
+    /**
+     * Updates the board when another player moves
+     * @param player player moving
+     * @param x1 worker's starting coordinate
+     * @param y1 worker's starting coordinate
+     * @param x2 worker's destination coordinate
+     * @param y2 worker's destination coordinate
+     */
     public void moveUpdate(String player, int x1, int y1, int x2, int y2) {
         //System.out.println("update move");
 
@@ -449,6 +505,12 @@ public class MatchController {
         workerTo.setImage(workerImg);
     }
 
+    /**
+     * Updates the board when another player builds
+     * @param player player building
+     * @param x building coordinate
+     * @param y building coordinate
+     */
     public void buildUpdate(String player, int x, int y) {
         message.setText(player + " has built on tile " + x+"-"+y);
         //System.out.println(x + "-" + y);
@@ -477,15 +539,14 @@ public class MatchController {
                 imageView.setImage(tileLevel.get(DOME));
                 break;
             default:
-                //System.out.println("boh");
+
         }
     }
 
 
-    /*
-    methods that ask user to do something and change actualAction --> invoked by gui
+    /**
+     * Sets the current action to placeworkers so that it can be caught in {@link #action(StackPane)}
      */
-
     public void setActionPlaceWorkers() {
         workerPlacement.clear();
 
@@ -497,6 +558,9 @@ public class MatchController {
 
     }
 
+    /**
+     * Sets the current action to selectworker so that it can be caught in {@link #action(StackPane)}
+     */
     public void setActionSelectWorker() {
         //System.out.println("Now you SELECTWORKER");
         message.setText("Click the worker you want to play with");
@@ -505,6 +569,10 @@ public class MatchController {
         focusWorkers(true);
     }
 
+    /**
+     * Called at the end of the turn or if the user can choose to end their turn (depending on divinity's power).
+     * Calls {@link ClientView#actionQuestion(Action, int, int)}
+     */
     public void endTurnConfirmation() {
         if(listenerOff)return;
         listenerOff=true;
@@ -553,6 +621,10 @@ public class MatchController {
         alertVBox.setVisible(true);
     }
 
+    /**
+     * Places the players with their divinities in the left side vbox. If a divinity is clicked, {@link #godDescrAlertSetup(String, Image)}
+     * is called.
+     */
     public void setPlayers() {
         List<PlayerRepresentation> players = clientView.getBoard().getPlayersList();
         
@@ -568,7 +640,7 @@ public class MatchController {
 
             Tooltip tt = new Tooltip();
             tt.setFont(santoriniFont);
-//            tt.setText(clientView.getBoard().getDivinities().get(div)); //hinta la descrizione
+//            tt.setText(clientView.getBoard().getDivinities().get(div));
             tt.setText("Click to see God's description");
             Tooltip.install(
                 god,
@@ -600,6 +672,11 @@ public class MatchController {
         vBoxLeft.getChildren().add(exit);
     }
 
+    /**
+     * Displays a box with a divinity's image and its description
+     * @param godName divinity clicked by the user
+     * @param godImg image of the clicked divinity
+     */
     public void godDescrAlertSetup(String godName, Image godImg) {
         if(listenerOff)return;
         listenerOff=true;
@@ -609,7 +686,6 @@ public class MatchController {
         alertVBox.prefWidth(400);
         alertVBox.prefHeight(600);
 
-       // System.out.println("ciao");
 
         ImageView imgView = new ImageView(godImg);
         imgView.fitHeightProperty().setValue(alertVBox.getHeight() * 0.5);
@@ -631,16 +707,26 @@ public class MatchController {
         });
         closeBtn.getStyleClass().addAll("coral", "white");
 
-       // System.out.println("ciao 2");
 
         alertVBox.getChildren().addAll(imgView, description, closeBtn);
         alertVBox.setVisible(true);
     }
 
+    /**
+     * Returns a custom font used in the game
+     * @param dimension desired size
+     * @return font to be used
+     */
     public Font getSantoriniFont(int dimension) {
         return Font.loadFont(getClass().getResource("/font/LillyBelle.ttf").toExternalForm(), dimension);
     }
 
+    /**
+     * Method to mark the tile as selectable
+     * @param x x tile coordinate
+     * @param y y tile coordinate
+     * @param val true if the stackpane is selectable
+     */
     public void setSelectable(int x, int y, boolean val) {
         StackPane s = (StackPane) board.getChildren().get(board.getRowCount()*y + x);
         StackPane shadow = (StackPane) s.getChildren().get(SHADOW);
@@ -648,6 +734,10 @@ public class MatchController {
         shadow.setVisible(val);
     }
 
+    /**
+     * It focuses the player's workers.
+     * @param value true if the tile contains the player's worker
+     */
     public void focusWorkers(boolean value) {
         String color = clientView.getBoard().getPlayersMap().get(clientView.getUsername()).getColor().toString().toLowerCase();
         StackPane x;

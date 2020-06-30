@@ -1,4 +1,4 @@
-package it.polimi.ingsw.clientView;
+package it.polimi.ingsw.Client;
 
 import it.polimi.ingsw.events.serverToClient.BuildEvent;
 import it.polimi.ingsw.model.Action;

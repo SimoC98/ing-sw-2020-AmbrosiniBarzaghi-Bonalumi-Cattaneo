@@ -2,7 +2,7 @@ package it.polimi.ingsw.events.clientToServer;
 
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.model.Action;
-import it.polimi.ingsw.serverView.PingManager;
+import it.polimi.ingsw.Server.PingManager;
 
 /**
  * Sends to the server the action chosen by the client and performed on the selected worker

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.clientView;
+package it.polimi.ingsw.Client;
 
 import it.polimi.ingsw.Pair;
 import it.polimi.ingsw.model.Action;
@@ -8,7 +8,7 @@ import java.util.Map;
 
 /**
  * UI is the interface for the user interface. It bears all the methods to view what is happening on the {@link it.polimi.ingsw.model.Match}
- * and to communicate to the Server through the {@link ClientSocketHandler}. It is implemented by the {@link it.polimi.ingsw.clientView.gui.GUI}
+ * and to communicate to the Server through the {@link ClientSocketHandler}. It is implemented by the {@link it.polimi.ingsw.Client.gui.GUI}
  * and the {@link CLI}
  */
 public interface UI {

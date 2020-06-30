@@ -1,16 +1,14 @@
-package it.polimi.ingsw.clientView.gui;
+package it.polimi.ingsw.Client.gui;
 
-import it.polimi.ingsw.clientView.ClientView;
+import it.polimi.ingsw.Client.ClientView;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
@@ -20,14 +18,15 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
-import javafx.stage.Stage;
 
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class to display and menage the GUI inherent to the selection of the divinities to be selected by the last player.
+ * After displaying the divinities and collecting the choice of the user, a list of players is shown and the last player
+ * will have to chose the starting player. At the end {@link ClientView#playableDivinitiesSelection(List, String)} is called.
+ */
 public class DivinitySelectionController {
 
     private static ClientView clientView;
@@ -35,12 +34,6 @@ public class DivinitySelectionController {
 
     @FXML
     private BorderPane bPane;
-
-    @FXML
-    private VBox vBox;
-
-    @FXML
-    private VBox vBoxGod;
 
     @FXML
     private VBox godDescription;
@@ -52,16 +45,10 @@ public class DivinitySelectionController {
     private VBox endVBox;
 
     @FXML
-    private Label labelTxt;
-
-    @FXML
     private StackPane sPane;
 
     @FXML
     private HBox titleHBox;
-
-    @FXML
-    private ProgressIndicator progressIndicator;
 
     private List<ImageView> godsImages = new ArrayList<>();
 
@@ -82,8 +69,9 @@ public class DivinitySelectionController {
     private DoubleProperty fontSizeNames = new SimpleDoubleProperty(20);
     Font santoriniFont = Font.loadFont(getClass().getResource("/font/LillyBelle.ttf").toExternalForm(),18);
 
-
-
+    /**
+     * Graphical properties to show the divinities.
+     */
     @FXML
     public void initialize() {
         fontSizeTitle.bind(bPane.widthProperty().add(bPane.heightProperty()).divide(80));
@@ -124,11 +112,22 @@ public class DivinitySelectionController {
         DivinitySelectionController.clientView = clientView;
     }
 
+    /**
+     * Assigns the gui and clientView
+     * @param gui {@link GUI}
+     */
     public static void setGui(GUI gui) {
         DivinitySelectionController.gui = gui;
         DivinitySelectionController.clientView = gui.getClientView();
     }
 
+    /**
+     * It uses the information passed by the server to create a grid of divinities with their name, description and image.
+     * @param divinities List of divinities' names
+     * @param descriptions List of divinities' description
+     * @param playerNumber number of player in game. used in methods below
+     * @param players List of username . used in methods below
+     */
     public void setDivinityOnGrid(List<String> divinities, List<String> descriptions, int playerNumber,List<String> players) {
         title.setText("CHOOSE " + playerNumber + " GODS THAT WILL BE USED IN THIS MATCH:");
 
@@ -170,6 +169,16 @@ public class DivinitySelectionController {
 
     }
 
+    /**
+     * The aim is to manage the graphical part of the divinities' selection. Divinities are added to a grid where they are
+     * decorated with a background and are made interactive. If a divinity is clicked another window pops up to let the
+     * user see the divinity's description alongside with two buttons to select (or deselect) or to close the window.
+     * Once a user chooses the third divinity, {@link #askStarter()} is called.
+     * @param node Reference node to perform actions on a divinity's graphical elements.
+     * @param x x position in the grid
+     * @param y y position in the grid
+     * @param count number of the divinity in the grid
+     */
     private void addCell(Node node, int x, int y,int count) {
         String back = "/graphics/fg_panel4.png";
         ImageView b = new ImageView(new Image(getClass().getResource(back).toExternalForm()));
@@ -242,7 +251,7 @@ public class DivinitySelectionController {
             //add god effect to the desc panel
             godDescription.getChildren().add(text1);
 
-            //creations of buttons
+            //creation of buttons
             HBox buttons = new HBox();
             godDescription.getChildren().add(buttons);
             buttons.setAlignment(Pos.CENTER);
@@ -346,14 +355,18 @@ public class DivinitySelectionController {
         });
     }
 
-
+    /**
+     * Called after the selection of the divinities. A window containing all the players' names is created as to display
+     * them and make them clickable so that the last player can click on the player they want to make the starter.
+     * At the end {@link ClientView#playableDivinitiesSelection(List, String)} is invoked and the information is sent to the server.
+     */
     public void askStarter() {
         godDescription.getChildren().clear();
         godDescription.setVisible(true);
 
         godDescription.setSpacing(30);
 
-        Label label = new Label("SELECT THE STARTER:");
+        Label label = new Label("SELECT THE STARTING PLAYER:");
         label.setStyle("-fx-font-weight: bold");
         label.setFont(Font.loadFont(getClass().getResource("/font/LillyBelle.ttf").toExternalForm(),30));
 
@@ -405,10 +418,5 @@ public class DivinitySelectionController {
 
             v.getChildren().add(p);
         }
-
-
     }
-
-
-
 }

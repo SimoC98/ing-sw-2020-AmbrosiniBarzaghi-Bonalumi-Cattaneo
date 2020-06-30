@@ -1,4 +1,4 @@
-package it.polimi.ingsw.clientView;
+package it.polimi.ingsw.Client;
 
 import it.polimi.ingsw.Pair;
 import it.polimi.ingsw.model.Color;

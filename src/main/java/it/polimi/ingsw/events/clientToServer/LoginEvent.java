@@ -1,7 +1,7 @@
 package it.polimi.ingsw.events.clientToServer;
 
 import it.polimi.ingsw.controller.Controller;
-import it.polimi.ingsw.serverView.PingManager;
+import it.polimi.ingsw.Server.PingManager;
 
 /**
  * Sent when the client connects to the server. It bears the username with which the client will be known.

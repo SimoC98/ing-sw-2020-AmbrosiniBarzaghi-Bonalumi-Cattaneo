@@ -1,7 +1,7 @@
 package it.polimi.ingsw.events.serverToClient;
 
-import it.polimi.ingsw.clientView.ClientView;
-import it.polimi.ingsw.clientView.PingReceiver;
+import it.polimi.ingsw.Client.ClientView;
+import it.polimi.ingsw.Client.PingReceiver;
 
 /**
  * Sent if the client chose a worker that is currently blocked (cannot move).

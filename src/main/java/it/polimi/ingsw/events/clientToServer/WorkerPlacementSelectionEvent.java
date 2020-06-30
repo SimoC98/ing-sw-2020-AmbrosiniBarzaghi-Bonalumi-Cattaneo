@@ -1,7 +1,7 @@
 package it.polimi.ingsw.events.clientToServer;
 
 import it.polimi.ingsw.controller.Controller;
-import it.polimi.ingsw.serverView.PingManager;
+import it.polimi.ingsw.Server.PingManager;
 
 /**
  * Event that tells the model where to place a player's workers. The placement on the tiles is made passing the coordinates

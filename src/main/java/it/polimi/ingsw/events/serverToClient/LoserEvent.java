@@ -1,9 +1,7 @@
 package it.polimi.ingsw.events.serverToClient;
 
-import it.polimi.ingsw.clientView.ClientView;
-import it.polimi.ingsw.clientView.PingReceiver;
-import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.serverView.ServerView;
+import it.polimi.ingsw.Client.ClientView;
+import it.polimi.ingsw.Client.PingReceiver;
 
 /**
  * Event sent to inform a player that they lost

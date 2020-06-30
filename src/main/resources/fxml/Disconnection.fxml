@@ -2,4 +2,4 @@
 
 <?import javafx.scene.layout.*?>
 
-<VBox fx:id="root" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1500.0" spacing="50.0" styleClass="mid" stylesheets="@../css/divinitySelectionBack.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.clientView.gui.DisconnectionController" />
+<VBox fx:id="root" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1500.0" spacing="50.0" styleClass="mid" stylesheets="@../css/divinitySelectionBack.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.gui.DisconnectionController" />

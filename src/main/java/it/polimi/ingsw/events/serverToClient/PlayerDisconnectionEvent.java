@@ -1,7 +1,7 @@
 package it.polimi.ingsw.events.serverToClient;
 
-import it.polimi.ingsw.clientView.ClientView;
-import it.polimi.ingsw.clientView.PingReceiver;
+import it.polimi.ingsw.Client.ClientView;
+import it.polimi.ingsw.Client.PingReceiver;
 
 /**
  * Sent to every client after an user disconnected. According to specifications, the game ends if someone quits

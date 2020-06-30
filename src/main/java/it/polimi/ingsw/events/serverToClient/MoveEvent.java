@@ -1,8 +1,7 @@
 package it.polimi.ingsw.events.serverToClient;
 
-import it.polimi.ingsw.clientView.ClientView;
-import it.polimi.ingsw.clientView.PingReceiver;
-import it.polimi.ingsw.model.Tile;
+import it.polimi.ingsw.Client.ClientView;
+import it.polimi.ingsw.Client.PingReceiver;
 
 /**
  * Informs a client that the specified player moved with the selected worker on the specified tile

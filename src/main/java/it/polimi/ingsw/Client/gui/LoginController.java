@@ -1,6 +1,6 @@
-package it.polimi.ingsw.clientView.gui;
+package it.polimi.ingsw.Client.gui;
 
-import it.polimi.ingsw.clientView.ClientView;
+import it.polimi.ingsw.Client.ClientView;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
@@ -25,6 +25,10 @@ import java.util.List;
 
 import static java.lang.System.exit;
 
+/**
+ * Class to manage the GUI for the login. The aim is to show a welcome interface and to get the player's username
+ * in order to connect to the server through {@link ClientView#loginQuestion(String)}
+ */
 public class LoginController {
 
     @FXML
@@ -58,11 +62,18 @@ public class LoginController {
     Font santoriniFont = Font.loadFont(getClass().getResource("/font/LillyBelle.ttf").toExternalForm(),18);
     Lighting lighting;
 
+    /**
+     * Assigns gui and clientView(proxy)
+     * @param gui
+     */
     public static void setGui(GUI gui) {
         LoginController.gui = gui;
         LoginController.clientView = gui.getClientView();
     }
 
+    /**
+     * Creates a window from file and decorates it and adds a text form and a button to input the player's username.
+     */
     @FXML
     public void initialize() {
         root.getStylesheets().add(getClass().getResource("/css/btn.css").toExternalForm());
@@ -133,6 +144,10 @@ public class LoginController {
         LoginController.clientView = clientView;
     }
 
+    /**
+     * Manages the wrong inputs and sends the login request. After sending the request the form is not available to fill
+     * anymore.
+     */
     public void handleLogin() {
 
         String username = txt.getText();
@@ -164,9 +179,13 @@ public class LoginController {
 
            clientView.loginQuestion(txt.getText());
        }
-
     }
 
+    /**
+     * Method to menage the input of an already taken username. After the server finds a double of the previously sent
+     * username it sends back a list of logged users. This method shows such list.
+     * @param loggedUsers list of taken username
+     */
     public void invalidUsername(List<String> loggedUsers) {
         //Font santoriniFont = Font.loadFont(getClass().getResource("/font/LillyBelle.ttf").toExternalForm(),18);
 
@@ -187,11 +206,14 @@ public class LoginController {
         messages.getChildren().add(l);
     }
 
+    /**
+     * Called when the user correctly joins a lobby. A message is displayed and a ProgressIndicator appears.
+     */
     public void inLobby() {
         messages.getChildren().clear();
 
         Text inLobbyMessage = new Text();
-        inLobbyMessage.setText("WAIT THE GAME START...");
+        inLobbyMessage.setText("THE GAME IS STARTING...");
         //inLobbyMessage.setFont(new Font(16));
         inLobbyMessage.setFont(santoriniFont);
         inLobbyMessage.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
@@ -208,6 +230,9 @@ public class LoginController {
         messages.setSpacing(10);
     }
 
+    /**
+     * Called if the user attempted to join a full lobby. An interactive button to quit appears.
+     */
     public void lobbyFull() {
         messages.getChildren().clear();
         messages.setSpacing(20);
@@ -239,11 +264,15 @@ public class LoginController {
 
     }
 
+    /**
+     * Called when the lobby filled with players and the game is going to start. A message is shown and the progress
+     * indicator appears again.
+     */
     public void gameStart() {
         messages.getChildren().clear();
         Text t = new Text();
         t.setFont(santoriniFont);
-        t.setText("YOUR GAME IS STARTING! PLEASE WAIT...");
+        t.setText("THE GAME IS STARTING! PLEASE WAIT...");
         t.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSize.asString(), ";"));
 
         ProgressIndicator progress = new ProgressIndicator();

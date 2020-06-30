@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox fx:id="vBox1" alignment="CENTER" prefHeight="1000.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.clientView.gui.EndGameController">
+<VBox fx:id="vBox1" alignment="CENTER" prefHeight="1000.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.Client.gui.EndGameController">
    <children>
       <VBox fx:id="vBox2" alignment="CENTER" spacing="10.0">
          <children>

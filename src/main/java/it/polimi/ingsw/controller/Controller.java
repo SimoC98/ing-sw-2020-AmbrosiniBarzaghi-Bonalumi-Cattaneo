@@ -9,7 +9,7 @@ import it.polimi.ingsw.model.Divinity;
 import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.Model;
 import it.polimi.ingsw.model.exceptions.*;
-import it.polimi.ingsw.serverView.ServerView;
+import it.polimi.ingsw.Server.ServerView;
 
 
 import java.util.ArrayList;

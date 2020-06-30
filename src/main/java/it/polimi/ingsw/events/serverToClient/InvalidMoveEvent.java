@@ -1,8 +1,8 @@
 package it.polimi.ingsw.events.serverToClient;
 
 import it.polimi.ingsw.Pair;
-import it.polimi.ingsw.clientView.ClientView;
-import it.polimi.ingsw.clientView.PingReceiver;
+import it.polimi.ingsw.Client.ClientView;
+import it.polimi.ingsw.Client.PingReceiver;
 import it.polimi.ingsw.model.Action;
 
 import java.util.List;

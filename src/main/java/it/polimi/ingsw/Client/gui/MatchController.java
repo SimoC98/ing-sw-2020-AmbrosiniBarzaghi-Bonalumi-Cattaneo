@@ -768,6 +768,12 @@ public class MatchController {
 //            userInteractionLabel.setText("system message: \n" + msg);
 //    }
 
+    /**
+     * It displays a text message with the passed information
+     * @param title title for the message
+     * @param header subtitle
+     * @param msg text message
+     */
     public void textMessage(String title, String header, String msg) {
         Alert a = new Alert(Alert.AlertType.INFORMATION, msg);
         a.setTitle(title);
@@ -775,6 +781,9 @@ public class MatchController {
         a.show();
     }
 
+    /**
+     * Turns off the shadows for every tile. It is called after an action to remove the mark applied.
+     */
     private void setShadowOff() {
         for(int i=0; i<5; i++) {
             for(int j=0; j<5; j++) {
@@ -784,6 +793,10 @@ public class MatchController {
         }
     }
 
+    /**
+     * Highlights the selectable tiles inherent to an action.
+     * @param action action on which to perform the highlight check
+     */
     public void markAvailableTiles(Action action) {
         List<Pair<Integer,Integer>> availableTiles = possibleActions.get(action);
 
@@ -796,10 +809,16 @@ public class MatchController {
         }
     }
 
+    /**
+     * Changes the text message.
+     */
     public void loserPlayer() {
         message.setText("YOU HAVE LOST!");
     }
 
+    /**
+     * Removes the workers of the losing player from the GUI's board
+     */
     public void manageLoserPlayer() {
         for(int i=0; i<5; i++) {
             for(int j=0; j<5; j++) {
@@ -812,8 +831,13 @@ public class MatchController {
         }
     }
 
-    //returns a button with standard values, css+blue, 120x40, santoriniFont+dimension20, Centered, lighting_effect
+    /**
+     * Creates a button with the aid of a fxml file and makes it interactive
+     * @return button ready to use
+     */
     public Button newStandardizedButton() {
+
+        //returns a button with standard values, css+blue, 120x40, santoriniFont+dimension20, Centered, lighting_effect
         Button btn = new Button("STD_BTN");
         btn.prefHeight(BTN_HEIGHT);
         btn.prefWidth(BTN_WIDTH);

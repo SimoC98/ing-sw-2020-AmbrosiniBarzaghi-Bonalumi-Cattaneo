@@ -9,6 +9,8 @@ import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static java.lang.System.exit;
+
 
 /*
 Following tutor Michele Bertoni's tips:
@@ -58,7 +60,12 @@ public class Server{
         System.out.println("I. AM. ALIVE. ON " + port); //ADDED FOR MULTI_SERVER
         ServerSocket serverSocket = null;
         try {
-           serverSocket = new ServerSocket(port);
+            try{
+                serverSocket = new ServerSocket(port);
+            } catch (Exception e) {
+                System.out.println("\n\nPORT ALREADY IN USE!\n\n");
+                exit(0);
+            }
            while(true) {
                Socket socket = serverSocket.accept();
                System.out.println("accepted" + socket.getInetAddress());
@@ -229,6 +236,7 @@ public class Server{
      * @param connection Socket of the lost connection
      */
     protected void disconnectAll(ServerSocketHandler connection){
+        System.out.println("user " + loggedPlayers.get(connection) + " disconnected... this match will end soon");
 
         for(int i=0; i<connections.size(); i++) {
             ServerSocketHandler s = connections.get(i);
@@ -240,7 +248,7 @@ public class Server{
         }
 
 
-        System.out.println("this match is ended...\n\n\n");
+        System.out.println("\n\nthis match is ended... waiting for players\n\n\n");
         connections.clear();
         loggedPlayers.clear();
         isGameStarted=false;

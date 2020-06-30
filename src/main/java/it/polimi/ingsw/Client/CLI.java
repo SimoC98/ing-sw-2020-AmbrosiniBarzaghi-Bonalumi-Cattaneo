@@ -653,6 +653,12 @@ public class CLI implements UI{
         updateBoard();
     }
 
+    @Override
+    public void serverDisconnection() {
+        System.out.println("\n\nThe server is no longer reachable!\n\n");
+        exit(0);
+    }
+
     /**
      * Prints the board writing the coordinates (numbers on top, letters at the side) and reads the {@link BoardRepresentation}
      * to correctly place the workers, the buildings and the domes.

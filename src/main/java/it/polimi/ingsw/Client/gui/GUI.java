@@ -475,6 +475,19 @@ public class GUI extends Application implements UI {
         });
     }
 
+    @Override
+    public void serverDisconnection() {
+        System.out.println("SERVER CONNECTION DROPPED");
+
+        Platform.runLater(() -> {
+            primaryStage.getScene().setRoot(disconnectionRoot);
+
+            disconnectionController.serverDisconnection();
+
+        });
+
+    }
+
     /**
      * Loads the resources that will be used to display the GUI elements from fxml files. It also binds the controllers
      * in order to use them after their setup happened ({@code initialize()} has been called when creating them)

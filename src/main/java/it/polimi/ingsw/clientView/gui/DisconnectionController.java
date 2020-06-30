@@ -30,6 +30,8 @@ public class DisconnectionController {
 
     private Text disconnectionText;
 
+    private VBox buttons;
+
     private DoubleProperty fontSize = new SimpleDoubleProperty(10);
     private DoubleProperty fontSizeBtn = new SimpleDoubleProperty(10);
     Font santoriniFont = Font.loadFont(getClass().getResource("/font/LillyBelle.ttf").toExternalForm(),18);
@@ -65,7 +67,7 @@ public class DisconnectionController {
         exit.getStyleClass().addAll("coral","whiteTxt");
         Button connect = new Button("NEW GAME");
         connect.getStyleClass().addAll("blue","whiteTxt");
-        VBox buttons = new VBox();
+        this.buttons = new VBox();
         buttons.getChildren().addAll(connect,exit);
         buttons.setSpacing(10);
         buttons.setAlignment(Pos.CENTER);
@@ -102,7 +104,7 @@ public class DisconnectionController {
 
         exit.setOnMouseClicked((e) -> {
             Platform.exit();
-            exit(0);
+            //exit(0);
         });
 
         connect.setOnMouseClicked((e) -> {
@@ -120,5 +122,11 @@ public class DisconnectionController {
 
     public void disconnect(String player) {
         disconnectionText.setText("User " + player + " has left the game... this match is ended");
+    }
+
+    public void serverDisconnection() {
+        disconnectionText.setText("The server is no longer reachable!");
+
+        buttons.getChildren().remove(0);
     }
 }

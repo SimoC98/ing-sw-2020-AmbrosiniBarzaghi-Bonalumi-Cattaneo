@@ -18,6 +18,8 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.*;
 
+import static java.lang.System.exit;
+
 /**
  * This class is the core to manage a player during a game, observing the {@link ServerEvent} to update the client
  * and calling the methods to send an event on the {@link ClientSocketHandler}.
@@ -382,6 +384,7 @@ public class ClientView implements Observer<ServerEvent> {
      * @param username losing player
      */
     public void manageLoser(String username){
+        if(username.equals(this.username)) proxy.stopCheckPing();
         board.setLoser(username);
         ui.loser(username);
     }
@@ -392,6 +395,7 @@ public class ClientView implements Observer<ServerEvent> {
      * @param username winning player
      */
     public void manageWinner(String username){
+        proxy.stopCheckPing();
         board.setWinner(username);
         ui.winner(username);
     }
@@ -404,6 +408,7 @@ public class ClientView implements Observer<ServerEvent> {
     public void managePlayerDisconnection(String username) {
         //System.out.println("player disconnection");
 
+        proxy.stopCheckPing();
         ui.playerDisconnection(username);
     }
 
@@ -481,6 +486,10 @@ public class ClientView implements Observer<ServerEvent> {
         ui.lobbyFull();
     }
 
+    public void manageServerDisconnection() {
+        ui.serverDisconnection();
+    }
+
     /**
      * Called when a {@link ServerEvent} is received. The package is extracted and the method on the incoming
      * event overrides a method on ClientView
@@ -508,8 +517,9 @@ public class ClientView implements Observer<ServerEvent> {
                 System.out.println("Default ip and port taken from file");
                 socket = connectionConfigParser();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("\n\nSERVER NOT AVAILABLE AT THE SPECIFIED IP AND PORT!\n\n");
+            exit(0);
         }
 
         ClientSocketHandler proxy = new ClientSocketHandler(socket);

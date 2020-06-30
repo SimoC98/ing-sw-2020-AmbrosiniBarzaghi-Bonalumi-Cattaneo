@@ -178,4 +178,6 @@ public interface UI {
      */
     public void workerPlacementUpdate(String player,int x1,int y1,int x2,int y2);
 
+    public void serverDisconnection();
+
 }

@@ -120,7 +120,7 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
      * disconnects every client if the game has already begun.
      */
     protected void disconnect() {
-        System.out.println("disconnection");
+        //System.out.println("disconnection");
         synchronized (lock) {
             if(server.isGameStarted()) {
                 server.disconnectAll(this);

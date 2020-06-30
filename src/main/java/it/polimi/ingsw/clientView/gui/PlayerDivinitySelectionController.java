@@ -83,7 +83,7 @@ public class PlayerDivinitySelectionController {
         Font santorini = Font.loadFont(getClass().getResource("/font/LillyBelle.ttf").toExternalForm(), 24);
 
         sceneTitle.setAlignment(Pos.CENTER);
-        Text title = new Text("CHOOSE GODS THAT WILL BE USED IN THIS MATCH:");
+        Text title = new Text("CHOOSE YOUR GOD:");
         title.setFont(santorini);
         title.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSizeTitle.asString(), ";"));
         sceneTitle.getChildren().add(title);

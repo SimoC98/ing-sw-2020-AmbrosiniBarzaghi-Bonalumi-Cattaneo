@@ -2,6 +2,7 @@ package it.polimi.ingsw.clientView;
 
 import it.polimi.ingsw.Observable;
 import it.polimi.ingsw.events.clientToServer.ClientEvent;
+import it.polimi.ingsw.events.serverToClient.ServerDisconnectionEvent;
 import it.polimi.ingsw.events.serverToClient.ServerEvent;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -46,7 +47,7 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
         this.in = tempin;
         this.out = tempout;
 
-        pinger = new PingReceiver(this);
+        this.pinger = new PingReceiver(this);
     }
 
 
@@ -69,14 +70,12 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
                 t.start();
             }
         }catch(SocketException se){
-            //System.out.println("SOCKET CLOSED, NO PROBLEM");
+            se.getMessage();
             //se.printStackTrace();
-            //System.out.println("SOCKET CLOSED, NO PROBLEM");
         } catch(Exception e) {
-            //notify(new Disconnect());
+             e.getMessage();
             //e.printStackTrace();
         }
-
 
     }
 
@@ -112,8 +111,16 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
             out.writeObject(event);
             out.flush();
         } catch (IOException e) {
+            e.getMessage();
             //e.printStackTrace();
-            //notify(new Disconnect());
         }
+    }
+
+    protected void serverDisconnection() {
+        receiveEvent(new ServerDisconnectionEvent());
+    }
+
+    public void stopCheckPing() {
+        pinger.stopCheckPing();
     }
 }

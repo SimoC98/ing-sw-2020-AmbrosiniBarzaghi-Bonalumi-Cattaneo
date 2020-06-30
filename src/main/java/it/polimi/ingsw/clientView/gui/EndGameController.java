@@ -50,7 +50,9 @@ public class EndGameController {
         //vBox2.getStyleClass().add("loser");
 
         quit.getStyleClass().add("coral");
+        quit.getStyleClass().add("whiteTxt");
         newGame.getStyleClass().add("blue");
+        newGame.getStyleClass().add("whiteTxt");
 
         quit.setOnMouseEntered((e) -> {
             quit.setEffect(lighting);

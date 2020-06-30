@@ -655,7 +655,7 @@ public class CLI implements UI{
 
     @Override
     public void serverDisconnection() {
-        System.out.println("SERVER CONNECTION DROPPED!");
+        System.out.println("\n\nThe server is no longer reachable!\n\n");
         exit(0);
     }
 

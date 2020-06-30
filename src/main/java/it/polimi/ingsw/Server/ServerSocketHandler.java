@@ -22,7 +22,6 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
     private ObjectInputStream in;
     private ObjectOutputStream out;
 
-    //maybe reference is not necessary
     private PingManager sender;
 
 
@@ -120,7 +119,6 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
      * disconnects every client if the game has already begun.
      */
     protected void disconnect() {
-        //System.out.println("disconnection");
         synchronized (lock) {
             if(server.isGameStarted()) {
                 server.disconnectAll(this);

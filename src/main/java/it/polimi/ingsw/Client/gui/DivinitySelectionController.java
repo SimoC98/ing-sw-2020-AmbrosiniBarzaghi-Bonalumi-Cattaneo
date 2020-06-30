@@ -170,10 +170,10 @@ public class DivinitySelectionController {
     }
 
     /**
-     * The aim is to manage the graphical part of the divinities' selection. Divinities are added to a grid where buttons
-     * are created to observe if they are clicked and in that case another window opens to let the user see the divinity's
-     * description alongside with two buttons to select (or deselect) and to close the window. Once a user chooses the
-     * third divinity, {@link #askStarter()} is called.
+     * The aim is to manage the graphical part of the divinities' selection. Divinities are added to a grid where they are
+     * decorated with a background and are made interactive. If a divinity is clicked another window pops up to let the
+     * user see the divinity's description alongside with two buttons to select (or deselect) or to close the window.
+     * Once a user chooses the third divinity, {@link #askStarter()} is called.
      * @param node Reference node to perform actions on a divinity's graphical elements.
      * @param x x position in the grid
      * @param y y position in the grid
@@ -366,7 +366,7 @@ public class DivinitySelectionController {
 
         godDescription.setSpacing(30);
 
-        Label label = new Label("SELECT THE STARTER:");
+        Label label = new Label("SELECT THE STARTING PLAYER:");
         label.setStyle("-fx-font-weight: bold");
         label.setFont(Font.loadFont(getClass().getResource("/font/LillyBelle.ttf").toExternalForm(),30));
 

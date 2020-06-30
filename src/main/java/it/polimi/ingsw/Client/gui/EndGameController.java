@@ -11,6 +11,9 @@ import java.io.IOException;
 
 import static java.lang.System.exit;
 
+/**
+ * This controller manages the graphical elements for the end game (there is a winner)
+ */
 public class EndGameController {
 
     @FXML
@@ -25,6 +28,10 @@ public class EndGameController {
     private static ClientView clientView;
     private static GUI gui;
 
+    /**
+     * Loads the graphical elements for the vboxes of the end game and adds the interactivity of buttons in order to
+     * disconnect or to start a new game.
+     */
     @FXML
     public void initialize() {
         Light.Distant light = new Light.Distant();
@@ -80,9 +87,6 @@ public class EndGameController {
             }
             clientView.startConnection();
         });
-
-
-
     }
 
     public static void setClientView(ClientView clientView) {
@@ -94,10 +98,16 @@ public class EndGameController {
         EndGameController.clientView = gui.getClientView();
     }
 
+    /**
+     * Called when the client is the winner
+     */
     public void setWinner() {
         vBox2.getStyleClass().add("winner");
     }
 
+    /**
+     * Called if the client is not the winner
+     */
     public void setLoser() {
         vBox2.getStyleClass().add("loser");
     }

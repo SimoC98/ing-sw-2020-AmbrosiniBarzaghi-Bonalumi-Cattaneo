@@ -23,6 +23,10 @@ import javafx.scene.text.TextAlignment;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class to manage the gui's divinity selection. Its aim is to show the available divinities and to have the user 
+ * picking one as to call {@link ClientView#divinitySelection(String)}
+ */
 public class PlayerDivinitySelectionController {
 
     private static ClientView clientView;
@@ -66,6 +70,9 @@ public class PlayerDivinitySelectionController {
         PlayerDivinitySelectionController.clientView = gui.getClientView();
     }
 
+    /**
+     * Prepares to display the window showing the incoming divinities to choose from and all the pertinent text
+     */
     @FXML
     public void initialize() {
         fontSize.bind(bPane.widthProperty().add(bPane.heightProperty()).divide(100));
@@ -82,7 +89,7 @@ public class PlayerDivinitySelectionController {
         Font santorini = Font.loadFont(getClass().getResource("/font/LillyBelle.ttf").toExternalForm(), 24);
 
         sceneTitle.setAlignment(Pos.CENTER);
-        Text title = new Text("CHOOSE GODS THAT WILL BE USED IN THIS MATCH:");
+        Text title = new Text("CHOOSE YOUR DIVINITY:");
         title.setFont(santorini);
         title.styleProperty().bind(Bindings.concat("-fx-font-size: ", fontSizeTitle.asString(), ";"));
         sceneTitle.getChildren().add(title);
@@ -121,6 +128,10 @@ public class PlayerDivinitySelectionController {
     }
 
 
+    /**
+     * Prepares the incoming divinities to be shown, loading their images and resizing them. The image views are then added to the hbox.
+     * @param divinities List of divinities coming from the clientView
+     */
     public void selectPlayerDivinity(List<String> divinities) {
 
         this.divinities = divinities;
@@ -138,11 +149,15 @@ public class PlayerDivinitySelectionController {
             god.setFitWidth(240);*/
 
             addDivinityToHbox(god,i);
-
         }
-
     }
 
+    /**
+     * Adds the passed node to the hbox after making it interactive and adding a background. The divinity's selection
+     * causes {@link ClientView#divinitySelection(String)} to be called.
+     * @param node node to be edited.
+     * @param count number of the divinity
+     */
     private void addDivinityToHbox(Node node, int count) {
         //light effect
         Light.Distant light = new Light.Distant();
@@ -190,16 +205,11 @@ public class PlayerDivinitySelectionController {
 
                 godImages.stream().forEach(i -> i.setOnMouseClicked(null));
 
-                godDescription.setText("you chose " + chosenGod + "... Wait other player's choice!");
+                godDescription.setText("you chose " + chosenGod + "... Wait other players' choice!");
 
                 clientView.divinitySelection(divinities.get(count));
 
             });
-
-
-
         });
-
     }
-
 }

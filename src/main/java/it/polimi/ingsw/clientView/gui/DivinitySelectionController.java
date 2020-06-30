@@ -130,7 +130,7 @@ public class DivinitySelectionController {
     }
 
     public void setDivinityOnGrid(List<String> divinities, List<String> descriptions, int playerNumber,List<String> players) {
-        title.setText("CHOOSE " + playerNumber + "GODS THAT WILL BE USED IN THIS MATCH:");
+        title.setText("CHOOSE " + playerNumber + " GODS THAT WILL BE USED IN THIS MATCH:");
 
         this.players = players;
         this.divinities = new ArrayList<>(divinities);

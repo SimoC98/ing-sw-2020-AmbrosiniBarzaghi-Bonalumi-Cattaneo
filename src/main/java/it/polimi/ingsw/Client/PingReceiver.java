@@ -16,8 +16,6 @@ import java.util.TimerTask;
  */
 public class PingReceiver implements Observer<ServerEvent> {
     private ClientSocketHandler connection;
-    private boolean stopPing = false;
-    private Timer pinger = new Timer();
 
     public PingReceiver(ClientSocketHandler connection) {
         this.connection = connection;
@@ -32,14 +30,6 @@ public class PingReceiver implements Observer<ServerEvent> {
         connection.sendEvent(new Pong());
     }
 
-    public synchronized void stopCheckPing() {
-        if(!stopPing) {
-            stopPing=true;
-            pinger.cancel();
-        }
-
-
-    }
 
 
     /**

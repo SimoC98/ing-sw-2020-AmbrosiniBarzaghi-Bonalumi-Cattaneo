@@ -256,7 +256,7 @@ public class ClientView implements Observer<ServerEvent> {
     public void playersSetup(List<String> playersNames, List<Color> colors) {
 
         for(int i=0; i<playersNames.size(); i++) {
-            System.out.println("#" + i + " - " + playersNames.get(i));
+            //System.out.println("#" + i + " - " + playersNames.get(i));
             board.addPlayer(playersNames.get(i), colors.get(i));
         }
         int thisPlayer = playersNames.indexOf(this.username);

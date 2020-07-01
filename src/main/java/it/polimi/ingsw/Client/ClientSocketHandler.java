@@ -64,7 +64,7 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
                 t.setPriority(Thread.MAX_PRIORITY);
                 t.start();
             }
-        } catch(Exception e) {
+        } catch(IOException | ClassNotFoundException e) {
             receiveEvent(new ServerDisconnectionEvent());
             e.getMessage();
             //e.printStackTrace();
@@ -109,11 +109,4 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
         }
     }
 
-    protected void serverDisconnection() {
-        receiveEvent(new ServerDisconnectionEvent());
-    }
-
-    public void stopCheckPing() {
-        pinger.stopCheckPing();
-    }
 }

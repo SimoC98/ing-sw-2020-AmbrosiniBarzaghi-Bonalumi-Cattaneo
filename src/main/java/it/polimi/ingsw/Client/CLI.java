@@ -524,7 +524,9 @@ public class CLI implements UI{
      */
     @Override
     public void endTurn() {
-        System.out.println("\nYour turn is ended!\n");
+        synchronized (lock) {
+            System.out.println("\nYour turn is ended!\n");
+        }
     }
 
     /**
@@ -557,7 +559,9 @@ public class CLI implements UI{
         else if(wrongX<0 || wrongX>4 || wrongY<0 || wrongY>4) s.append(" YOU MUST SELECT A TILE ON THE BOARD!");
         else s.append(" YOU CAN'T MOVE HERE!");
 
-        System.out.println(s.toString());
+        synchronized (lock) {
+            System.out.println(s.toString());
+        }
 
         performAction(possibleActions);
     }
@@ -583,7 +587,9 @@ public class CLI implements UI{
         else if(wrongX<0 || wrongX>4 || wrongY<0 || wrongY>4) s.append(" YOU MUST SELECT A TILE ON THE BOARD!");
         else s.append(" YOU CAN'T BUILD HERE!");
 
-        System.out.println(s.toString());
+        synchronized (lock) {
+            System.out.println(s.toString());
+        }
 
         performAction(possibleActions);
     }
@@ -593,7 +599,9 @@ public class CLI implements UI{
      */
     @Override
     public void invalidWorkerPlacement() {
-        System.out.println("\n\nERROR! INVALID WORKER PLACEMENT!");
+        synchronized (lock) {
+            System.out.println("\n\nERROR! INVALID WORKER PLACEMENT!");
+        }
         placeWorkers();
     }
 
@@ -612,7 +620,9 @@ public class CLI implements UI{
         else if(wrongX<0 || wrongX>4 || wrongY<0 || wrongY>4) s.append(" YOU MUST SELECT A TILE ON THE BOARD!");
         else s.append("YOU CAN'T USE THIS WORKER!");
 
-        System.out.println(s.toString());
+        synchronized (lock) {
+            System.out.println(s.toString());
+        }
 
         selectWorker();
     }

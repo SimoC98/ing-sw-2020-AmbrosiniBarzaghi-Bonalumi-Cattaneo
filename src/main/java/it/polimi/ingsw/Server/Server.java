@@ -108,6 +108,7 @@ public class Server{
         printUsers();
 
         if(isGameStarted && loggedPlayers.size()==0) {
+            System.out.println("\n\nthis match is ended... waiting for players");
             connections.clear();
             loggedPlayers.clear();
             isGameStarted=false;

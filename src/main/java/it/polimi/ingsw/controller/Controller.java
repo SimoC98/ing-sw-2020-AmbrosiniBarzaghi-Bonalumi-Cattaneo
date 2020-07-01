@@ -112,7 +112,7 @@ public class Controller implements Observer<ClientEvent> {
 
             int winner = model.checkWinner();
             if(winner>=0) {
-                System.out.println("\n\n" + playersUsernames.get(currentPlayerId) + " has won");
+                //System.out.println("vincitore");
                 disconnectAll();
                 return;
             }
@@ -180,7 +180,6 @@ public class Controller implements Observer<ClientEvent> {
         }
         else {
             playersInGame.get(currentPlayerId).startTurn(playersUsernames.get(currentPlayerId));
-            System.out.println("\n\n" + playersUsernames.get(currentPlayerId) + " is starting his turn");
         }
     }
 
@@ -189,7 +188,6 @@ public class Controller implements Observer<ClientEvent> {
      * The losing player is removed from all the list they were inserted into and their ping flow is interrupted (see {@link ServerView#stopPing()})
      */
     public void manageLoser() {
-        System.out.println("\n\n" + playersUsernames.get(currentPlayerId) + " has lost");
         if(playersInGame.size()==2) {
             //System.out.println("\n\ncheck disconnecting all");
             disconnectAll();
@@ -245,18 +243,29 @@ public class Controller implements Observer<ClientEvent> {
             Map<String, Divinity> divinityMap =  XMLParserUtility.getDivinities();
             model.setDivinityMap(divinityMap);
             playersInGame.get(playersInGame.size()-1).chooseDivinitiesInGame(model.getAllDivinities(),model.getAllDivinitiesDescriptions(),playersInGame.size(),model.getPlayersUsernames());
-            System.out.println("\n\n" + playersUsernames.get(playersUsernames.size()-1) + " is choosing playable divinities");
         }
         else {
+            this.startPlayer = playersUsernames.indexOf(startPlayer);
+
             List<String> descriptions = new ArrayList<>();
             for(int i=0; i<gameDivinities.size();i++) {
                 descriptions.add(allDivinitiesDescription.get(allDivinities.indexOf(gameDivinities.get(i))));
             }
-            for(ServerView s : playersInGame) {
-                s.sendGameSetupInfo(model.getPlayersUsernames(),model.getPlayersColors(),gameDivinities,descriptions);
+
+            List<String> orderedPlayers = new ArrayList<>();
+            int playersNum = model.getPlayersUsernames().size();
+            for(int i=0; i<playersNum; i++) {
+                if(i + this.startPlayer < playersNum)
+                    orderedPlayers.add(model.getPlayersUsernames().get(i + this.startPlayer));
+                else
+                    orderedPlayers.add(model.getPlayersUsernames().get(i + this.startPlayer - playersNum));
             }
 
-            this.startPlayer = playersUsernames.indexOf(startPlayer);
+            for(ServerView s : playersInGame) {
+//                s.sendGameSetupInfo(model.getPlayersUsernames(),model.getPlayersColors(),gameDivinities,descriptions);
+                s.sendGameSetupInfo(orderedPlayers,model.getPlayersColors(),gameDivinities,descriptions);
+            }
+
             this.gameDivinities = gameDivinities;
             model.setStartPlayer(startPlayer);
 
@@ -268,7 +277,6 @@ public class Controller implements Observer<ClientEvent> {
             * -divinities descriptions
             * */
             playersInGame.get(this.startPlayer).sendDivinityInitialization(this.gameDivinities);
-            System.out.println("\n\n" + playersUsernames.get(this.startPlayer) + " is choosing his god");
         }
     }
 
@@ -303,6 +311,7 @@ public class Controller implements Observer<ClientEvent> {
      */
     public void handleDivinityInitialization(String divinity) {
         currentPlayerId = model.getCurrentPlayerId();
+        //System.out.println(playersUsernames.get(currentPlayerId));
 
         try {
             model.divinityInitialization(divinity);
@@ -320,13 +329,10 @@ public class Controller implements Observer<ClientEvent> {
                     s.sendDivinitiesSetup(model.getPlayersUsernames(),model.getPlayersDivinities());
                 }
                 playersInGame.get(currentPlayerId).sendWorkerInitialization();
-                System.out.println("\n\n" + playersUsernames.get(currentPlayerId) + " is placing workers on the board");
-
 
             }
             else {
                 playersInGame.get(currentPlayerId).sendDivinityInitialization(new ArrayList<>(gameDivinities));
-                System.out.println("\n\n" + playersUsernames.get(currentPlayerId) + " is choosing his god");
             }
 
         } catch (InvalidDivinitySelectionEvent e) {
@@ -358,14 +364,10 @@ public class Controller implements Observer<ClientEvent> {
             if(model.getCurrentPlayerId() == this.startPlayer) {
                 boolean loser = model.checkLoser();
                 if(loser) manageLoser();
-                else {
-                    playersInGame.get(currentPlayerId).startTurn(playersUsernames.get(currentPlayerId));
-                    System.out.println("\n\n" + playersUsernames.get(currentPlayerId) + " is starting his turn");
-                }
+                else playersInGame.get(currentPlayerId).startTurn(playersUsernames.get(currentPlayerId));
             }
             else {
                 playersInGame.get(currentPlayerId).sendWorkerInitialization();
-                System.out.println("\n\n" + playersUsernames.get(currentPlayerId) + " is placing workers on the board");
             }
 
         } catch (WorkerBadPlacementException e) {

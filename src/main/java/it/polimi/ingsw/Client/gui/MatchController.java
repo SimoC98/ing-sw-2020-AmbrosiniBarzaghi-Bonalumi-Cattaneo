@@ -17,6 +17,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 
 import java.util.*;
@@ -649,9 +651,13 @@ public class MatchController {
 
             god.setOnMouseClicked((e) -> godDescrAlertSetup(div, god.getImage()));
 
-            VBox box = new VBox();
-            box.setSpacing(5);
-            box.setAlignment(Pos.CENTER);
+//            VBox box = new VBox();
+//            box.setSpacing(5);
+//            box.setAlignment(Pos.CENTER);
+
+            Label playerNum = new Label("#" + (i+1));
+            playerNum.setFont(santoriniFont);
+            playerNum.setTextFill(Color.LIGHTGRAY);
 
             //Label playerName = new Label(players.get(i).getUsername());
             Label playerName = new Label();
@@ -659,9 +665,30 @@ public class MatchController {
             else playerName.setText(players.get(i).getUsername());
             playerName.setFont(santoriniFont);
 
-            box.getChildren().addAll(god, playerName);
+            Circle colorMark = new Circle(10);
 
-            vBoxLeft.getChildren().add(box);
+            switch(players.get(i).getColor()) {
+                case BLUE:
+                    colorMark.fillProperty().setValue(Color.BLUE);
+                    break;
+                case CREAM:
+//                    colorMark.fillProperty().setValue(Color.WHEAT);
+                    colorMark.fillProperty().setValue(Color.web("#DCCE92"));
+//                    colorMark.fillProperty().setValue(Color.BEIGE);
+                    break;
+                case WHITE:
+                    colorMark.fillProperty().setValue(Color.WHITE);
+                    break;
+            }
+
+            HBox playerNameAndColor = new HBox();
+            playerNameAndColor.alignmentProperty().setValue(Pos.CENTER);
+            playerNameAndColor.setSpacing(10);
+            playerNameAndColor.getChildren().addAll(playerNum, playerName, colorMark);
+
+//            box.getChildren().addAll(god, playerNameAndColor);
+
+            vBoxLeft.getChildren().addAll(god, playerNameAndColor);
         }
 
         Button exit = newStandardizedButton();

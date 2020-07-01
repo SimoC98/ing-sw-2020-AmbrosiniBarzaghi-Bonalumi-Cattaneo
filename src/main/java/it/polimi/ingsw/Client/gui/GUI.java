@@ -283,6 +283,8 @@ public class GUI extends Application implements UI {
             matchController.setPlayers();
 
             primaryStage.setMinHeight(700);
+            primaryStage.setHeight(Screen.getPrimary().getBounds().getHeight() * 0.9);
+            primaryStage.setWidth(Screen.getPrimary().getBounds().getWidth() * 0.9);
             primaryStage.getScene().setRoot(matchRoot);
         });
     }

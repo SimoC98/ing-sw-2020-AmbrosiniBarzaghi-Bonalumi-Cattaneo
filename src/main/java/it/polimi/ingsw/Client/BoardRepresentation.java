@@ -4,10 +4,7 @@ import it.polimi.ingsw.Pair;
 import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Color;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -27,7 +24,7 @@ public class BoardRepresentation {
         for(int i=0; i<boardDimension; i++)
             for(int j=0; j<boardDimension; j++)
                 board[i][j] = 0;
-        players = new HashMap<>();
+        players = new LinkedHashMap<>();
     }
 
     /**

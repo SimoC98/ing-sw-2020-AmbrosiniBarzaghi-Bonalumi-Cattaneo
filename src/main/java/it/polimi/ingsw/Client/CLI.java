@@ -474,6 +474,7 @@ public class CLI implements UI{
         }
 
         clientView.disconnect();
+        exit(0);
     }
 
     /**

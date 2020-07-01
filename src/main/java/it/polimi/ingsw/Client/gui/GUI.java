@@ -245,7 +245,8 @@ public class GUI extends Application implements UI {
                 matchController.loserPlayer();
             }
             else {
-                matchController.textMessage("LOSER","user " + username + "has lost","don't give up!");
+                //matchController.textMessage("LOSER","user " + username + "has lost","don't give up!");
+                matchController.opponentDefeated(username);
             }
         });
     }

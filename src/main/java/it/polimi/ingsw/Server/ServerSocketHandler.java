@@ -88,20 +88,11 @@ public class ServerSocketHandler extends Observable<ClientEvent> implements Runn
     }
 
     /**
-     * Closes the streams, the socket and closes the connection  on the server
+     * Stops sending pings to the client and remove reference from the server
      */
     public void close() {
-        try {
-            in.close();
-            out.close();
-            socket.close();
-        } catch (IOException e) {
-            //e.printStackTrace();
-            e.getMessage();
-        } finally {
-            server.unregisterConnection(this);
-            stopPing();
-        }
+        server.unregisterConnection(this);
+        stopPing();
     }
 
     /**

@@ -64,11 +64,9 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
                 t.setPriority(Thread.MAX_PRIORITY);
                 t.start();
             }
-        }catch(SocketException se){
-            se.getMessage();
-            //se.printStackTrace();
         } catch(Exception e) {
-             e.getMessage();
+            receiveEvent(new ServerDisconnectionEvent());
+            e.getMessage();
             //e.printStackTrace();
         }
 

@@ -384,7 +384,6 @@ public class ClientView implements Observer<ServerEvent> {
      * @param username losing player
      */
     public void manageLoser(String username){
-        if(username.equals(this.username)) proxy.stopCheckPing();
         board.setLoser(username);
         ui.loser(username);
     }
@@ -395,7 +394,7 @@ public class ClientView implements Observer<ServerEvent> {
      * @param username winning player
      */
     public void manageWinner(String username){
-        proxy.stopCheckPing();
+        proxy.removeObserver(this);
         board.setWinner(username);
         ui.winner(username);
     }
@@ -407,8 +406,7 @@ public class ClientView implements Observer<ServerEvent> {
      */
     public void managePlayerDisconnection(String username) {
         //System.out.println("player disconnection");
-
-        proxy.stopCheckPing();
+        proxy.removeObserver(this);
         ui.playerDisconnection(username);
     }
 
@@ -487,6 +485,7 @@ public class ClientView implements Observer<ServerEvent> {
     }
 
     public void manageServerDisconnection() {
+        System.out.println("server disconnection!");
         ui.serverDisconnection();
     }
 

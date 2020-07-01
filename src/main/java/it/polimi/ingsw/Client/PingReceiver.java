@@ -16,8 +16,6 @@ import java.util.TimerTask;
  */
 public class PingReceiver implements Observer<ServerEvent> {
     private ClientSocketHandler connection;
-    private boolean active=false;
-    private boolean pingReceived=true;
     private boolean stopPing = false;
     private Timer pinger = new Timer();
 
@@ -31,24 +29,6 @@ public class PingReceiver implements Observer<ServerEvent> {
      * Called whenever a {@link it.polimi.ingsw.events.serverToClient.Ping} is received.
      */
     public void receivePing() {
-        pingReceived=true;
-        if(!active) {
-            active=true;
-            TimerTask task = new TimerTask() {
-                @Override
-                public void run() {
-                    if(!pingReceived) {
-                        stopCheckPing();
-                        //System.out.println("server disconnection");
-                        connection.serverDisconnection();
-                    }
-                    else {
-                        pingReceived=false;
-                    }
-                }
-            };
-            pinger.schedule(task,0,6000);
-        }
         connection.sendEvent(new Pong());
     }
 

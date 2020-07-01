@@ -181,8 +181,8 @@ public class CLI implements UI{
             System.out.print("\t" + div);
 
         System.out.println("\n\n");
-        for(int i=0;i<players.size();i++) {
-            System.out.println("(" + i + ")" + players.get(i));
+        for(int i=1;i<=players.size();i++) {
+            System.out.println("(" + i  + ")" + players.get(i-1));
         }
 
         int start = -1;
@@ -190,9 +190,9 @@ public class CLI implements UI{
             System.out.println("Now choose the starting player: ");
             String in = scanner.nextLine();
             if(in.matches("[0-9]")) start = Integer.parseInt(in);
-        } while(start<0||start>players.size());
+        } while(start<=0||start>players.size());
 
-        clientView.playableDivinitiesSelection(playableDivinities,players.get(start));
+        clientView.playableDivinitiesSelection(playableDivinities,players.get(start -1));
     }
 
     /**

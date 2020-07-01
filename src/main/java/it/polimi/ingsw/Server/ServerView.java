@@ -172,20 +172,20 @@ public class ServerView extends Observable<ClientEvent> implements Observer<Serv
     }
 
     /**
-     * Sends a {@link InvalidWorkerPlacement} if the player chooses a tile holding another worker or the worker will be
+     * Sends a {@link InvalidWorkerPlacementEvent} if the player chooses a tile holding another worker or the worker will be
      * blocked once selected
      */
     public void invalidWorkerPlacement() {
-        sendEvent(new InvalidWorkerPlacement());
+        sendEvent(new InvalidWorkerPlacementEvent());
     }
 
     /**
-     * Sends a {@link InvalidWorkerSelection} when a player chooses a blocked worker
+     * Sends a {@link InvalidWorkerSelectionEvent} when a player chooses a blocked worker
      * @param x x tile of the blocked worker
      * @param y y tile of the blocked worker
      */
     public void invalidWorkerSelection(int x, int y) {
-        sendEvent(new InvalidWorkerSelection(x,y));
+        sendEvent(new InvalidWorkerSelectionEvent(x,y));
     }
 
 

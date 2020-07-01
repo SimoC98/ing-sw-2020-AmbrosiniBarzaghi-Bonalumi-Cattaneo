@@ -4,6 +4,7 @@ import it.polimi.ingsw.Observer;
 import it.polimi.ingsw.Pair;
 import it.polimi.ingsw.XMLparser.XMLParserUtility;
 import it.polimi.ingsw.events.clientToServer.ClientEvent;
+import it.polimi.ingsw.events.clientToServer.WorkersPlacementSelectionEvent;
 import it.polimi.ingsw.model.Action;
 import it.polimi.ingsw.model.Divinity;
 import it.polimi.ingsw.model.Match;
@@ -354,7 +355,7 @@ public class Controller implements Observer<ClientEvent> {
      * Places a player's worker on the {@link it.polimi.ingsw.model.Board}. If the player places the workers wrongly, an
      * exception is thrown and they have to choose again.
      * After each player placed their workers the game start (see {@link Match#workerPlacementInitialization(int, int, int, int)}
-     * Called when a {@link it.polimi.ingsw.events.clientToServer.WorkerPlacementSelectionEvent} is received
+     * Called when a {@link WorkersPlacementSelectionEvent} is received
      * @param x1 first x coordinate
      * @param y1 first y coordinate
      * @param x2 second x coordinate

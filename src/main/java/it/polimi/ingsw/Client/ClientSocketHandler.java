@@ -74,7 +74,7 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
 
     /**
      * Called whenever a new server event is received; it notifies the client view of such event through {@link ClientView#update(ServerEvent)}.
-     * @param event
+     * @param event ServerEvent to be read
      */
     private void receiveEvent(ServerEvent event) {
         notify(event);

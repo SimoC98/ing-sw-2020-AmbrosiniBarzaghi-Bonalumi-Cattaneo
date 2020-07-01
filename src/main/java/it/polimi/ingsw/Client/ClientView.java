@@ -4,6 +4,8 @@ import it.polimi.ingsw.Observer;
 import it.polimi.ingsw.Pair;
 import it.polimi.ingsw.Client.gui.GUI;
 import it.polimi.ingsw.events.clientToServer.*;
+import it.polimi.ingsw.events.serverToClient.InvalidWorkerPlacementEvent;
+import it.polimi.ingsw.events.serverToClient.InvalidWorkerSelectionEvent;
 import it.polimi.ingsw.events.serverToClient.ServerEvent;
 import it.polimi.ingsw.events.serverToClient.UsernameAlreadyUsed;
 import it.polimi.ingsw.model.Action;
@@ -133,11 +135,6 @@ public class ClientView implements Observer<ServerEvent> {
         proxy.sendEvent(new LoginEvent(username));
     }
 
-    //IF USERID==0
-    public void playersNumberQuestion(int num) {
-        proxy.sendEvent(new PlayersNumberQuestionEvent(num));
-    }
-
     //IF USERID==PLAYERSNUMBER
 
     /**
@@ -162,7 +159,7 @@ public class ClientView implements Observer<ServerEvent> {
     }
 
     /**
-     * Calls a method on the socket to place the workers on the model's board. It sends a {@link WorkerPlacementSelectionEvent}
+     * Calls a method on the socket to place the workers on the model's board. It sends a {@link WorkersPlacementSelectionEvent}
      * after a {@link it.polimi.ingsw.events.serverToClient.WorkerPlacementEvent} is received.
      * @param x1 First x woorker's coordinate
      * @param y1 First y woorker's coordinate
@@ -170,7 +167,7 @@ public class ClientView implements Observer<ServerEvent> {
      * @param y2 Second y woorker's coordinate
      */
     public void workerPlacement(int x1, int y1, int x2, int y2) {
-        proxy.sendEvent(new WorkerPlacementSelectionEvent(x1, y1, x2, y2));
+        proxy.sendEvent(new WorkersPlacementSelectionEvent(x1, y1, x2, y2));
     }
 
     /**
@@ -452,7 +449,7 @@ public class ClientView implements Observer<ServerEvent> {
     }
 
     /**
-     * When a player places a worker on another one {@link it.polimi.ingsw.events.serverToClient.InvalidWorkerPlacement}
+     * When a player places a worker on another one {@link InvalidWorkerPlacementEvent}
      * {@link CLI#invalidWorkerPlacement()}  {@link GUI#invalidWorkerPlacement()}
      */
     public void manageInvalidWorkerPlacement() {
@@ -460,7 +457,7 @@ public class ClientView implements Observer<ServerEvent> {
     }
 
     /**
-     * Consequence of a bad worker selection. It returns the bad coordinated {@link it.polimi.ingsw.events.serverToClient.InvalidWorkerSelection}
+     * Consequence of a bad worker selection. It returns the bad coordinated {@link InvalidWorkerSelectionEvent}
      * {@link CLI#invalidWorkerSelection(int, int)} {@link GUI#invalidWorkerSelection(int, int)}
      * @param wrongX wrong coordinate
      * @param wrongY wrong coordinate
@@ -485,6 +482,9 @@ public class ClientView implements Observer<ServerEvent> {
         ui.lobbyFull();
     }
 
+    /**
+     * Called when the server cannot be reached.
+     */
     public void manageServerDisconnection() {
         System.out.println("server disconnection!");
         ui.serverDisconnection();

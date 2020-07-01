@@ -155,10 +155,7 @@ public class Server{
             System.out.print("USERNAME NOT AVAILABLE");
             return;
         }
-        /*else if(username.length()<3 || username.length()>15 || username.contains(" ")) {
-            connection.sendEvent(new InvalidUsernameEvent());
-            return;
-        }*/
+
 
         connection.sendEvent(new InLobbyEvent());
         registerConnection(connection);

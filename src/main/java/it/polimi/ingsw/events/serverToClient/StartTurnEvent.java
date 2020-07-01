@@ -4,7 +4,7 @@ import it.polimi.ingsw.Client.ClientView;
 import it.polimi.ingsw.Client.PingReceiver;
 
 /**
- * Informs a client that it is their turn. This should unlock the client's ui and stop the others'
+ * Informs a client that it is their turn. This should unlock the client's ui.
  */
 public class StartTurnEvent implements ServerEvent{
     public StartTurnEvent() {    }

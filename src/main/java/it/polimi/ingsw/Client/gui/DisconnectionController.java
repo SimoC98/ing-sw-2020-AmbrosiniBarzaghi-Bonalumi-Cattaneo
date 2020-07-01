@@ -139,6 +139,9 @@ public class DisconnectionController {
         disconnectionText.setText("User " + player + " has left the game... this match is ended");
     }
 
+    /**
+     * Removes the current interface when the server drops.
+     */
     public void serverDisconnection() {
         disconnectionText.setText("The server is no longer reachable!");
 

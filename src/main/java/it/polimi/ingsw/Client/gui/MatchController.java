@@ -129,7 +129,7 @@ public class MatchController {
 //        turnInformation.setWrapText(true);
         turnInformation.alignmentProperty().setValue(Pos.TOP_CENTER);
         turnInformation.setFont(getSantoriniFont(30));
-        turnInformation.setText("OPPONENTS'\nPLACING WORKERS");
+        turnInformation.setText("AN OPPONENT IS\nPLACING WORKERS");
 
         message.maxWidthProperty().bind(rightStack.maxWidthProperty());
         message.prefWidthProperty().bind(rightStack.widthProperty());
@@ -380,7 +380,7 @@ public class MatchController {
      * Updates the textlabel
      */
     public void endTurn() {
-        turnInformation.setText("OPPONENTS'\nTURNS");
+        turnInformation.setText("OPPONENT'S\nTURN");
     }
 
 

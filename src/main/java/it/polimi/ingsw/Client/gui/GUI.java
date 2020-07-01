@@ -478,6 +478,9 @@ public class GUI extends Application implements UI {
         });
     }
 
+    /**
+     * Called when the server cannot be reached.
+     */
     @Override
     public void serverDisconnection() {
         System.out.println("SERVER CONNECTION DROPPED");

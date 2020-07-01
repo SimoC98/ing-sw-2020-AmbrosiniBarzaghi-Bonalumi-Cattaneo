@@ -3,7 +3,9 @@ package it.polimi.ingsw.events.clientToServer;
 import it.polimi.ingsw.controller.Controller;
 import it.polimi.ingsw.Server.PingManager;
 
-//TODO: MAYBE
+/**
+ * Informs the server the will of a client to disconnect
+ */
 public class DisconnectionEvent implements ClientEvent {
 
     private final String playerName;

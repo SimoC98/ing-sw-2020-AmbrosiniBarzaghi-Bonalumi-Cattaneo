@@ -664,6 +664,9 @@ public class CLI implements UI{
         updateBoard();
     }
 
+    /**
+     * Called when the server cannot be reaches. It aborts the process.
+     */
     @Override
     public void serverDisconnection() {
         System.out.println("\n\nThe server is no longer reachable!\n\n");

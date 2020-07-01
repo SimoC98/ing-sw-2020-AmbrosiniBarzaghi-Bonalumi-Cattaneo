@@ -236,7 +236,7 @@ public class Server{
      * @param connection Socket of the lost connection
      */
     protected void disconnectAll(ServerSocketHandler connection){
-        System.out.println("user " + loggedPlayers.get(connection) + " disconnected... this match will end soon");
+        System.out.println("\n\nuser " + loggedPlayers.get(connection) + " disconnected... this match will end soon");
 
         for(int i=0; i<connections.size(); i++) {
             ServerSocketHandler s = connections.get(i);

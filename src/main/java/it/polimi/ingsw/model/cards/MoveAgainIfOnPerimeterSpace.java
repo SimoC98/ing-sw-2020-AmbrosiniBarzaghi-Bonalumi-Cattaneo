@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * This God, Triton, can move as many times as he wishes if his worker is on a perimetrical tile
  */
-public class MoveAgainIfOnPerimeterSpace extends MoveTwice{
+public class MoveAgainIfOnPerimeterSpace extends MoveMultipleTimes {
     //is true if after a move is on a perimeter cell
     private boolean isOnPerimeter;
 

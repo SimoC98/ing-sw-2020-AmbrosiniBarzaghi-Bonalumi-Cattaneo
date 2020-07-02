@@ -38,18 +38,17 @@ class BuildDomeEverywhereTest {
     public void buildNotDomeTest() throws InvalidActionException {
         Tile tile1 = board.getTile(1,1);
         Tile tile2 = board.getTile(2,2);
-        Tile tile3 = board.getTile(3,3);
         Worker w = match.getCurrentPlayer().getWorkers().get(0);
         Player p1 = match.getCurrentPlayer();
-        match.setUserAction(Action.BUILD);
 
-        assert(p1.move(board,w,tile2));
-
+        p1.move(board,w,tile2);
+        match.setAction(Action.BUILD);
         assert(p1.getPossibleActions().size()==2);
         assert(p1.getPossibleActions().contains(Action.BUILD));
         assert(p1.getPossibleActions().contains(Action.BUILDDOME));
 
-        assert(p1.build(board,w,tile1));
+        p1.build(board,w,tile1);
+
 
         assertFalse(tile1.isDome());
         assert(tile1.getLevel()==1);
@@ -59,21 +58,21 @@ class BuildDomeEverywhereTest {
     public void buildDomeTest() throws InvalidActionException {
         Tile tile1 = board.getTile(1,1);
         Tile tile2 = board.getTile(2,2);
-        Tile tile3 = board.getTile(3,3);
         Worker w = match.getCurrentPlayer().getWorkers().get(0);
         Player p1 = match.getCurrentPlayer();
-        match.setUserAction(Action.BUILDDOME);
 
-        assert(p1.move(board,w,tile2));
+
+        p1.move(board,w,tile2);
+        match.setAction(Action.BUILDDOME);
 
         assert(p1.getPossibleActions().size()==2);
         assert(p1.getPossibleActions().contains(Action.BUILD));
         assert(p1.getPossibleActions().contains(Action.BUILDDOME));
 
-        assert(p1.build(board,w,tile1));
+        p1.build(board,w,tile1);
 
         assert(tile1.isDome());
-        assertFalse(tile1.getLevel()==3);
+        assertNotEquals(3, tile1.getLevel());
     }
 
 }

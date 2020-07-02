@@ -15,7 +15,7 @@ import java.util.List;
  * adds the possibility to end the move phase and thus beginning the build phase,
  * after the first move.
  */
-public class MoveTwiceNotBack extends MoveTwice{
+public class MoveTwiceNotBack extends MoveMultipleTimes {
 
     public MoveTwiceNotBack() { super(); }
 
@@ -46,10 +46,7 @@ public class MoveTwiceNotBack extends MoveTwice{
      */
     @Override
     public void updatePossibleActions(List<Action> possibleActions) {
-        /*if(getMoveCount() == 1 && !isHasBuilt()) {
-            List<Tile> l = ActionManager.getMatch().getAvailableMoveTiles(Game.getMatch().getSelectedWorker());
-            if(l.size()>0) possibleActions.add(Action.MOVE);
-        }*/
+
 
         if(getMoveCount()>1 || hasBuilt()) return;
         super.updatePossibleActions(possibleActions);

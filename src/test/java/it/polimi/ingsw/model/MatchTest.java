@@ -242,36 +242,9 @@ class MatchTest {
         assert(match.getAllDivinitiesDescriptions().size()==15);
     }
 
-    @Test
-    public void initializationTest() {
-        match.setDivinityMap(XMLParserUtility.getDivinities());
-
-        try {
-            match.playerInitialization(0,0,1,1, "Apollo");
-            match.playerInitialization(2,2,3,3,"Artemis");
-            match.playerInitialization(0,2,0,3,"Athena");
-        } catch (WorkerBadPlacementException e) {
-            System.out.println("Error in initializationTest");
-        } catch (InvalidDivinitySelectionEvent invalidDivinitySelectionEvent) {
-            invalidDivinitySelectionEvent.printStackTrace();
-        }
-
-        assertEquals(p1.getWorkers().get(0).getPositionOnBoard(),board.getTile(0,0));
-        assertEquals(p1.getWorkers().get(1).getPositionOnBoard(),board.getTile(1,1));
-        assertEquals(p2.getWorkers().get(0).getPositionOnBoard(),board.getTile(2,2));
-        assertEquals(p2.getWorkers().get(1).getPositionOnBoard(),board.getTile(3,3));
-        assertEquals(p3.getWorkers().get(0).getPositionOnBoard(),board.getTile(0,2));
-        assertEquals(p3.getWorkers().get(1).getPositionOnBoard(),board.getTile(0,3));
-
-        assertEquals(p1.getDivinity().getClass(),SwapWithOpponent.class);
-        assertEquals(p2.getDivinity().getClass(), MoveTwiceNotBack.class);
-        assertEquals(p3.getDivinity().getClass(), OpponentCannotMoveUp.class);
-
-        assertEquals(match.getCurrentPlayer(),p1);
-    }
 
     @Test
-    public void getPossibliActionTest() throws WorkerBadPlacementException, InvalidWorkerSelectionException {
+    public void getPossibleActionTest() throws WorkerBadPlacementException, InvalidWorkerSelectionException {
         p1.setDivinity(new StandardDivinity());
         p2.setDivinity(new StandardDivinity());
         p3.setDivinity(new StandardDivinity());

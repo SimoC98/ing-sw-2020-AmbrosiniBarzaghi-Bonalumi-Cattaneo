@@ -24,8 +24,8 @@ public class PlayerWinWith5CompleteBuildings extends SetEffectOnOpponent{
 
     /**
      * Returns the number of towers, tiles with level 3 and isDome set to true.
-     * @param b
-     * @return
+     * @param b board to be checked
+     * @return number of completed towers
      */
     private int checkCompleteTowersNumber(Board b) {
         int count=0;
@@ -43,7 +43,7 @@ public class PlayerWinWith5CompleteBuildings extends SetEffectOnOpponent{
 
     /**
      * Sets the effect on opponents only when there are already 4 towers
-     * @return
+     * @return true when there are 4 buildings
      */
     @Override
     public boolean hasSetEffectOnOpponentWorkers() {

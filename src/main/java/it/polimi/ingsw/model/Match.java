@@ -27,7 +27,7 @@ public class Match extends Observable<ServerEvent> implements Model{
     private ArrayList<Player> players;
     private Player currentPlayer;
     private Board board;
-    private static Action userAction; //soluzione momentanea
+    private static Action userAction;
     private Worker selectedWorker;
     private Map<String,Divinity> divinities;
 
@@ -68,7 +68,10 @@ public class Match extends Observable<ServerEvent> implements Model{
         currentPlayer = null;
     }
 
-
+    /**
+     * Sets the starting player
+     * @param startPlayer name of the starter
+     */
     public void setStartPlayer(String startPlayer) {
         for(Player p : players) {
             if(p.getUsername().equals(startPlayer)) {
@@ -185,7 +188,7 @@ public class Match extends Observable<ServerEvent> implements Model{
 
     /**
      * Returns the index of the winning player, if there is one
-     * @return
+     * @return index of the winning player
      */
     public int checkWinner() {
         Player winner = findWinner();
@@ -225,6 +228,7 @@ public class Match extends Observable<ServerEvent> implements Model{
     }
 
     /**
+     * Action chosen by a client
      * @param action one of the possible actions from  the enumeration {@link Action} i.e. {@link Action#BUILD}, {@link Action#BUILDDOME}, {@link Action#MOVE} or {@link Action#END}
      * @throws InvalidActionException The action is not present among the current player's actions
      */
@@ -233,15 +237,6 @@ public class Match extends Observable<ServerEvent> implements Model{
         else throw new InvalidActionException();
     }
 
-
-    /**
-     * The specified action is the one chosen by the player
-     * and which will occur next.
-     * @param action
-     */
-    public void setUserAction(Action action) {
-        userAction = action;
-    }
 
     /**
      * Moves the {@link Match#selectedWorker} of the {@link Match#currentPlayer}
@@ -291,48 +286,30 @@ public class Match extends Observable<ServerEvent> implements Model{
     }
 
     /**
-     * Called at the beginning of a match to keep track of all the available divinities
-     * selected divinity from an xml file and putting their name in a map.
-     * @param divinities Divinity's name as {@code String}
-     * @return Returns {@code true} if the operation was successful
+     * Called at the beginning of a match to keep track of all the available divinities.
+     * The divinities's names are loaded from an xml file and they are put in a map with the corresponding class.
+     * @param divinities Map of divinities and their class
      */
     public void setDivinityMap(Map<String,Divinity> divinities) {
         this.divinities = divinities;
     }
 
+    /**
+     * Sets a player's divinity assigning the divinity to a player, retrieving the divinity's class from the map.
+     * @param divinityName Name of the divinity to be loaded
+     * @throws InvalidDivinitySelectionEvent divinity not found
+     */
     public void loadPlayerDivinity(String divinityName) throws InvalidDivinitySelectionEvent {
         if(!divinities.keySet().contains(divinityName)) throw new InvalidDivinitySelectionEvent();
         currentPlayer.setDivinity(divinities.get(divinityName));
     }
 
-    /**
-     * Method to be called once per player at the beginning of the match
-     * to place his workers and to choose a divinity
-     * @param x1
-     * @param y1
-     * @param x2
-     * @param y2
-     * @param divName
-     */
-        //TODO: has to be removed
-    public void playerInitialization(int x1, int y1, int x2, int y2, String divName) throws WorkerBadPlacementException, InvalidDivinitySelectionEvent {
-        placeWorkers(x1,y1,x2,y2);
-        loadPlayerDivinity(divName);
-
-        notify(new WorkerPlacementEvent(currentPlayer.getUsername(),x1,y1,x2,y2));
-
-        int index = players.indexOf(currentPlayer) + 1;
-        if(index==players.size()) startNextTurn();
-        else {
-            currentPlayer = players.get(index);
-        }
-    }
-
 
     /**
-     * Sets a player's divinity.
-     * @param divName
-     * @throws InvalidDivinitySelectionEvent
+     * Sets a player's divinity calling another method to load it from the map of divinities. Then it advances to the next
+     * player.
+     * @param divName name of the divinity chosen by the player
+     * @throws InvalidDivinitySelectionEvent thrown if no such divinity is found
      */
     public void divinityInitialization(String divName) throws InvalidDivinitySelectionEvent {
         loadPlayerDivinity(divName);
@@ -345,13 +322,13 @@ public class Match extends Observable<ServerEvent> implements Model{
     }
 
     /**
-     * Positions a player's workers on the board. If the player is the last to choose
-     * the game begins
-     * @param x1
-     * @param y1
-     * @param x2
-     * @param y2
-     * @throws WorkerBadPlacementException
+     * Positions a player's workers on the board. The turn passes to the next player until the player is reached and after
+     * their selection, the game begins.
+     * @param x1 Worker's coordinates
+     * @param y1 Worker's coordinates
+     * @param x2 Worker's coordinates
+     * @param y2 Worker's coordinates
+     * @throws WorkerBadPlacementException The player tried to position a worker on another one
      */
     public void workerPlacementInitialization(int x1, int y1, int x2, int y2) throws WorkerBadPlacementException {
         placeWorkers(x1,y1,x2,y2);

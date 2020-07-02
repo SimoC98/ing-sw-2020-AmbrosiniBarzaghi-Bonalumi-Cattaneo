@@ -9,16 +9,15 @@ import java.util.List;
  * Parent class to realize divinities whose effect is to move twice in the same turn
  */
 
-//TODO: name should change in something LIKE "MoveMoreThanOnce"
 
-public class MoveTwice extends DivinityDecoratorWithEffects {
+public class MoveMultipleTimes extends DivinityDecoratorWithEffects {
     private Tile firstMovedTile;
     protected int moveCount;
     protected boolean hasBuilt;
 
-    public MoveTwice() { super(); }
+    public MoveMultipleTimes() { super(); }
 
-    public MoveTwice(Divinity decoratedDivinity) {
+    public MoveMultipleTimes(Divinity decoratedDivinity) {
         super(decoratedDivinity);
     }
 

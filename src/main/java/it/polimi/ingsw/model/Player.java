@@ -113,14 +113,14 @@ public class Player {
      * is possible, in first place, it clears the list from actions in order
      * to respect the game logic; then it adds the possibility to build as in the
      * basic Santorini's rules and it adds other possible actions deriving from a divinity's effects
-     * @param board
-     * @param selectedWorker
-     * @param selectedTile
+     * @param board game's board
+     * @param selectedWorker worker performing the action
+     * @param selectedTile tile where to perform the action
      * @return {@code true} whether the move was successful
      */
     public boolean move(Board board, Worker selectedWorker, Tile selectedTile) {
         if(divinity.legalMove(board,selectedWorker,selectedTile)) {
-            if (divinity.isWinner(selectedWorker,selectedTile)) //TODO: is this the correct position?
+            if (divinity.isWinner(selectedWorker,selectedTile))
                 setWinner();
             possibleActions.clear();
             updates.clear();
@@ -147,9 +147,9 @@ public class Player {
      * In addition, it manages the next possible actions: if the build
      * is possible, in first place, it clears the list from actions in order
      * to respect the game logic; then it adds other possible actions deriving from a divinity's effects
-     * @param board
-     * @param selectedWorker
-     * @param selectedTile
+     * @param board game's board
+     * @param selectedWorker worker performing the action
+     * @param selectedTile tile where to perform the action
      * @return {@code true} whether the build was successful
      */
     public boolean build(Board board,Worker selectedWorker, Tile selectedTile) {
@@ -185,7 +185,7 @@ public class Player {
     }
 
     /**
-     * List of Tiles that are to send to other players to inform them of changes on the board
+     * List of Tiles that are to be sent to other players to inform them of changes on the board
      * @return List of {@link ModelUpdate}
      */
     public List<ModelUpdate> getModelUpdates() {

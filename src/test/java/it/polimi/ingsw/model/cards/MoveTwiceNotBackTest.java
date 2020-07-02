@@ -16,7 +16,7 @@ class MoveTwiceNotBackTest {
 
     private Match match;
     private Board board;
-    private MoveTwice div;
+    private MoveMultipleTimes div;
 
     @BeforeEach
     void setup() throws WorkerBadPlacementException, InvalidWorkerSelectionException {

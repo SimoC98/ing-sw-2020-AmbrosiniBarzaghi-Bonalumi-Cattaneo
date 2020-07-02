@@ -45,13 +45,7 @@ public class Worker {
      * @throws InvalidMoveException Thrown if the selection is not valid
      */
     public void move(Tile t) {
-        /*if(!legalMove(t)) {
-            throw new InvalidMoveException();
-        }*/
 
-//        if(isWinner(t)) {
-//            player.setWinner();
-//        }
         positionOnBoard.free();
 
         t.setWorker(this);
@@ -73,9 +67,7 @@ public class Worker {
      * @param t {@link Tile} to build on
      */
     public void build (Tile t)  {
-        /*if(!legalBuild(t)) {
-            throw new InvalidBuildException();
-        }*/
+
         t.increaseLevel();
     }
 

@@ -20,8 +20,8 @@ public class BlockWinOnPerimeter extends DivinityDecoratorWithEffects  {
 
     /**
      * Checks if a tile is on the perimeter
-     * @param selectedTile
-     * @return
+     * @param selectedTile tile to be checked
+     * @return true if the tile is perimetral
      */
     public boolean isOnPerimeter(Tile selectedTile){
         int x = selectedTile.getX();
@@ -29,6 +29,12 @@ public class BlockWinOnPerimeter extends DivinityDecoratorWithEffects  {
         return x == 0 || x == 4 || y == 0 || y == 4;
     }
 
+    /**
+     * New win condition
+     * @param selectedWorker current worker performing an action
+     * @param selectedTile {@link Tile} the worker is going to perform the action on
+     * @return false even when the winning condition takes place on the perimeter
+     */
     @Override
     public boolean isWinner(Worker selectedWorker,Tile selectedTile){
         if(isOnPerimeter(selectedTile)) return false;

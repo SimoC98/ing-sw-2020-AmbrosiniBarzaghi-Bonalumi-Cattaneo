@@ -38,9 +38,9 @@ public class StandardDivinity implements Divinity {
 
     /**
      * Constructor used to characterise a divinity upon filling its information fields
-     * @param name
-     * @param heading
-     * @param description
+     * @param name name of the divinity
+     * @param heading heading (subtitle) of the divinity
+     * @param description description of the divinity's power
      * @param number index of the divinity as in the game
      */
     public StandardDivinity(String name, String heading, String description, int number) {
@@ -74,9 +74,10 @@ public class StandardDivinity implements Divinity {
 
     /**
      * Calls the method {@code build} on the {@link Worker} passed as parameter, given a {@link Tile}.
-     * @param board
-     * @param selectedWorker
-     * @param selectedTile
+     * @param board current {@link Board}
+     * @param selectedWorker Selected worker from the {@link Match}
+     * @param selectedTile {@link Tile} to build on
+     * @return
      */
     @Override
     public List<ModelUpdate> build(Board board, Worker selectedWorker, Tile selectedTile) {
@@ -94,9 +95,9 @@ public class StandardDivinity implements Divinity {
     }
 
     /**
-     * Checks if the player is performing a winning move with the currenteffects
-     * @param selectedWorker
-     * @param selectedTile
+     * Checks if the player is performing a winning move with the current effects
+     * @param selectedWorker current worker performing an action
+     * @param selectedTile {@link Tile} the worker is going to perform the action on
      * @return
      */
     @Override
@@ -106,9 +107,9 @@ public class StandardDivinity implements Divinity {
 
     /**
      * Checks if the selected {@link Worker} is able to move on the specified {@link Tile}
-     * @param board
-     * @param selectedWorker
-     * @param selectedTile
+     * @param board current {@link Board}
+     * @param selectedWorker {@link Worker} whose move is verified
+     * @param selectedTile {@link Tile} to check
      * @return {@code true} if the move is legal
      */
     @Override
@@ -118,9 +119,9 @@ public class StandardDivinity implements Divinity {
 
     /**
      * Checks if the selected {@link Worker} is able to build on the specified {@link Tile}
-     * @param board
-     * @param selectedWorker
-     * @param selectedTile
+     * @param board current {@link Board}
+     * @param selectedWorker {@link Worker} whose build is verified
+     * @param selectedTile {@link Tile} to check
      * @return {@code true} if the build is legal
      */
     @Override
@@ -154,7 +155,7 @@ public class StandardDivinity implements Divinity {
      * Function used to initialize the parameters of
      * a divinity in able to update correctly the set
      * of possible actions that {@link StandardDivinity#updatePossibleActions(List)} will return
-     * @param possibleActions
+     * @param possibleActions list of {@link Action} to be modified
      */
     @Override
     public void setupDivinity(List<Action> possibleActions) {
@@ -181,10 +182,6 @@ public class StandardDivinity implements Divinity {
 
     public String getHeading() {
         return heading;
-    }
-
-    public void setHeading(String heading) {
-        this.heading = heading;
     }
 
     /**

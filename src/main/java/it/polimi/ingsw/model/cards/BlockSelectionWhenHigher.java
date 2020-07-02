@@ -22,8 +22,8 @@ public class BlockSelectionWhenHigher extends DivinityDecoratorWithEffects {
 
     /**
      * List of workers different from the one in parameters
-     * @param selectedWorker
-     * @return
+     * @param selectedWorker worker whose level has to be compared to the others
+     * @return List of higher workers
      */
     public List<Worker> otherWorkers(Worker selectedWorker){
         List<Worker> list = new ArrayList<>();
@@ -39,10 +39,10 @@ public class BlockSelectionWhenHigher extends DivinityDecoratorWithEffects {
      * <p>
      * This "trick" works because a worker is affected by the condition only on the first move so that it cannot be selected;
      * for divinities that can move more than once, the effects is thus removed after moving a first time.
-     * @param board
-     * @param selectedWorker
-     * @param selectedTile
-     * @return
+     * @param board current {@link Board}
+     * @param selectedWorker Selected worker from the {@link Match}
+     * @param selectedTile {@link Tile} to move onto
+     * @return list of tiles to be modified on the view
      */
     @Override
     public List<ModelUpdate> move(Board board, Worker selectedWorker, Tile selectedTile) {
@@ -53,10 +53,10 @@ public class BlockSelectionWhenHigher extends DivinityDecoratorWithEffects {
 
     /**
      * The legal move is overwritten so that if a worker is higher than the others, it cannot be selected.
-     * @param board
-     * @param selectedWorker
-     * @param selectedTile
-     * @return
+     * @param board current {@link Board}
+     * @param selectedWorker {@link Worker} whose move is verified
+     * @param selectedTile {@link Tile} to check
+     * @return true if legal or the worker is lower
      */
     @Override
     public boolean legalMove(Board board, Worker selectedWorker, Tile selectedTile){
@@ -72,7 +72,7 @@ public class BlockSelectionWhenHigher extends DivinityDecoratorWithEffects {
 
     /**
      * During the setup the flag is set to false so that the condition will be applied when selecting a worker.
-     * @param possibleActions
+     * @param possibleActions List of possible {@link Action}
      */
     @Override
     public void setupDivinity(List<Action> possibleActions) {

@@ -19,9 +19,9 @@ public class BuildTwiceNotOnPerimeter extends BuildTwice{
     /**
      * Checks if the worker is building for the first time or the second time and on which tile.
      * If the tile is on the edge of the board, they can not build.
-     * @param board
-     * @param selectedWorker
-     * @param selectedTile
+     * @param board current {@link Board}
+     * @param selectedWorker {@link Worker} whose build is verified
+     * @param selectedTile {@link Tile} to check
      * @return
      */
     @Override
@@ -40,7 +40,7 @@ public class BuildTwiceNotOnPerimeter extends BuildTwice{
 
     /**
      * Updates the list of possible actions so that a user can build at most twice.
-     * @param possibleActions
+     * @param possibleActions List of actions to modify
      */
     @Override
     public void updatePossibleActions(List<Action> possibleActions) {

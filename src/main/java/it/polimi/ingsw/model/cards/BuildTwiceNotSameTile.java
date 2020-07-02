@@ -24,9 +24,9 @@ public class BuildTwiceNotSameTile extends BuildTwice {
 
     /**
      * Checks if the player is building on a tile different from the first
-     * @param board
-     * @param selectedWorker
-     * @param selectedTile
+     * @param board current {@link Board}
+     * @param selectedWorker {@link Worker} whose build is verified
+     * @param selectedTile {@link Tile} to check
      * @return {@code true} if the build is correct: it is the first one and in accordance to the game rules, or it is the second and on a different tile
      */
     @Override
@@ -71,19 +71,11 @@ public class BuildTwiceNotSameTile extends BuildTwice {
 
     /**
      * After the first build the player can end his turn
-     * @param possibleActions
+     * @param possibleActions List of actions to modify
      */
     @Override
     public void updatePossibleActions(List<Action> possibleActions) {
-        /*if(getBuildCount()==1) {
-            List<Tile> l = ActionManager.getMatch().getAvailableBuildTiles(Game.getMatch().getSelectedWorker());
-            if(l.size()>0) {
-                possibleActions.add(Action.BUILD);
-                possibleActions.add(Action.END);
-            }
-        }*/
-
-        if(getBuildCount()!=1) return;
+         if(getBuildCount()!=1) return;
         else super.updatePossibleActions(possibleActions);
     }
 
@@ -91,6 +83,4 @@ public class BuildTwiceNotSameTile extends BuildTwice {
     public void setupDivinity(List<Action> possibleActions) {
         super.setupDivinity(possibleActions);
     }
-
-
 }

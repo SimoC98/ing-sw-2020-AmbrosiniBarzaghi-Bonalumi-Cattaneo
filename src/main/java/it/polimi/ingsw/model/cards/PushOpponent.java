@@ -27,9 +27,9 @@ public class PushOpponent extends MoveOnOpponent {
     /**
      * The control verify that if the selected tile contains an opponent worker, then when he will be moved, he will not
      * be moved out of the {@link it.polimi.ingsw.model.Board}, on a dome or on another worker
-     * @param board
-     * @param selectedWorker
-     * @param selectedTile
+     * @param board current {@link Board}
+     * @param selectedWorker {@link Worker} whose move is verified
+     * @param selectedTile {@link Tile} to check
      * @return {@code true} if the move is not illegal
      */
     @Override
@@ -58,9 +58,9 @@ public class PushOpponent extends MoveOnOpponent {
 
     /**
      * Moves both the current player's worker and the opponent one if the selected tile is occupied by the latter
-     * @param board
-     * @param selectedWorker
-     * @param selectedTile
+     * @param board current {@link Board}
+     * @param selectedWorker Selected worker from the {@link Match}
+     * @param selectedTile {@link Tile} to move onto
      * @return List of tiles to update on the UI representations
      */
     @Override
@@ -69,7 +69,6 @@ public class PushOpponent extends MoveOnOpponent {
         int dy = selectedTile.getY() - selectedWorker.getPositionOnBoard().getY();
 
         List<ModelUpdate> ret = new ArrayList<>();
-        //List<Tile> modifiedTiles = new ArrayList<>();
         List<Pair<Integer,Integer>> modifiedTiles = new ArrayList<>();
         ModelUpdate update = null;
 

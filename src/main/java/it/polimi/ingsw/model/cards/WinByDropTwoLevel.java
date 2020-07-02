@@ -18,8 +18,8 @@ public class WinByDropTwoLevel extends DivinityDecoratorWithEffects {
 
     /**
      * Verifies if the worker will perform a winning move before moving
-     * @param selectedTile
-     * @param selectedWorker
+     * @param selectedWorker current worker performing an action
+     * @param selectedTile {@link Tile} the worker is going to perform the action on
      * @return {@code true} if Pan's winning condition is verified
      */
     @Override

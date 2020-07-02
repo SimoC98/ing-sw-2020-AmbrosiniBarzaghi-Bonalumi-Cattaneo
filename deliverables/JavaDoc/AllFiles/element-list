@@ -1,0 +1,13 @@
+module:it.polimi.ingsw
+it.polimi.ingsw
+it.polimi.ingsw.Client
+it.polimi.ingsw.Client.gui
+it.polimi.ingsw.controller
+it.polimi.ingsw.events.clientToServer
+it.polimi.ingsw.events.serverToClient
+it.polimi.ingsw.model
+it.polimi.ingsw.model.cards
+it.polimi.ingsw.model.exceptions
+it.polimi.ingsw.model.update
+it.polimi.ingsw.Server
+it.polimi.ingsw.XMLparser

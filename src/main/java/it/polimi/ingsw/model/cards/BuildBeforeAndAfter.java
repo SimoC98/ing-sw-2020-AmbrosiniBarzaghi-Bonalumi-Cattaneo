@@ -28,10 +28,12 @@ public class BuildBeforeAndAfter extends DivinityDecoratorWithEffects {
 
     /**
      * If the player builds before moving, a flag is set to remember this decision
-     * @param board
-     * @param selectedWorker
-     * @param selectedTile
+     * @param board current {@link Board}
+     * @param selectedWorker Selected worker from the {@link Match}
+     * @param selectedTile {@link Tile} to build on
+     * @return
      */
+
     @Override
     public List<ModelUpdate> build(Board board,Worker selectedWorker, Tile selectedTile) {
         if(hasMoved==false) {
@@ -46,12 +48,13 @@ public class BuildBeforeAndAfter extends DivinityDecoratorWithEffects {
         return super.move(board,selectedWorker, selectedTile);
     }
 
+
     /**
      * If the build before the movement will lead the worker to be blocked, such build is prevented.
      * This is the reason why an {@code ArrayList} containing the possible moves after the build is created.
-     * @param board
-     * @param selectedWorker
-     * @param selectedTile
+     * @param board current {@link Board}
+     * @param selectedWorker {@link Worker} whose build is verified
+     * @param selectedTile {@link Tile} to check
      * @return {@code true} if the second build is viable, or the first build will not stall the {@link Worker}
      */
     @Override
@@ -69,10 +72,10 @@ public class BuildBeforeAndAfter extends DivinityDecoratorWithEffects {
     }
 
     /**
-     * @param board
-     * @param selectedWorker
-     * @param selectedTile
-     * @return {@code true} when the worker is moving on a valid position before or after building
+     * @param board current {@link Board}
+     * @param selectedWorker {@link Worker} whose move is verified
+     * @param selectedTile {@link Tile} to check
+     * @return when the worker is moving on a valid position before or after building
      */
     @Override
     public boolean legalMove(Board board,Worker selectedWorker, Tile selectedTile) {
@@ -85,6 +88,8 @@ public class BuildBeforeAndAfter extends DivinityDecoratorWithEffects {
     }
 
     /**
+     * Adds the action MOVE even when the worker built before but did not move up.
+     * @param possibleActions List of actions to modify
      */
     @Override
     public void updatePossibleActions(List<Action> possibleActions) {

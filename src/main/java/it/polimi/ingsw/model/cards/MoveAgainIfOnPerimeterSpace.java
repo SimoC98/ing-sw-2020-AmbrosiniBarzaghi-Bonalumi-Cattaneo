@@ -24,7 +24,7 @@ public class MoveAgainIfOnPerimeterSpace extends MoveMultipleTimes {
     /**
      * The list of possible actions is updated so that if the worker is not on the perimeter or they have built, they
      * can no longer keep moving
-     * @param possibleActions
+     * @param possibleActions List of actions to modify
      */
     @Override
     public void updatePossibleActions(List<Action> possibleActions) {
@@ -38,9 +38,9 @@ public class MoveAgainIfOnPerimeterSpace extends MoveMultipleTimes {
      * Updates the list of actions to send to the user, checking the flag.
      * If it is set to {@code true}, it returns a list containing both {@link Action#MOVE} and {@link Action#BUILD};
      * otherwise only {@link Action#BUILD}.
-     * @param board
-     * @param selectedWorker
-     * @param selectedTile
+     * @param board current {@link Board}
+     * @param selectedWorker Selected worker from the {@link Match}
+     * @param selectedTile {@link Tile} to move onto
      * @return
      */
     @Override
@@ -53,7 +53,7 @@ public class MoveAgainIfOnPerimeterSpace extends MoveMultipleTimes {
 
     /**
      * Initialize {@code isOnPerimeter} to false so that it updates correctly when calling {@code move}
-     * @param possibleActions
+     * @param possibleActions List of actions to be modified
      */
     @Override
     public void setupDivinity(List<Action> possibleActions) {

@@ -18,6 +18,13 @@ public class MoveOnOpponent extends DivinityDecoratorWithEffects {
         super(decoratedDivinity);
     }
 
+    /**
+     * Overrides normal move
+     * @param board current {@link Board}
+     * @param selectedWorker Selected worker from the {@link Match}
+     * @param selectedTile {@link Tile} to move onto
+     * @return
+     */
     @Override
     public List<ModelUpdate> move(Board board, Worker selectedWorker, Tile selectedTile) {
         return super.move(board,selectedWorker, selectedTile);
@@ -25,9 +32,9 @@ public class MoveOnOpponent extends DivinityDecoratorWithEffects {
 
     /**
      * Alters the method so that a worker can move on an opponent's worker
-     * @param board
-     * @param selectedWorker
-     * @param selectedTile
+     * @param board current {@link Board}
+     * @param selectedWorker {@link Worker} whose move is verified
+     * @param selectedTile {@link Tile} to check
      * @return {@code true} if the base move is valid and the worker is trying to  move on an enemy worker
      */
     @Override

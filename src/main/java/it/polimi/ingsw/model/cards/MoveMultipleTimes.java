@@ -23,9 +23,10 @@ public class MoveMultipleTimes extends DivinityDecoratorWithEffects {
 
     /**
      * Saves the tile the worker was on his first movement and updates the move counter
-     * @param board
-     * @param selectedWorker
-     * @param selectedTile
+     * @param board current {@link Board}
+     * @param selectedWorker Selected worker from the {@link Match}
+     * @param selectedTile {@link Tile} to move onto
+     * @return
      */
     @Override
     public List<ModelUpdate> move(Board board, Worker selectedWorker, Tile selectedTile) {
@@ -38,9 +39,10 @@ public class MoveMultipleTimes extends DivinityDecoratorWithEffects {
 
     /**
      * The build can only happen upon a worker's change of position
-     * @param board
-     * @param selectedWorker
-     * @param selectedTile
+     * @param board current {@link Board}
+     * @param selectedWorker Selected worker from the {@link Match}
+     * @param selectedTile {@link Tile} to build on
+     * @return
      */
     @Override
     public List<ModelUpdate> build(Board board, Worker selectedWorker, Tile selectedTile) {
@@ -59,6 +61,13 @@ public class MoveMultipleTimes extends DivinityDecoratorWithEffects {
         return super.getDivinity();
     }
 
+    /**
+     * Overrides the normal legalMove
+     * @param board current {@link Board}
+     * @param selectedWorker {@link Worker} whose move is verified
+     * @param selectedTile {@link Tile} to check
+     * @return
+     */
     @Override
     public boolean legalMove(Board board,Worker selectedWorker, Tile selectedTile) {
         return super.legalMove(board,selectedWorker, selectedTile);
@@ -76,6 +85,10 @@ public class MoveMultipleTimes extends DivinityDecoratorWithEffects {
         return hasBuilt;
     }
 
+    /**
+     * Adds another MOVE action
+     * @param possibleActions List of actions to modify
+     */
     @Override
     public void updatePossibleActions(List<Action> possibleActions) {
         possibleActions.add(Action.MOVE);
@@ -84,7 +97,7 @@ public class MoveMultipleTimes extends DivinityDecoratorWithEffects {
 
     /**
      * Initializes the attribute for the correct use of the gods' effects
-     * @param possibleActions
+     * @param possibleActions List of actions to be modified
      */
     @Override
     public void setupDivinity(List<Action> possibleActions) {

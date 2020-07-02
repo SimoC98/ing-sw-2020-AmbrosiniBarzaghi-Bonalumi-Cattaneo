@@ -29,16 +29,15 @@ public class SwapWithOpponent extends MoveOnOpponent {
     /**
      * If the selected tile is occupied by an opponent worker, such worker and his tile are
      * saved and the swap takes place. Otherwise it is a simple move
-     * @param board
-     * @param selectedWorker
-     * @param selectedTile
-     * @return
+     * @param board current {@link Board}
+     * @param selectedWorker Selected worker from the {@link Match}
+     * @param selectedTile {@link Tile} to move onto
+     * @return list of all the modified tiles to be sent to the view
      */
     @Override
     public List<ModelUpdate> move(Board board, Worker selectedWorker, Tile selectedTile) {
         if (selectedTile.getWorker() != null) {
             List<ModelUpdate> ret = new ArrayList<>();
-            //List<Tile> modifiedTiles = new ArrayList<>();
             List<Pair<Integer,Integer>> modifiedTiles = new ArrayList<>();
 
             Worker opponentWorker = selectedTile.getWorker();
@@ -72,9 +71,9 @@ public class SwapWithOpponent extends MoveOnOpponent {
      * An {@code ArrayList} is created to prevent the player from committing a rare losing condition:
      * The player swaps on a {@link Tile} where he will not be able to build; i.e. the worker is surrounded by domes
      * or other workers.
-     * @param board
-     * @param selectedWorker
-     * @param selectedTile
+     * @param board current {@link Board}
+     * @param selectedWorker {@link Worker} whose move is verified
+     * @param selectedTile {@link Tile} to check
      * @return {@code true} if the worker moves on a free tile or an occupied tile and will be able to build
      */
     @Override

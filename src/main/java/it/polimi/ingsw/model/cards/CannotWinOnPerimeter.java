@@ -23,7 +23,7 @@ public class CannotWinOnPerimeter extends SetEffectOnOpponent{
 
     /**
      * Method called in {@link Match#startNextTurn()} that decorates the other players.
-     * @param opponentPlayer
+     * @param opponentPlayer player affected by the divinity
      */
     @Override
     public void setEffectOnOpponentWorkers(Player opponentPlayer) {

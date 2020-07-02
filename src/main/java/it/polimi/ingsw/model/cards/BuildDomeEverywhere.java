@@ -25,9 +25,10 @@ public class BuildDomeEverywhere extends DivinityDecoratorWithEffects {
     /**
      * Modified {@code build} that builds a dome if the player chooses to do so.
      * The choice is done in {@link Match}
-     * @param board
-     * @param selectedWorker
-     * @param selectedTile
+     * @param board current {@link Board}
+     * @param selectedWorker Selected worker from the {@link Match}
+     * @param selectedTile {@link Tile} to build on
+     * @return list of tiles to be modified on the view
      */
     @Override
     public List<ModelUpdate> build(Board board, Worker selectedWorker, Tile selectedTile) {
@@ -70,6 +71,10 @@ public class BuildDomeEverywhere extends DivinityDecoratorWithEffects {
         super.setDivinity(decoratedDivinity);
     }
 
+    /**
+     * Sets hasbuilt to false to correctly being able to build a dome
+     * @param possibleActions List of actions to be modified
+     */
     @Override
     public void setupDivinity(List<Action> possibleActions) {
 

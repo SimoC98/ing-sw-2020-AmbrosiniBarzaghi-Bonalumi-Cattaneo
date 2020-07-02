@@ -12,9 +12,6 @@ import java.util.List;
 public class Check5CompleteTowerWinCondition extends DivinityDecoratorWithEffects {
     private Player winnerPlayer;
 
-    public Check5CompleteTowerWinCondition() {
-    }
-
     public Check5CompleteTowerWinCondition(Divinity divinity) {
         super(divinity);
     }

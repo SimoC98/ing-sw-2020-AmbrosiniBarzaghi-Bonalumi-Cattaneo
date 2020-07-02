@@ -25,9 +25,9 @@ public class MoveTwiceNotBack extends MoveMultipleTimes {
 
     /**
      * Checks if a player is moving twice on different tiles
-     * @param board
-     * @param selectedWorker
-     * @param selectedTile
+     * @param board current {@link Board}
+     * @param selectedWorker {@link Worker} whose move is verified
+     * @param selectedTile {@link Tile} to check
      * @return {@code true} if the move is correct: it is the first one and in accordance to the game rules, or it is the second and on a different tile
      */
     @Override
@@ -42,7 +42,7 @@ public class MoveTwiceNotBack extends MoveMultipleTimes {
 
     /**
      * After the first move, the player can build
-     * @param possibleActions
+     * @param possibleActions List of actions to modify
      */
     @Override
     public void updatePossibleActions(List<Action> possibleActions) {

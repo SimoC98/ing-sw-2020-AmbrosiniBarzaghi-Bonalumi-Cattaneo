@@ -22,11 +22,11 @@ public class BuildTwice extends DivinityDecoratorWithEffects {
     }
 
     /**
-     * The methods follows the call flow of parent classes to
-     * effectively "decorate" this method
-     * @param board
-     * @param selectedWorker
-     * @param selectedTile
+     * The methods follows the call flow of parent classes to effectively "decorate" this method
+     * @param board current {@link Board}
+     * @param selectedWorker {@link Worker} whose build is verified
+     * @param selectedTile {@link Tile} to check
+     * @return
      */
     @Override
     public boolean legalBuild(Board board,Worker selectedWorker, Tile selectedTile) {
@@ -37,9 +37,10 @@ public class BuildTwice extends DivinityDecoratorWithEffects {
      * The function saves the {@link Tile} where the {@link Worker}
      * first builds and it increments the building counter in order to
      * build only twice.
-     * @param board
-     * @param selectedWorker
-     * @param selectedTile
+     * @param board current {@link Board}
+     * @param selectedWorker Selected worker from the {@link Match}
+     * @param selectedTile {@link Tile} to build on
+     * @return list of tiles to be sent to view
      */
     @Override
     public List<ModelUpdate> build(Board board, Worker selectedWorker, Tile selectedTile) {
@@ -74,6 +75,10 @@ public class BuildTwice extends DivinityDecoratorWithEffects {
         return firstBuildTile;
     }
 
+    /**
+     * Tracks the first building position and the building count
+     * @param possibleActions List of actions to be modified
+     */
     @Override
     public void setupDivinity(List<Action> possibleActions) {
         firstBuildTile = null;
@@ -81,6 +86,10 @@ public class BuildTwice extends DivinityDecoratorWithEffects {
         super.setupDivinity(possibleActions);
     }
 
+    /**
+     * Adds the possibility to build twice or to end the turn
+     * @param possibleActions List of actions to modify
+     */
     @Override
     public void updatePossibleActions(List<Action> possibleActions) {
         possibleActions.add(Action.BUILD);

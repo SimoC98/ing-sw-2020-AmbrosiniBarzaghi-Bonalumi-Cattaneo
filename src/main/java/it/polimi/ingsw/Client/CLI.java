@@ -516,7 +516,8 @@ public class CLI implements UI{
     public void lobbyFull() {
         System.out.println("The lobby is full, you can't join this match!");
         System.out.println("\ndisconnecting...");
-        clientView.disconnect();
+        //clientView.disconnect();
+        exit(0);
     }
 
     /**

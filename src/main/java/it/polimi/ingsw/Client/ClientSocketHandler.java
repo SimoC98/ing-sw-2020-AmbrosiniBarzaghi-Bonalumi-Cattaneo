@@ -69,7 +69,6 @@ public class ClientSocketHandler extends Observable<ServerEvent> implements Runn
             e.getMessage();
             //e.printStackTrace();
         }
-
     }
 
     /**

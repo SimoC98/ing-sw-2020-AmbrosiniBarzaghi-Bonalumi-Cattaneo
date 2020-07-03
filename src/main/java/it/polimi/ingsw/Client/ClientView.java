@@ -244,7 +244,6 @@ public class ClientView implements Observer<ServerEvent> {
         ui.selectPlayableDivinities(divinitiesNames, divinitiesDescriptions, playersNumber,players);
     }
 
-    //TODO: why players are put in random order???
     /**
      * {@link it.polimi.ingsw.events.serverToClient.GameSetupEvent} informs the client which color each player has
      * @param playersNames list of players' names

@@ -15,7 +15,6 @@ public class BoardRepresentation {
 
     protected final int boardDimension = 5;
     private int [][] board;
-    //TODO: add another matrix for seeing domes position and keeping the level information
     private Map<String, PlayerRepresentation> players;
     private Map<String, String> divinitiesDescriptions;
 

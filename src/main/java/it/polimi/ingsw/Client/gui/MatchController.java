@@ -490,8 +490,8 @@ public class MatchController {
 
         message.setText(player + " has moved from " + x1+"-"+y1 + " to " + x2+"-"+y2);
 
-        StackPane stackPaneFrom = (StackPane) board.getChildren().get(y1*board.getRowCount() + x1);   //TODO: check if x and y must be inverted
-        StackPane stackPaneTo = (StackPane) board.getChildren().get(y2*board.getRowCount() + x2);   //TODO: check if x and y must be inverted
+        StackPane stackPaneFrom = (StackPane) board.getChildren().get(y1*board.getRowCount() + x1);
+        StackPane stackPaneTo = (StackPane) board.getChildren().get(y2*board.getRowCount() + x2);
 
         ImageView workerFrom = (ImageView) stackPaneFrom.getChildren().get(WORKER);
         Image workerImg = workerColors.get(color);
@@ -516,7 +516,7 @@ public class MatchController {
     public void buildUpdate(String player, int x, int y) {
         message.setText(player + " has built on tile " + x+"-"+y);
         //System.out.println(x + "-" + y);
-        StackPane s = (StackPane) board.getChildren().get(y*board.getRowCount() + x);   //TODO: check if x and y must be inverted
+        StackPane s = (StackPane) board.getChildren().get(y*board.getRowCount() + x);
 
         ImageView imageView;
 

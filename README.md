@@ -48,7 +48,7 @@ Keep in mind that in some systems like Linux it is forbidden to use ports until 
 
 
 
-### [Client.jar](/deliverables/JAR/Client_linux.jar)
+### [Client.jar](/deliverables/JAR/Client.jar)
 Run the file on the terminal by typing
 ```
 java -jar PATH_TO_Client.jar

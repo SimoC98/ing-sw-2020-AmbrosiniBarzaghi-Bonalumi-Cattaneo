@@ -26,6 +26,16 @@
 [![GREEN](https://placehold.it/15/44bb44/44bb44)](#)
 -->
 
+## UPDATE on .jar files
+
+Now there are three jar files in the deliverables, one for every OS supported, due to cross-platform issues with JavaFX.
+
+[Client_linux.jar](/deliverables/JAR/Client_linux.jar) works on Linux and on Windows if you have JavaFX installed in Intellij and you are using the JRE that JavaFX has created.
+
+[Client_windows.jar](/deliverables/JAR/Client_windows.jar) works on every PC running a JRE 9 or newer, or a JDK of the same version or higher and a modified path in environment variables.
+
+[Client_macos.jar](/deliverables/JAR/Client_macos.jar) works on Windows with under the same requirements. We don't know what works on MacOS and what doesn't since that we don't own a Mac.
+
 ## How To Run .jar Files 
 
 Be sure to have installed Java 9 or newer.

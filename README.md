@@ -1,5 +1,7 @@
 # Prova Finale Ingegneria del Software 2020
 
+## voto: 29/30
+
 ## Group AM26
 
 - ### Bonalumi - Marco - 891457 - 10607992 - marco1.bonalumi@mail.polimi.it
